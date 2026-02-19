@@ -1,4 +1,17 @@
 # Changelog
+## 5.11.0 (2026-XX-XX)
+
+### Changed
+
+### Added
+
+### Fixed
+
+- Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader`.[#16836](https://github.com/phalcon/cphalcon/issues/16836)
+
+### Removed
+
+# Changelog
 ## 5.10.0 (2025-12-25)
 
 ### Changed
