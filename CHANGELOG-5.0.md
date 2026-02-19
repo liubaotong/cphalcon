@@ -3,6 +3,8 @@
 
 ### Changed
 
+- Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address.[#16838](https://github.com/phalcon/cphalcon/issues/16838)
+
 ### Added
 
 ### Fixed

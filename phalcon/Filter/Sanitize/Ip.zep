@@ -24,77 +24,34 @@ class Ip
      */
     public function __invoke(string input, int filter = 0) -> string | false
     {
-        var parts, ip, mask, protocol, filtered;
+        var parts, ip, mask, maxMask, filtered, ipInput;
 
-        let protocol = this->getIpAddressProtocolVersion(input);
-        if (protocol === false) {
-            return false;
-        }
+        let ipInput = trim(input);
 
         // CIDR notation (e.g., 192.168.1.0/24)
-        if memstr(input, "/") {
+        if memstr(ipInput, "/") {
             let parts       = explode("/", input, 2),
                 ip          = parts[0],
                 mask        = parts[1];
 
-            // Try IPv4 validation
-            if protocol === 4 {
-                let filtered = filter_var(ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | filter);
-                if filtered !== false {
-                    if is_numeric(mask) && mask >= 0 && mask <= 32 {
-                        return filtered . "/" . mask;
-                    }
-                }
+            let filtered = filter_var(ip, FILTER_VALIDATE_IP, filter);
+            if (filtered === false) {
+                return false;
             }
 
-            // Try IPv6 validation
-            if protocol === 6 {
-                let filtered = filter_var(ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | filter);
-                if (filtered) {
-                    if is_numeric(mask) && mask >= 0 && mask <= 128 {
-                        return filtered . "/" . mask;
-                    }
-                }
-            }
-        } else {
-            // Single IP
-            if protocol === 4 {
-                return filter_var(input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | filter);
+            if (!ctype_digit(mask)) {
+                return false;
             }
 
-            if (protocol === 6) {
-                return filter_var(input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | filter);
+            let maxMask = strpos(filtered, ':') !== false ? 128 : 32;
+
+            if ((int)mask <= maxMask) {
+                return filtered . "/" . mask;
             }
+
+            return false;
         }
 
-        // return false if nothing filtered.
-        return false;
-    }
-
-    /**
-     * Return the IP address protocol version
-     *
-     * @param $ip
-     * @return int|false
-     */
-    private function getIpAddressProtocolVersion(string input) -> int | false
-    {
-        var parts, ip;
-
-        let ip = input;
-        if (memstr(ip, "/")) {
-            let parts   = explode("/", ip, 2),
-                ip      = parts[0];
-        }
-
-        if (filter_var(ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
-            return 4;
-        }
-
-        if (filter_var(ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
-            return 6;
-        }
-
-        return false;
+        return filter_var(ipInput, FILTER_VALIDATE_IP, filter);
     }
 }
