@@ -3,13 +3,15 @@
 
 ### Changed
 
-- Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address.[#16838](https://github.com/phalcon/cphalcon/issues/16838)
+- Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address [#16838](https://github.com/phalcon/cphalcon/issues/16838)
 
 ### Added
 
+- Added the ability to specify aliases for `Phalcon\Di\Di` services.[#13042](https://github.com/phalcon/cphalcon/issues/13042)
+
 ### Fixed
 
-- Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader`.[#16836](https://github.com/phalcon/cphalcon/issues/16836)
+- Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader` [#16836](https://github.com/phalcon/cphalcon/issues/16836)
 
 ### Removed
 
