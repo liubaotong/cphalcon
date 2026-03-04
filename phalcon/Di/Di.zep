@@ -64,6 +64,27 @@ use Phalcon\Di\ServiceProviderInterface;
 class Di implements DiInterface
 {
     /**
+     * List of service aliases
+     *
+     * @var array
+     */
+    protected aliases = [];
+
+    /**
+     * Latest DI build
+     *
+     * @var DiInterface|null
+     */
+    protected static defaultContainer = null;
+
+    /**
+     * Events Manager
+     *
+     * @var ManagerInterface|null
+     */
+    protected eventsManager = null;
+
+    /**
      * List of registered services
      *
      * @var ServiceInterface[]
@@ -78,26 +99,12 @@ class Di implements DiInterface
     protected sharedInstances = [];
 
     /**
-     * Events Manager
-     *
-     * @var ManagerInterface|null
-     */
-    protected eventsManager = null;
-
-    /**
-     * Latest DI build
-     *
-     * @var DiInterface|null
-     */
-    protected static defaultDi;
-
-    /**
      * Phalcon\Di\Di constructor
      */
     public function __construct()
     {
-        if !self::defaultDi {
-            let self::defaultDi = this;
+        if (null === self::defaultContainer) {
+            let self::defaultContainer = this;
         }
     }
 
@@ -139,12 +146,7 @@ class Di implements DiInterface
             }
         }
 
-        /**
-         * The method doesn't start with set/get throw an exception
-         */
-        throw new Exception(
-            "Call to undefined method or service '" . method . "'"
-        );
+        throw Exception::undefinedMethod(method);
     }
 
     /**
@@ -169,6 +171,14 @@ class Di implements DiInterface
     public function get(string! name, parameters = null) -> var
     {
         var service, isShared, instance = null;
+
+        let instance = null;
+        let service  = null;
+
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
 
         /**
          * If the service is shared and it already has a cached instance then
@@ -265,11 +275,24 @@ class Di implements DiInterface
     }
 
     /**
+     * Return the alias based on a passed key. Returns an empty string if
+     * the alias does not exist
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function getAlias(string name) -> string
+    {
+        return isset(this->aliases[name]) ? this->aliases[$name] : "";
+    }
+
+    /**
      * Return the latest DI created
      */
     public static function getDefault() -> <DiInterface> | null
     {
-        return self::defaultDi;
+        return self::defaultContainer;
     }
 
     /**
@@ -285,15 +308,9 @@ class Di implements DiInterface
      */
     public function getRaw(string! name) -> var
     {
-        var service;
-
-        if unlikely !fetch service, this->services[name] {
-            throw new Exception(
-                "Service '" . name . "' was not found in the dependency injection container"
-            );
-        }
-
-        return service->getDefinition();
+        return this->getService(name)
+                   ->getDefinition()
+        ;
     }
 
     /**
@@ -301,15 +318,16 @@ class Di implements DiInterface
      */
     public function getService(string! name) -> <ServiceInterface>
     {
-        var service;
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
 
-        if unlikely !fetch service, this->services[name] {
-            throw new Exception(
-                "Service '" . name . "' was not found in the dependency injection container"
-            );
+        if (true !== this->has(name)) {
+            throw Exception::serviceNotFound(name);
         }
 
-        return service;
+        return this->services[name];
     }
 
     /**
@@ -326,18 +344,17 @@ class Di implements DiInterface
      */
     public function getShared(string! name, parameters = null) -> var
     {
-        var instance;
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
 
-        // Attempt to use the instance from the shared instances cache.
-        if !fetch instance, this->sharedInstances[name] {
-            // Resolve the instance normally
-            let instance = this->get(name, parameters);
-
+        if (!isset($this->sharedInstances[name])) {
             // Store the instance in the shared instances cache.
-            let this->sharedInstances[name] = instance;
+            let this->sharedInstances[name] = this->get(name, parameters);
         }
 
-        return instance;
+        return this->sharedInstances[name];
     }
 
     /**
@@ -446,7 +463,12 @@ class Di implements DiInterface
      */
     public function has(string! name) -> bool
     {
-        return isset this->services[name];
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
+
+        return isset(this->services[name]);
     }
 
     /**
@@ -521,14 +543,23 @@ class Di implements DiInterface
      */
     public function remove(string! name) -> void
     {
-        var services;
-        let services = this->services;
-        unset services[name];
-        let this->services = services;
+        var aliases, services, sharedInstances;
 
-        var sharedInstances;
+        let aliases         = this->aliases;
+        let services        = this->services;
         let sharedInstances = this->sharedInstances;
+
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
+
+        unset aliases[name];
+        unset services[name];
         unset sharedInstances[name];
+
+        let aliases               = aliases;
+        let this->services        = services;
         let this->sharedInstances = sharedInstances;
     }
 
@@ -537,7 +568,7 @@ class Di implements DiInterface
      */
     public static function reset() -> void
     {
-        let self::defaultDi = null;
+        let self::defaultContainer = null;
     }
 
     /**
@@ -545,9 +576,54 @@ class Di implements DiInterface
      */
     public function set(string! name, var definition, bool shared = false) -> <ServiceInterface>
     {
+        /**
+         * Resolve the alias, if any
+         */
+        let name = this->resolveAlias(name);
+
         let this->services[name] = new Service(definition, shared);
 
         return this->services[name];
+    }
+
+    /**
+     * Sets one or more aliases to the given name.
+     *
+     * @param string       $name
+     * @param string|array $aliases
+     *
+     * @return $this
+     * @throws DiException
+     */
+    public function setAlias(string name, var aliases) -> <Di>
+    {
+        var alias, currentAliases, localAliases;
+
+        if (true !== this->has(name)) {
+            throw Exception::serviceNotFound(name);
+        }
+
+        let currentAliases = this->aliases;
+        let localAliases   = aliases;
+        if (typeof localAliases !== "array") {
+            let localAliases = [localAliases];
+        }
+
+        for alias in localAliases {
+            if (typeof alias !== "string") {
+                throw new Exception("Alias name must be a string");
+            }
+
+            if (true === isset(currentAliases[alias]) || true === this->has(alias)) {
+                throw new Exception("Alias '" . alias . "' is already in use by an existing service");
+            }
+
+            let currentAliases[alias] = name;
+        }
+
+        let this->aliases = currentAliases;
+
+        return this;
     }
 
     /**
@@ -556,7 +632,7 @@ class Di implements DiInterface
      */
     public static function setDefault(<DiInterface> container) -> void
     {
-        let self::defaultDi = container;
+        let self::defaultContainer = container;
     }
 
     /**
@@ -583,5 +659,35 @@ class Di implements DiInterface
     public function setShared(string! name, var definition) -> <ServiceInterface>
     {
         return this->set(name, definition, true);
+    }
+    /**
+     * Resolve an alias to its actual service name
+     *
+     * @param string $name
+     *
+     * @return string
+     * @throws Exception
+     */
+    private function resolveAlias(string name) -> string
+    {
+        var current, seen;
+
+        let current = name;
+        let seen    = [];
+
+        while (isset(this->aliases[current])) {
+            if (isset(seen[current])) {
+                throw new Exception(
+                    sprintf(
+                        "Circular alias reference detected while resolving '%s'",
+                        name
+                    )
+                );
+            }
+            let seen[current] = true;
+            let current       = this->aliases[current];
+        }
+
+        return current;
     }
 }
