@@ -592,8 +592,8 @@ class Di implements DiInterface
      * @param string       $name
      * @param string|array $aliases
      *
-     * @return $this
-     * @throws DiException
+     * @return Di
+     * @throws Exception
      */
     public function setAlias(string name, var aliases) -> <Di>
     {
