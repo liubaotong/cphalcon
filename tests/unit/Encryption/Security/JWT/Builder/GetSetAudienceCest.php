@@ -39,7 +39,7 @@ class GetSetAudienceCest
         $signer  = new Hmac();
         $builder = new Builder($signer);
 
-        $I->assertNull($builder->getAudience());
+        $I->assertSame([], $builder->getAudience());
 
         $return = $builder->setAudience('audience');
         $I->assertInstanceOf(Builder::class, $return);
