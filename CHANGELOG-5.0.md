@@ -4,10 +4,14 @@
 ### Changed
 
 - Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address [#16838](https://github.com/phalcon/cphalcon/issues/16838)
+- Changed `Phalcon\Encryption\Security\JWT\Builder::setPassphrase()` to require digits and special characters [#16847](https://github.com/phalcon/cphalcon/issues/16847) 
+- Changed `Phalcon\Encryption\Security\JWT\Builder::getAudience()` to return an empty array if not set [#16846](https://github.com/phalcon/cphalcon/issues/16846) 
+- Changed `Phalcon\Encryption\Security\Random::base()` to use 16 bits by default [#16845](https://github.com/phalcon/cphalcon/issues/16845) 
 
 ### Added
 
 - Added the ability to specify aliases for `Phalcon\Di\Di` services.[#13042](https://github.com/phalcon/cphalcon/issues/13042)
+- Added `Phalcon\Encryption\Security\JWT\Validator::validateClaim()` to validate custom claims [#16843](https://github.com/phalcon/cphalcon/issues/16843)
 
 ### Fixed
 

@@ -419,7 +419,7 @@ class Builder
     public function setPassphrase(string! passphrase) -> <Builder>
     {
         if !preg_match(
-            "/(?=^.{16,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/",
+            "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{16,}$/",
             passphrase
         ) {
             throw new ValidatorException(
