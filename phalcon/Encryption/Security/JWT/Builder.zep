@@ -130,7 +130,7 @@ class Builder
      */
     public function getAudience()
     {
-        return this->claims->get(Enum::AUDIENCE);
+        return this->claims->get(Enum::AUDIENCE, []);
     }
 
     /**
