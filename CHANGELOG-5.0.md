@@ -11,7 +11,7 @@
 ### Added
 
 - Added the ability to specify aliases for `Phalcon\Di\Di` services.[#13042](https://github.com/phalcon/cphalcon/issues/13042)
-- Added `Phalcon\Encryption\Security\JWT\Builder::validateClaim()` to validate custom claims [#16843](https://github.com/phalcon/cphalcon/issues/16843)
+- Added `Phalcon\Encryption\Security\JWT\Validator::validateClaim()` to validate custom claims [#16843](https://github.com/phalcon/cphalcon/issues/16843)
 
 ### Fixed
 
