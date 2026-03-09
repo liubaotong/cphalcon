@@ -321,7 +321,7 @@ abstract class AbstractLogger
          * If someone uses "critical" as the level (string)
          */
         if (typeof level === "string") {
-            let levelName = strtoupper(level),
+            let levelName = strtolower(level),
                 levels    = array_flip(this->getLevels());
 
             if (isset(levels[levelName])) {
@@ -346,15 +346,15 @@ abstract class AbstractLogger
     protected function getLevels() -> array
     {
         return [
-            self::ALERT     : "ALERT",
-            self::CRITICAL  : "CRITICAL",
-            self::DEBUG     : "DEBUG",
-            self::EMERGENCY : "EMERGENCY",
-            self::ERROR     : "ERROR",
-            self::INFO      : "INFO",
-            self::NOTICE    : "NOTICE",
-            self::WARNING   : "WARNING",
-            self::CUSTOM    : "CUSTOM"
+            self::ALERT     : "alert",
+            self::CRITICAL  : "critical",
+            self::DEBUG     : "debug",
+            self::EMERGENCY : "emergency",
+            self::ERROR     : "error",
+            self::INFO      : "info",
+            self::NOTICE    : "notice",
+            self::WARNING   : "warning",
+            self::CUSTOM    : "custom"
         ];
     }
 }

@@ -21,7 +21,7 @@ use UnitTester;
 
 use function logsDir;
 use function sprintf;
-use function strtoupper;
+use function strtolower;
 use function uniqid;
 
 class LogCest
@@ -80,7 +80,7 @@ class LogCest
         foreach ($levels as $levelName) {
             $expected = sprintf(
                 '[%s] Message %s',
-                strtoupper($levelName),
+                strtolower($levelName),
                 $levelName
             );
 
@@ -155,7 +155,7 @@ class LogCest
         foreach ($levelsYes as $levelName) {
             $expected = sprintf(
                 '[%s] Message %s',
-                strtoupper($levelName),
+                strtolower($levelName),
                 $levelName
             );
             $I->seeInThisFile($expected);
@@ -164,7 +164,7 @@ class LogCest
         foreach ($levelsNo as $levelName) {
             $expected = sprintf(
                 '[%s] Message %s',
-                strtoupper($levelName),
+                strtolower($levelName),
                 $levelName
             );
             $I->dontSeeInThisFile($expected);
@@ -212,7 +212,7 @@ class LogCest
         $I->openFile($fileName);
 
         $expected = sprintf(
-            'log message-[DEBUG]-%s:%s',
+            'log message-[debug]-%s:%s',
             $context['server'],
             $context['user']
         );
@@ -262,7 +262,7 @@ class LogCest
         $I->openFile($fileName);
 
         $expected = sprintf(
-            'log message-[DEBUG]-%s:%s',
+            'log message-[debug]-%s:%s',
             $context['server'],
             $context['user']
         );
