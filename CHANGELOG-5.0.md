@@ -6,7 +6,10 @@
 - Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address [#16838](https://github.com/phalcon/cphalcon/issues/16838)
 - Changed `Phalcon\Encryption\Security\JWT\Builder::setPassphrase()` to require digits and special characters [#16847](https://github.com/phalcon/cphalcon/issues/16847) 
 - Changed `Phalcon\Encryption\Security\JWT\Builder::getAudience()` to return an empty array if not set [#16846](https://github.com/phalcon/cphalcon/issues/16846) 
-- Changed `Phalcon\Encryption\Security\Random::base()` to use 16 bits by default [#16845](https://github.com/phalcon/cphalcon/issues/16845) 
+- Changed `Phalcon\Encryption\Security\Random::base()` to use 16 bits by default [#16845](https://github.com/phalcon/cphalcon/issues/16845)
+- Changed `Phalcon\Logger\Logger` to use lowercase when reporting log levels (previously uppercase) [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+- Changed `Phalcon\Logger\Adapter\Stream` to use a more efficient way to write messages in the logger instead of opening and closing the stream per message [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+- Changed `Phalcon\Logger\Adapter\Syslog` to use the `Enum` instead of `Logger` constants [#16852](https://github.com/phalcon/cphalcon/issues/16852)
 
 ### Added
 

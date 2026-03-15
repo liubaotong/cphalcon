@@ -24,7 +24,7 @@ use function end;
 use function file_get_contents;
 use function logsDir;
 use function preg_match;
-use function strtoupper;
+use function strtolower;
 
 class LevelsCest
 {
@@ -65,7 +65,7 @@ class LevelsCest
         $I->seeInThisFile($logString);
 
         // Check if the level is in the log file
-        $I->seeInThisFile('[' . strtoupper($level) . ']');
+        $I->seeInThisFile('[' . strtolower($level) . ']');
 
         // Check time content
         $content = file_get_contents($fileName);
@@ -73,7 +73,7 @@ class LevelsCest
         // Get time part
         $matches = [];
         preg_match(
-            '/\[(.*)\]\[' . strtoupper($level) . '\]/',
+            '/\[(.*)\]\[' . strtolower($level) . '\]/',
             $content,
             $matches
         );
