@@ -93,9 +93,12 @@ class Stream extends AbstractAdapter
      */
     public function close() -> bool
     {
+        var handler;
+
         if (this->handler !== null) {
-            let this->handler = null;
-            return this->phpFclose(this->handler);
+            let handler = this->handler,
+                this->handler = null;
+            return this->phpFclose(handler);
         }
 
         return true;
