@@ -36,6 +36,7 @@ class GetClientAddressCest
         // skip private IP and return the first non-private and non-reserved IP
         $_SERVER = [
             'REQUEST_TIME_FLOAT'   => $time,
+            'REMOTE_ADDR'          => '25.25.25.25',
             'HTTP_X_FORWARDED_FOR' => '10.4.6.1,25.25.25.25',
         ];
 
@@ -89,6 +90,7 @@ class GetClientAddressCest
         // set correct IP with trusted proxy
         $_SERVER = [
             'REQUEST_TIME_FLOAT'   => $time,
+            'REMOTE_ADDR'          => '25.25.25.1',
             'HTTP_X_FORWARDED_FOR' => '8.8.8.8,25.25.25.1',
         ];
 
@@ -122,6 +124,7 @@ class GetClientAddressCest
         // verify proxy is trusted
         $_SERVER = [
             'REQUEST_TIME_FLOAT'   => $time,
+            'REMOTE_ADDR'          => '1.1.1.1',
             'HTTP_X_FORWARDED_FOR' => '8.8.8.8,1.1.1.1',
         ];
 
@@ -131,13 +134,43 @@ class GetClientAddressCest
             '25.25.25.0/24'
         ]);
 
-        $expected = 'The forwarded proxy IP addresses are not trusted.';
-        try {
-            $request->getClientAddress(true);
-            $I->fail('Expected exception was not thrown.');
-        } catch (\Exception $e) {
-            $I->assertEquals($expected, $e->getMessage());
-        }
+        $expected = '1.1.1.1';
+        $actual   = $request->getClientAddress(true);
+        $I->assertSame($expected, $actual);
+
+        $_SERVER = $store;
+    }
+
+    /**
+     * Tests Phalcon\Http\Request :: getClientAddress() - trustForwardedHeader - with non-public proxy IPs
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2025-07-11
+     */
+    public function httpRequestGetClientAddressTrustForwardedHeaderWithNonPublicProxyIps(UnitTester $I)
+    {
+        $I->wantToTest('Http\Request - getClientAddress() - trustForwardedHeader - with non-public proxy IPs');
+        $container = new FactoryDefault();
+
+        $store   = $_SERVER ?? [];
+        $time    = $_SERVER['REQUEST_TIME_FLOAT'];
+
+        // verify proxy is trusted
+        $_SERVER = [
+            'REQUEST_TIME_FLOAT'   => $time,
+            'REMOTE_ADDR'          => '192.168.0.10',
+            'HTTP_X_FORWARDED_FOR' => '10.4.5.3,192.168.0.10',
+        ];
+
+        $request = new Request();
+        $request->setDI($container);
+        $request->setTrustedProxies([
+            '192.168.0.10'
+        ]);
+
+        $expected = '192.168.0.10';
+        $actual   = $request->getClientAddress(true);
+        $I->assertSame($expected, $actual);
 
         $_SERVER = $store;
     }
@@ -159,11 +192,13 @@ class GetClientAddressCest
         // Test HTTP_CLIENT_IP header
         $_SERVER = [
             'REQUEST_TIME_FLOAT' => $time,
+            'REMOTE_ADDR'        => '10.1.2.3',
             'HTTP_CLIENT_IP'     => '10.4.6.2',
         ];
 
         $request = new Request();
         $request->setDI($container);
+        $request->setTrustedProxyHeader('HTTP_CLIENT_IP');
 
         $expected = '10.4.6.2';
         $actual   = $request->getClientAddress(true);

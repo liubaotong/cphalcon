@@ -80,7 +80,6 @@ class Random
     /**
      * Generates a random base58 string
      *
-     * If $len is not specified, 16 is assumed. It may be larger in future.
      * The result may contain alphanumeric characters except 0, O, I and l.
      *
      * It is similar to `Phalcon\Encryption\Security\Random::base64()` but has been
@@ -97,7 +96,7 @@ class Random
      * @link   https://en.wikipedia.org/wiki/Base58
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    public function base58(int len = null) -> string
+    public function base58(int len = 16) -> string
     {
         return this->base(
             "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",
@@ -108,8 +107,6 @@ class Random
 
     /**
      * Generates a random base62 string
-     *
-     * If $len is not specified, 16 is assumed. It may be larger in future.
      *
      * It is similar to `Phalcon\Encryption\Security\Random::base58()` but has been
      * modified to provide the largest value that can safely be used in URLs
@@ -125,7 +122,7 @@ class Random
      * @see    \Phalcon\Encryption\Security\Random:base58
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    public function base62(int len = null) -> string
+    public function base62(int len = 16) -> string
     {
         return this->base(
             "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -137,7 +134,6 @@ class Random
     /**
      * Generates a random base64 string
      *
-     * If $len is not specified, 16 is assumed. It may be larger in future.
      * The length of the result string is usually greater of $len.
      * Size formula: 4 * ($len / 3) rounded up to a multiple of 4.
      *
@@ -149,7 +145,7 @@ class Random
      *
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    public function base64(int len = null) -> string
+    public function base64(int len = 16) -> string
     {
         return base64_encode(
             this->bytes(len)
@@ -159,7 +155,6 @@ class Random
     /**
      * Generates a random URL-safe base64 string
      *
-     * If $len is not specified, 16 is assumed. It may be larger in future.
      * The length of the result string is usually greater of $len.
      *
      * By default, padding is not generated because "=" may be used as a URL
@@ -176,7 +171,7 @@ class Random
      * @link https://www.ietf.org/rfc/rfc3548.txt
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    public function base64Safe(int len = null, bool padding = false) -> string
+    public function base64Safe(int len = 16, bool padding = false) -> string
     {
         var s;
 
@@ -232,7 +227,6 @@ class Random
     /**
      * Generates a random hex string
      *
-     * If $len is not specified, 16 is assumed. It may be larger in future.
      * The length of the result string is usually greater of $len.
      *
      *```php
@@ -243,7 +237,7 @@ class Random
      *
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    public function hex(int len = null) -> string
+    public function hex(int len = 16) -> string
     {
         return array_shift(
             unpack(
@@ -324,11 +318,9 @@ class Random
      * Generates a random string based on the number ($base) of characters
      * ($alphabet).
      *
-     * If $n is not specified, 16 is assumed. It may be larger in future.
-     *
      * @throws Exception If secure random number generator is not available or unexpected partial read
      */
-    protected function base(string alphabet, int base, n = null) -> string
+    protected function base(string alphabet, int base, n = 16) -> string
     {
         var bytes, idx;
         string byteString = "";

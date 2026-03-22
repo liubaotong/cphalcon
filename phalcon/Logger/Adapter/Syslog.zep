@@ -11,8 +11,8 @@
 namespace Phalcon\Logger\Adapter;
 
 use LogicException;
+use Phalcon\Logger\Enum;
 use Phalcon\Logger\Item;
-use Phalcon\Logger\Logger;
 
 
 /**
@@ -141,15 +141,15 @@ class Syslog extends AbstractAdapter
         array levels;
 
         let levels = [
-            Logger::ALERT     : LOG_ALERT,
-            Logger::CRITICAL  : LOG_CRIT,
-            Logger::CUSTOM    : LOG_ERR,
-            Logger::DEBUG     : LOG_DEBUG,
-            Logger::EMERGENCY : LOG_EMERG,
-            Logger::ERROR     : LOG_ERR,
-            Logger::INFO      : LOG_INFO,
-            Logger::NOTICE    : LOG_NOTICE,
-            Logger::WARNING   : LOG_WARNING
+            Enum::ALERT     : LOG_ALERT,
+            Enum::CRITICAL  : LOG_CRIT,
+            Enum::CUSTOM    : LOG_ERR,
+            Enum::DEBUG     : LOG_DEBUG,
+            Enum::EMERGENCY : LOG_EMERG,
+            Enum::ERROR     : LOG_ERR,
+            Enum::INFO      : LOG_INFO,
+            Enum::NOTICE    : LOG_NOTICE,
+            Enum::WARNING   : LOG_WARNING
         ];
 
         if !fetch result, levels[level] {
