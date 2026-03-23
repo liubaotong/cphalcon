@@ -16,6 +16,7 @@ use Phalcon\Mvc\Model\Binder\BindableInterface;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use ReflectionFunction;
 use ReflectionMethod;
+use ReflectionNamedType;
 
 /**
  * Phalcon\Mvc\Model\Binder
@@ -185,7 +186,7 @@ class Binder implements BinderInterface
         for paramKey, methodParam in methodParams {
             let reflectionClass = methodParam->getType();
 
-            if !reflectionClass {
+            if !reflectionClass || !(reflectionClass instanceof ReflectionNamedType) {
                 continue;
             }
 

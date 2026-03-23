@@ -20,6 +20,7 @@ use Phalcon\Acl\ComponentAwareInterface;
 use Phalcon\Acl\ComponentInterface;
 use ReflectionClass;
 use ReflectionFunction;
+use ReflectionNamedType;
 
 /**
  * Manages ACL lists in memory
@@ -707,7 +708,7 @@ class Memory extends AbstractAdapter
                 let parameterToCheck = reflectionParameter->getName();
 
 
-                if null !== reflectionType {
+                if null !== reflectionType && (reflectionType instanceof ReflectionNamedType) {
                     let className       = reflectionType->getName();
                     let reflectionClass = new ReflectionClass(className);
                     // roleObject is this class
