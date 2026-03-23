@@ -19,6 +19,7 @@
 ### Fixed
 
 - Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader` [#16836](https://github.com/phalcon/cphalcon/issues/16836)
+- Fixed `Phalcon\Acl\Adapter\Memory::isAllowed()` and `Phalcon\Mvc\Model\Binder` to handle PHP 8.1+ union and intersection types by checking for `ReflectionNamedType` before calling `getName()` [#16261](https://github.com/phalcon/cphalcon/issues/16261)
 
 ### Removed
 
@@ -46,7 +47,6 @@
 - Fixed `Phalcon\Storage\Adapters\Libmemcached::getAdapter()` to correctly merge adapter options [#16818](https://github.com/phalcon/cphalcon/issues/16818)
 - Fixed `Phalcon\Encryption\Crypt` method `checkCipherHashIsAvailable(string $cipher, string $type)` to correctly check the `cipher` or `hash` type [#16822](https://github.com/phalcon/cphalcon/issues/16822)
 - Fixed `Phalcon\Mvc\Model` docblocks [#16825](https://github.com/phalcon/cphalcon/issues/16825)
-- Fixed `Phalcon\Acl\Adapter\Memory::isAllowed()` and `Phalcon\Mvc\Model\Binder` to handle PHP 8.1+ union and intersection types by checking for `ReflectionNamedType` before calling `getName()` [#16261](https://github.com/phalcon/cphalcon/issues/16261)
 
 ### Removed
 
