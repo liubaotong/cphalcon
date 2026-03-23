@@ -120,6 +120,27 @@ class Validator
     }
 
     /**
+     * Validate a claim
+     *
+     * @param string          $name
+     * @param bool|int|string $value
+     *
+     * @return Validator
+     */
+    public function validateClaim(string name, var value) -> <Validator>
+    {
+        var claimValue;
+
+        let claimValue = this->token->getClaims()->get(name);
+
+        if value !== claimValue {
+            let this->errors[] = "Validation: incorrect " . name;
+        }
+
+        return this;
+    }
+
+    /**
      * Validate the audience
      *
      * @param string|array $audience

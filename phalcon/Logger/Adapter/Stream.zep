@@ -23,18 +23,26 @@ use Phalcon\Logger\Item;
  * $logger = new \Phalcon\Logger\Adapter\Stream('app/logs/test.log');
  *
  * $logger->log('This is a message');
- * $logger->log(\Phalcon\Logger::ERROR, 'This is an error');
+ * $logger->log(\Phalcon\Logger\Enum::ERROR, 'This is an error');
  * $logger->error('This is another error');
  *
  * $logger->close();
  *```
  *
+ * @property resource|null $handler
  * @property string        $mode
  * @property string        $name
  * @property array         $options
  */
 class Stream extends AbstractAdapter
 {
+    /**
+     * Stream handler resource
+     *
+     * @var resource|null
+     */
+    protected handler = null;
+
     /**
      * The file open mode. Defaults to 'ab'
      *
@@ -85,6 +93,14 @@ class Stream extends AbstractAdapter
      */
     public function close() -> bool
     {
+        var handler;
+
+        if (this->handler !== null) {
+            let handler = this->handler,
+                this->handler = null;
+            return this->phpFclose(handler);
+        }
+
         return true;
     }
 
@@ -105,28 +121,34 @@ class Stream extends AbstractAdapter
      */
     public function process(<Item> item) -> void
     {
-        var handler, message;
+        var message;
 
-        let handler = this->phpFopen(this->name, this->mode);
+        if (!is_resource(this->handler)) {
+            let this->handler = this->phpFopen(this->name, this->mode);
 
-        if !is_resource(handler) {
-            throw new LogicException(
-                "The file '" .
-                this->name .
-                "' cannot be opened with mode '" .
-                this->mode .
-                "'"
-            );
+            if (!is_resource(this->handler)) {
+                let this->handler = null;
+
+                throw new LogicException(
+                    "The file '" .
+                    this->name .
+                    "' cannot be opened with mode '" .
+                    this->mode .
+                    "'"
+                );
+            }
         }
 
-        /**
-         * Not much we can do about locking
-         */
-        flock(handler, LOCK_EX);
         let message = this->getFormattedItem(item) . PHP_EOL;
-        fwrite(handler, message);
+        this->phpFwrite(this->handler, message);
+    }
 
-        fclose(handler);
+    /**
+     * @todo to be removed when we get traits
+     */
+    protected function phpFclose(var handle) -> bool
+    {
+        return fclose(handle);
     }
 
     /**
@@ -135,5 +157,13 @@ class Stream extends AbstractAdapter
     protected function phpFopen(string filename, string mode)
     {
         return fopen(filename, mode);
+    }
+
+    /**
+     * @todo to be removed when we get traits
+     */
+    protected function phpFwrite(var handle, string message)
+    {
+        return fwrite(handle, message);
     }
 }

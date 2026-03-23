@@ -1,4 +1,28 @@
 # Changelog
+## 5.11.0 (2026-XX-XX)
+
+### Changed
+
+- Changed `Phalcon\Filter\Sanitize\IP` to optimize the sanatization of IP address [#16838](https://github.com/phalcon/cphalcon/issues/16838)
+- Changed `Phalcon\Encryption\Security\JWT\Builder::setPassphrase()` to require digits and special characters [#16847](https://github.com/phalcon/cphalcon/issues/16847) 
+- Changed `Phalcon\Encryption\Security\JWT\Builder::getAudience()` to return an empty array if not set [#16846](https://github.com/phalcon/cphalcon/issues/16846) 
+- Changed `Phalcon\Encryption\Security\Random::base()` to use 16 bits by default [#16845](https://github.com/phalcon/cphalcon/issues/16845)
+- Changed `Phalcon\Logger\Logger` to use lowercase when reporting log levels (previously uppercase) [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+- Changed `Phalcon\Logger\Adapter\Stream` to use a more efficient way to write messages in the logger instead of opening and closing the stream per message [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+- Changed `Phalcon\Logger\Adapter\Syslog` to use the `Enum` instead of `Logger` constants [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+
+### Added
+
+- Added the ability to specify aliases for `Phalcon\Di\Di` services.[#13042](https://github.com/phalcon/cphalcon/issues/13042)
+- Added `Phalcon\Encryption\Security\JWT\Validator::validateClaim()` to validate custom claims [#16843](https://github.com/phalcon/cphalcon/issues/16843)
+
+### Fixed
+
+- Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader` [#16836](https://github.com/phalcon/cphalcon/issues/16836)
+
+### Removed
+
+# Changelog
 ## 5.10.0 (2025-12-25)
 
 ### Changed
