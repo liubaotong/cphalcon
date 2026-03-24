@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Integration\Forms\Form;
 
 use IntegrationTester;
+use Phalcon\Filter\Filter;
 use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Numericality;
 use Phalcon\Filter\Validation\Validator\PresenceOf;
 use Phalcon\Filter\Validation\Validator\Regex;
 use Phalcon\Forms\Element\Text;
@@ -171,5 +173,43 @@ class IsValidCest
         );
 
         $I->assertEquals($expected, $messages);
+    }
+
+    /**
+     * Tests Form::isValid() applies filters even when no validators are specified
+     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/16936
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-03-22
+     */
+    public function formsFormIsValidAppliesFiltersWithoutValidators(IntegrationTester $I)
+    {
+        $I->wantToTest('Forms\Form - isValid() applies filters without validators');
+
+        $entity = new \stdClass();
+
+        $fieldNoValidator = new Text('test1');
+        $fieldNoValidator->setFilters([Filter::FILTER_TRIM]);
+
+        $fieldWithValidator = new Text('test2');
+        $fieldWithValidator->setFilters([Filter::FILTER_TRIM]);
+        $fieldWithValidator->addValidator(
+            new Numericality(['allowEmpty' => true])
+        );
+
+        $form = new Form($entity);
+        $form->add($fieldNoValidator);
+        $form->add($fieldWithValidator);
+
+        $data = [
+            'test1' => '   ',
+            'test2' => '   ',
+        ];
+
+        $result = $form->isValid($data, $entity);
+
+        $I->assertTrue($result);
+        $I->assertEquals('', $entity->test1, 'Filter should be applied for field without validators');
+        $I->assertEquals('', $entity->test2, 'Filter should be applied for field with validators');
     }
 }

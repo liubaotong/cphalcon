@@ -18,6 +18,7 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Forms\Form::isValid()` to apply field filters even when no validators are specified [#16936](https://github.com/phalcon/cphalcon/issues/16936)
 - Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader` [#16836](https://github.com/phalcon/cphalcon/issues/16836)
 - Fixed `Phalcon\Acl\Adapter\Memory::isAllowed()` and `Phalcon\Mvc\Model\Binder` to handle PHP 8.1+ union and intersection types by checking for `ReflectionNamedType` before calling `getName()` [#16261](https://github.com/phalcon/cphalcon/issues/16261)
 
