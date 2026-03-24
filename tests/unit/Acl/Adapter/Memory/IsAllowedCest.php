@@ -433,4 +433,40 @@ class IsAllowedCest
         $actual = $acl->isAllowed('guest', 'reports', 'add');
         $I->assertFalse($actual);
     }
+
+    /**
+     * Tests Phalcon\Acl\Adapter\Memory :: isAllowed() - union type parameter
+     * in callback does not cause a fatal error
+     *
+     * @param UnitTester $I
+     *
+     * @author  Phalcon Team <team@phalcon.io>
+     * @since   2026-03-23
+     */
+    public function aclAdapterMemoryIsAllowedUnionTypeParameter(UnitTester $I)
+    {
+        $I->wantToTest(
+            'Acl\Adapter\Memory - isAllowed() - union type parameter in callback'
+        );
+
+        $acl = new Memory();
+        $acl->setDefaultAction(Enum::DENY);
+
+        $acl->addRole('Admin');
+        $acl->addComponent('User', ['update']);
+        $acl->allow(
+            'Admin',
+            'User',
+            ['update'],
+            function (int|string $parameter) {
+                return $parameter === 1;
+            }
+        );
+
+        $actual = $acl->isAllowed('Admin', 'User', 'update', ['parameter' => 1]);
+        $I->assertTrue($actual);
+
+        $actual = $acl->isAllowed('Admin', 'User', 'update', ['parameter' => 2]);
+        $I->assertFalse($actual);
+    }
 }
