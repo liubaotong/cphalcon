@@ -67,6 +67,13 @@ class Attributes extends Collection implements RenderInterface
         let result = "";
         for key, value in results {
             if typeof key === "string" && null !== value {
+                if (typeof value === "array" || is_resource(value)) {
+                    throw new Exception(
+                        "Value at index: \"" . key . "\" type: \"" .
+                        gettype(value) . "\" cannot be rendered"
+                    );
+                }
+
                 let result .= key . "=\""
                 . htmlspecialchars(value, ENT_QUOTES, "utf-8", true)
                 . "\" ";

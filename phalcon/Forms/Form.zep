@@ -551,6 +551,13 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             }
         }
 
+        /**
+         * Check if the name is in the _POST superglobal
+         */
+        if fetch value, _POST[name] {
+            return value;
+        }
+
         let forbidden = [
             "attributes":    true,
             "validation":    true,
@@ -687,12 +694,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
         for element in this->elements {
             let validators = element->getValidators();
 
-            /**
-             * Get filters in the element
-             */
-            let filters = element->getFilters();
-
-            if count(validators) == 0 && typeof filters != "array" {
+            if count(validators) == 0 {
                 continue;
             }
 
@@ -707,6 +709,11 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             for validator in validators {
                 validation->add(name, validator);
             }
+
+            /**
+             * Get filters in the element
+             */
+            let filters = element->getFilters();
 
             /**
              * Assign the filters to the validation
