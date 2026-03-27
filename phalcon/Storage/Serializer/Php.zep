@@ -43,8 +43,6 @@ class Php extends AbstractSerializer
             return;
         }
 
-        let version = phpversion();
-
         globals_set("warning.enable", false);
 
         set_error_handler(
