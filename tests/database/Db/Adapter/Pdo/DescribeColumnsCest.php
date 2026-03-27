@@ -92,7 +92,7 @@ class DescribeColumnsCest
 
         $columns = $db->describeColumns($migration->getTable());
 
-        $I->assertSame('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP', $columns[2]->getDefault());
+        $I->assertSame('CURRENT_TIMESTAMP DEFAULT_GENERATED on update CURRENT_TIMESTAMP', $columns[2]->getDefault());
         $I->assertSame('NULL on update CURRENT_TIMESTAMP', $columns[3]->getDefault());
     }
 
