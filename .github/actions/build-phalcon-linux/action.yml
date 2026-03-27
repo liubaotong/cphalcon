@@ -9,10 +9,15 @@ inputs:
     description: 'PHP version'
     required: true
 
+outputs:
+  extension-dir:
+    description: 'PHP extension directory'
+    value: ${{ steps.get-ext-dir.outputs.dir }}
+
 runs:
   using: 'composite'
   steps:
-    - name: 'Build Phalcon for Linux'
+    - name: Build Phalcon for Linux
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
@@ -24,6 +29,11 @@ runs:
     - name: Enable extension
       shell: bash
       run: echo "extension=phalcon" >> /etc/php/${{ inputs.php-version }}/cli/conf.d/99-pecl.ini
+
+    - name: Get extension directory
+      id: get-ext-dir
+      shell: bash
+      run: echo "dir=$(php-config --extension-dir)" >> $GITHUB_OUTPUT
 
     - name: Check Extension
       shell: bash
