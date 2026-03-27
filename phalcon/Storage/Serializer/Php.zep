@@ -35,7 +35,7 @@ class Php extends AbstractSerializer
      */
     public function unserialize(mixed data) -> void
     {
-        var result, version;
+        var result;
 
         if (true !== this->isSerializable(data)) {
             let this->data = data;
@@ -47,21 +47,12 @@ class Php extends AbstractSerializer
 
         globals_set("warning.enable", false);
 
-        if version_compare(version, "8.0", ">=") {
-            set_error_handler(
-                function (number, message, file, line) {
-                    globals_set("warning.enable", true);
-                },
-                E_NOTICE
-            );
-        } else {
-            set_error_handler(
-                function (number, message, file, line, context) {
-                    globals_set("warning.enable", true);
-                },
-                E_NOTICE
-            );
-        }
+        set_error_handler(
+            function (number, message, file, line) {
+                globals_set("warning.enable", true);
+            },
+            E_NOTICE
+        );
 
         let result = this->phpUnserialize(data);
 
