@@ -32,7 +32,9 @@ return <<<HEADER
 #include <main/php_ini.h>
 #include <main/SAPI.h>
 #include <ext/standard/php_string.h>
+#if PHP_VERSION_ID < 80500
 #include <ext/standard/php_smart_string.h>
+#endif
 #include <ext/standard/info.h>
 #include <ext/standard/file.h>
 #include <ext/standard/php_filestat.h>
