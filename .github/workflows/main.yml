@@ -29,7 +29,7 @@ env:
   CACHE_DIR: 'C:\Downloads'
 
   # PHP extensions required by Composer
-  EXTENSIONS: apcu, gettext, gd, igbinary, imagick, intl, json, mbstring, msgpack, memcached, sqlite3, yaml, redis, :memcache, openssl
+  EXTENSIONS: apcu, gettext, gd, igbinary, imagick, intl, json, mbstring, msgpack, memcached, sqlite3, yaml, redis, :memcache, openssl, xdebug
 
 permissions: {}
 

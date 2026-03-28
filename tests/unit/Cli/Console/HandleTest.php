@@ -488,7 +488,7 @@ final class HandleTest extends AbstractUnitTestCase
         }
 
         $module   = '';
-        if (extension_loaded('phalcon')) {
+        if (!env('GITHUB_RUN_ID')) {
             $module = '-d extension=' . rootDir() . 'ext/modules/phalcon.so ';
         }
         $script = rootDir() . 'tests/testbed/cli.php ';
