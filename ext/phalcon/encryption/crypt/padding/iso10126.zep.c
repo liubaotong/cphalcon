@@ -83,15 +83,15 @@ PHP_METHOD(Phalcon_Encryption_Crypt_Padding_Iso10126, pad)
 			}
 			ZEPHIR_INIT_NVAR(&counter);
 			ZVAL_LONG(&counter, _1);
-			ZEPHIR_CALL_FUNCTION(&_3$$3, "rand", &_4, 246);
+			ZEPHIR_CALL_FUNCTION(&_3$$3, "rand", &_4, 245);
 			zephir_check_call_status();
-			ZEPHIR_CALL_FUNCTION(&_5$$3, "chr", &_6, 244, &_3$$3);
+			ZEPHIR_CALL_FUNCTION(&_5$$3, "chr", &_6, 243, &_3$$3);
 			zephir_check_call_status();
 			zephir_concat_self(&padding, &_5$$3);
 		}
 	}
 	ZVAL_LONG(&_7, paddingSize);
-	ZEPHIR_CALL_FUNCTION(&_8, "chr", &_6, 244, &_7);
+	ZEPHIR_CALL_FUNCTION(&_8, "chr", &_6, 243, &_7);
 	zephir_check_call_status();
 	zephir_concat_self(&padding, &_8);
 	RETURN_CCTOR(&padding);
@@ -107,10 +107,10 @@ PHP_METHOD(Phalcon_Encryption_Crypt_Padding_Iso10126, unpad)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long blockSize, ZEPHIR_LAST_CALL_STATUS;
-	zval *input_param = NULL, *blockSize_param = NULL, last, length, _0, _1;
-	zval input;
+	zval input_zv, *blockSize_param = NULL, last, length, _0, _1;
+	zend_string *input = NULL;
 
-	ZVAL_UNDEF(&input);
+	ZVAL_UNDEF(&input_zv);
 	ZVAL_UNDEF(&last);
 	ZVAL_UNDEF(&length);
 	ZVAL_UNDEF(&_0);
@@ -121,15 +121,15 @@ PHP_METHOD(Phalcon_Encryption_Crypt_Padding_Iso10126, unpad)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &input_param, &blockSize_param);
-	zephir_get_strval(&input, input_param);
+	blockSize_param = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&input_zv, input);
 	ZEPHIR_INIT_VAR(&length);
-	ZVAL_LONG(&length, zephir_fast_strlen_ev(&input));
+	ZVAL_LONG(&length, zephir_fast_strlen_ev(&input_zv));
 	ZVAL_LONG(&_0, (zephir_get_numberval(&length) - 1));
 	ZVAL_LONG(&_1, 1);
 	ZEPHIR_INIT_VAR(&last);
-	zephir_substr(&last, &input, zephir_get_intval(&_0), 1 , 0);
-	ZEPHIR_RETURN_CALL_FUNCTION("ord", NULL, 245, &last);
+	zephir_substr(&last, &input_zv, zephir_get_intval(&_0), 1 , 0);
+	ZEPHIR_RETURN_CALL_FUNCTION("ord", NULL, 244, &last);
 	zephir_check_call_status();
 	RETURN_MM();
 }

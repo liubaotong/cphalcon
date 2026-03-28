@@ -13,9 +13,9 @@
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
-#include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/array.h"
+#include "kernel/fcall.h"
 #include "kernel/time.h"
 #include "kernel/concat.h"
 #include "kernel/exception.h"
@@ -71,38 +71,9 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Debug)
 	 * @var string
 	 */
 	zend_declare_property_string(phalcon_support_debug_ce, SL("uri"), "https://assets.phalcon.io/debug/5.0.x/", ZEND_ACC_PROTECTED);
-	/**
-	 * @var Version
-	 */
-	zend_declare_property_null(phalcon_support_debug_ce, SL("version"), ZEND_ACC_PRIVATE);
 	phalcon_support_debug_ce->create_object = zephir_init_properties_Phalcon_Support_Debug;
 
 	return SUCCESS;
-}
-
-/**
- * Constructor setting a reusable version object
- */
-PHP_METHOD(Phalcon_Support_Debug, __construct)
-{
-	zval _0;
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *this_ptr = getThis();
-
-	ZVAL_UNDEF(&_0);
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-
-	ZEPHIR_INIT_VAR(&_0);
-	object_init_ex(&_0, phalcon_support_version_ce);
-	if (zephir_has_constructor(&_0)) {
-		ZEPHIR_CALL_METHOD(NULL, &_0, "__construct", NULL, 0);
-		zephir_check_call_status();
-	}
-
-	zephir_update_property_zval(this_ptr, ZEND_STRL("version"), &_0);
-	ZEPHIR_MM_RESTORE();
 }
 
 /**
@@ -165,21 +136,37 @@ PHP_METHOD(Phalcon_Support_Debug, debugVar)
  */
 PHP_METHOD(Phalcon_Support_Debug, getCssSources)
 {
-	zval uri, sources, _0;
+	zval template, _0, _1, _2, _3, _4;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&uri);
-	ZVAL_UNDEF(&sources);
+	ZVAL_UNDEF(&template);
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_4);
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("uri"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CPY_WRT(&uri, &_0);
-	ZEPHIR_INIT_VAR(&sources);
-	ZEPHIR_CONCAT_SVSSVSSVS(&sources, "<link rel=\"stylesheet\" type=\"text/css\" href=\"", &uri, "assets/jquery-ui/themes/ui-lightness/jquery-ui.min.css\" />", "<link rel=\"stylesheet\" type=\"text/css\" href=\"", &uri, "assets/jquery-ui/themes/ui-lightness/theme.css\" />", "<link rel=\"stylesheet\" type=\"text/css\" href=\"", &uri, "themes/default/style.css\" />");
-	RETURN_CCTOR(&sources);
+	ZEPHIR_INIT_VAR(&template);
+	ZEPHIR_CONCAT_SVS(&template, "\n    <link href='", &_0, "%s'\n          rel='stylesheet'\n          type='text/css' />");
+	ZEPHIR_INIT_VAR(&_1);
+	ZVAL_STRING(&_1, "assets/jquery-ui/themes/ui-lightness/jquery-ui.min.css");
+	ZEPHIR_CALL_FUNCTION(&_2, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "assets/jquery-ui/themes/ui-lightness/theme.css");
+	ZEPHIR_CALL_FUNCTION(&_3, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "themes/default/style.css");
+	ZEPHIR_CALL_FUNCTION(&_4, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VVV(return_value, &_2, &_3, &_4);
+	RETURN_MM();
 }
 
 /**
@@ -187,21 +174,47 @@ PHP_METHOD(Phalcon_Support_Debug, getCssSources)
  */
 PHP_METHOD(Phalcon_Support_Debug, getJsSources)
 {
-	zval uri, sources, _0;
+	zval template, _0, _1, _2, _3, _4, _5, _6;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&uri);
-	ZVAL_UNDEF(&sources);
+	ZVAL_UNDEF(&template);
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_4);
+	ZVAL_UNDEF(&_5);
+	ZVAL_UNDEF(&_6);
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("uri"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CPY_WRT(&uri, &_0);
-	ZEPHIR_INIT_VAR(&sources);
-	ZEPHIR_CONCAT_SVSSVSSVSSVSSVS(&sources, "<script type=\"application/javascript\" src=\"", &uri, "assets/jquery/dist/jquery.min.js\"></script>", "<script type=\"application/javascript\" src=\"", &uri, "assets/jquery-ui/jquery-ui.min.js\"></script>", "<script type=\"application/javascript\" src=\"", &uri, "assets/jquery.scrollTo/jquery.scrollTo.min.js\"></script>", "<script type=\"application/javascript\" src=\"", &uri, "prettify/prettify.js\"></script>", "<script type=\"application/javascript\" src=\"", &uri, "pretty.js\"></script>");
-	RETURN_CCTOR(&sources);
+	ZEPHIR_INIT_VAR(&template);
+	ZEPHIR_CONCAT_SVS(&template, "\n    <script type='application/javascript'\n            src='", &_0, "%s'></script>");
+	ZEPHIR_INIT_VAR(&_1);
+	ZVAL_STRING(&_1, "assets/jquery/dist/jquery.min.js");
+	ZEPHIR_CALL_FUNCTION(&_2, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "assets/jquery-ui/jquery-ui.min.js");
+	ZEPHIR_CALL_FUNCTION(&_3, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "assets/jquery.scrollTo/jquery.scrollTo.min.js");
+	ZEPHIR_CALL_FUNCTION(&_4, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "prettify/prettify.js");
+	ZEPHIR_CALL_FUNCTION(&_5, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "pretty.js");
+	ZEPHIR_CALL_FUNCTION(&_6, "sprintf", NULL, 81, &template, &_1);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VVVVV(return_value, &_2, &_3, &_4, &_5, &_6);
+	RETURN_MM();
 }
 
 /**
@@ -209,11 +222,11 @@ PHP_METHOD(Phalcon_Support_Debug, getJsSources)
  */
 PHP_METHOD(Phalcon_Support_Debug, getVersion)
 {
-	zval link, _0, _1, _2, _3;
+	zval version, link, _0, _1, _2, _3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *this_ptr = getThis();
 
+	ZVAL_UNDEF(&version);
 	ZVAL_UNDEF(&link);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -222,16 +235,24 @@ PHP_METHOD(Phalcon_Support_Debug, getVersion)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	zephir_read_property(&_0, this_ptr, ZEND_STRL("version"), PH_NOISY_CC | PH_READONLY);
-	ZVAL_LONG(&_2, 0);
-	ZEPHIR_CALL_METHOD(&_1, &_0, "getpart", NULL, 0, &_2);
+	ZEPHIR_INIT_VAR(&version);
+	object_init_ex(&version, phalcon_support_version_ce);
+	if (zephir_has_constructor(&version)) {
+		ZEPHIR_CALL_METHOD(NULL, &version, "__construct", NULL, 0);
+		zephir_check_call_status();
+	}
+
+	ZVAL_LONG(&_1, 0);
+	ZEPHIR_CALL_METHOD(&_0, &version, "getpart", NULL, 0, &_1);
+	zephir_check_call_status();
+	ZVAL_LONG(&_1, 1);
+	ZEPHIR_CALL_METHOD(&_2, &version, "getpart", NULL, 0, &_1);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&link);
-	ZEPHIR_CONCAT_SVS(&link, "https://docs.phalcon.io/", &_1, ".0/en/");
-	zephir_read_property(&_2, this_ptr, ZEND_STRL("version"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&_3, &_2, "get", NULL, 0);
+	ZEPHIR_CONCAT_SVSVS(&link, "https://docs.phalcon.io/", &_0, ".", &_2, "/");
+	ZEPHIR_CALL_METHOD(&_3, &version, "get", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CONCAT_SSVSVS(return_value, "<div class=\"version\">Phalcon Framework ", "<a href=\"", &link, "\" target=\"_new\">", &_3, "</a></div>");
+	ZEPHIR_CONCAT_SVSVS(return_value, "<div class='version'>\n    Phalcon Framework <a href='", &link, "' target='_new'>", &_3, "</a>\n</div>");
 	RETURN_MM();
 }
 
@@ -243,7 +264,7 @@ PHP_METHOD(Phalcon_Support_Debug, getVersion)
 PHP_METHOD(Phalcon_Support_Debug, halt)
 {
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(phalcon_support_debug_exception_ce, "Halted request", "phalcon/Support/Debug.zep", 169);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(phalcon_support_debug_exception_ce, "Halted request", "phalcon/Support/Debug.zep", 145);
 	return;
 }
 
@@ -338,7 +359,7 @@ PHP_METHOD(Phalcon_Support_Debug, listenLowSeverity)
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_STRING(&_1, "onUncaughtLowSeverity");
 	zephir_array_fast_append(&_0, &_1);
-	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 136, &_0);
+	ZEPHIR_CALL_FUNCTION(NULL, "set_error_handler", NULL, 135, &_0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_2);
 	zephir_create_array(&_2, 2, 0);
@@ -377,22 +398,22 @@ PHP_METHOD(Phalcon_Support_Debug, onUncaughtException)
 	ZEPHIR_CALL_FUNCTION(&obLevel, "ob_get_level", NULL, 0);
 	zephir_check_call_status();
 	if (ZEPHIR_GT_LONG(&obLevel, 0)) {
-		ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 494);
+		ZEPHIR_CALL_FUNCTION(NULL, "ob_end_clean", NULL, 495);
 		zephir_check_call_status();
 	}
 	zephir_read_static_property_ce(&_0, phalcon_support_debug_ce, SL("isActive"), PH_NOISY_CC | PH_READONLY);
-	if (zephir_is_true(&_0)) {
-		ZEPHIR_CALL_METHOD(&_1$$4, exception, "getmessage", NULL, 0);
+	if (!ZEPHIR_IS_TRUE_IDENTICAL(&_0)) {
+		zephir_update_static_property_ce(phalcon_support_debug_ce, ZEND_STRL("isActive"), &__$true);
+		ZEPHIR_CALL_METHOD(&_1$$4, this_ptr, "renderhtml", NULL, 0, exception);
 		zephir_check_call_status();
 		zend_print_zval(&_1$$4, 0);
-		RETURN_MM_NULL();
+		zephir_update_static_property_ce(phalcon_support_debug_ce, ZEND_STRL("isActive"), &__$false);
+		RETURN_MM_BOOL(1);
 	}
-	zephir_update_static_property_ce(phalcon_support_debug_ce, ZEND_STRL("isActive"), &__$true);
-	ZEPHIR_CALL_METHOD(&_2, this_ptr, "renderhtml", NULL, 0, exception);
+	ZEPHIR_CALL_METHOD(&_2, exception, "getmessage", NULL, 0);
 	zephir_check_call_status();
 	zend_print_zval(&_2, 0);
-	zephir_update_static_property_ce(phalcon_support_debug_ce, ZEND_STRL("isActive"), &__$false);
-	RETURN_MM_BOOL(1);
+	RETURN_MM_BOOL(0);
 }
 
 /**
@@ -431,7 +452,7 @@ PHP_METHOD(Phalcon_Support_Debug, onUncaughtLowSeverity)
 		ZVAL_LONG(&_3$$3, 0);
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 0, message, &_3$$3, severity, file, line);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_2$$3, "phalcon/Support/Debug.zep", 268);
+		zephir_throw_exception_debug(&_2$$3, "phalcon/Support/Debug.zep", 244);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -448,33 +469,17 @@ PHP_METHOD(Phalcon_Support_Debug, onUncaughtLowSeverity)
  */
 PHP_METHOD(Phalcon_Support_Debug, renderHtml)
 {
-	zend_string *_12$$3, *_23$$3, *_39$$3, *_52$$3, *_61$$21;
-	zend_ulong _11$$3, _22$$3, _38$$3, _51$$3, _60$$21;
-	zval _7$$3, _16$$3, _33$$3, _47$$3, _57$$21;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_14 = NULL, *_27 = NULL, *_42 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *exception, exception_sub, _REQUEST, __$true, _SERVER, blacklist, className, dataVar, dataVars, escapedMessage, html, keyFile, keyRequest, keyServer, keyVar, n, showBackTrace, traceItem, value, _0, _1, _2, _3, _4, _5, _6, _68, _69, _8$$3, *_9$$3, _10$$3, _17$$3, _18$$3, _19$$3, *_20$$3, _21$$3, _34$$3, _35$$3, *_36$$3, _37$$3, _48$$3, *_49$$3, _50$$3, _55$$3, _56$$3, _13$$5, _15$$6, _24$$7, _25$$9, _26$$10, _28$$10, _29$$11, _30$$13, _31$$14, _32$$14, _40$$15, _41$$16, _43$$16, _44$$17, _45$$18, _46$$18, _53$$19, _54$$20, *_58$$21, _59$$21, _62$$22, _63$$22, _64$$22, _65$$23, _66$$23, _67$$23;
+	zval *exception, exception_sub, _REQUEST, _SERVER, className, escapedMessage, html, _0, _1, _2, _3, _4, _5, _6, _15, _7$$3, _8$$3, _9$$3, _10$$3, _11$$3, _12$$3, _13$$3, _14$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&exception_sub);
 	ZVAL_UNDEF(&_REQUEST);
-	ZVAL_BOOL(&__$true, 1);
 	ZVAL_UNDEF(&_SERVER);
-	ZVAL_UNDEF(&blacklist);
 	ZVAL_UNDEF(&className);
-	ZVAL_UNDEF(&dataVar);
-	ZVAL_UNDEF(&dataVars);
 	ZVAL_UNDEF(&escapedMessage);
 	ZVAL_UNDEF(&html);
-	ZVAL_UNDEF(&keyFile);
-	ZVAL_UNDEF(&keyRequest);
-	ZVAL_UNDEF(&keyServer);
-	ZVAL_UNDEF(&keyVar);
-	ZVAL_UNDEF(&n);
-	ZVAL_UNDEF(&showBackTrace);
-	ZVAL_UNDEF(&traceItem);
-	ZVAL_UNDEF(&value);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -482,51 +487,15 @@ PHP_METHOD(Phalcon_Support_Debug, renderHtml)
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&_6);
-	ZVAL_UNDEF(&_68);
-	ZVAL_UNDEF(&_69);
-	ZVAL_UNDEF(&_8$$3);
-	ZVAL_UNDEF(&_10$$3);
-	ZVAL_UNDEF(&_17$$3);
-	ZVAL_UNDEF(&_18$$3);
-	ZVAL_UNDEF(&_19$$3);
-	ZVAL_UNDEF(&_21$$3);
-	ZVAL_UNDEF(&_34$$3);
-	ZVAL_UNDEF(&_35$$3);
-	ZVAL_UNDEF(&_37$$3);
-	ZVAL_UNDEF(&_48$$3);
-	ZVAL_UNDEF(&_50$$3);
-	ZVAL_UNDEF(&_55$$3);
-	ZVAL_UNDEF(&_56$$3);
-	ZVAL_UNDEF(&_13$$5);
-	ZVAL_UNDEF(&_15$$6);
-	ZVAL_UNDEF(&_24$$7);
-	ZVAL_UNDEF(&_25$$9);
-	ZVAL_UNDEF(&_26$$10);
-	ZVAL_UNDEF(&_28$$10);
-	ZVAL_UNDEF(&_29$$11);
-	ZVAL_UNDEF(&_30$$13);
-	ZVAL_UNDEF(&_31$$14);
-	ZVAL_UNDEF(&_32$$14);
-	ZVAL_UNDEF(&_40$$15);
-	ZVAL_UNDEF(&_41$$16);
-	ZVAL_UNDEF(&_43$$16);
-	ZVAL_UNDEF(&_44$$17);
-	ZVAL_UNDEF(&_45$$18);
-	ZVAL_UNDEF(&_46$$18);
-	ZVAL_UNDEF(&_53$$19);
-	ZVAL_UNDEF(&_54$$20);
-	ZVAL_UNDEF(&_59$$21);
-	ZVAL_UNDEF(&_62$$22);
-	ZVAL_UNDEF(&_63$$22);
-	ZVAL_UNDEF(&_64$$22);
-	ZVAL_UNDEF(&_65$$23);
-	ZVAL_UNDEF(&_66$$23);
-	ZVAL_UNDEF(&_67$$23);
+	ZVAL_UNDEF(&_15);
 	ZVAL_UNDEF(&_7$$3);
-	ZVAL_UNDEF(&_16$$3);
-	ZVAL_UNDEF(&_33$$3);
-	ZVAL_UNDEF(&_47$$3);
-	ZVAL_UNDEF(&_57$$21);
+	ZVAL_UNDEF(&_8$$3);
+	ZVAL_UNDEF(&_9$$3);
+	ZVAL_UNDEF(&_10$$3);
+	ZVAL_UNDEF(&_11$$3);
+	ZVAL_UNDEF(&_12$$3);
+	ZVAL_UNDEF(&_13$$3);
+	ZVAL_UNDEF(&_14$$3);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(exception, zend_ce_throwable)
 	ZEND_PARSE_PARAMETERS_END();
@@ -544,7 +513,7 @@ PHP_METHOD(Phalcon_Support_Debug, renderHtml)
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "getcsssources", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&html);
-	ZEPHIR_CONCAT_SSVSVSVS(&html, "<html><head>", "<title>", &className, ": ", &escapedMessage, "</title>", &_1, "</head><body>");
+	ZEPHIR_CONCAT_SVSVSVS(&html, "<!DOCTYPE html>\n<html lang='en'>\n<head>\n    <title>", &className, ":", &escapedMessage, "</title>", &_1, "\n</head>\n<body>\n");
 	ZEPHIR_CALL_METHOD(&_2, this_ptr, "getversion", NULL, 0);
 	zephir_check_call_status();
 	zephir_concat_self(&html, &_2);
@@ -553,303 +522,45 @@ PHP_METHOD(Phalcon_Support_Debug, renderHtml)
 	ZEPHIR_CALL_METHOD(&_4, exception, "getline", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_5);
-	ZEPHIR_CONCAT_SSSVSVSSVSVSS(&_5, "<div align=\"center\">", "<div class=\"error-main\">", "<h1>", &className, ": ", &escapedMessage, "</h1>", "<span class=\"error-file\">", &_3, " (", &_4, ")</span>", "</div>");
+	ZEPHIR_CONCAT_SVSVSVSVS(&_5, "\n<div align='center'>\n    <div class='error-main'>\n        <h1>", &className, ": ", &escapedMessage, "</h1>\n        <span class='error-file'>", &_3, " (", &_4, ")</span>\n    </div>");
 	zephir_concat_self(&html, &_5);
 	zephir_read_property(&_6, this_ptr, ZEND_STRL("showBackTrace"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CPY_WRT(&showBackTrace, &_6);
-	if (zephir_is_true(&showBackTrace)) {
-		zephir_memory_observe(&dataVars);
-		zephir_read_property(&dataVars, this_ptr, ZEND_STRL("data"), PH_NOISY_CC);
-		ZEPHIR_INIT_VAR(&_7$$3);
-		ZEPHIR_CONCAT_SSSSSS(&_7$$3, "<div class=\"error-info\"><div id=\"tabs\"><ul>", "<li><a href=\"#error-tabs-1\">Backtrace</a></li>", "<li><a href=\"#error-tabs-2\">Request</a></li>", "<li><a href=\"#error-tabs-3\">Server</a></li>", "<li><a href=\"#error-tabs-4\">Included Files</a></li>", "<li><a href=\"#error-tabs-5\">Memory</a></li>");
-		zephir_concat_self(&html, &_7$$3);
-		if (!(ZEPHIR_IS_EMPTY(&dataVars))) {
-			zephir_concat_self_str(&html, SL("<li><a href=\"#error-tabs-6\">Variables</a></li>"));
+	if (ZEPHIR_IS_TRUE_IDENTICAL(&_6)) {
+		zephir_concat_self_str(&html, SL("\n\n    <div class='error-info'>\n        <div id='tabs'>\n            <ul>\n                <li><a href='#backtrace'>Backtrace</a></li>\n                <li><a href='#request'>Request</a></li>\n                <li><a href='#server'>Server</a></li>\n                <li><a href='#files'>Included Files</a></li>\n                <li><a href='#memory'>Memory</a></li>"));
+		zephir_memory_observe(&_7$$3);
+		zephir_read_property(&_7$$3, this_ptr, ZEND_STRL("data"), PH_NOISY_CC);
+		if (!(ZEPHIR_IS_EMPTY(&_7$$3))) {
+			zephir_concat_self_str(&html, SL("\n                <li><a href='#variables'>Variables</a></li>"));
 		}
-		zephir_concat_self_str(&html, SL("</ul>"));
-		zephir_concat_self_str(&html, SL("<div id=\"error-tabs-1\"><table cellspacing=\"0\" align=\"center\" width=\"100%\">"));
-		ZEPHIR_CALL_METHOD(&_8$$3, exception, "gettrace", NULL, 0);
+		zephir_concat_self_str(&html, SL("\n            </ul>"));
+		ZEPHIR_CALL_METHOD(&_8$$3, this_ptr, "printbacktrace", NULL, 0, exception);
 		zephir_check_call_status();
-		zephir_is_iterable(&_8$$3, 0, "phalcon/Support/Debug.zep", 355);
-		if (Z_TYPE_P(&_8$$3) == IS_ARRAY) {
-			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_8$$3), _11$$3, _12$$3, _9$$3)
-			{
-				ZEPHIR_INIT_NVAR(&n);
-				if (_12$$3 != NULL) { 
-					ZVAL_STR_COPY(&n, _12$$3);
-				} else {
-					ZVAL_LONG(&n, _11$$3);
-				}
-				ZEPHIR_INIT_NVAR(&traceItem);
-				ZVAL_COPY(&traceItem, _9$$3);
-				ZEPHIR_CALL_METHOD(&_13$$5, this_ptr, "showtraceitem", &_14, 0, &n, &traceItem);
-				zephir_check_call_status();
-				zephir_concat_self(&html, &_13$$5);
-			} ZEND_HASH_FOREACH_END();
-		} else {
-			ZEPHIR_CALL_METHOD(NULL, &_8$$3, "rewind", NULL, 0);
-			zephir_check_call_status();
-			while (1) {
-				ZEPHIR_CALL_METHOD(&_10$$3, &_8$$3, "valid", NULL, 0);
-				zephir_check_call_status();
-				if (!zend_is_true(&_10$$3)) {
-					break;
-				}
-				ZEPHIR_CALL_METHOD(&n, &_8$$3, "key", NULL, 0);
-				zephir_check_call_status();
-				ZEPHIR_CALL_METHOD(&traceItem, &_8$$3, "current", NULL, 0);
-				zephir_check_call_status();
-					ZEPHIR_CALL_METHOD(&_15$$6, this_ptr, "showtraceitem", &_14, 0, &n, &traceItem);
-					zephir_check_call_status();
-					zephir_concat_self(&html, &_15$$6);
-				ZEPHIR_CALL_METHOD(NULL, &_8$$3, "next", NULL, 0);
-				zephir_check_call_status();
-			}
-		}
-		ZEPHIR_INIT_NVAR(&traceItem);
-		ZEPHIR_INIT_NVAR(&n);
-		zephir_concat_self_str(&html, SL("</table></div>"));
-		ZEPHIR_INIT_VAR(&_16$$3);
-		ZEPHIR_CONCAT_SSS(&_16$$3, "<div id=\"error-tabs-2\">", "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">", "<tr><th>Key</th><th>Value</th></tr>");
-		zephir_concat_self(&html, &_16$$3);
-		zephir_read_property(&_17$$3, this_ptr, ZEND_STRL("blacklist"), PH_NOISY_CC | PH_READONLY);
-		ZEPHIR_INIT_VAR(&_18$$3);
-		array_init(&_18$$3);
-		ZEPHIR_INIT_VAR(&_19$$3);
-		ZVAL_STRING(&_19$$3, "request");
-		ZEPHIR_CALL_METHOD(&blacklist, this_ptr, "getarrval", NULL, 0, &_17$$3, &_19$$3, &_18$$3);
+		zephir_concat_self(&html, &_8$$3);
+		ZEPHIR_INIT_VAR(&_10$$3);
+		ZVAL_STRING(&_10$$3, "request");
+		ZEPHIR_CALL_METHOD(&_9$$3, this_ptr, "printsuperglobal", NULL, 0, &_REQUEST, &_10$$3);
 		zephir_check_call_status();
-		zephir_is_iterable(&_REQUEST, 0, "phalcon/Support/Debug.zep", 379);
-		if (Z_TYPE_P(&_REQUEST) == IS_ARRAY) {
-			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_REQUEST), _22$$3, _23$$3, _20$$3)
-			{
-				ZEPHIR_INIT_NVAR(&keyRequest);
-				if (_23$$3 != NULL) { 
-					ZVAL_STR_COPY(&keyRequest, _23$$3);
-				} else {
-					ZVAL_LONG(&keyRequest, _22$$3);
-				}
-				ZEPHIR_INIT_NVAR(&value);
-				ZVAL_COPY(&value, _20$$3);
-				ZEPHIR_INIT_NVAR(&_24$$7);
-				zephir_fast_strtolower(&_24$$7, &keyRequest);
-				if (1 != zephir_array_isset(&blacklist, &_24$$7)) {
-					if (Z_TYPE_P(&value) != IS_ARRAY) {
-						ZEPHIR_INIT_NVAR(&_25$$9);
-						ZEPHIR_CONCAT_SVSVS(&_25$$9, "<tr><td class=\"key\">", &keyRequest, "</td><td>", &value, "</td></tr>");
-						zephir_concat_self(&html, &_25$$9);
-					} else {
-						ZEPHIR_CALL_FUNCTION(&_26$$10, "print_r", &_27, 0, &value, &__$true);
-						zephir_check_call_status();
-						ZEPHIR_INIT_NVAR(&_28$$10);
-						ZEPHIR_CONCAT_SVSVS(&_28$$10, "<tr><td class=\"key\">", &keyRequest, "</td><td>", &_26$$10, "</td></tr>");
-						zephir_concat_self(&html, &_28$$10);
-					}
-				}
-			} ZEND_HASH_FOREACH_END();
-		} else {
-			ZEPHIR_CALL_METHOD(NULL, &_REQUEST, "rewind", NULL, 0);
-			zephir_check_call_status();
-			while (1) {
-				ZEPHIR_CALL_METHOD(&_21$$3, &_REQUEST, "valid", NULL, 0);
-				zephir_check_call_status();
-				if (!zend_is_true(&_21$$3)) {
-					break;
-				}
-				ZEPHIR_CALL_METHOD(&keyRequest, &_REQUEST, "key", NULL, 0);
-				zephir_check_call_status();
-				ZEPHIR_CALL_METHOD(&value, &_REQUEST, "current", NULL, 0);
-				zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_29$$11);
-					zephir_fast_strtolower(&_29$$11, &keyRequest);
-					if (1 != zephir_array_isset(&blacklist, &_29$$11)) {
-						if (Z_TYPE_P(&value) != IS_ARRAY) {
-							ZEPHIR_INIT_NVAR(&_30$$13);
-							ZEPHIR_CONCAT_SVSVS(&_30$$13, "<tr><td class=\"key\">", &keyRequest, "</td><td>", &value, "</td></tr>");
-							zephir_concat_self(&html, &_30$$13);
-						} else {
-							ZEPHIR_CALL_FUNCTION(&_31$$14, "print_r", &_27, 0, &value, &__$true);
-							zephir_check_call_status();
-							ZEPHIR_INIT_NVAR(&_32$$14);
-							ZEPHIR_CONCAT_SVSVS(&_32$$14, "<tr><td class=\"key\">", &keyRequest, "</td><td>", &_31$$14, "</td></tr>");
-							zephir_concat_self(&html, &_32$$14);
-						}
-					}
-				ZEPHIR_CALL_METHOD(NULL, &_REQUEST, "next", NULL, 0);
-				zephir_check_call_status();
-			}
-		}
-		ZEPHIR_INIT_NVAR(&value);
-		ZEPHIR_INIT_NVAR(&keyRequest);
-		zephir_concat_self_str(&html, SL("</table></div>"));
-		ZEPHIR_INIT_VAR(&_33$$3);
-		ZEPHIR_CONCAT_SSS(&_33$$3, "<div id=\"error-tabs-3\">", "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">", "<tr><th>Key</th><th>Value</th></tr>");
-		zephir_concat_self(&html, &_33$$3);
-		zephir_read_property(&_34$$3, this_ptr, ZEND_STRL("blacklist"), PH_NOISY_CC | PH_READONLY);
-		ZEPHIR_INIT_NVAR(&_19$$3);
-		array_init(&_19$$3);
-		ZEPHIR_INIT_VAR(&_35$$3);
-		ZVAL_STRING(&_35$$3, "server");
-		ZEPHIR_CALL_METHOD(&blacklist, this_ptr, "getarrval", NULL, 0, &_34$$3, &_35$$3, &_19$$3);
+		zephir_concat_self(&html, &_9$$3);
+		ZEPHIR_INIT_NVAR(&_10$$3);
+		ZVAL_STRING(&_10$$3, "server");
+		ZEPHIR_CALL_METHOD(&_11$$3, this_ptr, "printsuperglobal", NULL, 0, &_SERVER, &_10$$3);
 		zephir_check_call_status();
-		zephir_is_iterable(&_SERVER, 0, "phalcon/Support/Debug.zep", 397);
-		if (Z_TYPE_P(&_SERVER) == IS_ARRAY) {
-			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_SERVER), _38$$3, _39$$3, _36$$3)
-			{
-				ZEPHIR_INIT_NVAR(&keyServer);
-				if (_39$$3 != NULL) { 
-					ZVAL_STR_COPY(&keyServer, _39$$3);
-				} else {
-					ZVAL_LONG(&keyServer, _38$$3);
-				}
-				ZEPHIR_INIT_NVAR(&value);
-				ZVAL_COPY(&value, _36$$3);
-				ZEPHIR_INIT_NVAR(&_40$$15);
-				zephir_fast_strtolower(&_40$$15, &keyServer);
-				if (1 != zephir_array_isset(&blacklist, &_40$$15)) {
-					ZEPHIR_CALL_METHOD(&_41$$16, this_ptr, "getvardump", &_42, 0, &value);
-					zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_43$$16);
-					ZEPHIR_CONCAT_SVSVS(&_43$$16, "<tr><td class=\"key\">", &keyServer, "</td><td>", &_41$$16, "</td></tr>");
-					zephir_concat_self(&html, &_43$$16);
-				}
-			} ZEND_HASH_FOREACH_END();
-		} else {
-			ZEPHIR_CALL_METHOD(NULL, &_SERVER, "rewind", NULL, 0);
-			zephir_check_call_status();
-			while (1) {
-				ZEPHIR_CALL_METHOD(&_37$$3, &_SERVER, "valid", NULL, 0);
-				zephir_check_call_status();
-				if (!zend_is_true(&_37$$3)) {
-					break;
-				}
-				ZEPHIR_CALL_METHOD(&keyServer, &_SERVER, "key", NULL, 0);
-				zephir_check_call_status();
-				ZEPHIR_CALL_METHOD(&value, &_SERVER, "current", NULL, 0);
-				zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_44$$17);
-					zephir_fast_strtolower(&_44$$17, &keyServer);
-					if (1 != zephir_array_isset(&blacklist, &_44$$17)) {
-						ZEPHIR_CALL_METHOD(&_45$$18, this_ptr, "getvardump", &_42, 0, &value);
-						zephir_check_call_status();
-						ZEPHIR_INIT_NVAR(&_46$$18);
-						ZEPHIR_CONCAT_SVSVS(&_46$$18, "<tr><td class=\"key\">", &keyServer, "</td><td>", &_45$$18, "</td></tr>");
-						zephir_concat_self(&html, &_46$$18);
-					}
-				ZEPHIR_CALL_METHOD(NULL, &_SERVER, "next", NULL, 0);
-				zephir_check_call_status();
-			}
-		}
-		ZEPHIR_INIT_NVAR(&value);
-		ZEPHIR_INIT_NVAR(&keyServer);
-		zephir_concat_self_str(&html, SL("</table></div>"));
-		ZEPHIR_INIT_VAR(&_47$$3);
-		ZEPHIR_CONCAT_SSS(&_47$$3, "<div id=\"error-tabs-4\">", "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">", "<tr><th>#</th><th>Path</th></tr>");
-		zephir_concat_self(&html, &_47$$3);
-		ZEPHIR_CALL_FUNCTION(&_48$$3, "get_included_files", NULL, 0);
+		zephir_concat_self(&html, &_11$$3);
+		ZEPHIR_CALL_METHOD(&_12$$3, this_ptr, "printincludedfiles", NULL, 0);
 		zephir_check_call_status();
-		zephir_is_iterable(&_48$$3, 0, "phalcon/Support/Debug.zep", 410);
-		if (Z_TYPE_P(&_48$$3) == IS_ARRAY) {
-			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_48$$3), _51$$3, _52$$3, _49$$3)
-			{
-				ZEPHIR_INIT_NVAR(&keyFile);
-				if (_52$$3 != NULL) { 
-					ZVAL_STR_COPY(&keyFile, _52$$3);
-				} else {
-					ZVAL_LONG(&keyFile, _51$$3);
-				}
-				ZEPHIR_INIT_NVAR(&value);
-				ZVAL_COPY(&value, _49$$3);
-				ZEPHIR_INIT_NVAR(&_53$$19);
-				ZEPHIR_CONCAT_SVSVS(&_53$$19, "<tr><td>", &keyFile, "</th><td>", &value, "</td></tr>");
-				zephir_concat_self(&html, &_53$$19);
-			} ZEND_HASH_FOREACH_END();
-		} else {
-			ZEPHIR_CALL_METHOD(NULL, &_48$$3, "rewind", NULL, 0);
-			zephir_check_call_status();
-			while (1) {
-				ZEPHIR_CALL_METHOD(&_50$$3, &_48$$3, "valid", NULL, 0);
-				zephir_check_call_status();
-				if (!zend_is_true(&_50$$3)) {
-					break;
-				}
-				ZEPHIR_CALL_METHOD(&keyFile, &_48$$3, "key", NULL, 0);
-				zephir_check_call_status();
-				ZEPHIR_CALL_METHOD(&value, &_48$$3, "current", NULL, 0);
-				zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_54$$20);
-					ZEPHIR_CONCAT_SVSVS(&_54$$20, "<tr><td>", &keyFile, "</th><td>", &value, "</td></tr>");
-					zephir_concat_self(&html, &_54$$20);
-				ZEPHIR_CALL_METHOD(NULL, &_48$$3, "next", NULL, 0);
-				zephir_check_call_status();
-			}
-		}
-		ZEPHIR_INIT_NVAR(&value);
-		ZEPHIR_INIT_NVAR(&keyFile);
-		zephir_concat_self_str(&html, SL("</table></div>"));
-		ZEPHIR_CALL_FUNCTION(&_55$$3, "memory_get_usage", NULL, 0, &__$true);
+		zephir_concat_self(&html, &_12$$3);
+		ZEPHIR_CALL_METHOD(&_13$$3, this_ptr, "printmemoryusage", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_INIT_VAR(&_56$$3);
-		ZEPHIR_CONCAT_SSSVSS(&_56$$3, "<div id=\"error-tabs-5\">", "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">", "<tr><th colspan=\"2\">Memory</th></tr><tr><td>Usage</td><td>", &_55$$3, "</td></tr>", "</table></div>");
-		zephir_concat_self(&html, &_56$$3);
-		if (!(ZEPHIR_IS_EMPTY(&dataVars))) {
-			ZEPHIR_INIT_VAR(&_57$$21);
-			ZEPHIR_CONCAT_SSS(&_57$$21, "<div id=\"error-tabs-6\">", "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">", "<tr><th>Key</th><th>Value</th></tr>");
-			zephir_concat_self(&html, &_57$$21);
-			zephir_is_iterable(&dataVars, 0, "phalcon/Support/Debug.zep", 435);
-			if (Z_TYPE_P(&dataVars) == IS_ARRAY) {
-				ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&dataVars), _60$$21, _61$$21, _58$$21)
-				{
-					ZEPHIR_INIT_NVAR(&keyVar);
-					if (_61$$21 != NULL) { 
-						ZVAL_STR_COPY(&keyVar, _61$$21);
-					} else {
-						ZVAL_LONG(&keyVar, _60$$21);
-					}
-					ZEPHIR_INIT_NVAR(&dataVar);
-					ZVAL_COPY(&dataVar, _58$$21);
-					zephir_array_fetch_long(&_63$$22, &dataVar, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 432);
-					ZEPHIR_CALL_METHOD(&_62$$22, this_ptr, "getvardump", &_42, 0, &_63$$22);
-					zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_64$$22);
-					ZEPHIR_CONCAT_SVSVS(&_64$$22, "<tr><td class=\"key\">", &keyVar, "</td><td>", &_62$$22, "</td></tr>");
-					zephir_concat_self(&html, &_64$$22);
-				} ZEND_HASH_FOREACH_END();
-			} else {
-				ZEPHIR_CALL_METHOD(NULL, &dataVars, "rewind", NULL, 0);
-				zephir_check_call_status();
-				while (1) {
-					ZEPHIR_CALL_METHOD(&_59$$21, &dataVars, "valid", NULL, 0);
-					zephir_check_call_status();
-					if (!zend_is_true(&_59$$21)) {
-						break;
-					}
-					ZEPHIR_CALL_METHOD(&keyVar, &dataVars, "key", NULL, 0);
-					zephir_check_call_status();
-					ZEPHIR_CALL_METHOD(&dataVar, &dataVars, "current", NULL, 0);
-					zephir_check_call_status();
-						zephir_array_fetch_long(&_66$$23, &dataVar, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 432);
-						ZEPHIR_CALL_METHOD(&_65$$23, this_ptr, "getvardump", &_42, 0, &_66$$23);
-						zephir_check_call_status();
-						ZEPHIR_INIT_NVAR(&_67$$23);
-						ZEPHIR_CONCAT_SVSVS(&_67$$23, "<tr><td class=\"key\">", &keyVar, "</td><td>", &_65$$23, "</td></tr>");
-						zephir_concat_self(&html, &_67$$23);
-					ZEPHIR_CALL_METHOD(NULL, &dataVars, "next", NULL, 0);
-					zephir_check_call_status();
-				}
-			}
-			ZEPHIR_INIT_NVAR(&dataVar);
-			ZEPHIR_INIT_NVAR(&keyVar);
-			zephir_concat_self_str(&html, SL("</table></div>"));
-		}
-		zephir_concat_self_str(&html, SL("</div>"));
+		zephir_concat_self(&html, &_13$$3);
+		ZEPHIR_CALL_METHOD(&_14$$3, this_ptr, "printextravariables", NULL, 0);
+		zephir_check_call_status();
+		zephir_concat_self(&html, &_14$$3);
+		zephir_concat_self_str(&html, SL("\n            </div>"));
 	}
-	ZEPHIR_CALL_METHOD(&_68, this_ptr, "getjssources", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_15, this_ptr, "getjssources", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(&_69);
-	ZEPHIR_CONCAT_VS(&_69, &_68, "</div></body></html>");
-	zephir_concat_self(&html, &_69);
-	RETURN_CCTOR(&html);
+	ZEPHIR_CONCAT_VVS(return_value, &html, &_15, "\n        </div>\n    </body>\n</html>");
+	RETURN_MM();
 }
 
 /**
@@ -860,8 +571,9 @@ PHP_METHOD(Phalcon_Support_Debug, renderHtml)
 PHP_METHOD(Phalcon_Support_Debug, setBlacklist)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zephir_fcall_cache_entry *_5 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *blacklist_param = NULL, area, result, subArray, value, _0, _1, *_2, _3, _6, *_7, _8, _4$$3, _5$$4, _9$$5, _10$$6;
+	zval *blacklist_param = NULL, area, result, subArray, value, _0, _1, *_2, _3, _9, *_10, _11, _4$$3, _6$$3, _7$$4, _8$$4, _12$$5, _13$$5, _14$$6, _15$$6;
 	zval blacklist;
 	zval *this_ptr = getThis();
 
@@ -873,12 +585,16 @@ PHP_METHOD(Phalcon_Support_Debug, setBlacklist)
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_3);
-	ZVAL_UNDEF(&_6);
-	ZVAL_UNDEF(&_8);
+	ZVAL_UNDEF(&_9);
+	ZVAL_UNDEF(&_11);
 	ZVAL_UNDEF(&_4$$3);
-	ZVAL_UNDEF(&_5$$4);
-	ZVAL_UNDEF(&_9$$5);
-	ZVAL_UNDEF(&_10$$6);
+	ZVAL_UNDEF(&_6$$3);
+	ZVAL_UNDEF(&_7$$4);
+	ZVAL_UNDEF(&_8$$4);
+	ZVAL_UNDEF(&_12$$5);
+	ZVAL_UNDEF(&_13$$5);
+	ZVAL_UNDEF(&_14$$6);
+	ZVAL_UNDEF(&_15$$6);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_ARRAY(blacklist)
 	ZEND_PARSE_PARAMETERS_END();
@@ -896,18 +612,18 @@ PHP_METHOD(Phalcon_Support_Debug, setBlacklist)
 	array_init(&subArray);
 	ZEPHIR_INIT_VAR(&result);
 	array_init(&result);
-	zephir_is_iterable(&area, 0, "phalcon/Support/Debug.zep", 467);
+	zephir_is_iterable(&area, 0, "phalcon/Support/Debug.zep", 354);
 	if (Z_TYPE_P(&area) == IS_ARRAY) {
 		ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&area), _2)
 		{
 			ZEPHIR_INIT_NVAR(&value);
 			ZVAL_COPY(&value, _2);
-			ZEPHIR_INIT_NVAR(&_4$$3);
-			zephir_fast_strtolower(&_4$$3, &value);
+			ZEPHIR_CALL_FUNCTION(&_4$$3, "mb_strtolower", &_5, 10, &value);
+			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(&value, &_4$$3);
-			ZEPHIR_INIT_NVAR(&_4$$3);
-			ZVAL_LONG(&_4$$3, 1);
-			zephir_array_update_zval(&subArray, &value, &_4$$3, PH_COPY | PH_SEPARATE);
+			ZEPHIR_INIT_NVAR(&_6$$3);
+			ZVAL_LONG(&_6$$3, 1);
+			zephir_array_update_zval(&subArray, &value, &_6$$3, PH_COPY | PH_SEPARATE);
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		ZEPHIR_CALL_METHOD(NULL, &area, "rewind", NULL, 0);
@@ -920,12 +636,12 @@ PHP_METHOD(Phalcon_Support_Debug, setBlacklist)
 			}
 			ZEPHIR_CALL_METHOD(&value, &area, "current", NULL, 0);
 			zephir_check_call_status();
-				ZEPHIR_INIT_NVAR(&_5$$4);
-				zephir_fast_strtolower(&_5$$4, &value);
-				ZEPHIR_CPY_WRT(&value, &_5$$4);
-				ZEPHIR_INIT_NVAR(&_5$$4);
-				ZVAL_LONG(&_5$$4, 1);
-				zephir_array_update_zval(&subArray, &value, &_5$$4, PH_COPY | PH_SEPARATE);
+				ZEPHIR_CALL_FUNCTION(&_7$$4, "mb_strtolower", &_5, 10, &value);
+				zephir_check_call_status();
+				ZEPHIR_CPY_WRT(&value, &_7$$4);
+				ZEPHIR_INIT_NVAR(&_8$$4);
+				ZVAL_LONG(&_8$$4, 1);
+				zephir_array_update_zval(&subArray, &value, &_8$$4, PH_COPY | PH_SEPARATE);
 			ZEPHIR_CALL_METHOD(NULL, &area, "next", NULL, 0);
 			zephir_check_call_status();
 		}
@@ -934,42 +650,42 @@ PHP_METHOD(Phalcon_Support_Debug, setBlacklist)
 	zephir_array_update_string(&result, SL("request"), &subArray, PH_COPY | PH_SEPARATE);
 	ZEPHIR_INIT_NVAR(&_1);
 	array_init(&_1);
-	ZEPHIR_INIT_VAR(&_6);
-	ZVAL_STRING(&_6, "server");
-	ZEPHIR_CALL_METHOD(&area, this_ptr, "getarrval", NULL, 0, &blacklist, &_6, &_1);
+	ZEPHIR_INIT_VAR(&_9);
+	ZVAL_STRING(&_9, "server");
+	ZEPHIR_CALL_METHOD(&area, this_ptr, "getarrval", NULL, 0, &blacklist, &_9, &_1);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(&subArray);
 	array_init(&subArray);
-	zephir_is_iterable(&area, 0, "phalcon/Support/Debug.zep", 476);
+	zephir_is_iterable(&area, 0, "phalcon/Support/Debug.zep", 363);
 	if (Z_TYPE_P(&area) == IS_ARRAY) {
-		ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&area), _7)
+		ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&area), _10)
 		{
 			ZEPHIR_INIT_NVAR(&value);
-			ZVAL_COPY(&value, _7);
-			ZEPHIR_INIT_NVAR(&_9$$5);
-			zephir_fast_strtolower(&_9$$5, &value);
-			ZEPHIR_CPY_WRT(&value, &_9$$5);
-			ZEPHIR_INIT_NVAR(&_9$$5);
-			ZVAL_LONG(&_9$$5, 1);
-			zephir_array_update_zval(&subArray, &value, &_9$$5, PH_COPY | PH_SEPARATE);
+			ZVAL_COPY(&value, _10);
+			ZEPHIR_CALL_FUNCTION(&_12$$5, "mb_strtolower", &_5, 10, &value);
+			zephir_check_call_status();
+			ZEPHIR_CPY_WRT(&value, &_12$$5);
+			ZEPHIR_INIT_NVAR(&_13$$5);
+			ZVAL_LONG(&_13$$5, 1);
+			zephir_array_update_zval(&subArray, &value, &_13$$5, PH_COPY | PH_SEPARATE);
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		ZEPHIR_CALL_METHOD(NULL, &area, "rewind", NULL, 0);
 		zephir_check_call_status();
 		while (1) {
-			ZEPHIR_CALL_METHOD(&_8, &area, "valid", NULL, 0);
+			ZEPHIR_CALL_METHOD(&_11, &area, "valid", NULL, 0);
 			zephir_check_call_status();
-			if (!zend_is_true(&_8)) {
+			if (!zend_is_true(&_11)) {
 				break;
 			}
 			ZEPHIR_CALL_METHOD(&value, &area, "current", NULL, 0);
 			zephir_check_call_status();
-				ZEPHIR_INIT_NVAR(&_10$$6);
-				zephir_fast_strtolower(&_10$$6, &value);
-				ZEPHIR_CPY_WRT(&value, &_10$$6);
-				ZEPHIR_INIT_NVAR(&_10$$6);
-				ZVAL_LONG(&_10$$6, 1);
-				zephir_array_update_zval(&subArray, &value, &_10$$6, PH_COPY | PH_SEPARATE);
+				ZEPHIR_CALL_FUNCTION(&_14$$6, "mb_strtolower", &_5, 10, &value);
+				zephir_check_call_status();
+				ZEPHIR_CPY_WRT(&value, &_14$$6);
+				ZEPHIR_INIT_NVAR(&_15$$6);
+				ZVAL_LONG(&_15$$6, 1);
+				zephir_array_update_zval(&subArray, &value, &_15$$6, PH_COPY | PH_SEPARATE);
 			ZEPHIR_CALL_METHOD(NULL, &area, "next", NULL, 0);
 			zephir_check_call_status();
 		}
@@ -1063,29 +779,17 @@ PHP_METHOD(Phalcon_Support_Debug, setShowFiles)
  */
 PHP_METHOD(Phalcon_Support_Debug, setUri)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *uri_param = NULL;
-	zval uri;
+	zval uri_zv;
+	zend_string *uri = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&uri);
+	ZVAL_UNDEF(&uri_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(uri)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &uri_param);
-	if (UNEXPECTED(Z_TYPE_P(uri_param) != IS_STRING && Z_TYPE_P(uri_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'uri' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(uri_param) == IS_STRING)) {
-		zephir_get_strval(&uri, uri_param);
-	} else {
-		ZEPHIR_INIT_VAR(&uri);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("uri"), &uri);
-	RETURN_THIS();
+	ZVAL_STR(&uri_zv, uri);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("uri"), &uri_zv);
+	RETURN_THISW();
 }
 
 /**
@@ -1097,10 +801,10 @@ PHP_METHOD(Phalcon_Support_Debug, escapeString)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *value_param = NULL, _0, _1, _2, _3, _4;
-	zval value;
+	zval value_zv, _0, _1, _2, _3, _4;
+	zend_string *value = NULL;
 
-	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&value_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -1111,14 +815,13 @@ PHP_METHOD(Phalcon_Support_Debug, escapeString)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &value_param);
-	zephir_get_strval(&value, value_param);
+	ZVAL_STR_COPY(&value_zv, value);
 	ZEPHIR_INIT_VAR(&_0);
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_STRING(&_1, "\n");
 	ZEPHIR_INIT_VAR(&_2);
 	ZVAL_STRING(&_2, "\\n");
-	zephir_fast_str_replace(&_0, &_1, &_2, &value);
+	zephir_fast_str_replace(&_0, &_1, &_2, &value_zv);
 	ZVAL_LONG(&_3, 2);
 	ZEPHIR_INIT_VAR(&_4);
 	ZVAL_STRING(&_4, "utf-8");
@@ -1191,7 +894,7 @@ PHP_METHOD(Phalcon_Support_Debug, getArrayDump)
 	}
 	ZEPHIR_INIT_VAR(&dump);
 	array_init(&dump);
-	zephir_is_iterable(&argument, 0, "phalcon/Support/Debug.zep", 587);
+	zephir_is_iterable(&argument, 0, "phalcon/Support/Debug.zep", 474);
 	if (Z_TYPE_P(&argument) == IS_ARRAY) {
 		ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&argument), _3, _4, _1)
 		{
@@ -1228,7 +931,7 @@ PHP_METHOD(Phalcon_Support_Debug, getArrayDump)
 			}
 			ZEPHIR_INIT_NVAR(&_10$$5);
 			ZEPHIR_CONCAT_SVSV(&_10$$5, "[", &k, "] =&gt; ", &varDump);
-			zephir_array_append(&dump, &_10$$5, PH_SEPARATE, "phalcon/Support/Debug.zep", 584);
+			zephir_array_append(&dump, &_10$$5, PH_SEPARATE, "phalcon/Support/Debug.zep", 471);
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		ZEPHIR_CALL_METHOD(NULL, &argument, "rewind", NULL, 0);
@@ -1268,7 +971,7 @@ PHP_METHOD(Phalcon_Support_Debug, getArrayDump)
 				}
 				ZEPHIR_INIT_NVAR(&_14$$12);
 				ZEPHIR_CONCAT_SVSV(&_14$$12, "[", &k, "] =&gt; ", &varDump);
-				zephir_array_append(&dump, &_14$$12, PH_SEPARATE, "phalcon/Support/Debug.zep", 584);
+				zephir_array_append(&dump, &_14$$12, PH_SEPARATE, "phalcon/Support/Debug.zep", 471);
 			ZEPHIR_CALL_METHOD(NULL, &argument, "next", NULL, 0);
 			zephir_check_call_status();
 		}
@@ -1346,7 +1049,7 @@ PHP_METHOD(Phalcon_Support_Debug, getVarDump)
 /**
  * Shows a backtrace item
  *
- * @param int   $n
+ * @param int   $number
  * @param array $trace
  *
  * @return string
@@ -1354,13 +1057,13 @@ PHP_METHOD(Phalcon_Support_Debug, getVarDump)
  */
 PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 {
-	zend_bool _45$$25;
-	zval _1, _31$$17;
+	zend_bool _31$$25, _40$$25;
+	zval _24$$17;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_24 = NULL, *_52 = NULL;
+	zephir_fcall_cache_entry *_17 = NULL, *_47 = NULL;
 	zval trace;
-	zval *n_param = NULL, *trace_param = NULL, className, prepareInternalClass, preparedFunctionName, html, classReflection, prepareUriClass, functionName, functionReflection, traceArgs, arguments, argument, filez, line, showFiles, lines, numberLines, showFileFragment, firstLine, lastLine, linePosition, currentLine, classNameWithLink, functionNameWithLink, parts, _0, _20, _2$$3, _3$$3, _4$$3, _5$$3, _15$$3, _16$$3, _6$$4, _7$$4, _8$$4, _9$$4, _10$$4, _11$$5, _12$$6, _13$$6, _14$$6, _17$$10, _18$$11, _19$$11, *_21$$14, _22$$14, _28$$14, _29$$14, _23$$15, _25$$15, _26$$16, _27$$16, _30$$17, _32$$17, _33$$17, _34$$18, _35$$19, _36$$24, _37$$27, _38$$27, _39$$27, _40$$27, _41$$27, _42$$28, _43$$28, _44$$28, _46$$30, _47$$30, _48$$30, _49$$30, _50$$30, _51$$30;
-	zend_long n, ZEPHIR_LAST_CALL_STATUS, i = 0, beforeLine$$19, afterLine$$19;
+	zval *number_param = NULL, *trace_param = NULL, className, prepareInternalClass, preparedFunctionName, html, classReflection, prepareUriClass, functionName, functionReflection, traceArgs, arguments, argument, file, line, lines, numberLines, firstLine, lastLine, linePosition, currentLine, classNameWithLink, functionNameWithLink, parts, _13, _0$$3, _1$$3, _8$$3, _9$$3, _2$$4, _3$$4, _4$$5, _5$$6, _6$$6, _7$$6, _10$$10, _11$$11, _12$$11, *_14$$14, _15$$14, _21$$14, _22$$14, _16$$15, _18$$15, _19$$16, _20$$16, _23$$17, _25$$17, _26$$17, _27$$18, _28$$19, _29$$24, _30$$25, _32$$26, _33$$26, _34$$26, _35$$26, _36$$26, _37$$27, _38$$27, _39$$27, _41$$29, _42$$29, _43$$29, _44$$29, _45$$29, _46$$29;
+	zend_long number, ZEPHIR_LAST_CALL_STATUS, i = 0, beforeLine$$19, afterLine$$19;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&className);
@@ -1374,12 +1077,10 @@ PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 	ZVAL_UNDEF(&traceArgs);
 	ZVAL_UNDEF(&arguments);
 	ZVAL_UNDEF(&argument);
-	ZVAL_UNDEF(&filez);
+	ZVAL_UNDEF(&file);
 	ZVAL_UNDEF(&line);
-	ZVAL_UNDEF(&showFiles);
 	ZVAL_UNDEF(&lines);
 	ZVAL_UNDEF(&numberLines);
-	ZVAL_UNDEF(&showFileFragment);
 	ZVAL_UNDEF(&firstLine);
 	ZVAL_UNDEF(&lastLine);
 	ZVAL_UNDEF(&linePosition);
@@ -1387,140 +1088,124 @@ PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 	ZVAL_UNDEF(&classNameWithLink);
 	ZVAL_UNDEF(&functionNameWithLink);
 	ZVAL_UNDEF(&parts);
-	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_20);
-	ZVAL_UNDEF(&_2$$3);
-	ZVAL_UNDEF(&_3$$3);
-	ZVAL_UNDEF(&_4$$3);
-	ZVAL_UNDEF(&_5$$3);
-	ZVAL_UNDEF(&_15$$3);
-	ZVAL_UNDEF(&_16$$3);
-	ZVAL_UNDEF(&_6$$4);
-	ZVAL_UNDEF(&_7$$4);
-	ZVAL_UNDEF(&_8$$4);
-	ZVAL_UNDEF(&_9$$4);
-	ZVAL_UNDEF(&_10$$4);
-	ZVAL_UNDEF(&_11$$5);
-	ZVAL_UNDEF(&_12$$6);
-	ZVAL_UNDEF(&_13$$6);
-	ZVAL_UNDEF(&_14$$6);
-	ZVAL_UNDEF(&_17$$10);
-	ZVAL_UNDEF(&_18$$11);
-	ZVAL_UNDEF(&_19$$11);
+	ZVAL_UNDEF(&_13);
+	ZVAL_UNDEF(&_0$$3);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_8$$3);
+	ZVAL_UNDEF(&_9$$3);
+	ZVAL_UNDEF(&_2$$4);
+	ZVAL_UNDEF(&_3$$4);
+	ZVAL_UNDEF(&_4$$5);
+	ZVAL_UNDEF(&_5$$6);
+	ZVAL_UNDEF(&_6$$6);
+	ZVAL_UNDEF(&_7$$6);
+	ZVAL_UNDEF(&_10$$10);
+	ZVAL_UNDEF(&_11$$11);
+	ZVAL_UNDEF(&_12$$11);
+	ZVAL_UNDEF(&_15$$14);
+	ZVAL_UNDEF(&_21$$14);
 	ZVAL_UNDEF(&_22$$14);
-	ZVAL_UNDEF(&_28$$14);
-	ZVAL_UNDEF(&_29$$14);
-	ZVAL_UNDEF(&_23$$15);
-	ZVAL_UNDEF(&_25$$15);
-	ZVAL_UNDEF(&_26$$16);
-	ZVAL_UNDEF(&_27$$16);
-	ZVAL_UNDEF(&_30$$17);
-	ZVAL_UNDEF(&_32$$17);
-	ZVAL_UNDEF(&_33$$17);
-	ZVAL_UNDEF(&_34$$18);
-	ZVAL_UNDEF(&_35$$19);
-	ZVAL_UNDEF(&_36$$24);
+	ZVAL_UNDEF(&_16$$15);
+	ZVAL_UNDEF(&_18$$15);
+	ZVAL_UNDEF(&_19$$16);
+	ZVAL_UNDEF(&_20$$16);
+	ZVAL_UNDEF(&_23$$17);
+	ZVAL_UNDEF(&_25$$17);
+	ZVAL_UNDEF(&_26$$17);
+	ZVAL_UNDEF(&_27$$18);
+	ZVAL_UNDEF(&_28$$19);
+	ZVAL_UNDEF(&_29$$24);
+	ZVAL_UNDEF(&_30$$25);
+	ZVAL_UNDEF(&_32$$26);
+	ZVAL_UNDEF(&_33$$26);
+	ZVAL_UNDEF(&_34$$26);
+	ZVAL_UNDEF(&_35$$26);
+	ZVAL_UNDEF(&_36$$26);
 	ZVAL_UNDEF(&_37$$27);
 	ZVAL_UNDEF(&_38$$27);
 	ZVAL_UNDEF(&_39$$27);
-	ZVAL_UNDEF(&_40$$27);
-	ZVAL_UNDEF(&_41$$27);
-	ZVAL_UNDEF(&_42$$28);
-	ZVAL_UNDEF(&_43$$28);
-	ZVAL_UNDEF(&_44$$28);
-	ZVAL_UNDEF(&_46$$30);
-	ZVAL_UNDEF(&_47$$30);
-	ZVAL_UNDEF(&_48$$30);
-	ZVAL_UNDEF(&_49$$30);
-	ZVAL_UNDEF(&_50$$30);
-	ZVAL_UNDEF(&_51$$30);
+	ZVAL_UNDEF(&_41$$29);
+	ZVAL_UNDEF(&_42$$29);
+	ZVAL_UNDEF(&_43$$29);
+	ZVAL_UNDEF(&_44$$29);
+	ZVAL_UNDEF(&_45$$29);
+	ZVAL_UNDEF(&_46$$29);
 	ZVAL_UNDEF(&trace);
-	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_31$$17);
+	ZVAL_UNDEF(&_24$$17);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_LONG(n)
+		Z_PARAM_LONG(number)
 		Z_PARAM_ARRAY(trace)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &n_param, &trace_param);
+	zephir_fetch_params(1, 2, 0, &number_param, &trace_param);
 	ZEPHIR_OBS_COPY_OR_DUP(&trace, trace_param);
-	ZEPHIR_INIT_VAR(&_0);
-	ZVAL_LONG(&_0, n);
-	ZEPHIR_INIT_VAR(&_1);
-	ZEPHIR_CONCAT_SVS(&_1, "<tr><td align=\"right\" valign=\"top\" class=\"error-number\">#", &_0, "</td><td>");
-	ZEPHIR_CPY_WRT(&html, &_1);
+	ZEPHIR_INIT_VAR(&html);
+	ZVAL_STRING(&html, "\n                    <tr>\n                        <td style='text-align: right; vertical-align: top'\n                            class='error-number'>\n                            #\n                        </td>\n                        <td>");
 	zephir_memory_observe(&className);
 	if (zephir_array_isset_string_fetch(&className, &trace, SL("class"), 0)) {
-		ZEPHIR_INIT_VAR(&_2$$3);
-		ZEPHIR_INIT_VAR(&_3$$3);
-		ZVAL_STRING(&_3$$3, "/^Phalcon/");
-		ZEPHIR_INIT_VAR(&_4$$3);
-		ZEPHIR_INIT_VAR(&_5$$3);
-		ZVAL_STRING(&_5$$3, "/^Phalcon/");
-		zephir_preg_match(&_4$$3, &_5$$3, &className, &_2$$3, 0, 0 , 0 );
-		if (zephir_is_true(&_4$$3)) {
+		ZEPHIR_INIT_VAR(&_0$$3);
+		ZVAL_STRING(&_0$$3, "Phalcon");
+		ZEPHIR_CALL_FUNCTION(&_1$$3, "str_starts_with", NULL, 334, &className, &_0$$3);
+		zephir_check_call_status();
+		if (zephir_is_true(&_1$$3)) {
 			ZEPHIR_INIT_VAR(&parts);
 			zephir_fast_explode_str(&parts, SL("\\"), &className, LONG_MAX);
-			zephir_array_fetch_long(&_6$$4, &parts, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 700);
-			zephir_array_fetch_long(&_7$$4, &parts, 1, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 700);
+			zephir_array_fetch_long(&_2$$4, &parts, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 585);
+			zephir_array_fetch_long(&_3$$4, &parts, 1, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 585);
 			ZEPHIR_INIT_VAR(&prepareUriClass);
-			ZEPHIR_CONCAT_VSV(&prepareUriClass, &_6$$4, "_", &_7$$4);
-			zephir_read_property(&_8$$4, this_ptr, ZEND_STRL("version"), PH_NOISY_CC | PH_READONLY);
-			ZVAL_LONG(&_10$$4, 0);
-			ZEPHIR_CALL_METHOD(&_9$$4, &_8$$4, "getpart", NULL, 0, &_10$$4);
-			zephir_check_call_status();
+			ZEPHIR_CONCAT_VSV(&prepareUriClass, &_2$$4, "_", &_3$$4);
 			ZEPHIR_INIT_VAR(&classNameWithLink);
-			ZEPHIR_CONCAT_SVSVSVS(&classNameWithLink, "<a target=\"_new\" href=\"https://docs.phalcon.io/", &_9$$4, ".0/en/api/", &prepareUriClass, "\">", &className, "</a>");
+			ZEPHIR_CONCAT_SSVSVS(&classNameWithLink, "<a target='_new' ", "href='https://docs.phalcon.io/5.0/en/api/", &prepareUriClass, "'>", &className, "</a>");
 		} else {
 			ZEPHIR_INIT_VAR(&classReflection);
 			object_init_ex(&classReflection, zephir_get_internal_ce(SL("reflectionclass")));
-			ZEPHIR_CALL_METHOD(NULL, &classReflection, "__construct", NULL, 155, &className);
+			ZEPHIR_CALL_METHOD(NULL, &classReflection, "__construct", NULL, 154, &className);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(&_11$$5, &classReflection, "isinternal", NULL, 0);
+			ZEPHIR_CALL_METHOD(&_4$$5, &classReflection, "isinternal", NULL, 0);
 			zephir_check_call_status();
-			if (zephir_is_true(&_11$$5)) {
-				ZEPHIR_INIT_VAR(&_12$$6);
-				zephir_fast_strtolower(&_12$$6, &className);
-				ZEPHIR_INIT_VAR(&_13$$6);
-				ZVAL_STRING(&_13$$6, "_");
-				ZEPHIR_INIT_VAR(&_14$$6);
-				ZVAL_STRING(&_14$$6, "-");
+			if (ZEPHIR_IS_TRUE_IDENTICAL(&_4$$5)) {
+				ZEPHIR_CALL_FUNCTION(&_5$$6, "mb_strtolower", NULL, 10, &className);
+				zephir_check_call_status();
+				ZEPHIR_INIT_VAR(&_6$$6);
+				ZVAL_STRING(&_6$$6, "_");
+				ZEPHIR_INIT_VAR(&_7$$6);
+				ZVAL_STRING(&_7$$6, "-");
 				ZEPHIR_INIT_VAR(&prepareInternalClass);
-				zephir_fast_str_replace(&prepareInternalClass, &_13$$6, &_14$$6, &_12$$6);
+				zephir_fast_str_replace(&prepareInternalClass, &_6$$6, &_7$$6, &_5$$6);
 				ZEPHIR_INIT_NVAR(&classNameWithLink);
-				ZEPHIR_CONCAT_SVSVS(&classNameWithLink, "<a target=\"_new\" href=\"https://secure.php.net/manual/en/class.", &prepareInternalClass, ".php\">", &className, "</a>");
+				ZEPHIR_CONCAT_SSVSVS(&classNameWithLink, "<a target='_new' ", "href='https://secure.php.net/manual/en/class.", &prepareInternalClass, ".php'>", &className, "</a>");
 			} else {
 				ZEPHIR_CPY_WRT(&classNameWithLink, &className);
 			}
 		}
-		ZEPHIR_INIT_VAR(&_15$$3);
-		ZEPHIR_CONCAT_SVS(&_15$$3, "<span class=\"error-class\">", &classNameWithLink, "</span>");
-		zephir_concat_self(&html, &_15$$3);
-		zephir_array_fetch_string(&_16$$3, &trace, SL("type"), PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 739);
-		zephir_concat_self(&html, &_16$$3);
+		ZEPHIR_INIT_VAR(&_8$$3);
+		ZEPHIR_CONCAT_SVS(&_8$$3, "\n                        <span class='error-class'>\n                            ", &classNameWithLink, "\n                        </span>");
+		zephir_concat_self(&html, &_8$$3);
+		zephir_array_fetch_string(&_9$$3, &trace, SL("type"), PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 622);
+		zephir_concat_self(&html, &_9$$3);
 	}
 	zephir_memory_observe(&functionName);
-	zephir_array_fetch_string(&functionName, &trace, SL("function"), PH_NOISY, "phalcon/Support/Debug.zep", 745);
+	zephir_array_fetch_string(&functionName, &trace, SL("function"), PH_NOISY, "phalcon/Support/Debug.zep", 628);
 	if (zephir_array_isset_string(&trace, SL("class"))) {
 		ZEPHIR_CPY_WRT(&functionNameWithLink, &functionName);
 	} else {
-		if ((zephir_function_exists(&functionName) == SUCCESS)) {
+		if (1 == (zephir_function_exists(&functionName) == SUCCESS)) {
 			ZEPHIR_INIT_VAR(&functionReflection);
 			object_init_ex(&functionReflection, zephir_get_internal_ce(SL("reflectionfunction")));
-			ZEPHIR_CALL_METHOD(NULL, &functionReflection, "__construct", NULL, 152, &functionName);
+			ZEPHIR_CALL_METHOD(NULL, &functionReflection, "__construct", NULL, 151, &functionName);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(&_17$$10, &functionReflection, "isinternal", NULL, 0);
+			ZEPHIR_CALL_METHOD(&_10$$10, &functionReflection, "isinternal", NULL, 0);
 			zephir_check_call_status();
-			if (zephir_is_true(&_17$$10)) {
-				ZEPHIR_INIT_VAR(&_18$$11);
-				ZVAL_STRING(&_18$$11, "_");
-				ZEPHIR_INIT_VAR(&_19$$11);
-				ZVAL_STRING(&_19$$11, "-");
+			if (ZEPHIR_IS_TRUE_IDENTICAL(&_10$$10)) {
+				ZEPHIR_INIT_VAR(&_11$$11);
+				ZVAL_STRING(&_11$$11, "_");
+				ZEPHIR_INIT_VAR(&_12$$11);
+				ZVAL_STRING(&_12$$11, "-");
 				ZEPHIR_INIT_VAR(&preparedFunctionName);
-				zephir_fast_str_replace(&preparedFunctionName, &_18$$11, &_19$$11, &functionName);
+				zephir_fast_str_replace(&preparedFunctionName, &_11$$11, &_12$$11, &functionName);
 				ZEPHIR_INIT_NVAR(&functionNameWithLink);
-				ZEPHIR_CONCAT_SVSVS(&functionNameWithLink, "<a target=\"_new\" href=\"https://secure.php.net/manual/en/function.", &preparedFunctionName, ".php\">", &functionName, "</a>");
+				ZEPHIR_CONCAT_SSVSVS(&functionNameWithLink, "<a target='_new' ", "href='https://secure.php.net/manual/en/function.", &preparedFunctionName, ".php'>", &functionName, "</a>");
 			} else {
 				ZEPHIR_CPY_WRT(&functionNameWithLink, &functionName);
 			}
@@ -1528,71 +1213,70 @@ PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 			ZEPHIR_CPY_WRT(&functionNameWithLink, &functionName);
 		}
 	}
-	ZEPHIR_INIT_VAR(&_20);
-	ZEPHIR_CONCAT_SVS(&_20, "<span class=\"error-function\">", &functionNameWithLink, "</span>");
-	zephir_concat_self(&html, &_20);
+	ZEPHIR_INIT_VAR(&_13);
+	ZEPHIR_CONCAT_SVS(&_13, "\n                        <span class='error-function'>\n                            ", &functionNameWithLink, "\n                        </span>");
+	zephir_concat_self(&html, &_13);
 	zephir_memory_observe(&traceArgs);
 	if (zephir_array_isset_string_fetch(&traceArgs, &trace, SL("args"), 0)) {
 		ZEPHIR_INIT_VAR(&arguments);
 		array_init(&arguments);
-		zephir_is_iterable(&traceArgs, 0, "phalcon/Support/Debug.zep", 800);
+		zephir_is_iterable(&traceArgs, 0, "phalcon/Support/Debug.zep", 682);
 		if (Z_TYPE_P(&traceArgs) == IS_ARRAY) {
-			ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&traceArgs), _21$$14)
+			ZEND_HASH_FOREACH_VAL(Z_ARRVAL_P(&traceArgs), _14$$14)
 			{
 				ZEPHIR_INIT_NVAR(&argument);
-				ZVAL_COPY(&argument, _21$$14);
-				ZEPHIR_CALL_METHOD(&_23$$15, this_ptr, "getvardump", &_24, 0, &argument);
+				ZVAL_COPY(&argument, _14$$14);
+				ZEPHIR_CALL_METHOD(&_16$$15, this_ptr, "getvardump", &_17, 0, &argument);
 				zephir_check_call_status();
-				ZEPHIR_INIT_NVAR(&_25$$15);
-				ZEPHIR_CONCAT_SVS(&_25$$15, "<span class=\"error-parameter\">", &_23$$15, "</span>");
-				zephir_array_append(&arguments, &_25$$15, PH_SEPARATE, "phalcon/Support/Debug.zep", 794);
+				ZEPHIR_INIT_NVAR(&_18$$15);
+				ZEPHIR_CONCAT_SVS(&_18$$15, "\n                        <span class='error-parameter'>\n                            ", &_16$$15, "\n                        </span>");
+				zephir_array_append(&arguments, &_18$$15, PH_SEPARATE, "phalcon/Support/Debug.zep", 676);
 			} ZEND_HASH_FOREACH_END();
 		} else {
 			ZEPHIR_CALL_METHOD(NULL, &traceArgs, "rewind", NULL, 0);
 			zephir_check_call_status();
 			while (1) {
-				ZEPHIR_CALL_METHOD(&_22$$14, &traceArgs, "valid", NULL, 0);
+				ZEPHIR_CALL_METHOD(&_15$$14, &traceArgs, "valid", NULL, 0);
 				zephir_check_call_status();
-				if (!zend_is_true(&_22$$14)) {
+				if (!zend_is_true(&_15$$14)) {
 					break;
 				}
 				ZEPHIR_CALL_METHOD(&argument, &traceArgs, "current", NULL, 0);
 				zephir_check_call_status();
-					ZEPHIR_CALL_METHOD(&_26$$16, this_ptr, "getvardump", &_24, 0, &argument);
+					ZEPHIR_CALL_METHOD(&_19$$16, this_ptr, "getvardump", &_17, 0, &argument);
 					zephir_check_call_status();
-					ZEPHIR_INIT_NVAR(&_27$$16);
-					ZEPHIR_CONCAT_SVS(&_27$$16, "<span class=\"error-parameter\">", &_26$$16, "</span>");
-					zephir_array_append(&arguments, &_27$$16, PH_SEPARATE, "phalcon/Support/Debug.zep", 794);
+					ZEPHIR_INIT_NVAR(&_20$$16);
+					ZEPHIR_CONCAT_SVS(&_20$$16, "\n                        <span class='error-parameter'>\n                            ", &_19$$16, "\n                        </span>");
+					zephir_array_append(&arguments, &_20$$16, PH_SEPARATE, "phalcon/Support/Debug.zep", 676);
 				ZEPHIR_CALL_METHOD(NULL, &traceArgs, "next", NULL, 0);
 				zephir_check_call_status();
 			}
 		}
 		ZEPHIR_INIT_NVAR(&argument);
-		ZEPHIR_INIT_VAR(&_28$$14);
-		zephir_fast_join_str(&_28$$14, SL(", "), &arguments);
-		ZEPHIR_INIT_VAR(&_29$$14);
-		ZEPHIR_CONCAT_SVS(&_29$$14, "(", &_28$$14, ")");
-		zephir_concat_self(&html, &_29$$14);
+		ZEPHIR_INIT_VAR(&_21$$14);
+		zephir_fast_join_str(&_21$$14, SL(", "), &arguments);
+		ZEPHIR_INIT_VAR(&_22$$14);
+		ZEPHIR_CONCAT_SVS(&_22$$14, "(", &_21$$14, ")");
+		zephir_concat_self(&html, &_22$$14);
 	}
-	zephir_memory_observe(&filez);
-	if (zephir_array_isset_string_fetch(&filez, &trace, SL("file"), 0)) {
-		zephir_memory_observe(&_30$$17);
-		zephir_array_fetch_string(&_30$$17, &trace, SL("line"), PH_NOISY, "phalcon/Support/Debug.zep", 808);
-		zephir_cast_to_string(&_31$$17, &_30$$17);
-		ZEPHIR_CPY_WRT(&line, &_31$$17);
-		ZEPHIR_INIT_VAR(&_32$$17);
-		ZEPHIR_CONCAT_SVSVS(&_32$$17, "<br/><div class=\"error-file\">", &filez, " (", &line, ")</div>");
-		zephir_concat_self(&html, &_32$$17);
-		zephir_read_property(&_33$$17, this_ptr, ZEND_STRL("showFiles"), PH_NOISY_CC | PH_READONLY);
-		ZEPHIR_CPY_WRT(&showFiles, &_33$$17);
-		if (zephir_is_true(&showFiles)) {
-			ZEPHIR_CALL_FUNCTION(&lines, "file", NULL, 0, &filez);
+	if (zephir_array_isset_string(&trace, SL("file"))) {
+		zephir_memory_observe(&file);
+		zephir_array_fetch_string(&file, &trace, SL("file"), PH_NOISY, "phalcon/Support/Debug.zep", 690);
+		zephir_memory_observe(&_23$$17);
+		zephir_array_fetch_string(&_23$$17, &trace, SL("line"), PH_NOISY, "phalcon/Support/Debug.zep", 691);
+		zephir_cast_to_string(&_24$$17, &_23$$17);
+		ZEPHIR_CPY_WRT(&line, &_24$$17);
+		ZEPHIR_INIT_VAR(&_25$$17);
+		ZEPHIR_CONCAT_SVSVS(&_25$$17, "\n                        <br/>\n                        <div class='error-file'>\n                            ", &file, " (", &line, ")\n                        </div>");
+		zephir_concat_self(&html, &_25$$17);
+		zephir_read_property(&_26$$17, this_ptr, ZEND_STRL("showFiles"), PH_NOISY_CC | PH_READONLY);
+		if (ZEPHIR_IS_TRUE_IDENTICAL(&_26$$17)) {
+			ZEPHIR_CALL_FUNCTION(&lines, "file", NULL, 0, &file);
 			zephir_check_call_status();
 			ZEPHIR_INIT_VAR(&numberLines);
 			ZVAL_LONG(&numberLines, zephir_fast_count_int(&lines));
-			zephir_read_property(&_34$$18, this_ptr, ZEND_STRL("showFileFragment"), PH_NOISY_CC | PH_READONLY);
-			ZEPHIR_CPY_WRT(&showFileFragment, &_34$$18);
-			if (zephir_is_true(&showFileFragment)) {
+			zephir_read_property(&_27$$18, this_ptr, ZEND_STRL("showFileFragment"), PH_NOISY_CC | PH_READONLY);
+			if (ZEPHIR_IS_TRUE_IDENTICAL(&_27$$18)) {
 				beforeLine$$19 = (zephir_get_numberval(&line) - 7);
 				if (beforeLine$$19 < 1) {
 					ZEPHIR_INIT_VAR(&firstLine);
@@ -1608,16 +1292,16 @@ PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 					ZEPHIR_INIT_NVAR(&lastLine);
 					ZVAL_LONG(&lastLine, afterLine$$19);
 				}
-				ZEPHIR_INIT_VAR(&_35$$19);
-				ZEPHIR_CONCAT_SVSVSVS(&_35$$19, "<pre class=\"prettyprint highlight:", &firstLine, ":", &line, " linenums:", &firstLine, "\">");
-				zephir_concat_self(&html, &_35$$19);
+				ZEPHIR_INIT_VAR(&_28$$19);
+				ZEPHIR_CONCAT_SVSVSVS(&_28$$19, "\n                        <pre class='prettyprint highlight:", &firstLine, ":", &line, " linenums:", &firstLine, "'>");
+				zephir_concat_self(&html, &_28$$19);
 			} else {
 				ZEPHIR_INIT_NVAR(&firstLine);
 				ZVAL_LONG(&firstLine, 1);
 				ZEPHIR_CPY_WRT(&lastLine, &numberLines);
-				ZEPHIR_INIT_VAR(&_36$$24);
-				ZEPHIR_CONCAT_SVSVS(&_36$$24, "<pre class=\"prettyprint highlight:", &firstLine, ":", &line, " linenums error-scroll\">");
-				zephir_concat_self(&html, &_36$$24);
+				ZEPHIR_INIT_VAR(&_29$$24);
+				ZEPHIR_CONCAT_SVSVS(&_29$$24, "\n                        <pre class='prettyprint highlight:", &firstLine, ":", &line, " linenums error-scroll'>");
+				zephir_concat_self(&html, &_29$$24);
 			}
 			i = zephir_get_numberval(&firstLine);
 			while (1) {
@@ -1627,56 +1311,518 @@ PHP_METHOD(Phalcon_Support_Debug, showTraceItem)
 				ZEPHIR_INIT_NVAR(&linePosition);
 				ZVAL_LONG(&linePosition, (i - 1));
 				ZEPHIR_OBS_NVAR(&currentLine);
-				zephir_array_fetch(&currentLine, &lines, &linePosition, PH_NOISY, "phalcon/Support/Debug.zep", 881);
-				if (zephir_is_true(&showFileFragment)) {
-					if (ZEPHIR_IS_LONG(&firstLine, i)) {
+				zephir_array_fetch(&currentLine, &lines, &linePosition, PH_NOISY, "phalcon/Support/Debug.zep", 760);
+				zephir_read_property(&_30$$25, this_ptr, ZEND_STRL("showFileFragment"), PH_NOISY_CC | PH_READONLY);
+				_31$$25 = zephir_is_true(&_30$$25);
+				if (_31$$25) {
+					_31$$25 = ZEPHIR_IS_LONG(&firstLine, i);
+				}
+				if (_31$$25) {
+					ZEPHIR_INIT_NVAR(&_32$$26);
+					ZEPHIR_INIT_NVAR(&_33$$26);
+					zephir_fast_trim(&_33$$26, &currentLine, NULL , ZEPHIR_TRIM_RIGHT);
+					ZEPHIR_INIT_NVAR(&_34$$26);
+					ZVAL_STRING(&_34$$26, "#\\*\\/#");
+					ZEPHIR_INIT_NVAR(&_35$$26);
+					ZEPHIR_INIT_NVAR(&_36$$26);
+					ZVAL_STRING(&_36$$26, "#\\*\\/#");
+					zephir_preg_match(&_35$$26, &_36$$26, &_33$$26, &_32$$26, 0, 0 , 0 );
+					if (zephir_is_true(&_35$$26)) {
 						ZEPHIR_INIT_NVAR(&_37$$27);
 						ZEPHIR_INIT_NVAR(&_38$$27);
-						zephir_fast_trim(&_38$$27, &currentLine, NULL , ZEPHIR_TRIM_RIGHT);
+						ZVAL_STRING(&_38$$27, "* /");
 						ZEPHIR_INIT_NVAR(&_39$$27);
-						ZVAL_STRING(&_39$$27, "#\\*\\/#");
-						ZEPHIR_INIT_NVAR(&_40$$27);
-						ZEPHIR_INIT_NVAR(&_41$$27);
-						ZVAL_STRING(&_41$$27, "#\\*\\/#");
-						zephir_preg_match(&_40$$27, &_41$$27, &_38$$27, &_37$$27, 0, 0 , 0 );
-						if (zephir_is_true(&_40$$27)) {
-							ZEPHIR_INIT_NVAR(&_42$$28);
-							ZEPHIR_INIT_NVAR(&_43$$28);
-							ZVAL_STRING(&_43$$28, "* /");
-							ZEPHIR_INIT_NVAR(&_44$$28);
-							ZVAL_STRING(&_44$$28, " ");
-							zephir_fast_str_replace(&_42$$28, &_43$$28, &_44$$28, &currentLine);
-							ZEPHIR_CPY_WRT(&currentLine, &_42$$28);
-						}
+						ZVAL_STRING(&_39$$27, " ");
+						zephir_fast_str_replace(&_37$$27, &_38$$27, &_39$$27, &currentLine);
+						ZEPHIR_CPY_WRT(&currentLine, &_37$$27);
 					}
 				}
-				_45$$25 = ZEPHIR_IS_STRING(&currentLine, "\n");
-				if (!(_45$$25)) {
-					_45$$25 = ZEPHIR_IS_STRING(&currentLine, "\r\n");
+				_40$$25 = ZEPHIR_IS_STRING(&currentLine, "\n");
+				if (!(_40$$25)) {
+					_40$$25 = ZEPHIR_IS_STRING(&currentLine, "\r\n");
 				}
-				if (_45$$25) {
+				if (_40$$25) {
 					zephir_concat_self_str(&html, SL("&nbsp;\n"));
 				} else {
-					ZEPHIR_INIT_NVAR(&_46$$30);
-					ZEPHIR_INIT_NVAR(&_47$$30);
-					ZVAL_STRING(&_47$$30, "\t");
-					ZEPHIR_INIT_NVAR(&_48$$30);
-					ZVAL_STRING(&_48$$30, "  ");
-					zephir_fast_str_replace(&_46$$30, &_47$$30, &_48$$30, &currentLine);
-					ZVAL_LONG(&_49$$30, 2);
-					ZEPHIR_INIT_NVAR(&_50$$30);
-					ZVAL_STRING(&_50$$30, "UTF-8");
-					ZEPHIR_CALL_FUNCTION(&_51$$30, "htmlentities", &_52, 0, &_46$$30, &_49$$30, &_50$$30);
+					ZEPHIR_INIT_NVAR(&_41$$29);
+					ZEPHIR_INIT_NVAR(&_42$$29);
+					ZVAL_STRING(&_42$$29, "\t");
+					ZEPHIR_INIT_NVAR(&_43$$29);
+					ZVAL_STRING(&_43$$29, "  ");
+					zephir_fast_str_replace(&_41$$29, &_42$$29, &_43$$29, &currentLine);
+					ZVAL_LONG(&_44$$29, 2);
+					ZEPHIR_INIT_NVAR(&_45$$29);
+					ZVAL_STRING(&_45$$29, "UTF-8");
+					ZEPHIR_CALL_FUNCTION(&_46$$29, "htmlentities", &_47, 0, &_41$$29, &_44$$29, &_45$$29);
 					zephir_check_call_status();
-					zephir_concat_self(&html, &_51$$30);
+					zephir_concat_self(&html, &_46$$29);
 				}
 				i++;
 			}
-			zephir_concat_self_str(&html, SL("</pre>"));
+			zephir_concat_self_str(&html, SL("\n                            </pre>"));
 		}
 	}
-	zephir_concat_self_str(&html, SL("</td></tr>"));
+	ZEPHIR_CONCAT_VS(return_value, &html, "\n                    </td>\n                </tr>");
+	RETURN_MM();
+}
+
+/**
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, closeTable)
+{
+
+	RETURN_STRING("\n                </tbody>\n            </table>\n        </div>");
+}
+
+/**
+ * @param Throwable $exception
+ *
+ * @return string
+ * @throws ReflectionException
+ */
+PHP_METHOD(Phalcon_Support_Debug, printBacktrace)
+{
+	zend_string *_3;
+	zend_ulong _2;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zephir_fcall_cache_entry *_5 = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *exception, exception_sub, html, trace, number, item, *_0, _1, _7, _4$$3, _6$$4;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&exception_sub);
+	ZVAL_UNDEF(&html);
+	ZVAL_UNDEF(&trace);
+	ZVAL_UNDEF(&number);
+	ZVAL_UNDEF(&item);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_7);
+	ZVAL_UNDEF(&_4$$3);
+	ZVAL_UNDEF(&_6$$4);
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(exception, zend_ce_throwable)
+	ZEND_PARSE_PARAMETERS_END();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &exception);
+	ZEPHIR_INIT_VAR(&html);
+	ZVAL_STRING(&html, "\n\n        <div id='backtrace'>\n            <table style='border-collapse: collapse; border-spacing: 0; text-align=center; width:100%'>\n                <tbody>");
+	ZEPHIR_CALL_METHOD(&trace, exception, "gettrace", NULL, 0);
+	zephir_check_call_status();
+	zephir_is_iterable(&trace, 0, "phalcon/Support/Debug.zep", 832);
+	if (Z_TYPE_P(&trace) == IS_ARRAY) {
+		ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&trace), _2, _3, _0)
+		{
+			ZEPHIR_INIT_NVAR(&number);
+			if (_3 != NULL) { 
+				ZVAL_STR_COPY(&number, _3);
+			} else {
+				ZVAL_LONG(&number, _2);
+			}
+			ZEPHIR_INIT_NVAR(&item);
+			ZVAL_COPY(&item, _0);
+			ZEPHIR_CALL_METHOD(&_4$$3, this_ptr, "showtraceitem", &_5, 0, &number, &item);
+			zephir_check_call_status();
+			zephir_concat_self(&html, &_4$$3);
+		} ZEND_HASH_FOREACH_END();
+	} else {
+		ZEPHIR_CALL_METHOD(NULL, &trace, "rewind", NULL, 0);
+		zephir_check_call_status();
+		while (1) {
+			ZEPHIR_CALL_METHOD(&_1, &trace, "valid", NULL, 0);
+			zephir_check_call_status();
+			if (!zend_is_true(&_1)) {
+				break;
+			}
+			ZEPHIR_CALL_METHOD(&number, &trace, "key", NULL, 0);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(&item, &trace, "current", NULL, 0);
+			zephir_check_call_status();
+				ZEPHIR_CALL_METHOD(&_6$$4, this_ptr, "showtraceitem", &_5, 0, &number, &item);
+				zephir_check_call_status();
+				zephir_concat_self(&html, &_6$$4);
+			ZEPHIR_CALL_METHOD(NULL, &trace, "next", NULL, 0);
+			zephir_check_call_status();
+		}
+	}
+	ZEPHIR_INIT_NVAR(&item);
+	ZEPHIR_INIT_NVAR(&number);
+	ZEPHIR_CALL_METHOD(&_7, this_ptr, "closetable", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VV(return_value, &html, &_7);
+	RETURN_MM();
+}
+
+/**
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, printExtraVariables)
+{
+	zend_string *_9$$3;
+	zend_ulong _8$$3;
+	zval html, key, value, _0, _1$$3, _2$$3, _3$$3, _4$$3, _5$$3, *_6$$3, _7$$3, _17$$3, _10$$4, _11$$4, _13$$4, _14$$5, _15$$5, _16$$5;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zephir_fcall_cache_entry *_12 = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&html);
+	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
+	ZVAL_UNDEF(&_4$$3);
+	ZVAL_UNDEF(&_5$$3);
+	ZVAL_UNDEF(&_7$$3);
+	ZVAL_UNDEF(&_17$$3);
+	ZVAL_UNDEF(&_10$$4);
+	ZVAL_UNDEF(&_11$$4);
+	ZVAL_UNDEF(&_13$$4);
+	ZVAL_UNDEF(&_14$$5);
+	ZVAL_UNDEF(&_15$$5);
+	ZVAL_UNDEF(&_16$$5);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+
+	ZEPHIR_INIT_VAR(&html);
+	ZVAL_STRING(&html, "");
+	zephir_read_property(&_0, this_ptr, ZEND_STRL("data"), PH_NOISY_CC | PH_READONLY);
+	if (!(ZEPHIR_IS_EMPTY(&_0))) {
+		ZEPHIR_INIT_VAR(&_2$$3);
+		ZVAL_STRING(&_2$$3, "variables");
+		ZEPHIR_INIT_VAR(&_3$$3);
+		ZVAL_STRING(&_3$$3, "Key");
+		ZEPHIR_INIT_VAR(&_4$$3);
+		ZVAL_STRING(&_4$$3, "Value");
+		ZEPHIR_CALL_METHOD(&_1$$3, this_ptr, "printtableheader", NULL, 0, &_2$$3, &_3$$3, &_4$$3);
+		zephir_check_call_status();
+		zephir_concat_self(&html, &_1$$3);
+		zephir_read_property(&_5$$3, this_ptr, ZEND_STRL("data"), PH_NOISY_CC | PH_READONLY);
+		zephir_is_iterable(&_5$$3, 0, "phalcon/Support/Debug.zep", 854);
+		if (Z_TYPE_P(&_5$$3) == IS_ARRAY) {
+			ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_5$$3), _8$$3, _9$$3, _6$$3)
+			{
+				ZEPHIR_INIT_NVAR(&key);
+				if (_9$$3 != NULL) { 
+					ZVAL_STR_COPY(&key, _9$$3);
+				} else {
+					ZVAL_LONG(&key, _8$$3);
+				}
+				ZEPHIR_INIT_NVAR(&value);
+				ZVAL_COPY(&value, _6$$3);
+				zephir_array_fetch_long(&_11$$4, &value, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 850);
+				ZEPHIR_CALL_METHOD(&_10$$4, this_ptr, "getvardump", &_12, 0, &_11$$4);
+				zephir_check_call_status();
+				ZEPHIR_INIT_NVAR(&_13$$4);
+				ZEPHIR_CONCAT_SVSVS(&_13$$4, "<tr><td class=\"key\">", &key, "</td><td>", &_10$$4, "</td></tr>");
+				zephir_concat_self(&html, &_13$$4);
+			} ZEND_HASH_FOREACH_END();
+		} else {
+			ZEPHIR_CALL_METHOD(NULL, &_5$$3, "rewind", NULL, 0);
+			zephir_check_call_status();
+			while (1) {
+				ZEPHIR_CALL_METHOD(&_7$$3, &_5$$3, "valid", NULL, 0);
+				zephir_check_call_status();
+				if (!zend_is_true(&_7$$3)) {
+					break;
+				}
+				ZEPHIR_CALL_METHOD(&key, &_5$$3, "key", NULL, 0);
+				zephir_check_call_status();
+				ZEPHIR_CALL_METHOD(&value, &_5$$3, "current", NULL, 0);
+				zephir_check_call_status();
+					zephir_array_fetch_long(&_15$$5, &value, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Debug.zep", 850);
+					ZEPHIR_CALL_METHOD(&_14$$5, this_ptr, "getvardump", &_12, 0, &_15$$5);
+					zephir_check_call_status();
+					ZEPHIR_INIT_NVAR(&_16$$5);
+					ZEPHIR_CONCAT_SVSVS(&_16$$5, "<tr><td class=\"key\">", &key, "</td><td>", &_14$$5, "</td></tr>");
+					zephir_concat_self(&html, &_16$$5);
+				ZEPHIR_CALL_METHOD(NULL, &_5$$3, "next", NULL, 0);
+				zephir_check_call_status();
+			}
+		}
+		ZEPHIR_INIT_NVAR(&value);
+		ZEPHIR_INIT_NVAR(&key);
+		ZEPHIR_CALL_METHOD(&_17$$3, this_ptr, "closetable", NULL, 0);
+		zephir_check_call_status();
+		zephir_concat_self(&html, &_17$$3);
+	}
 	RETURN_CCTOR(&html);
+}
+
+/**
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, printIncludedFiles)
+{
+	zend_string *_7;
+	zend_ulong _6;
+	zval html, key, value, _0, _1, _2, _3, *_4, _5, _10, _8$$3, _9$$4;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&html);
+	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_5);
+	ZVAL_UNDEF(&_10);
+	ZVAL_UNDEF(&_8$$3);
+	ZVAL_UNDEF(&_9$$4);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+
+	ZEPHIR_INIT_VAR(&_0);
+	ZVAL_STRING(&_0, "files");
+	ZEPHIR_INIT_VAR(&_1);
+	ZVAL_STRING(&_1, "#");
+	ZEPHIR_INIT_VAR(&_2);
+	ZVAL_STRING(&_2, "Path");
+	ZEPHIR_CALL_METHOD(&html, this_ptr, "printtableheader", NULL, 0, &_0, &_1, &_2);
+	zephir_check_call_status();
+	ZEPHIR_CALL_FUNCTION(&_3, "get_included_files", NULL, 0);
+	zephir_check_call_status();
+	zephir_is_iterable(&_3, 0, "phalcon/Support/Debug.zep", 873);
+	if (Z_TYPE_P(&_3) == IS_ARRAY) {
+		ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&_3), _6, _7, _4)
+		{
+			ZEPHIR_INIT_NVAR(&key);
+			if (_7 != NULL) { 
+				ZVAL_STR_COPY(&key, _7);
+			} else {
+				ZVAL_LONG(&key, _6);
+			}
+			ZEPHIR_INIT_NVAR(&value);
+			ZVAL_COPY(&value, _4);
+			ZEPHIR_INIT_NVAR(&_8$$3);
+			ZEPHIR_CONCAT_SVSVS(&_8$$3, "\n                        <tr>\n                            <td>", &key, "</td>\n                            <td>", &value, "</td>\n                        </tr>");
+			zephir_concat_self(&html, &_8$$3);
+		} ZEND_HASH_FOREACH_END();
+	} else {
+		ZEPHIR_CALL_METHOD(NULL, &_3, "rewind", NULL, 0);
+		zephir_check_call_status();
+		while (1) {
+			ZEPHIR_CALL_METHOD(&_5, &_3, "valid", NULL, 0);
+			zephir_check_call_status();
+			if (!zend_is_true(&_5)) {
+				break;
+			}
+			ZEPHIR_CALL_METHOD(&key, &_3, "key", NULL, 0);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(&value, &_3, "current", NULL, 0);
+			zephir_check_call_status();
+				ZEPHIR_INIT_NVAR(&_9$$4);
+				ZEPHIR_CONCAT_SVSVS(&_9$$4, "\n                        <tr>\n                            <td>", &key, "</td>\n                            <td>", &value, "</td>\n                        </tr>");
+				zephir_concat_self(&html, &_9$$4);
+			ZEPHIR_CALL_METHOD(NULL, &_3, "next", NULL, 0);
+			zephir_check_call_status();
+		}
+	}
+	ZEPHIR_INIT_NVAR(&value);
+	ZEPHIR_INIT_NVAR(&key);
+	ZEPHIR_CALL_METHOD(&_10, this_ptr, "closetable", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VV(return_value, &html, &_10);
+	RETURN_MM();
+}
+
+/**
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, printMemoryUsage)
+{
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval __$true, _0, _1, _2, _3, _4;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zval *this_ptr = getThis();
+
+	ZVAL_BOOL(&__$true, 1);
+	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_4);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+
+	ZEPHIR_INIT_VAR(&_1);
+	ZVAL_STRING(&_1, "memory");
+	ZEPHIR_INIT_VAR(&_2);
+	ZVAL_STRING(&_2, "Memory");
+	ZEPHIR_INIT_VAR(&_3);
+	ZVAL_STRING(&_3, "");
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "printtableheader", NULL, 0, &_1, &_2, &_3);
+	zephir_check_call_status();
+	ZEPHIR_CALL_FUNCTION(&_4, "memory_get_usage", NULL, 0, &__$true);
+	zephir_check_call_status();
+	ZEPHIR_CONCAT_VSVS(return_value, &_0, "\n                    <tr>\n                        <td>\n                            Usage\n                        </td>\n                        <td>", &_4, "</td>\n                    </tr>\n                </tbody>\n                </table>\n            </div>");
+	RETURN_MM();
+}
+
+/**
+ * @param array  $source
+ * @param string $div
+ *
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, printSuperglobal)
+{
+	zend_ulong _5;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zephir_fcall_cache_entry *_8 = NULL, *_10 = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS;
+	zend_string *div = NULL, *_6;
+	zval *source_param = NULL, div_zv, html, filter, key, value, _0, _1, _2, *_3, _4, _7$$3, _9$$4, _11$$4, _12$$5, _13$$6, _14$$6;
+	zval source;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&source);
+	ZVAL_UNDEF(&div_zv);
+	ZVAL_UNDEF(&html);
+	ZVAL_UNDEF(&filter);
+	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_4);
+	ZVAL_UNDEF(&_7$$3);
+	ZVAL_UNDEF(&_9$$4);
+	ZVAL_UNDEF(&_11$$4);
+	ZVAL_UNDEF(&_12$$5);
+	ZVAL_UNDEF(&_13$$6);
+	ZVAL_UNDEF(&_14$$6);
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_ARRAY(source)
+		Z_PARAM_STR(div)
+	ZEND_PARSE_PARAMETERS_END();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	source_param = ZEND_CALL_ARG(execute_data, 1);
+	zephir_get_arrval(&source, source_param);
+	ZVAL_STR_COPY(&div_zv, div);
+	ZEPHIR_INIT_VAR(&_0);
+	ZVAL_STRING(&_0, "Key");
+	ZEPHIR_INIT_VAR(&_1);
+	ZVAL_STRING(&_1, "Value");
+	ZEPHIR_CALL_METHOD(&html, this_ptr, "printtableheader", NULL, 0, &div_zv, &_0, &_1);
+	zephir_check_call_status();
+	zephir_read_property(&_2, this_ptr, ZEND_STRL("blacklist"), PH_NOISY_CC | PH_READONLY);
+	ZEPHIR_INIT_NVAR(&_0);
+	array_init(&_0);
+	ZEPHIR_INIT_NVAR(&_1);
+	ZVAL_STRING(&_1, "server");
+	ZEPHIR_CALL_METHOD(&filter, this_ptr, "getarrval", NULL, 0, &_2, &_1, &_0);
+	zephir_check_call_status();
+	zephir_is_iterable(&source, 0, "phalcon/Support/Debug.zep", 906);
+	if (Z_TYPE_P(&source) == IS_ARRAY) {
+		ZEND_HASH_FOREACH_KEY_VAL(Z_ARRVAL_P(&source), _5, _6, _3)
+		{
+			ZEPHIR_INIT_NVAR(&key);
+			if (_6 != NULL) { 
+				ZVAL_STR_COPY(&key, _6);
+			} else {
+				ZVAL_LONG(&key, _5);
+			}
+			ZEPHIR_INIT_NVAR(&value);
+			ZVAL_COPY(&value, _3);
+			ZEPHIR_CALL_FUNCTION(&_7$$3, "mb_strtolower", &_8, 10, &key);
+			zephir_check_call_status();
+			if (!(zephir_array_isset(&filter, &_7$$3))) {
+				ZEPHIR_CALL_METHOD(&_9$$4, this_ptr, "getvardump", &_10, 0, &value);
+				zephir_check_call_status();
+				ZEPHIR_INIT_NVAR(&_11$$4);
+				ZEPHIR_CONCAT_SVSVS(&_11$$4, "\n                    <tr>\n                        <td class='key'>", &key, "</td>\n                        <td>", &_9$$4, "</td>\n                    </tr>");
+				zephir_concat_self(&html, &_11$$4);
+			}
+		} ZEND_HASH_FOREACH_END();
+	} else {
+		ZEPHIR_CALL_METHOD(NULL, &source, "rewind", NULL, 0);
+		zephir_check_call_status();
+		while (1) {
+			ZEPHIR_CALL_METHOD(&_4, &source, "valid", NULL, 0);
+			zephir_check_call_status();
+			if (!zend_is_true(&_4)) {
+				break;
+			}
+			ZEPHIR_CALL_METHOD(&key, &source, "key", NULL, 0);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(&value, &source, "current", NULL, 0);
+			zephir_check_call_status();
+				ZEPHIR_CALL_FUNCTION(&_12$$5, "mb_strtolower", &_8, 10, &key);
+				zephir_check_call_status();
+				if (!(zephir_array_isset(&filter, &_12$$5))) {
+					ZEPHIR_CALL_METHOD(&_13$$6, this_ptr, "getvardump", &_10, 0, &value);
+					zephir_check_call_status();
+					ZEPHIR_INIT_NVAR(&_14$$6);
+					ZEPHIR_CONCAT_SVSVS(&_14$$6, "\n                    <tr>\n                        <td class='key'>", &key, "</td>\n                        <td>", &_13$$6, "</td>\n                    </tr>");
+					zephir_concat_self(&html, &_14$$6);
+				}
+			ZEPHIR_CALL_METHOD(NULL, &source, "next", NULL, 0);
+			zephir_check_call_status();
+		}
+	}
+	ZEPHIR_INIT_NVAR(&value);
+	ZEPHIR_INIT_NVAR(&key);
+	ZEPHIR_CONCAT_VS(return_value, &html, "\n                    </tbody>\n                </table>\n            </div>");
+	RETURN_MM();
+}
+
+/**
+ * @param string $divId
+ * @param string $headerOne
+ * @param string $headerTwo
+ * @param string $colspan
+ *
+ * @return string
+ */
+PHP_METHOD(Phalcon_Support_Debug, printTableHeader)
+{
+	zval _0$$4;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval divId_zv, headerOne_zv, headerTwo_zv, colspan_zv, span;
+	zend_string *divId = NULL, *headerOne = NULL, *headerTwo = NULL, *colspan = NULL;
+
+	ZVAL_UNDEF(&divId_zv);
+	ZVAL_UNDEF(&headerOne_zv);
+	ZVAL_UNDEF(&headerTwo_zv);
+	ZVAL_UNDEF(&colspan_zv);
+	ZVAL_UNDEF(&span);
+	ZVAL_UNDEF(&_0$$4);
+	ZEND_PARSE_PARAMETERS_START(3, 4)
+		Z_PARAM_STR(divId)
+		Z_PARAM_STR(headerOne)
+		Z_PARAM_STR(headerTwo)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_STR(colspan)
+	ZEND_PARSE_PARAMETERS_END();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	ZVAL_STR_COPY(&divId_zv, divId);
+	ZVAL_STR_COPY(&headerOne_zv, headerOne);
+	ZVAL_STR_COPY(&headerTwo_zv, headerTwo);
+	if (!colspan) {
+		colspan = zend_string_init(ZEND_STRL(""), 0);
+		ZVAL_STR(&colspan_zv, colspan);
+	} else {
+		ZVAL_STR_COPY(&colspan_zv, colspan);
+	}
+	ZEPHIR_INIT_VAR(&span);
+	if (ZEPHIR_IS_EMPTY(&colspan_zv)) {
+		ZVAL_STRING(&span, "");
+	} else {
+		ZEPHIR_INIT_VAR(&_0$$4);
+		ZEPHIR_CONCAT_SVS(&_0$$4, " colspan=\"", &colspan_zv, "\"");
+		ZEPHIR_CPY_WRT(&span, &_0$$4);
+	}
+	ZEPHIR_CONCAT_SVSVSVSVS(return_value, "\n        <div id='", &divId_zv, "'>\n            <table style='border-collapse: collapse; border-spacing: 0; text-align: center'\n                   class='superglobal-detail'>\n                <thead>\n                <tr>\n                    <th", &span, ">", &headerOne_zv, "</th>\n                </tr>\n                <tr>\n                    <th>", &headerTwo_zv, "</th>\n                </tr>\n                </thead>\n                <tbody>");
+	RETURN_MM();
 }
 
 /**

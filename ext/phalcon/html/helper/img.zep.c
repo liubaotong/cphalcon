@@ -51,11 +51,11 @@ PHP_METHOD(Phalcon_Html_Helper_Img, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval attributes;
-	zval *src_param = NULL, *attributes_param = NULL, overrides, _0;
-	zval src;
+	zval src_zv, *attributes_param = NULL, overrides, _0;
+	zend_string *src = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&src);
+	ZVAL_UNDEF(&src_zv);
 	ZVAL_UNDEF(&overrides);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&attributes);
@@ -66,8 +66,10 @@ PHP_METHOD(Phalcon_Html_Helper_Img, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &src_param, &attributes_param);
-	zephir_get_strval(&src, src_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 2);
+	}
+	ZVAL_STR_COPY(&src_zv, src);
 	if (!attributes_param) {
 		ZEPHIR_INIT_VAR(&attributes);
 		array_init(&attributes);
@@ -76,7 +78,7 @@ PHP_METHOD(Phalcon_Html_Helper_Img, __invoke)
 	}
 	ZEPHIR_INIT_VAR(&overrides);
 	zephir_create_array(&overrides, 1, 0);
-	zephir_array_update_string(&overrides, SL("src"), &src, PH_COPY | PH_SEPARATE);
+	zephir_array_update_string(&overrides, SL("src"), &src_zv, PH_COPY | PH_SEPARATE);
 	zephir_array_unset_string(&attributes, SL("src"), PH_SEPARATE);
 	ZEPHIR_INIT_VAR(&_0);
 	zephir_fast_array_merge(&_0, &overrides, &attributes);

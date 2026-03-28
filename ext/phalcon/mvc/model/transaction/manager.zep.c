@@ -18,7 +18,6 @@
 #include "kernel/exception.h"
 #include "kernel/memory.h"
 #include "kernel/array.h"
-#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -312,7 +311,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Transaction_Manager, get)
 			ZEPHIR_INIT_VAR(&_3$$4);
 			ZVAL_STRING(&_3$$4, "rollbackPendent");
 			zephir_array_fast_append(&_2$$4, &_3$$4);
-			ZEPHIR_CALL_FUNCTION(NULL, "register_shutdown_function", NULL, 488, &_2$$4);
+			ZEPHIR_CALL_FUNCTION(NULL, "register_shutdown_function", NULL, 489, &_2$$4);
 			zephir_check_call_status();
 		}
 		if (1) {
@@ -439,9 +438,9 @@ PHP_METHOD(Phalcon_Mvc_Model_Transaction_Manager, getOrCreateTransaction)
 	} else {
 		ZVAL_BOOL(&_7, 0);
 	}
-	ZEPHIR_CALL_METHOD(NULL, &transaction, "__construct", NULL, 489, &container, &_7, &_6);
+	ZEPHIR_CALL_METHOD(NULL, &transaction, "__construct", NULL, 490, &container, &_7, &_6);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, &transaction, "settransactionmanager", NULL, 490, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, &transaction, "settransactionmanager", NULL, 491, this_ptr);
 	zephir_check_call_status();
 	zephir_update_property_array_append(this_ptr, SL("transactions"), &transaction);
 	RETURN_ON_FAILURE(zephir_property_incr(this_ptr, SL("number")));
@@ -631,29 +630,17 @@ PHP_METHOD(Phalcon_Mvc_Model_Transaction_Manager, rollbackPendent)
  */
 PHP_METHOD(Phalcon_Mvc_Model_Transaction_Manager, setDbService)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *service_param = NULL;
-	zval service;
+	zval service_zv;
+	zend_string *service = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&service);
+	ZVAL_UNDEF(&service_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(service)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &service_param);
-	if (UNEXPECTED(Z_TYPE_P(service_param) != IS_STRING && Z_TYPE_P(service_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'service' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(service_param) == IS_STRING)) {
-		zephir_get_strval(&service, service_param);
-	} else {
-		ZEPHIR_INIT_VAR(&service);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("service"), &service);
-	RETURN_THIS();
+	ZVAL_STR(&service_zv, service);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("service"), &service_zv);
+	RETURN_THISW();
 }
 
 /**

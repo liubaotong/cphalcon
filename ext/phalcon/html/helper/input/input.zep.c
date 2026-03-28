@@ -13,8 +13,6 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
 
 
 /**
@@ -44,20 +42,16 @@ ZEPHIR_INIT_CLASS(Phalcon_Html_Helper_Input_Input)
  */
 PHP_METHOD(Phalcon_Html_Helper_Input_Input, setType)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *type_param = NULL;
-	zval type;
+	zval type_zv;
+	zend_string *type = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type);
+	ZVAL_UNDEF(&type_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(type)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &type_param);
-	zephir_get_strval(&type, type_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
-	RETURN_THIS();
+	ZVAL_STR(&type_zv, type);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
+	RETURN_THISW();
 }
 

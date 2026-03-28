@@ -52,11 +52,11 @@ PHP_METHOD(Phalcon_Html_Helper_Label, __invoke)
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool raw;
 	zval attributes;
-	zval *label_param = NULL, *attributes_param = NULL, *raw_param = NULL, _0, _1;
-	zval label;
+	zval label_zv, *attributes_param = NULL, *raw_param = NULL, _0, _1;
+	zend_string *label = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&label);
+	ZVAL_UNDEF(&label_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&attributes);
@@ -68,8 +68,13 @@ PHP_METHOD(Phalcon_Html_Helper_Label, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 2, &label_param, &attributes_param, &raw_param);
-	zephir_get_strval(&label, label_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 2);
+	}
+	if (ZEND_NUM_ARGS() > 2) {
+		raw_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&label_zv, label);
 	if (!attributes_param) {
 		ZEPHIR_INIT_VAR(&attributes);
 		array_init(&attributes);
@@ -87,7 +92,7 @@ PHP_METHOD(Phalcon_Html_Helper_Label, __invoke)
 	} else {
 		ZVAL_BOOL(&_1, 0);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &_0, &label, &attributes, &_1);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &_0, &label_zv, &attributes, &_1);
 	zephir_check_call_status();
 	RETURN_MM();
 }

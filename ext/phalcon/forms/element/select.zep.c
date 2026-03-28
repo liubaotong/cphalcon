@@ -14,8 +14,8 @@
 #include "kernel/main.h"
 #include "kernel/object.h"
 #include "kernel/fcall.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
 #include "kernel/array.h"
 
 
@@ -52,11 +52,11 @@ PHP_METHOD(Phalcon_Forms_Element_Select, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval attributes;
-	zval *name_param = NULL, *options = NULL, options_sub, *attributes_param = NULL, __$null;
-	zval name;
+	zval name_zv, *options = NULL, options_sub, *attributes_param = NULL, __$null;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&options_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&attributes);
@@ -69,8 +69,13 @@ PHP_METHOD(Phalcon_Forms_Element_Select, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 2, &name_param, &options, &attributes_param);
-	zephir_get_strval(&name, name_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		options = ZEND_CALL_ARG(execute_data, 2);
+	}
+	if (ZEND_NUM_ARGS() > 2) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&name_zv, name);
 	if (!options) {
 		options = &options_sub;
 		options = &__$null;
@@ -82,7 +87,7 @@ PHP_METHOD(Phalcon_Forms_Element_Select, __construct)
 		zephir_get_arrval(&attributes, attributes_param);
 	}
 	zephir_update_property_zval(this_ptr, ZEND_STRL("optionsValues"), options);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_forms_element_select_ce, getThis(), "__construct", NULL, 0, &name, &attributes);
+	ZEPHIR_CALL_PARENT(NULL, phalcon_forms_element_select_ce, getThis(), "__construct", NULL, 0, &name_zv, &attributes);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }

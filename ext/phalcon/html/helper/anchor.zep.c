@@ -54,12 +54,12 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, __invoke)
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool raw;
 	zval attributes;
-	zval *href_param = NULL, *text_param = NULL, *attributes_param = NULL, *raw_param = NULL, overrides, _0, _1;
-	zval href, text;
+	zval href_zv, text_zv, *attributes_param = NULL, *raw_param = NULL, overrides, _0, _1;
+	zend_string *href = NULL, *text = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&href);
-	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&href_zv);
+	ZVAL_UNDEF(&text_zv);
 	ZVAL_UNDEF(&overrides);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -73,9 +73,14 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 2, &href_param, &text_param, &attributes_param, &raw_param);
-	zephir_get_strval(&href, href_param);
-	zephir_get_strval(&text, text_param);
+	if (ZEND_NUM_ARGS() > 2) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	if (ZEND_NUM_ARGS() > 3) {
+		raw_param = ZEND_CALL_ARG(execute_data, 4);
+	}
+	ZVAL_STR_COPY(&href_zv, href);
+	ZVAL_STR_COPY(&text_zv, text);
 	if (!attributes_param) {
 		ZEPHIR_INIT_VAR(&attributes);
 		array_init(&attributes);
@@ -86,7 +91,7 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, __invoke)
 		raw = 0;
 	} else {
 		}
-	ZEPHIR_CALL_METHOD(&overrides, this_ptr, "processattributes", NULL, 0, &href, &attributes);
+	ZEPHIR_CALL_METHOD(&overrides, this_ptr, "processattributes", NULL, 0, &href_zv, &attributes);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "a");
@@ -95,7 +100,7 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, __invoke)
 	} else {
 		ZVAL_BOOL(&_1, 0);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &_0, &text, &overrides, &_1);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &_0, &text_zv, &overrides, &_1);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -110,10 +115,10 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, processAttributes)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval attributes;
-	zval *href_param = NULL, *attributes_param = NULL, overrides;
-	zval href;
+	zval href_zv, *attributes_param = NULL, overrides;
+	zend_string *href = NULL;
 
-	ZVAL_UNDEF(&href);
+	ZVAL_UNDEF(&href_zv);
 	ZVAL_UNDEF(&overrides);
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
@@ -122,12 +127,12 @@ PHP_METHOD(Phalcon_Html_Helper_Anchor, processAttributes)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &href_param, &attributes_param);
-	zephir_get_strval(&href, href_param);
+	attributes_param = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&href_zv, href);
 	zephir_get_arrval(&attributes, attributes_param);
 	ZEPHIR_INIT_VAR(&overrides);
 	zephir_create_array(&overrides, 1, 0);
-	zephir_array_update_string(&overrides, SL("href"), &href, PH_COPY | PH_SEPARATE);
+	zephir_array_update_string(&overrides, SL("href"), &href_zv, PH_COPY | PH_SEPARATE);
 	zephir_array_unset_string(&attributes, SL("href"), PH_SEPARATE);
 	zephir_fast_array_merge(return_value, &overrides, &attributes);
 	RETURN_MM();

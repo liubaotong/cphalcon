@@ -255,7 +255,7 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getExpression)
 					ZEPHIR_INIT_NVAR(&item);
 					ZVAL_COPY(&item, _1$$7);
 					zephir_array_fetch_string(&_3$$8, &item, SL("expr"), PH_NOISY | PH_READONLY, "phalcon/Annotations/Annotation.zep", 139);
-					ZEPHIR_CALL_METHOD(&resolvedItem, this_ptr, "getexpression", &_4, 158, &_3$$8);
+					ZEPHIR_CALL_METHOD(&resolvedItem, this_ptr, "getexpression", &_4, 157, &_3$$8);
 					zephir_check_call_status();
 					ZEPHIR_OBS_NVAR(&name);
 					if (zephir_array_isset_string_fetch(&name, &item, SL("name"), 0)) {
@@ -276,7 +276,7 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getExpression)
 					ZEPHIR_CALL_METHOD(&item, &_0$$7, "current", NULL, 0);
 					zephir_check_call_status();
 						zephir_array_fetch_string(&_5$$11, &item, SL("expr"), PH_NOISY | PH_READONLY, "phalcon/Annotations/Annotation.zep", 139);
-						ZEPHIR_CALL_METHOD(&resolvedItem, this_ptr, "getexpression", &_4, 158, &_5$$11);
+						ZEPHIR_CALL_METHOD(&resolvedItem, this_ptr, "getexpression", &_4, 157, &_5$$11);
 						zephir_check_call_status();
 						ZEPHIR_OBS_NVAR(&name);
 						if (zephir_array_isset_string_fetch(&name, &item, SL("name"), 0)) {
@@ -293,7 +293,7 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getExpression)
 		}
 		if (ZEPHIR_IS_LONG(&type, 300)) {
 			object_init_ex(return_value, phalcon_annotations_annotation_ce);
-			ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 159, &expr);
+			ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 158, &expr);
 			zephir_check_call_status();
 			RETURN_MM();
 		}
@@ -326,11 +326,11 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getName)
 PHP_METHOD(Phalcon_Annotations_Annotation, getNamedArgument)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL, argument, _0;
-	zval name;
+	zval name_zv, argument, _0;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&argument);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -338,19 +338,10 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getNamedArgument)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
-		zephir_get_strval(&name, name_param);
-	} else {
-		ZEPHIR_INIT_VAR(&name);
-	}
+	ZVAL_STR_COPY(&name_zv, name);
 	zephir_memory_observe(&argument);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("arguments"), PH_NOISY_CC | PH_READONLY);
-	if (zephir_array_isset_fetch(&argument, &_0, &name, 0)) {
+	if (zephir_array_isset_fetch(&argument, &_0, &name_zv, 0)) {
 		RETURN_CCTOR(&argument);
 	}
 	RETURN_MM_NULL();
@@ -363,27 +354,18 @@ PHP_METHOD(Phalcon_Annotations_Annotation, getNamedParameter)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL;
-	zval name;
+	zval name_zv;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
-		zephir_get_strval(&name, name_param);
-	} else {
-		ZEPHIR_INIT_VAR(&name);
-	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getnamedargument", NULL, 0, &name);
+	ZVAL_STR_COPY(&name_zv, name);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getnamedargument", NULL, 0, &name_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }

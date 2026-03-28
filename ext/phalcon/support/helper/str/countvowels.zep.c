@@ -15,7 +15,6 @@
 #include "kernel/memory.h"
 #include "kernel/string.h"
 #include "kernel/array.h"
-#include "kernel/operators.h"
 #include "kernel/object.h"
 
 
@@ -46,10 +45,10 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_CountVowels)
 PHP_METHOD(Phalcon_Support_Helper_Str_CountVowels, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *text_param = NULL, matches, _0, _1, _2, _3;
-	zval text;
+	zval text_zv, matches, _0, _1, _2, _3;
+	zend_string *text = NULL;
 
-	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&text_zv);
 	ZVAL_UNDEF(&matches);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -60,14 +59,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_CountVowels, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &text_param);
-	zephir_get_strval(&text, text_param);
+	ZVAL_STR_COPY(&text_zv, text);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "/[aeiouy]/i");
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_INIT_VAR(&_2);
 	ZVAL_STRING(&_2, "/[aeiouy]/i");
-	zephir_preg_match(&_1, &_2, &text, &matches, 1, 0 , 0 );
+	zephir_preg_match(&_1, &_2, &text_zv, &matches, 1, 0 , 0 );
 	zephir_array_fetch_long(&_3, &matches, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/CountVowels.zep", 30);
 	RETURN_MM_LONG(zephir_fast_count_int(&_3));
 }

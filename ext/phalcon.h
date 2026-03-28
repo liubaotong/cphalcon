@@ -178,6 +178,7 @@
 #include "phalcon/storage/adapter/stream.zep.h"
 #include "phalcon/storage/adapter/weak.zep.h"
 #include "phalcon/storage/serializer/igbinary.zep.h"
+#include "phalcon/support/exception.zep.h"
 #include "phalcon/acl/adapter/memory.zep.h"
 #include "phalcon/acl/component.zep.h"
 #include "phalcon/acl/componentawareinterface.zep.h"
@@ -534,7 +535,6 @@
 #include "phalcon/support/debug.zep.h"
 #include "phalcon/support/debug/dump.zep.h"
 #include "phalcon/support/debug/exception.zep.h"
-#include "phalcon/support/exception.zep.h"
 #include "phalcon/support/helper/arr/blacklist.zep.h"
 #include "phalcon/support/helper/arr/chunk.zep.h"
 #include "phalcon/support/helper/arr/filter.zep.h"
@@ -619,9 +619,5 @@
 #include "phalcon/8__closure.zep.h"
 #include "phalcon/9__closure.zep.h"
 #include "phalcon/10__closure.zep.h"
-#include "phalcon/11__closure.zep.h"
-#include "phalcon/12__closure.zep.h"
-#include "phalcon/13__closure.zep.h"
-#include "phalcon/14__closure.zep.h"
 
 #endif

@@ -16,11 +16,11 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
 #include "kernel/string.h"
 #include "kernel/concat.h"
 #include "kernel/array.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 
 
 /**
@@ -94,20 +94,21 @@ ZEPHIR_INIT_CLASS(Phalcon_Cli_Router_Route)
  */
 PHP_METHOD(Phalcon_Cli_Router_Route, __construct)
 {
+	zval _2;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *pattern_param = NULL, *paths = NULL, paths_sub, __$null, routeId, uniqueId, _0, _1;
-	zval pattern, _2;
+	zval pattern_zv, *paths = NULL, paths_sub, __$null, routeId, uniqueId, _0, _1;
+	zend_string *pattern = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&pattern);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&pattern_zv);
 	ZVAL_UNDEF(&paths_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&routeId);
 	ZVAL_UNDEF(&uniqueId);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(pattern)
@@ -116,16 +117,10 @@ PHP_METHOD(Phalcon_Cli_Router_Route, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &pattern_param, &paths);
-	if (UNEXPECTED(Z_TYPE_P(pattern_param) != IS_STRING && Z_TYPE_P(pattern_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pattern' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		paths = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(pattern_param) == IS_STRING)) {
-		zephir_get_strval(&pattern, pattern_param);
-	} else {
-		ZEPHIR_INIT_VAR(&pattern);
-	}
+	ZVAL_STR_COPY(&pattern_zv, pattern);
 	if (!paths) {
 		paths = &paths_sub;
 		paths = &__$null;
@@ -133,7 +128,7 @@ PHP_METHOD(Phalcon_Cli_Router_Route, __construct)
 	zephir_memory_observe(&_0);
 	zephir_read_static_property_ce(&_0, phalcon_cli_router_route_ce, SL("delimiterPath"), PH_NOISY_CC);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("delimiter"), &_0);
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "reconfigure", NULL, 0, &pattern, paths);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "reconfigure", NULL, 0, &pattern_zv, paths);
 	zephir_check_call_status();
 	zephir_memory_observe(&_1);
 	zephir_read_static_property_ce(&_1, phalcon_cli_router_route_ce, SL("uniqueId"), PH_NOISY_CC);
@@ -206,7 +201,7 @@ PHP_METHOD(Phalcon_Cli_Router_Route, compilePattern)
 	ZVAL_UNDEF(&_19$$3);
 	ZVAL_UNDEF(&map);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STR(pattern)
+		Z_PARAM_ZVAL(pattern_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -286,31 +281,20 @@ PHP_METHOD(Phalcon_Cli_Router_Route, compilePattern)
  */
 PHP_METHOD(Phalcon_Cli_Router_Route, convert)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL, *converter, converter_sub;
-	zval name;
+	zval name_zv, *converter, converter_sub;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&converter_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(name)
 		Z_PARAM_ZVAL(converter)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &name_param, &converter);
-	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
-		zephir_get_strval(&name, name_param);
-	} else {
-		ZEPHIR_INIT_VAR(&name);
-	}
-	zephir_update_property_array(this_ptr, SL("converters"), &name, converter);
-	RETURN_THIS();
+	converter = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR(&name_zv, name);
+	zephir_update_property_array(this_ptr, SL("converters"), &name_zv, converter);
+	RETURN_THISW();
 }
 
 /**
@@ -319,10 +303,10 @@ PHP_METHOD(Phalcon_Cli_Router_Route, convert)
 PHP_METHOD(Phalcon_Cli_Router_Route, delimiter)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *delimiter_param = NULL;
-	zval delimiter;
+	zval delimiter_zv;
+	zend_string *delimiter = NULL;
 
-	ZVAL_UNDEF(&delimiter);
+	ZVAL_UNDEF(&delimiter_zv);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
@@ -330,21 +314,12 @@ PHP_METHOD(Phalcon_Cli_Router_Route, delimiter)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 0, 1, &delimiter_param);
-	if (!delimiter_param) {
-		ZEPHIR_INIT_VAR(&delimiter);
+	if (!delimiter) {
+		ZEPHIR_INIT_VAR(&delimiter_zv);
 	} else {
-	if (UNEXPECTED(Z_TYPE_P(delimiter_param) != IS_STRING && Z_TYPE_P(delimiter_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'delimiter' must be of the type string"));
-		RETURN_MM_NULL();
+	ZVAL_STR_COPY(&delimiter_zv, delimiter);
 	}
-	if (EXPECTED(Z_TYPE_P(delimiter_param) == IS_STRING)) {
-		zephir_get_strval(&delimiter, delimiter_param);
-	} else {
-		ZEPHIR_INIT_VAR(&delimiter);
-	}
-	}
-	zephir_update_static_property_ce(phalcon_cli_router_route_ce, ZEND_STRL("delimiterPath"), &delimiter);
+	zephir_update_static_property_ce(phalcon_cli_router_route_ce, ZEND_STRL("delimiterPath"), &delimiter_zv);
 	ZEPHIR_MM_RESTORE();
 }
 
@@ -354,25 +329,17 @@ PHP_METHOD(Phalcon_Cli_Router_Route, delimiter)
 PHP_METHOD(Phalcon_Cli_Router_Route, extractNamedParams)
 {
 	long _0, _5$$10, _26$$18;
+	zval route, item, variable, regexp, _4$$10, _21$$15, _24$$15, _27$$25, _30$$28;
 	zend_long cursor = 0, cursorVar = 0, marker = 0, bracketCount, parenthesesCount, foundPattern, intermediate, numberMatches;
 	zend_bool notValid = 0, _6$$11, _7$$11, _8$$11, _9$$11, _10$$11, _11$$11, _12$$11, _13$$11, _14$$11, _15$$11, _16$$11, _17$$11, _25$$17;
 	zval matches;
 	char ch = 0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *pattern_param = NULL, tmp, _1$$10, _2$$10, _3$$10, _18$$15, _19$$15, _20$$15, _22$$15, _23$$15, _28$$27, _29$$27;
-	zval pattern, route, item, variable, regexp, _4$$10, _21$$15, _24$$15, _27$$25, _30$$28;
+	zval pattern_zv, tmp, _1$$10, _2$$10, _3$$10, _18$$15, _19$$15, _20$$15, _22$$15, _23$$15, _28$$27, _29$$27;
+	zend_string *pattern = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&pattern);
-	ZVAL_UNDEF(&route);
-	ZVAL_UNDEF(&item);
-	ZVAL_UNDEF(&variable);
-	ZVAL_UNDEF(&regexp);
-	ZVAL_UNDEF(&_4$$10);
-	ZVAL_UNDEF(&_21$$15);
-	ZVAL_UNDEF(&_24$$15);
-	ZVAL_UNDEF(&_27$$25);
-	ZVAL_UNDEF(&_30$$28);
+	ZVAL_UNDEF(&pattern_zv);
 	ZVAL_UNDEF(&tmp);
 	ZVAL_UNDEF(&_1$$10);
 	ZVAL_UNDEF(&_2$$10);
@@ -385,35 +352,35 @@ PHP_METHOD(Phalcon_Cli_Router_Route, extractNamedParams)
 	ZVAL_UNDEF(&_28$$27);
 	ZVAL_UNDEF(&_29$$27);
 	ZVAL_UNDEF(&matches);
+	ZVAL_UNDEF(&route);
+	ZVAL_UNDEF(&item);
+	ZVAL_UNDEF(&variable);
+	ZVAL_UNDEF(&regexp);
+	ZVAL_UNDEF(&_4$$10);
+	ZVAL_UNDEF(&_21$$15);
+	ZVAL_UNDEF(&_24$$15);
+	ZVAL_UNDEF(&_27$$25);
+	ZVAL_UNDEF(&_30$$28);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(pattern)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &pattern_param);
-	if (UNEXPECTED(Z_TYPE_P(pattern_param) != IS_STRING && Z_TYPE_P(pattern_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'pattern' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(pattern_param) == IS_STRING)) {
-		zephir_get_strval(&pattern, pattern_param);
-	} else {
-		ZEPHIR_INIT_VAR(&pattern);
-	}
+	ZVAL_STR_COPY(&pattern_zv, pattern);
 	bracketCount = 0;
 	parenthesesCount = 0;
 	foundPattern = 0;
 	intermediate = 0;
 	numberMatches = 0;
-	if (zephir_fast_strlen_ev(&pattern) == 0) {
+	if (zephir_fast_strlen_ev(&pattern_zv) == 0) {
 		RETURN_MM_BOOL(0);
 	}
 	ZEPHIR_INIT_VAR(&matches);
 	array_init(&matches);
 	ZEPHIR_INIT_VAR(&route);
-	for (_0 = 0; _0 < Z_STRLEN_P(&pattern); _0++) {
+	for (_0 = 0; _0 < Z_STRLEN_P(&pattern_zv); _0++) {
 		cursor = _0; 
-		ch = ZEPHIR_STRING_OFFSET(&pattern, _0);
+		ch = ZEPHIR_STRING_OFFSET(&pattern_zv, _0);
 		if (parenthesesCount == 0) {
 			if (ch == '{') {
 				if (bracketCount == 0) {
@@ -432,7 +399,7 @@ PHP_METHOD(Phalcon_Cli_Router_Route, extractNamedParams)
 						ZVAL_LONG(&_1$$10, marker);
 						ZVAL_LONG(&_2$$10, (cursor - marker));
 						ZEPHIR_INIT_NVAR(&_3$$10);
-						zephir_substr(&_3$$10, &pattern, zephir_get_intval(&_1$$10), zephir_get_intval(&_2$$10), 0);
+						zephir_substr(&_3$$10, &pattern_zv, zephir_get_intval(&_1$$10), zephir_get_intval(&_2$$10), 0);
 						zephir_cast_to_string(&_4$$10, &_3$$10);
 						ZEPHIR_CPY_WRT(&item, &_4$$10);
 						for (_5$$10 = 0; _5$$10 < Z_STRLEN_P(&item); _5$$10++) {
@@ -675,7 +642,7 @@ PHP_METHOD(Phalcon_Cli_Router_Route, getReversedPaths)
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("paths"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_flip", NULL, 101, &_0);
+	ZEPHIR_RETURN_CALL_FUNCTION("array_flip", NULL, 103, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -727,7 +694,7 @@ PHP_METHOD(Phalcon_Cli_Router_Route, reConfigure)
 	ZVAL_UNDEF(&_7$$21);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_STR(pattern)
+		Z_PARAM_ZVAL(pattern_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(paths)
 	ZEND_PARSE_PARAMETERS_END();
@@ -876,29 +843,17 @@ PHP_METHOD(Phalcon_Cli_Router_Route, reset)
  */
 PHP_METHOD(Phalcon_Cli_Router_Route, setDescription)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *description_param = NULL;
-	zval description;
+	zval description_zv;
+	zend_string *description = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&description);
+	ZVAL_UNDEF(&description_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(description)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &description_param);
-	if (UNEXPECTED(Z_TYPE_P(description_param) != IS_STRING && Z_TYPE_P(description_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'description' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(description_param) == IS_STRING)) {
-		zephir_get_strval(&description, description_param);
-	} else {
-		ZEPHIR_INIT_VAR(&description);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("description"), &description);
-	RETURN_THIS();
+	ZVAL_STR(&description_zv, description);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("description"), &description_zv);
+	RETURN_THISW();
 }
 
 /**
@@ -915,29 +870,17 @@ PHP_METHOD(Phalcon_Cli_Router_Route, setDescription)
  */
 PHP_METHOD(Phalcon_Cli_Router_Route, setName)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL;
-	zval name;
+	zval name_zv;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
-		zephir_get_strval(&name, name_param);
-	} else {
-		ZEPHIR_INIT_VAR(&name);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name);
-	RETURN_THIS();
+	ZVAL_STR(&name_zv, name);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name_zv);
+	RETURN_THISW();
 }
 
 zend_object *zephir_init_properties_Phalcon_Cli_Router_Route(zend_class_entry *class_type)

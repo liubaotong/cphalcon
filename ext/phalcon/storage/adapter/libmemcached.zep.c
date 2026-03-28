@@ -18,7 +18,6 @@
 #include "kernel/operators.h"
 #include "kernel/object.h"
 #include "kernel/concat.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/string.h"
 
@@ -131,11 +130,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, decrement)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long value, ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *value_param = NULL, result, _0, _1, _2, _3, _4;
-	zval key;
+	zval key_zv, *value_param = NULL, result, _0, _1, _2, _3, _4;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -149,16 +148,10 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, decrement)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &key_param, &value_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		value_param = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	if (!value_param) {
 		value = 1;
 	} else {
@@ -166,17 +159,17 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, decrement)
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_CONCAT_VS(&_1, &_0, ":beforeDecrement");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_2, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_3, value);
-	ZEPHIR_CALL_METHOD(&result, &_2, "decrement", NULL, 0, &key, &_3);
+	ZEPHIR_CALL_METHOD(&result, &_2, "decrement", NULL, 0, &key_zv, &_3);
 	zephir_check_call_status();
 	zephir_read_property(&_3, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_4);
 	ZEPHIR_CONCAT_VS(&_4, &_3, ":afterDecrement");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key_zv);
 	zephir_check_call_status();
 	RETURN_CCTOR(&result);
 }
@@ -193,11 +186,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, delete)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, result, _0, _1, _2, _3, _4;
-	zval key;
+	zval key_zv, result, _0, _1, _2, _3, _4;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -209,30 +202,21 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, delete)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &key_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_CONCAT_VS(&_1, &_0, ":beforeDelete");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_2, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_3, 0);
-	ZEPHIR_CALL_METHOD(&result, &_2, "delete", NULL, 0, &key, &_3);
+	ZEPHIR_CALL_METHOD(&result, &_2, "delete", NULL, 0, &key_zv, &_3);
 	zephir_check_call_status();
 	zephir_read_property(&_3, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_4);
 	ZEPHIR_CONCAT_VS(&_4, &_3, ":afterDelete");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key_zv);
 	zephir_check_call_status();
 	RETURN_CCTOR(&result);
 }
@@ -334,17 +318,17 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, getAdapter)
 			add_index_long(&failover, 21, 2);
 			zephir_array_update_long(&failover, 35, &__$true, PH_COPY ZEPHIR_DEBUG_PARAMS_DUMMY);
 			add_index_long(&failover, 15, 1);
-			ZEPHIR_CALL_FUNCTION(&_9$$4, "array_replace", NULL, 109, &failover, &client);
+			ZEPHIR_CALL_FUNCTION(&_9$$4, "array_replace", NULL, 111, &failover, &client);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(&client, &_9$$4);
-			ZEPHIR_CALL_METHOD(&_9$$4, this_ptr, "setoptions", NULL, 110, &connection, &client);
+			ZEPHIR_CALL_METHOD(&_9$$4, this_ptr, "setoptions", NULL, 112, &connection, &client);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(&_10$$4, &_9$$4, "setservers", NULL, 111, &connection, &servers);
+			ZEPHIR_CALL_METHOD(&_10$$4, &_9$$4, "setservers", NULL, 113, &connection, &servers);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, &_10$$4, "setsasl", NULL, 112, &connection, &saslUser, &saslPass);
+			ZEPHIR_CALL_METHOD(NULL, &_10$$4, "setsasl", NULL, 114, &connection, &saslUser, &saslPass);
 			zephir_check_call_status();
 		}
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setserializer", NULL, 113, &connection);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setserializer", NULL, 115, &connection);
 		zephir_check_call_status();
 		zephir_update_property_zval(this_ptr, ZEND_STRL("adapter"), &connection);
 	}
@@ -363,11 +347,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, getKeys)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *prefix_param = NULL, _0, _1;
-	zval prefix;
+	zval prefix_zv, _0, _1;
+	zend_string *prefix = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&prefix);
+	ZVAL_UNDEF(&prefix_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
@@ -376,26 +360,17 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, getKeys)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 0, 1, &prefix_param);
-	if (!prefix_param) {
-		ZEPHIR_INIT_VAR(&prefix);
-		ZVAL_STRING(&prefix, "");
+	if (!prefix) {
+		prefix = zend_string_init(ZEND_STRL(""), 0);
+		ZVAL_STR(&prefix_zv, prefix);
 	} else {
-	if (UNEXPECTED(Z_TYPE_P(prefix_param) != IS_STRING && Z_TYPE_P(prefix_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'prefix' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(prefix_param) == IS_STRING)) {
-		zephir_get_strval(&prefix, prefix_param);
-	} else {
-		ZEPHIR_INIT_VAR(&prefix);
-	}
+	ZVAL_STR_COPY(&prefix_zv, prefix);
 	}
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, &_0, "getallkeys", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getfilteredkeys", NULL, 0, &_1, &prefix);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getfilteredkeys", NULL, 0, &_1, &prefix_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -412,11 +387,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, has)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, connection, result, code, _0, _1, _2, _3;
-	zval key;
+	zval key_zv, connection, result, code, _0, _1, _2, _3;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&connection);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&code);
@@ -429,31 +404,22 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, has)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &key_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_CONCAT_VS(&_1, &_0, ":beforeHas");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&connection, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&result, &connection, "get", NULL, 0, &key);
+	ZEPHIR_CALL_METHOD(&result, &connection, "get", NULL, 0, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&code, &connection, "getresultcode", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property(&_2, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_VS(&_3, &_2, ":afterHas");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_3, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_3, &key_zv);
 	zephir_check_call_status();
 	RETURN_MM_BOOL(!ZEPHIR_IS_LONG_IDENTICAL(&code, 16));
 }
@@ -471,11 +437,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, increment)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long value, ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *value_param = NULL, result, _0, _1, _2, _3, _4;
-	zval key;
+	zval key_zv, *value_param = NULL, result, _0, _1, _2, _3, _4;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -489,16 +455,10 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, increment)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &key_param, &value_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		value_param = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	if (!value_param) {
 		value = 1;
 	} else {
@@ -506,17 +466,17 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, increment)
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_CONCAT_VS(&_1, &_0, ":beforeIncrement");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_2, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_3, value);
-	ZEPHIR_CALL_METHOD(&result, &_2, "increment", NULL, 0, &key, &_3);
+	ZEPHIR_CALL_METHOD(&result, &_2, "increment", NULL, 0, &key_zv, &_3);
 	zephir_check_call_status();
 	zephir_read_property(&_3, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_4);
 	ZEPHIR_CONCAT_VS(&_4, &_3, ":afterIncrement");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4, &key_zv);
 	zephir_check_call_status();
 	RETURN_CCTOR(&result);
 }
@@ -541,11 +501,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, set)
 	zend_bool _2;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *value, value_sub, *ttl = NULL, ttl_sub, __$null, result, _0, _1, _5, _6, _7, _8, _9, _10, _3$$3, _4$$3;
-	zval key;
+	zval key_zv, *value, value_sub, *ttl = NULL, ttl_sub, __$null, result, _0, _1, _5, _6, _7, _8, _9, _10, _3$$3, _4$$3;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&ttl_sub);
 	ZVAL_NULL(&__$null);
@@ -569,8 +529,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, set)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 1, &key_param, &value, &ttl);
-	zephir_get_strval(&key, key_param);
+	value = ZEND_CALL_ARG(execute_data, 2);
+	if (ZEND_NUM_ARGS() > 2) {
+		ttl = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&key_zv, key);
 	if (!ttl) {
 		ttl = &ttl_sub;
 		ttl = &__$null;
@@ -578,19 +541,19 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, set)
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_CONCAT_VS(&_1, &_0, ":beforeSet");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_1, &key_zv);
 	zephir_check_call_status();
 	_2 = Z_TYPE_P(ttl) == IS_LONG;
 	if (_2) {
 		_2 = ZEPHIR_LT_LONG(ttl, 1);
 	}
 	if (_2) {
-		ZEPHIR_CALL_METHOD(&result, this_ptr, "delete", NULL, 0, &key);
+		ZEPHIR_CALL_METHOD(&result, this_ptr, "delete", NULL, 0, &key_zv);
 		zephir_check_call_status();
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 		ZEPHIR_INIT_VAR(&_4$$3);
 		ZEPHIR_CONCAT_VS(&_4$$3, &_3$$3, ":afterSet");
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4$$3, &key);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_4$$3, &key_zv);
 		zephir_check_call_status();
 		RETURN_CCTOR(&result);
 	}
@@ -600,12 +563,12 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, set)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_7, this_ptr, "getttl", NULL, 0, ttl);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&result, &_5, "set", NULL, 0, &key, &_6, &_7);
+	ZEPHIR_CALL_METHOD(&result, &_5, "set", NULL, 0, &key_zv, &_6, &_7);
 	zephir_check_call_status();
 	zephir_read_property(&_8, this_ptr, ZEND_STRL("eventType"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_9);
 	ZEPHIR_CONCAT_VS(&_9, &_8, ":afterSet");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_9, &key);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "fire", NULL, 0, &_9, &key_zv);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_10);
 	if (((Z_TYPE_P(&result) == IS_TRUE || Z_TYPE_P(&result) == IS_FALSE) == 1)) {
@@ -630,11 +593,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, setForever)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *value, value_sub, result, _0, _1, _2, _3;
-	zval key;
+	zval key_zv, *value, value_sub, result, _0, _1, _2, _3;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
@@ -647,14 +610,14 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, setForever)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &key_param, &value);
-	zephir_get_strval(&key, key_param);
+	value = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&key_zv, key);
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getadapter", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "getserializeddata", NULL, 0, value);
 	zephir_check_call_status();
 	ZVAL_LONG(&_2, 0);
-	ZEPHIR_CALL_METHOD(&result, &_0, "set", NULL, 0, &key, &_1, &_2);
+	ZEPHIR_CALL_METHOD(&result, &_0, "set", NULL, 0, &key_zv, &_1, &_2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_3);
 	if (((Z_TYPE_P(&result) == IS_TRUE || Z_TYPE_P(&result) == IS_FALSE) == 1)) {
@@ -712,13 +675,13 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, setSasl)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval saslUser, saslPass;
-	zval *connection, connection_sub, *saslUser_param = NULL, *saslPass_param = NULL;
+	zend_string *saslUser = NULL, *saslPass = NULL;
+	zval *connection, connection_sub, saslUser_zv, saslPass_zv;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&connection_sub);
-	ZVAL_UNDEF(&saslUser);
-	ZVAL_UNDEF(&saslPass);
+	ZVAL_UNDEF(&saslUser_zv);
+	ZVAL_UNDEF(&saslPass_zv);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_OBJECT_OF_CLASS(connection, zephir_get_internal_ce(SL("memcached")))
 		Z_PARAM_STR(saslUser)
@@ -726,11 +689,11 @@ PHP_METHOD(Phalcon_Storage_Adapter_Libmemcached, setSasl)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 3, 0, &connection, &saslUser_param, &saslPass_param);
-	zephir_get_strval(&saslUser, saslUser_param);
-	zephir_get_strval(&saslPass, saslPass_param);
-	if (1 != ZEPHIR_IS_EMPTY(&saslUser)) {
-		ZEPHIR_CALL_METHOD(NULL, connection, "setsaslauthdata", NULL, 0, &saslUser, &saslPass);
+	connection = ZEND_CALL_ARG(execute_data, 1);
+	ZVAL_STR_COPY(&saslUser_zv, saslUser);
+	ZVAL_STR_COPY(&saslPass_zv, saslPass);
+	if (1 != ZEPHIR_IS_EMPTY(&saslUser_zv)) {
+		ZEPHIR_CALL_METHOD(NULL, connection, "setsaslauthdata", NULL, 0, &saslUser_zv, &saslPass_zv);
 		zephir_check_call_status();
 	}
 	RETURN_THIS();

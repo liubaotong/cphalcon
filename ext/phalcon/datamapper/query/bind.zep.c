@@ -125,11 +125,11 @@ PHP_METHOD(Phalcon_DataMapper_Query_Bind, bindInline)
 PHP_METHOD(Phalcon_DataMapper_Query_Bind, remove)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *key_param = NULL, store, _0;
-	zval key;
+	zval key_zv, store, _0;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&store);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -137,11 +137,10 @@ PHP_METHOD(Phalcon_DataMapper_Query_Bind, remove)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &key_param);
-	zephir_get_strval(&key, key_param);
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("store"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&store, &_0);
-	zephir_array_unset(&store, &key, PH_SEPARATE);
+	zephir_array_unset(&store, &key_zv, PH_SEPARATE);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("store"), &store);
 	ZEPHIR_MM_RESTORE();
 }
@@ -158,11 +157,11 @@ PHP_METHOD(Phalcon_DataMapper_Query_Bind, setValue)
 	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long type, ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *value, value_sub, *type_param = NULL, localType;
-	zval key;
+	zval key_zv, *value, value_sub, *type_param = NULL, localType;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&localType);
 	ZVAL_UNDEF(&_0);
@@ -174,8 +173,11 @@ PHP_METHOD(Phalcon_DataMapper_Query_Bind, setValue)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 1, &key_param, &value, &type_param);
-	zephir_get_strval(&key, key_param);
+	value = ZEND_CALL_ARG(execute_data, 2);
+	if (ZEND_NUM_ARGS() > 2) {
+		type_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&key_zv, key);
 	if (!type_param) {
 		type = -1;
 	} else {
@@ -190,7 +192,7 @@ PHP_METHOD(Phalcon_DataMapper_Query_Bind, setValue)
 	zephir_create_array(&_0, 2, 0);
 	zephir_array_fast_append(&_0, value);
 	zephir_array_fast_append(&_0, &localType);
-	zephir_update_property_array(this_ptr, SL("store"), &key, &_0);
+	zephir_update_property_array(this_ptr, SL("store"), &key_zv, &_0);
 	ZEPHIR_MM_RESTORE();
 }
 

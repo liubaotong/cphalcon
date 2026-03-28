@@ -126,7 +126,7 @@ PHP_METHOD(Phalcon_Config_ConfigFactory, load)
 	zephir_memory_observe(&filePath);
 	zephir_array_fetch_string(&filePath, &configArray, SL("filePath"), PH_NOISY, "phalcon/Config/ConfigFactory.zep", 61);
 	ZVAL_LONG(&_1, 4);
-	ZEPHIR_CALL_FUNCTION(&_2, "pathinfo", NULL, 89, &filePath, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "pathinfo", NULL, 91, &filePath, &_1);
 	zephir_check_call_status();
 	if (1 == ZEPHIR_IS_EMPTY(&_2)) {
 		ZEPHIR_CALL_FUNCTION(&_3$$3, "lcfirst", NULL, 76, &adapter);
@@ -180,12 +180,12 @@ PHP_METHOD(Phalcon_Config_ConfigFactory, newInstance)
 	zval arguments;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *fileName_param = NULL, *params = NULL, params_sub, __$null, definition;
-	zval name, fileName;
+	zval name_zv, fileName_zv, *params = NULL, params_sub, __$null, definition;
+	zend_string *name = NULL, *fileName = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
-	ZVAL_UNDEF(&fileName);
+	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&fileName_zv);
 	ZVAL_UNDEF(&params_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&definition);
@@ -199,20 +199,22 @@ PHP_METHOD(Phalcon_Config_ConfigFactory, newInstance)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 1, &name_param, &fileName_param, &params);
-	zephir_get_strval(&name, name_param);
-	zephir_get_strval(&fileName, fileName_param);
+	if (ZEND_NUM_ARGS() > 2) {
+		params = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&name_zv, name);
+	ZVAL_STR_COPY(&fileName_zv, fileName);
 	if (!params) {
 		params = &params_sub;
 		params = &__$null;
 	}
-	ZEPHIR_CALL_METHOD(&definition, this_ptr, "getservice", NULL, 0, &name);
+	ZEPHIR_CALL_METHOD(&definition, this_ptr, "getservice", NULL, 0, &name_zv);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&arguments);
 	zephir_create_array(&arguments, 1, 0);
-	zephir_array_fast_append(&arguments, &fileName);
+	zephir_array_fast_append(&arguments, &fileName_zv);
 	do {
-		if (ZEPHIR_IS_STRING(&name, "grouped") || ZEPHIR_IS_STRING(&name, "ini") || ZEPHIR_IS_STRING(&name, "yaml")) {
+		if (ZEPHIR_IS_STRING(&name_zv, "grouped") || ZEPHIR_IS_STRING(&name_zv, "ini") || ZEPHIR_IS_STRING(&name_zv, "yaml")) {
 			if (Z_TYPE_P(params) != IS_NULL) {
 				zephir_array_append(&arguments, params, PH_SEPARATE, "phalcon/Config/ConfigFactory.zep", 112);
 			}
@@ -281,7 +283,7 @@ PHP_METHOD(Phalcon_Config_ConfigFactory, parseConfig)
 	if (Z_TYPE_P(config) == IS_STRING) {
 		ZEPHIR_CPY_WRT(&oldConfig, config);
 		ZVAL_LONG(&_0$$3, 4);
-		ZEPHIR_CALL_FUNCTION(&extension, "pathinfo", NULL, 89, config, &_0$$3);
+		ZEPHIR_CALL_FUNCTION(&extension, "pathinfo", NULL, 91, config, &_0$$3);
 		zephir_check_call_status();
 		if (1 == ZEPHIR_IS_EMPTY(&extension)) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_config_exception_ce, "You need to provide the extension in the file path", "phalcon/Config/ConfigFactory.zep", 161);
@@ -306,7 +308,7 @@ PHP_METHOD(Phalcon_Config_ConfigFactory, parseConfig)
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_config_exception_ce, "Config must be array or Phalcon\\Config\\Config object", "phalcon/Config/ConfigFactory.zep", 177);
 		return;
 	}
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "checkconfigarray", NULL, 200, config);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "checkconfigarray", NULL, 199, config);
 	zephir_check_call_status();
 	RETVAL_ZVAL(config, 1, 0);
 	RETURN_MM();

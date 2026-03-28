@@ -15,8 +15,6 @@
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/memory.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
 #include "kernel/object.h"
 
 
@@ -54,10 +52,10 @@ PHP_METHOD(Phalcon_Translate_Interpolator_IndexedArray, replacePlaceholders)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval placeholders;
-	zval *translation_param = NULL, *placeholders_param = NULL, _0$$3;
-	zval translation;
+	zval translation_zv, *placeholders_param = NULL, _0$$3;
+	zend_string *translation = NULL;
 
-	ZVAL_UNDEF(&translation);
+	ZVAL_UNDEF(&translation_zv);
 	ZVAL_UNDEF(&_0$$3);
 	ZVAL_UNDEF(&placeholders);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
@@ -67,16 +65,10 @@ PHP_METHOD(Phalcon_Translate_Interpolator_IndexedArray, replacePlaceholders)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &translation_param, &placeholders_param);
-	if (UNEXPECTED(Z_TYPE_P(translation_param) != IS_STRING && Z_TYPE_P(translation_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'translation' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		placeholders_param = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(translation_param) == IS_STRING)) {
-		zephir_get_strval(&translation, translation_param);
-	} else {
-		ZEPHIR_INIT_VAR(&translation);
-	}
+	ZVAL_STR_COPY(&translation_zv, translation);
 	if (!placeholders_param) {
 		ZEPHIR_INIT_VAR(&placeholders);
 		array_init(&placeholders);
@@ -85,7 +77,7 @@ PHP_METHOD(Phalcon_Translate_Interpolator_IndexedArray, replacePlaceholders)
 	}
 	if (1 != ZEPHIR_IS_EMPTY(&placeholders)) {
 		ZEPHIR_MAKE_REF(&placeholders);
-		ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 271, &placeholders, &translation);
+		ZEPHIR_CALL_FUNCTION(NULL, "array_unshift", NULL, 270, &placeholders, &translation_zv);
 		ZEPHIR_UNREF(&placeholders);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_0$$3);
@@ -94,6 +86,6 @@ PHP_METHOD(Phalcon_Translate_Interpolator_IndexedArray, replacePlaceholders)
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	RETURN_CTOR(&translation);
+	RETURN_MM_STR(zend_string_copy(translation));
 }
 

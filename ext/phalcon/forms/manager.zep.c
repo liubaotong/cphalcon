@@ -15,10 +15,10 @@
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
 #include "kernel/array.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "kernel/operators.h"
 
 
 /**
@@ -54,11 +54,11 @@ PHP_METHOD(Phalcon_Forms_Manager, create)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *entity = NULL, entity_sub, __$null, form;
-	zval name;
+	zval name_zv, *entity = NULL, entity_sub, __$null, form;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&entity_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&form);
@@ -70,17 +70,19 @@ PHP_METHOD(Phalcon_Forms_Manager, create)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &name_param, &entity);
-	zephir_get_strval(&name, name_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		entity = ZEND_CALL_ARG(execute_data, 2);
+	}
+	ZVAL_STR_COPY(&name_zv, name);
 	if (!entity) {
 		entity = &entity_sub;
 		entity = &__$null;
 	}
 	ZEPHIR_INIT_VAR(&form);
 	object_init_ex(&form, phalcon_forms_form_ce);
-	ZEPHIR_CALL_METHOD(NULL, &form, "__construct", NULL, 322, entity);
+	ZEPHIR_CALL_METHOD(NULL, &form, "__construct", NULL, 320, entity);
 	zephir_check_call_status();
-	zephir_update_property_array(this_ptr, SL("forms"), &name, &form);
+	zephir_update_property_array(this_ptr, SL("forms"), &name_zv, &form);
 	RETURN_CCTOR(&form);
 }
 
@@ -89,31 +91,31 @@ PHP_METHOD(Phalcon_Forms_Manager, create)
  */
 PHP_METHOD(Phalcon_Forms_Manager, get)
 {
+	zval _2$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, form, _0, _1$$3;
-	zval name, _2$$3;
+	zval name_zv, form, _0, _1$$3;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
-	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&form);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	zephir_get_strval(&name, name_param);
+	ZVAL_STR_COPY(&name_zv, name);
 	zephir_memory_observe(&form);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("forms"), PH_NOISY_CC | PH_READONLY);
-	if (UNEXPECTED(!(zephir_array_isset_fetch(&form, &_0, &name, 0)))) {
+	if (UNEXPECTED(!(zephir_array_isset_fetch(&form, &_0, &name_zv, 0)))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, phalcon_forms_exception_ce);
 		ZEPHIR_INIT_VAR(&_2$$3);
-		ZEPHIR_CONCAT_SVS(&_2$$3, "There is no form with name='", &name, "'");
+		ZEPHIR_CONCAT_SVS(&_2$$3, "There is no form with name='", &name_zv, "'");
 		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 33, &_2$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(&_1$$3, "phalcon/Forms/Manager.zep", 46);
@@ -128,22 +130,18 @@ PHP_METHOD(Phalcon_Forms_Manager, get)
  */
 PHP_METHOD(Phalcon_Forms_Manager, has)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL, _0;
-	zval name;
+	zval name_zv, _0;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	zephir_get_strval(&name, name_param);
+	ZVAL_STR(&name_zv, name);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("forms"), PH_NOISY_CC | PH_READONLY);
-	RETURN_MM_BOOL(zephir_array_isset(&_0, &name));
+	RETURN_BOOL(zephir_array_isset(&_0, &name_zv));
 }
 
 /**
@@ -151,23 +149,20 @@ PHP_METHOD(Phalcon_Forms_Manager, has)
  */
 PHP_METHOD(Phalcon_Forms_Manager, set)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL, *form, form_sub;
-	zval name;
+	zval name_zv, *form, form_sub;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&form_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(name)
 		Z_PARAM_OBJECT_OF_CLASS(form, phalcon_forms_form_ce)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &name_param, &form);
-	zephir_get_strval(&name, name_param);
-	zephir_update_property_array(this_ptr, SL("forms"), &name, form);
-	RETURN_THIS();
+	form = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR(&name_zv, name);
+	zephir_update_property_array(this_ptr, SL("forms"), &name_zv, form);
+	RETURN_THISW();
 }
 
 zend_object *zephir_init_properties_Phalcon_Forms_Manager(zend_class_entry *class_type)

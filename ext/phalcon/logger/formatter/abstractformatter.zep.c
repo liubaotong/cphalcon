@@ -13,7 +13,6 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 
@@ -65,21 +64,16 @@ PHP_METHOD(Phalcon_Logger_Formatter_AbstractFormatter, getDateFormat)
  */
 PHP_METHOD(Phalcon_Logger_Formatter_AbstractFormatter, setDateFormat)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *format_param = NULL;
-	zval format;
+	zval format_zv;
+	zend_string *format = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&format);
+	ZVAL_UNDEF(&format_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(format)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &format_param);
-	zephir_get_strval(&format, format_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("dateFormat"), &format);
-	ZEPHIR_MM_RESTORE();
+	ZVAL_STR(&format_zv, format);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("dateFormat"), &format_zv);
 }
 
 /**
@@ -123,28 +117,28 @@ PHP_METHOD(Phalcon_Logger_Formatter_AbstractFormatter, getInterpolatedMessage)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval message;
-	zval *item, item_sub, *message_param = NULL, _0, _1, _2;
+	zend_string *message = NULL;
+	zval *item, item_sub, message_zv, _0, _1, _2;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&item_sub);
+	ZVAL_UNDEF(&message_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
-	ZVAL_UNDEF(&message);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(item, phalcon_logger_item_ce)
 		Z_PARAM_STR(message)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &item, &message_param);
-	zephir_get_strval(&message, message_param);
+	item = ZEND_CALL_ARG(execute_data, 1);
+	ZVAL_STR_COPY(&message_zv, message);
 	ZEPHIR_CALL_METHOD(&_0, item, "getcontext", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("interpolatorLeft"), PH_NOISY_CC | PH_READONLY);
 	zephir_read_property(&_2, this_ptr, ZEND_STRL("interpolatorRight"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "tointerpolate", NULL, 0, &message, &_0, &_1, &_2);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "tointerpolate", NULL, 0, &message_zv, &_0, &_1, &_2);
 	zephir_check_call_status();
 	RETURN_MM();
 }

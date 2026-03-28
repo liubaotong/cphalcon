@@ -12,13 +12,13 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/object.h"
 #include "kernel/array.h"
 #include "kernel/fcall.h"
 #include "kernel/string.h"
 #include "kernel/concat.h"
+#include "kernel/operators.h"
 
 
 /**
@@ -80,12 +80,12 @@ ZEPHIR_INIT_CLASS(Phalcon_Html_Breadcrumbs)
 PHP_METHOD(Phalcon_Html_Breadcrumbs, add)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *label_param = NULL, *link_param = NULL;
-	zval label, link;
+	zval label_zv, link_zv;
+	zend_string *label = NULL, *link = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&label);
-	ZVAL_UNDEF(&link);
+	ZVAL_UNDEF(&label_zv);
+	ZVAL_UNDEF(&link_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(label)
 		Z_PARAM_OPTIONAL
@@ -93,15 +93,14 @@ PHP_METHOD(Phalcon_Html_Breadcrumbs, add)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &label_param, &link_param);
-	zephir_get_strval(&label, label_param);
-	if (!link_param) {
-		ZEPHIR_INIT_VAR(&link);
-		ZVAL_STRING(&link, "");
+	ZVAL_STR_COPY(&label_zv, label);
+	if (!link) {
+		link = zend_string_init(ZEND_STRL(""), 0);
+		ZVAL_STR(&link_zv, link);
 	} else {
-		zephir_get_strval(&link, link_param);
+		ZVAL_STR_COPY(&link_zv, link);
 	}
-	zephir_update_property_array(this_ptr, SL("elements"), &link, &label);
+	zephir_update_property_array(this_ptr, SL("elements"), &link_zv, &label_zv);
 	RETURN_THIS();
 }
 
@@ -152,11 +151,11 @@ PHP_METHOD(Phalcon_Html_Breadcrumbs, getSeparator)
 PHP_METHOD(Phalcon_Html_Breadcrumbs, remove)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *link_param = NULL, elements, _0;
-	zval link;
+	zval link_zv, elements, _0;
+	zend_string *link = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&link);
+	ZVAL_UNDEF(&link_zv);
 	ZVAL_UNDEF(&elements);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -164,11 +163,10 @@ PHP_METHOD(Phalcon_Html_Breadcrumbs, remove)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &link_param);
-	zephir_get_strval(&link, link_param);
+	ZVAL_STR_COPY(&link_zv, link);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("elements"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&elements, &_0);
-	zephir_array_unset(&elements, &link, PH_SEPARATE);
+	zephir_array_unset(&elements, &link_zv, PH_SEPARATE);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("elements"), &elements);
 	ZEPHIR_MM_RESTORE();
 }
@@ -227,7 +225,7 @@ PHP_METHOD(Phalcon_Html_Breadcrumbs, render)
 	ZEPHIR_INIT_VAR(&urls);
 	zephir_array_keys(&urls, &elements);
 	ZEPHIR_MAKE_REF(&urls);
-	ZEPHIR_CALL_FUNCTION(&lastUrl, "end", NULL, 323, &urls);
+	ZEPHIR_CALL_FUNCTION(&lastUrl, "end", NULL, 321, &urls);
 	ZEPHIR_UNREF(&urls);
 	zephir_check_call_status();
 	zephir_memory_observe(&lastLabel);
@@ -332,21 +330,17 @@ PHP_METHOD(Phalcon_Html_Breadcrumbs, render)
  */
 PHP_METHOD(Phalcon_Html_Breadcrumbs, setSeparator)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *separator_param = NULL;
-	zval separator;
+	zval separator_zv;
+	zend_string *separator = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&separator);
+	ZVAL_UNDEF(&separator_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(separator)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &separator_param);
-	zephir_get_strval(&separator, separator_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("separator"), &separator);
-	RETURN_THIS();
+	ZVAL_STR(&separator_zv, separator);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("separator"), &separator_zv);
+	RETURN_THISW();
 }
 
 /**
