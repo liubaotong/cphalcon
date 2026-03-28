@@ -22,23 +22,13 @@ class InvoicesMigration extends AbstractMigration
 {
     protected $table = 'co_invoices';
 
-    /**
-     * @param int         $id
-     * @param int|null    $custId
-     * @param int         $status
-     * @param string|null $title
-     * @param float       $total
-     * @param string|null $createdAt
-     *
-     * @return int
-     */
     public function insert(
-        $id,
-        int $custId = null,
+        int|string|null $id,
+        ?int $custId = null,
         int $status = 0,
-        string $title = null,
+        ?string $title = null,
         float $total = 0,
-        string $createdAt = null
+        ?string $createdAt = null
     ): int {
         $id     = $id ?: 'null';
         $title  = $title ?: uniqid('', true);

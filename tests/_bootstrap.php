@@ -7,8 +7,12 @@ define('PROJECT_PATH', $root);
 
 require_once $root . 'tests/_config/functions.php';
 
+if (file_exists(rootDir('.env'))) {
+    $dotenv = Dotenv\Dotenv::createImmutable(rootDir());
+    $dotenv->load();
+}
+
 loadIni();
-loadAutoloader($root);
 loadFolders();
 loadDefined();
 

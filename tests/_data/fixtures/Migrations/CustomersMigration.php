@@ -31,10 +31,10 @@ class CustomersMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        $id,
+        ?int $id,
         int $status = 0,
-        string $first = null,
-        string $last = null
+        ?string $first = null,
+        ?string $last = null
     ): int {
         $id  = $id ?: 'null';
         $sql = <<<SQL

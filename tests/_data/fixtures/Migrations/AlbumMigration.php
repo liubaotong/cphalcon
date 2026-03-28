@@ -28,10 +28,10 @@ class AlbumMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        $id,
+        ?int $id,
         string $name,
-        int $albumId = null,
-        int $photoId = null
+        ?int $albumId = null,
+        ?int $photoId = null
     ): int {
 
         $id     = $id ?: 'null';

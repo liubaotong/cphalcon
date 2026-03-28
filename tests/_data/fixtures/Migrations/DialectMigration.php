@@ -27,16 +27,6 @@ class DialectMigration extends AbstractMigration
 {
     protected $table = 'co_dialect';
 
-    /**
-     * @param int         $id
-     * @param int|null    $custId
-     * @param int         $status
-     * @param string|null $title
-     * @param float       $total
-     * @param string|null $createdAt
-     *
-     * @return int
-     */
     public function insert(
         int $primary,
         $blob,

@@ -20,23 +20,17 @@ class OrdersMigration extends AbstractMigration
 {
     protected $table = "co_orders";
 
-    /**
-     * @param int         $prdt_id
-     * @param string|null $prdt_name
-     *
-     * @return int
-     */
     public function insert(
-        $ord_id,
-        string $ord_name = null
+        ?int $id,
+        ?string $name = null
     ): int {
-        $ord_id    = $ord_id ?: 'null';
-        $ord_name  = $ord_name ?: uniqid();
-        $sql    = <<<SQL
+        $id    = $id ?: 'null';
+        $name  = $name ?: uniqid();
+        $sql   = <<<SQL
 insert into co_orders (
     ord_id, ord_name
 ) values (
-    {$ord_id}, {$ord_name}
+    {$id}, {$name}
 )
 SQL;
 

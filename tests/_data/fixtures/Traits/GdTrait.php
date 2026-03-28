@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Fixtures\Traits;
 
-use UnitTester;
+use function supportDir;
 
 /**
  * Trait GdTrait
@@ -23,18 +23,15 @@ trait GdTrait
     /**
      * executed before each test
      */
-    public function _before(UnitTester $I)
+    public function setUp(): void
     {
-        $I->checkExtensionIsLoaded('gd');
+        $this->checkExtensionIsLoaded('gd');
     }
 
-    /**
-     * @param UnitTester $I
-     */
-    private function checkJpegSupport(UnitTester $I): void
+    private function checkJpegSupport(): void
     {
         if (true !== $this->hasJpegSupport()) {
-            $I->skipTest(
+            $this->markTestSkipped(
                 "Extension 'gd' is compiled without JPEG support."
             );
         }
@@ -56,14 +53,14 @@ trait GdTrait
     private function getImages(): array
     {
         $images = [
-            'gif' => dataDir('assets/images/example-gif.gif'),
-            'png' => dataDir('assets/images/example-png.png'),
+            'gif' => supportDir('assets/images/example-gif.gif'),
+            'png' => supportDir('assets/images/example-png.png'),
         ];
 
         if (true === $this->hasJpegSupport()) {
-            $images['jpg']  = dataDir('assets/images/example-jpg.jpg');
-            $images['wbmp'] = dataDir('assets/images/example-wbmp.wbmp');
-            $images['webp'] = dataDir('assets/images/example-webp.webp');
+            $images['jpg']  = supportDir('assets/images/example-jpg.jpg');
+            $images['wbmp'] = supportDir('assets/images/example-wbmp.wbmp');
+            $images['webp'] = supportDir('assets/images/example-webp.webp');
         }
 
         return $images;

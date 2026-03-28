@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Fixtures\Helpers;
 
 use Codeception\Example;
-use Phalcon\Tests\Fixtures\Traits\TranslateGettextTrait;
+use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateGettextTrait;
 use Phalcon\Translate\Adapter\Gettext;
 use Phalcon\Translate\InterpolatorFactory;
 use UnitTester;

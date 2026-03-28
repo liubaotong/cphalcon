@@ -20,23 +20,17 @@ class ProductsMigration extends AbstractMigration
 {
     protected $table = "co_products";
 
-    /**
-     * @param int         $prd_id
-     * @param string|null $prd_name
-     *
-     * @return int
-     */
     public function insert(
-        $prd_id,
-        string $prd_name = null
+        ?int $id,
+        ?string $name = null
     ): int {
-        $prd_id    = $prd_id ?: 'null';
-        $prd_name  = $prd_name ?: uniqid();
+        $id    = $id ?: 'null';
+        $name  = $name ?: uniqid();
         $sql    = <<<SQL
 insert into co_products (
     prd_id, prd_name
 ) values (
-    {$prd_id}, {$prd_name}
+    {$id}, {$name}
 )
 SQL;
 

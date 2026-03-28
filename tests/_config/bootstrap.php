@@ -13,10 +13,7 @@ $container = new FactoryDefault();
 /**
  * Load environment
  */
-$root = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
-
 loadIni();
-loadAutoloader($root);
 loadFolders();
 loadDefined();
 
@@ -28,12 +25,12 @@ $configFile = [
         'baseUri'        => '/',
         'staticUri'      => '/',
         'timezone'       => 'UTC',
-        'controllersDir' => $root . 'tests/_data/fixtures/controllers/',
-        'modelsDir'      => $root . 'tests/_data/fixtures/models/',
-        'modulesDir'     => $root . 'tests/_data/fixtures/modules/',
-        'viewsDir'       => $root . 'tests/_data/fixtures/views/',
-        'resultsetsDir'  => $root . 'tests/_data/fixtures/resultsets/',
-        'tasksDir'       => $root . 'tests/_data/fixtures/tasks/',
+        'controllersDir' => rootDir('tests/_data/fixtures/controllers/'),
+        'modelsDir'      => rootDir('tests/_data/fixtures/models/'),
+        'modulesDir'     => rootDir('tests/_data/fixtures/modules/'),
+        'viewsDir'       => rootDir('tests/_data/fixtures/views/'),
+        'resultsetsDir'  => rootDir('tests/_data/fixtures/resultsets/'),
+        'tasksDir'       => rootDir('tests/_data/fixtures/tasks/'),
     ]
 ];
 
