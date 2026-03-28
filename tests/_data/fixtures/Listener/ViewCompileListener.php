@@ -13,29 +13,24 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Fixtures\Listener;
 
-use IntegrationTester;
 use Phalcon\Events\Event;
-use Phalcon\Tests\Integration\Mvc\View\Engine\Volt\RenderCest;
-use UnitTester;
+use Phalcon\Tests\Unit\Mvc\View\Engine\Volt\RenderTest;
+use PHPUnit\Framework\Assert;
 
 /**
  * Class ViewCompileListener
  */
 class ViewCompileListener
 {
-    /** @var RenderCest */
+    /** @var RenderTest */
     protected $testCase;
-
-    /** @var UnitTester */
-    protected $tester;
 
     protected $before = '';
     protected $after  = '';
 
-    public function setTestCase(RenderCest $testCase, IntegrationTester $tester)
+    public function setTestCase(RenderTest $testCase)
     {
         $this->testCase = $testCase;
-        $this->tester   = $tester;
     }
 
     /**
@@ -44,10 +39,7 @@ class ViewCompileListener
      */
     public function beforeCompile($event, $component)
     {
-        $this->tester->assertInstanceOf(
-            Event::class,
-            $event
-        );
+        Assert::isInstanceOf(Event::class)->evaluate($event);
 
         $this->before = 'Before fired';
     }
@@ -58,10 +50,7 @@ class ViewCompileListener
      */
     public function afterCompile($event, $component)
     {
-        $this->tester->assertInstanceOf(
-            Event::class,
-            $event
-        );
+        Assert::isInstanceOf(Event::class)->evaluate($event);
 
         $this->after = 'After fired';
     }
