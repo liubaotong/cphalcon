@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -11,40 +9,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Codeception\Util\Autoload;
+declare(strict_types=1);
 
 /*******************************************************************************
  * Load settings and setup
  *******************************************************************************/
-/**
- * Initialize ini values and xdebug if it is loaded
- */
-if (!function_exists('loadAutoloader')) {
-    function loadAutoloader(string $root)
-    {
-        Autoload::addNamespace(
-            'Phalcon\Tests\Controllers',
-            $root . 'fixtures/controllers'
-        );
-        Autoload::addNamespace(
-            'Phalcon\Tests\Models',
-            $root . 'fixtures/models'
-        );
-        Autoload::addNamespace(
-            'Phalcon\Tests\Resultsets',
-            $root . 'fixtures/resultsets'
-        );
-        Autoload::addNamespace(
-            'Phalcon\Tests\Modules\Frontend\Controllers',
-            $root . 'fixtures/modules/frontend/controllers/'
-        );
-        Autoload::addNamespace(
-            'Phalcon\Tests\Modules\Backend\Controllers',
-            $root . 'fixtures/modules/backend/controllers/'
-        );
-    }
-}
-
 /**
  * Converts ENV variables to defined for tests to work
  */
@@ -60,6 +29,10 @@ if (!function_exists('loadDefined')) {
 
         if (!defined('PATH_DATA')) {
             define('PATH_DATA', dataDir());
+        }
+
+        if (!defined('PATH_SUPPORT')) {
+            define('PATH_SUPPORT', supportDir());
         }
 
         if (!defined('PATH_OUTPUT')) {
@@ -136,12 +109,22 @@ if (!function_exists('loadIni')) {
  * Directories
  *******************************************************************************/
 /**
+ * Returns the project root directory
+ */
+if (!function_exists('rootDir')) {
+    function rootDir(string $fileName = ''): string
+    {
+        return dirname(__FILE__, 3) . DIRECTORY_SEPARATOR . $fileName;
+    }
+}
+
+/**
  * Returns the cache folder
  */
 if (!function_exists('cacheDir')) {
     function cacheDir(string $fileName = ''): string
     {
-        return codecept_output_dir()
+        return outputDir()
             . 'tests' . DIRECTORY_SEPARATOR
             . 'cache' . DIRECTORY_SEPARATOR
             . $fileName;
@@ -149,22 +132,25 @@ if (!function_exists('cacheDir')) {
 }
 
 /**
- * Returns the output folder
+ * Returns the data folder
  */
 if (!function_exists('dataDir')) {
     function dataDir(string $fileName = ''): string
     {
-        return codecept_data_dir() . $fileName;
+        return rootDir()
+            . 'tests' . DIRECTORY_SEPARATOR
+            . '_data' . DIRECTORY_SEPARATOR
+            . $fileName;
     }
 }
 
 /**
- * Returns the output folder
+ * Returns the logs folder
  */
 if (!function_exists('logsDir')) {
     function logsDir(string $fileName = ''): string
     {
-        return codecept_output_dir()
+        return outputDir()
             . 'tests' . DIRECTORY_SEPARATOR
             . 'logs' . DIRECTORY_SEPARATOR
             . $fileName;
@@ -172,12 +158,12 @@ if (!function_exists('logsDir')) {
 }
 
 /**
- * Returns the output folder
+ * Returns the cache/models folder
  */
 if (!function_exists('cacheModelsDir')) {
     function cacheModelsDir(string $fileName = ''): string
     {
-        return codecept_output_dir()
+        return outputDir()
             . 'tests' . DIRECTORY_SEPARATOR
             . 'cache' . DIRECTORY_SEPARATOR
             . 'models' . DIRECTORY_SEPARATOR
@@ -191,7 +177,23 @@ if (!function_exists('cacheModelsDir')) {
 if (!function_exists('outputDir')) {
     function outputDir(string $fileName = ''): string
     {
-        return codecept_output_dir() . $fileName;
+        return rootDir()
+            . 'tests' . DIRECTORY_SEPARATOR
+            . '_output' . DIRECTORY_SEPARATOR
+            . $fileName;
+    }
+}
+
+/**
+ * Returns the support folder
+ */
+if (!function_exists('supportDir')) {
+    function supportDir(string $fileName = ''): string
+    {
+        return rootDir()
+            . 'tests' . DIRECTORY_SEPARATOR
+            . 'support' . DIRECTORY_SEPARATOR
+            . $fileName;
     }
 }
 
@@ -333,7 +335,7 @@ if (!function_exists('getOptionsSqlite')) {
     function getOptionsSqlite(): array
     {
         return [
-            'dbname' => codecept_root_dir(env('DATA_SQLITE_NAME')),
+            'dbname' => rootDir(env('DATA_SQLITE_NAME')),
         ];
     }
 }
