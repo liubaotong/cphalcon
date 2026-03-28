@@ -203,7 +203,7 @@ class CompilerTest extends AbstractUnitTestCase
         $view->render('macro', 'my_input');
         $view->finish();
 
-        $expected = '<p><input type="text" id="name" name="name" class="input-text" /></p>';
+        $expected = '<p><input type="text" id="name" name="name" class="input-text"></p>';
         $actual   = $view->getContent();
         $this->assertEquals($expected, $actual);
 

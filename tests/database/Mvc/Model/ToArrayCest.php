@@ -26,11 +26,7 @@ use Phalcon\Tests\Models\InvoicesMap;
 
 use function date;
 use function getOptionsMysql;
-use function phpversion;
 use function uniqid;
-use function version_compare;
-
-use const PHP_VERSION;
 
 class ToArrayCest
 {
