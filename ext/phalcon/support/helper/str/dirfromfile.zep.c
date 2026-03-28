@@ -48,10 +48,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_DirFromFile, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval file_zv, name, start, _0, _1, _4, _5, _2$$3, _3$$3;
-	zend_string *file = NULL;
+	zval *file_param = NULL, name, start, _0, _1, _4, _5, _2$$3, _3$$3;
+	zval file;
 
-	ZVAL_UNDEF(&file_zv);
+	ZVAL_UNDEF(&file);
 	ZVAL_UNDEF(&name);
 	ZVAL_UNDEF(&start);
 	ZVAL_UNDEF(&_0);
@@ -65,18 +65,19 @@ PHP_METHOD(Phalcon_Support_Helper_Str_DirFromFile, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&file_zv, file);
+	zephir_fetch_params(1, 1, 0, &file_param);
+	zephir_get_strval(&file, file_param);
 	ZVAL_LONG(&_0, 8);
-	ZEPHIR_CALL_FUNCTION(&name, "pathinfo", NULL, 91, &file_zv, &_0);
+	ZEPHIR_CALL_FUNCTION(&name, "pathinfo", NULL, 89, &file, &_0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_0, 0);
 	ZVAL_LONG(&_1, -2);
-	ZEPHIR_CALL_FUNCTION(&start, "mb_substr", NULL, 228, &name, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&start, "mb_substr", NULL, 229, &name, &_0, &_1);
 	zephir_check_call_status();
 	if (!zephir_is_true(&start)) {
 		ZVAL_LONG(&_2$$3, 0);
 		ZVAL_LONG(&_3$$3, 1);
-		ZEPHIR_CALL_FUNCTION(&start, "mb_substr", NULL, 228, &name, &_2$$3, &_3$$3);
+		ZEPHIR_CALL_FUNCTION(&start, "mb_substr", NULL, 229, &name, &_2$$3, &_3$$3);
 		zephir_check_call_status();
 	}
 	ZEPHIR_INIT_VAR(&_4);

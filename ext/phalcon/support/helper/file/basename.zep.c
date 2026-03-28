@@ -53,12 +53,11 @@ PHP_METHOD(Phalcon_Support_Helper_File_Basename, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zend_string *suffix = NULL;
-	zval *uri_param = NULL, suffix_zv, fileName, matches, _0, _1, _2, _3, _4, _5, _6$$3, _7$$3, _8$$3, _9$$3;
-	zval uri;
+	zval *uri_param = NULL, *suffix_param = NULL, fileName, matches, _0, _1, _2, _3, _4, _5, _6$$3, _7$$3, _8$$3, _9$$3;
+	zval uri, suffix;
 
 	ZVAL_UNDEF(&uri);
-	ZVAL_UNDEF(&suffix_zv);
+	ZVAL_UNDEF(&suffix);
 	ZVAL_UNDEF(&fileName);
 	ZVAL_UNDEF(&matches);
 	ZVAL_UNDEF(&_0);
@@ -73,18 +72,18 @@ PHP_METHOD(Phalcon_Support_Helper_File_Basename, __invoke)
 	ZVAL_UNDEF(&_9$$3);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_ZVAL(uri_param)
+		Z_PARAM_STR(uri)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_STR_OR_NULL(suffix)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	uri_param = ZEND_CALL_ARG(execute_data, 1);
+	zephir_fetch_params(1, 1, 1, &uri_param, &suffix_param);
 	zephir_get_strval(&uri, uri_param);
-	if (!suffix) {
-		ZEPHIR_INIT_VAR(&suffix_zv);
+	if (!suffix_param) {
+		ZEPHIR_INIT_VAR(&suffix);
 	} else {
-		ZVAL_STR_COPY(&suffix_zv, suffix);
+		zephir_get_strval(&suffix, suffix_param);
 	}
 	ZEPHIR_INIT_VAR(&_0);
 	ZEPHIR_INIT_VAR(&_1);
@@ -108,10 +107,10 @@ PHP_METHOD(Phalcon_Support_Helper_File_Basename, __invoke)
 		ZEPHIR_INIT_NVAR(&fileName);
 		ZVAL_STRING(&fileName, "");
 	}
-	if (1 != ZEPHIR_IS_EMPTY(&suffix_zv)) {
+	if (1 != ZEPHIR_IS_EMPTY(&suffix)) {
 		ZEPHIR_INIT_VAR(&_6$$3);
 		ZVAL_STRING(&_6$$3, "@");
-		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 356, &suffix_zv, &_6$$3);
+		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 356, &suffix, &_6$$3);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_8$$3);
 		ZEPHIR_CONCAT_SVS(&_8$$3, "@", &_7$$3, "$@");

@@ -63,17 +63,20 @@ PHP_METHOD(Phalcon_Encryption_Crypt_Padding_Noop, pad)
  */
 PHP_METHOD(Phalcon_Encryption_Crypt_Padding_Noop, unpad)
 {
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long blockSize;
-	zval input_zv, *blockSize_param = NULL;
-	zend_string *input = NULL;
+	zval *input_param = NULL, *blockSize_param = NULL;
+	zval input;
 
-	ZVAL_UNDEF(&input_zv);
+	ZVAL_UNDEF(&input);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(input)
 		Z_PARAM_LONG(blockSize)
 	ZEND_PARSE_PARAMETERS_END();
-	blockSize_param = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR(&input_zv, input);
-	RETURN_LONG(0);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 2, 0, &input_param, &blockSize_param);
+	zephir_get_strval(&input, input_param);
+	RETURN_MM_LONG(0);
 }
 

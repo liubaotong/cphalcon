@@ -121,17 +121,26 @@ PHP_METHOD(Phalcon_Support_Registry, __get)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv;
-	zend_string *element = NULL;
+	zval *element_param = NULL;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "get", NULL, 0, &element_zv);
+	zephir_fetch_params(1, 1, 0, &element_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "get", NULL, 0, &element);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -143,17 +152,26 @@ PHP_METHOD(Phalcon_Support_Registry, __isset)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv;
-	zend_string *element = NULL;
+	zval *element_param = NULL;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "has", NULL, 0, &element_zv);
+	zephir_fetch_params(1, 1, 0, &element_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "has", NULL, 0, &element);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -165,10 +183,10 @@ PHP_METHOD(Phalcon_Support_Registry, __set)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv, *value, value_sub;
-	zend_string *element = NULL;
+	zval *element_param = NULL, *value, value_sub;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZVAL_UNDEF(&value_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(element)
@@ -176,9 +194,17 @@ PHP_METHOD(Phalcon_Support_Registry, __set)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	value = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "set", NULL, 0, &element_zv, value);
+	zephir_fetch_params(1, 2, 0, &element_param, &value);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "set", NULL, 0, &element, value);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }
@@ -190,17 +216,26 @@ PHP_METHOD(Phalcon_Support_Registry, __unset)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv;
-	zend_string *element = NULL;
+	zval *element_param = NULL;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "remove", NULL, 0, &element_zv);
+	zephir_fetch_params(1, 1, 0, &element_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "remove", NULL, 0, &element);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }
@@ -244,12 +279,12 @@ PHP_METHOD(Phalcon_Support_Registry, get)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv, *defaultValue = NULL, defaultValue_sub, cast_zv, __$null;
-	zend_string *element = NULL, *cast = NULL;
+	zval *element_param = NULL, *defaultValue = NULL, defaultValue_sub, *cast_param = NULL, __$null;
+	zval element, cast;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
+	ZVAL_UNDEF(&cast);
 	ZVAL_UNDEF(&defaultValue_sub);
-	ZVAL_UNDEF(&cast_zv);
 	ZVAL_NULL(&__$null);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 3)
@@ -260,20 +295,34 @@ PHP_METHOD(Phalcon_Support_Registry, get)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		defaultValue = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 2, &element_param, &defaultValue, &cast_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&element_zv, element);
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
 	if (!defaultValue) {
 		defaultValue = &defaultValue_sub;
 		defaultValue = &__$null;
 	}
-	if (!cast) {
-		ZEPHIR_INIT_VAR(&cast_zv);
+	if (!cast_param) {
+		ZEPHIR_INIT_VAR(&cast);
 	} else {
-	ZVAL_STR_COPY(&cast_zv, cast);
+	if (UNEXPECTED(Z_TYPE_P(cast_param) != IS_STRING && Z_TYPE_P(cast_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'cast' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "get", NULL, 0, &element_zv, defaultValue, &cast_zv);
+	if (EXPECTED(Z_TYPE_P(cast_param) == IS_STRING)) {
+		zephir_get_strval(&cast, cast_param);
+	} else {
+		ZEPHIR_INIT_VAR(&cast);
+	}
+	}
+	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "get", NULL, 0, &element, defaultValue, &cast);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -300,17 +349,26 @@ PHP_METHOD(Phalcon_Support_Registry, has)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv;
-	zend_string *element = NULL;
+	zval *element_param = NULL;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "has", NULL, 0, &element_zv);
+	zephir_fetch_params(1, 1, 0, &element_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_RETURN_CALL_PARENT(phalcon_support_registry_ce, getThis(), "has", NULL, 0, &element);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -463,17 +521,26 @@ PHP_METHOD(Phalcon_Support_Registry, remove)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv;
-	zend_string *element = NULL;
+	zval *element_param = NULL;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "remove", NULL, 0, &element_zv);
+	zephir_fetch_params(1, 1, 0, &element_param);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "remove", NULL, 0, &element);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }
@@ -502,10 +569,10 @@ PHP_METHOD(Phalcon_Support_Registry, set)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv, *value, value_sub;
-	zend_string *element = NULL;
+	zval *element_param = NULL, *value, value_sub;
+	zval element;
 
-	ZVAL_UNDEF(&element_zv);
+	ZVAL_UNDEF(&element);
 	ZVAL_UNDEF(&value_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(element)
@@ -513,9 +580,17 @@ PHP_METHOD(Phalcon_Support_Registry, set)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	value = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "set", NULL, 0, &element_zv, value);
+	zephir_fetch_params(1, 2, 0, &element_param, &value);
+	if (UNEXPECTED(Z_TYPE_P(element_param) != IS_STRING && Z_TYPE_P(element_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'element' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(element_param) == IS_STRING)) {
+		zephir_get_strval(&element, element_param);
+	} else {
+		ZEPHIR_INIT_VAR(&element);
+	}
+	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "set", NULL, 0, &element, value);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }
@@ -577,17 +652,18 @@ PHP_METHOD(Phalcon_Support_Registry, unserialize)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval data_zv;
-	zend_string *data = NULL;
+	zval *data_param = NULL;
+	zval data;
 
-	ZVAL_UNDEF(&data_zv);
+	ZVAL_UNDEF(&data);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(data)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&data_zv, data);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "unserialize", NULL, 0, &data_zv);
+	zephir_fetch_params(1, 1, 0, &data_param);
+	zephir_get_strval(&data, data_param);
+	ZEPHIR_CALL_PARENT(NULL, phalcon_support_registry_ce, getThis(), "unserialize", NULL, 0, &data);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }

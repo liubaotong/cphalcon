@@ -12,8 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/operators.h"
+#include "kernel/memory.h"
 #include "kernel/object.h"
 
 
@@ -45,12 +46,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Lower, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval text_zv, encoding_zv;
-	zend_string *text = NULL, *encoding = NULL;
+	zval *text_param = NULL, *encoding_param = NULL;
+	zval text, encoding;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&encoding_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&encoding);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(text)
 		Z_PARAM_OPTIONAL
@@ -58,14 +59,15 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Lower, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!encoding) {
-		encoding = zend_string_init(ZEND_STRL("UTF-8"), 0);
-		ZVAL_STR(&encoding_zv, encoding);
+	zephir_fetch_params(1, 1, 1, &text_param, &encoding_param);
+	zephir_get_strval(&text, text_param);
+	if (!encoding_param) {
+		ZEPHIR_INIT_VAR(&encoding);
+		ZVAL_STRING(&encoding, "UTF-8");
 	} else {
-		ZVAL_STR_COPY(&encoding_zv, encoding);
+		zephir_get_strval(&encoding, encoding_param);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "tolower", NULL, 0, &text_zv, &encoding_zv);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "tolower", NULL, 0, &text, &encoding);
 	zephir_check_call_status();
 	RETURN_MM();
 }

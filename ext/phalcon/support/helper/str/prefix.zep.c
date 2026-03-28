@@ -14,8 +14,8 @@
 #include "kernel/main.h"
 #include "kernel/concat.h"
 #include "kernel/operators.h"
-#include "kernel/object.h"
 #include "kernel/memory.h"
+#include "kernel/object.h"
 
 
 /**
@@ -44,13 +44,12 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_Prefix)
  */
 PHP_METHOD(Phalcon_Support_Helper_Str_Prefix, __invoke)
 {
-	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_string *prefix = NULL;
-	zval *text, text_sub, prefix_zv;
+	zval prefix, _0;
+	zval *text, text_sub, *prefix_param = NULL;
 
 	ZVAL_UNDEF(&text_sub);
-	ZVAL_UNDEF(&prefix_zv);
+	ZVAL_UNDEF(&prefix);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ZVAL(text)
@@ -58,10 +57,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Prefix, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	text = ZEND_CALL_ARG(execute_data, 1);
-	ZVAL_STR_COPY(&prefix_zv, prefix);
+	zephir_fetch_params(1, 2, 0, &text, &prefix_param);
+	zephir_get_strval(&prefix, prefix_param);
 	zephir_cast_to_string(&_0, text);
-	ZEPHIR_CONCAT_VV(return_value, &prefix_zv, &_0);
+	ZEPHIR_CONCAT_VV(return_value, &prefix, &_0);
 	RETURN_MM();
 }
 

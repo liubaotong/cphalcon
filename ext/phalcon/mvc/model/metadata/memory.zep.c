@@ -14,6 +14,8 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/object.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 #include "kernel/operators.h"
 
 
@@ -66,15 +68,27 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Memory, __construct)
  */
 PHP_METHOD(Phalcon_Mvc_Model_MetaData_Memory, read)
 {
-	zval key_zv;
-	zend_string *key = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *key_param = NULL;
+	zval key;
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(key)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&key_zv, key);
-	RETURN_NULL();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &key_param);
+	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
+		zephir_get_strval(&key, key_param);
+	} else {
+		ZEPHIR_INIT_VAR(&key);
+	}
+	RETURN_MM_NULL();
 }
 
 /**
@@ -84,10 +98,10 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Memory, write)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval data;
-	zval key_zv, *data_param = NULL;
-	zend_string *key = NULL;
+	zval *key_param = NULL, *data_param = NULL;
+	zval key;
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&data);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(key)
@@ -95,8 +109,16 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Memory, write)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	data_param = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR(&key_zv, key);
+	zephir_fetch_params(1, 2, 0, &key_param, &data_param);
+	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
+		zephir_get_strval(&key, key_param);
+	} else {
+		ZEPHIR_INIT_VAR(&key);
+	}
 	zephir_get_arrval(&data, data_param);
 	RETURN_MM_NULL();
 }

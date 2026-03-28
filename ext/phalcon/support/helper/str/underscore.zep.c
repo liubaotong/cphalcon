@@ -46,10 +46,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Underscore, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval text_zv, result, _0, _1, _2;
-	zend_string *text = NULL;
+	zval *text_param = NULL, result, _0, _1, _2;
+	zval text;
 
-	ZVAL_UNDEF(&text_zv);
+	ZVAL_UNDEF(&text);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -59,9 +59,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Underscore, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
+	zephir_fetch_params(1, 1, 0, &text_param);
+	zephir_get_strval(&text, text_param);
 	ZEPHIR_INIT_VAR(&_0);
-	zephir_fast_trim(&_0, &text_zv, NULL , ZEPHIR_TRIM_BOTH);
+	zephir_fast_trim(&_0, &text, NULL , ZEPHIR_TRIM_BOTH);
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_STRING(&_1, "#\\s+#");
 	ZEPHIR_INIT_VAR(&_2);

@@ -17,6 +17,7 @@
 #include "kernel/object.h"
 #include "kernel/operators.h"
 #include "kernel/fcall.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 
 
@@ -105,11 +106,11 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, _)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval placeholders;
-	zval translateKey_zv, *placeholders_param = NULL;
-	zend_string *translateKey = NULL;
+	zval *translateKey_param = NULL, *placeholders_param = NULL;
+	zval translateKey;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&translateKey_zv);
+	ZVAL_UNDEF(&translateKey);
 	ZVAL_UNDEF(&placeholders);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(translateKey)
@@ -118,17 +119,23 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, _)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		placeholders_param = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 1, &translateKey_param, &placeholders_param);
+	if (UNEXPECTED(Z_TYPE_P(translateKey_param) != IS_STRING && Z_TYPE_P(translateKey_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'translateKey' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&translateKey_zv, translateKey);
+	if (EXPECTED(Z_TYPE_P(translateKey_param) == IS_STRING)) {
+		zephir_get_strval(&translateKey, translateKey_param);
+	} else {
+		ZEPHIR_INIT_VAR(&translateKey);
+	}
 	if (!placeholders_param) {
 		ZEPHIR_INIT_VAR(&placeholders);
 		array_init(&placeholders);
 	} else {
 		zephir_get_arrval(&placeholders, placeholders_param);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "query", NULL, 0, &translateKey_zv, &placeholders);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "query", NULL, 0, &translateKey, &placeholders);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -242,11 +249,11 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, t)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval placeholders;
-	zval translateKey_zv, *placeholders_param = NULL;
-	zend_string *translateKey = NULL;
+	zval *translateKey_param = NULL, *placeholders_param = NULL;
+	zval translateKey;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&translateKey_zv);
+	ZVAL_UNDEF(&translateKey);
 	ZVAL_UNDEF(&placeholders);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(translateKey)
@@ -255,17 +262,23 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, t)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		placeholders_param = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 1, &translateKey_param, &placeholders_param);
+	if (UNEXPECTED(Z_TYPE_P(translateKey_param) != IS_STRING && Z_TYPE_P(translateKey_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'translateKey' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&translateKey_zv, translateKey);
+	if (EXPECTED(Z_TYPE_P(translateKey_param) == IS_STRING)) {
+		zephir_get_strval(&translateKey, translateKey_param);
+	} else {
+		ZEPHIR_INIT_VAR(&translateKey);
+	}
 	if (!placeholders_param) {
 		ZEPHIR_INIT_VAR(&placeholders);
 		array_init(&placeholders);
 	} else {
 		zephir_get_arrval(&placeholders, placeholders_param);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "query", NULL, 0, &translateKey_zv, &placeholders);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "query", NULL, 0, &translateKey, &placeholders);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -283,11 +296,11 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, replacePlaceholders)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval placeholders;
-	zval translation_zv, *placeholders_param = NULL, interpolator, _0, _1;
-	zend_string *translation = NULL;
+	zval *translation_param = NULL, *placeholders_param = NULL, interpolator, _0, _1;
+	zval translation;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&translation_zv);
+	ZVAL_UNDEF(&translation);
 	ZVAL_UNDEF(&interpolator);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -299,10 +312,16 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, replacePlaceholders)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		placeholders_param = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 1, &translation_param, &placeholders_param);
+	if (UNEXPECTED(Z_TYPE_P(translation_param) != IS_STRING && Z_TYPE_P(translation_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'translation' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&translation_zv, translation);
+	if (EXPECTED(Z_TYPE_P(translation_param) == IS_STRING)) {
+		zephir_get_strval(&translation, translation_param);
+	} else {
+		ZEPHIR_INIT_VAR(&translation);
+	}
 	if (!placeholders_param) {
 		ZEPHIR_INIT_VAR(&placeholders);
 		array_init(&placeholders);
@@ -313,7 +332,7 @@ PHP_METHOD(Phalcon_Translate_Adapter_AbstractAdapter, replacePlaceholders)
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("defaultInterpolator"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&interpolator, &_0, "newinstance", NULL, 0, &_1);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(&interpolator, "replaceplaceholders", NULL, 0, &translation_zv, &placeholders);
+	ZEPHIR_RETURN_CALL_METHOD(&interpolator, "replaceplaceholders", NULL, 0, &translation, &placeholders);
 	zephir_check_call_status();
 	RETURN_MM();
 }

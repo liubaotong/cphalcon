@@ -12,9 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
+#include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/object.h"
 
@@ -51,12 +51,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Decapitalize, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool upperRest;
-	zval text_zv, *upperRest_param = NULL, encoding_zv, substr, suffix, _0, _1, _2, _3;
-	zend_string *text = NULL, *encoding = NULL;
+	zval *text_param = NULL, *upperRest_param = NULL, *encoding_param = NULL, substr, suffix, _0, _1, _2, _3;
+	zval text, encoding;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&encoding_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&encoding);
 	ZVAL_UNDEF(&substr);
 	ZVAL_UNDEF(&suffix);
 	ZVAL_UNDEF(&_0);
@@ -71,34 +71,32 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Decapitalize, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		upperRest_param = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&text_zv, text);
+	zephir_fetch_params(1, 1, 2, &text_param, &upperRest_param, &encoding_param);
+	zephir_get_strval(&text, text_param);
 	if (!upperRest_param) {
 		upperRest = 0;
 	} else {
 		}
-	if (!encoding) {
-		encoding = zend_string_init(ZEND_STRL("UTF-8"), 0);
-		ZVAL_STR(&encoding_zv, encoding);
+	if (!encoding_param) {
+		ZEPHIR_INIT_VAR(&encoding);
+		ZVAL_STRING(&encoding, "UTF-8");
 	} else {
-		ZVAL_STR_COPY(&encoding_zv, encoding);
+		zephir_get_strval(&encoding, encoding_param);
 	}
 	ZVAL_LONG(&_0, 1);
-	ZEPHIR_CALL_FUNCTION(&substr, "mb_substr", NULL, 228, &text_zv, &_0);
+	ZEPHIR_CALL_FUNCTION(&substr, "mb_substr", NULL, 229, &text, &_0);
 	zephir_check_call_status();
 	if (upperRest) {
-		ZEPHIR_CALL_METHOD(&suffix, this_ptr, "toupper", NULL, 0, &substr, &encoding_zv);
+		ZEPHIR_CALL_METHOD(&suffix, this_ptr, "toupper", NULL, 0, &substr, &encoding);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(&suffix, &substr);
 	}
 	ZVAL_LONG(&_0, 0);
 	ZVAL_LONG(&_2, 1);
-	ZEPHIR_CALL_FUNCTION(&_3, "mb_substr", NULL, 228, &text_zv, &_0, &_2);
+	ZEPHIR_CALL_FUNCTION(&_3, "mb_substr", NULL, 229, &text, &_0, &_2);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_1, this_ptr, "tolower", NULL, 0, &_3, &encoding_zv);
+	ZEPHIR_CALL_METHOD(&_1, this_ptr, "tolower", NULL, 0, &_3, &encoding);
 	zephir_check_call_status();
 	ZEPHIR_CONCAT_VV(return_value, &_1, &suffix);
 	RETURN_MM();

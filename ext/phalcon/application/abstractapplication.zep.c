@@ -19,6 +19,7 @@
 #include "kernel/exception.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -110,31 +111,39 @@ PHP_METHOD(Phalcon_Application_AbstractApplication, getEventsManager)
  */
 PHP_METHOD(Phalcon_Application_AbstractApplication, getModule)
 {
-	zval _2$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, module, _0, _1$$3;
-	zend_string *name = NULL;
+	zval *name_param = NULL, module, _0, _1$$3;
+	zval name, _2$$3;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&module);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1$$3);
-	ZVAL_UNDEF(&_2$$3);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&name_zv, name);
+	zephir_fetch_params(1, 1, 0, &name_param);
+	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
+		zephir_get_strval(&name, name_param);
+	} else {
+		ZEPHIR_INIT_VAR(&name);
+	}
 	zephir_memory_observe(&module);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("modules"), PH_NOISY_CC | PH_READONLY);
-	if (UNEXPECTED(!(zephir_array_isset_fetch(&module, &_0, &name_zv, 0)))) {
+	if (UNEXPECTED(!(zephir_array_isset_fetch(&module, &_0, &name, 0)))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, phalcon_application_exception_ce);
 		ZEPHIR_INIT_VAR(&_2$$3);
-		ZEPHIR_CONCAT_SVS(&_2$$3, "Module '", &name_zv, "' is not registered in the application container");
+		ZEPHIR_CONCAT_SVS(&_2$$3, "Module '", &name, "' is not registered in the application container");
 		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 33, &_2$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(&_1$$3, "phalcon/Application/AbstractApplication.zep", 83);
@@ -211,17 +220,29 @@ PHP_METHOD(Phalcon_Application_AbstractApplication, registerModules)
  */
 PHP_METHOD(Phalcon_Application_AbstractApplication, setDefaultModule)
 {
-	zval defaultModule_zv;
-	zend_string *defaultModule = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *defaultModule_param = NULL;
+	zval defaultModule;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&defaultModule_zv);
+	ZVAL_UNDEF(&defaultModule);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(defaultModule)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&defaultModule_zv, defaultModule);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("defaultModule"), &defaultModule_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &defaultModule_param);
+	if (UNEXPECTED(Z_TYPE_P(defaultModule_param) != IS_STRING && Z_TYPE_P(defaultModule_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'defaultModule' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(defaultModule_param) == IS_STRING)) {
+		zephir_get_strval(&defaultModule, defaultModule_param);
+	} else {
+		ZEPHIR_INIT_VAR(&defaultModule);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("defaultModule"), &defaultModule);
+	RETURN_THIS();
 }
 
 /**

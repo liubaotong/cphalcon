@@ -12,10 +12,11 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
+#include "kernel/operators.h"
+#include "kernel/memory.h"
 
 
 /**
@@ -88,12 +89,12 @@ PHP_METHOD(Phalcon_Db_Index, __construct)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval columns;
-	zval name_zv, *columns_param = NULL, type_zv;
-	zend_string *name = NULL, *type = NULL;
+	zval *name_param = NULL, *columns_param = NULL, *type_param = NULL;
+	zval name, type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
-	ZVAL_UNDEF(&type_zv);
+	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&type);
 	ZVAL_UNDEF(&columns);
 	ZEND_PARSE_PARAMETERS_START(2, 3)
 		Z_PARAM_STR(name)
@@ -103,18 +104,26 @@ PHP_METHOD(Phalcon_Db_Index, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	columns_param = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR_COPY(&name_zv, name);
-	ZEPHIR_OBS_COPY_OR_DUP(&columns, columns_param);
-	if (!type) {
-		type = zend_string_init(ZEND_STRL(""), 0);
-		ZVAL_STR(&type_zv, type);
-	} else {
-		ZVAL_STR_COPY(&type_zv, type);
+	zephir_fetch_params(1, 2, 1, &name_param, &columns_param, &type_param);
+	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name_zv);
+	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
+		zephir_get_strval(&name, name_param);
+	} else {
+		ZEPHIR_INIT_VAR(&name);
+	}
+	ZEPHIR_OBS_COPY_OR_DUP(&columns, columns_param);
+	if (!type_param) {
+		ZEPHIR_INIT_VAR(&type);
+		ZVAL_STRING(&type, "");
+	} else {
+		zephir_get_strval(&type, type_param);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("columns"), &columns);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
 	ZEPHIR_MM_RESTORE();
 }
 

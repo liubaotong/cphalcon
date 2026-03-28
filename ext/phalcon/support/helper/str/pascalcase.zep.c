@@ -12,12 +12,12 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/memory.h"
 #include "kernel/concat.h"
 #include "kernel/string.h"
-#include "kernel/object.h"
 #include "kernel/operators.h"
+#include "kernel/object.h"
 #include "kernel/array.h"
 
 
@@ -50,12 +50,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_PascalCase, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_4 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval text_zv, delimiters_zv, exploded, output, element, *_0, _1, _2$$3, _3$$3, _5$$3, _6$$4, _7$$4, _8$$4;
-	zend_string *text = NULL, *delimiters = NULL;
+	zval *text_param = NULL, *delimiters_param = NULL, exploded, output, element, *_0, _1, _2$$3, _3$$3, _5$$3, _6$$4, _7$$4, _8$$4;
+	zval text, delimiters;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&delimiters_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&delimiters);
 	ZVAL_UNDEF(&exploded);
 	ZVAL_UNDEF(&output);
 	ZVAL_UNDEF(&element);
@@ -74,13 +74,14 @@ PHP_METHOD(Phalcon_Support_Helper_Str_PascalCase, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!delimiters) {
-		ZEPHIR_INIT_VAR(&delimiters_zv);
+	zephir_fetch_params(1, 1, 1, &text_param, &delimiters_param);
+	zephir_get_strval(&text, text_param);
+	if (!delimiters_param) {
+		ZEPHIR_INIT_VAR(&delimiters);
 	} else {
-		ZVAL_STR_COPY(&delimiters_zv, delimiters);
+		zephir_get_strval(&delimiters, delimiters_param);
 	}
-	ZEPHIR_CALL_METHOD(&exploded, this_ptr, "processarray", NULL, 0, &text_zv, &delimiters_zv);
+	ZEPHIR_CALL_METHOD(&exploded, this_ptr, "processarray", NULL, 0, &text, &delimiters);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&output);
 	ZVAL_STRING(&output, "");
@@ -136,11 +137,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_PascalCase, processArray)
 	zend_bool _2;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval delimiters, _10, _9$$4;
-	zval text_zv, *delimiters_param = NULL, result, _0, _1, _3, _4, _11, _12, _13, _5$$4, _7$$4;
-	zend_string *text = NULL;
+	zval *text_param = NULL, *delimiters_param = NULL, result, _0, _1, _3, _4, _11, _12, _13, _5$$4, _7$$4;
+	zval text, delimiters, _10, _9$$4;
 
-	ZVAL_UNDEF(&text_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&delimiters);
+	ZVAL_UNDEF(&_10);
+	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -151,23 +154,18 @@ PHP_METHOD(Phalcon_Support_Helper_Str_PascalCase, processArray)
 	ZVAL_UNDEF(&_13);
 	ZVAL_UNDEF(&_5$$4);
 	ZVAL_UNDEF(&_7$$4);
-	ZVAL_UNDEF(&delimiters);
-	ZVAL_UNDEF(&_10);
-	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&_6$$4);
 	ZVAL_UNDEF(&_8$$4);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(text)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ZVAL_OR_NULL(delimiters_param)
+		Z_PARAM_STR_OR_NULL(delimiters)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		delimiters_param = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&text_zv, text);
+	zephir_fetch_params(1, 1, 1, &text_param, &delimiters_param);
+	zephir_get_strval(&text, text_param);
 	if (!delimiters_param) {
 		ZEPHIR_INIT_VAR(&delimiters);
 	} else {
@@ -217,7 +215,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_PascalCase, processArray)
 	ZEPHIR_CONCAT_SVS(&_10, "/[", &delimiters, "]+/");
 	ZVAL_LONG(&_11, -1);
 	ZVAL_LONG(&_12, (2 | 1));
-	ZEPHIR_CALL_FUNCTION(&result, "preg_split", NULL, 70, &_10, &text_zv, &_11, &_12);
+	ZEPHIR_CALL_FUNCTION(&result, "preg_split", NULL, 70, &_10, &text, &_11, &_12);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_13);
 	if (ZEPHIR_IS_FALSE_IDENTICAL(&result)) {

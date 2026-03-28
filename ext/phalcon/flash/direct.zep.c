@@ -13,9 +13,9 @@
 
 #include "kernel/main.h"
 #include "kernel/fcall.h"
-#include "kernel/object.h"
-#include "kernel/memory.h"
 #include "kernel/operators.h"
+#include "kernel/memory.h"
+#include "kernel/object.h"
 
 
 /**
@@ -51,11 +51,11 @@ PHP_METHOD(Phalcon_Flash_Direct, message)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval type_zv, *message, message_sub;
-	zend_string *type = NULL;
+	zval *type_param = NULL, *message, message_sub;
+	zval type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type_zv);
+	ZVAL_UNDEF(&type);
 	ZVAL_UNDEF(&message_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(type)
@@ -63,9 +63,9 @@ PHP_METHOD(Phalcon_Flash_Direct, message)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	message = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR_COPY(&type_zv, type);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "outputmessage", NULL, 0, &type_zv, message);
+	zephir_fetch_params(1, 2, 0, &type_param, &message);
+	zephir_get_strval(&type, type_param);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "outputmessage", NULL, 0, &type, message);
 	zephir_check_call_status();
 	RETURN_MM();
 }

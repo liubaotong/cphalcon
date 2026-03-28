@@ -15,8 +15,8 @@
 #include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
-#include "kernel/array.h"
 #include "kernel/operators.h"
+#include "kernel/array.h"
 #include "kernel/concat.h"
 
 
@@ -94,21 +94,22 @@ PHP_METHOD(Phalcon_DataMapper_Query_Delete, __construct)
 PHP_METHOD(Phalcon_DataMapper_Query_Delete, from)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval table_zv, _0;
-	zend_string *table = NULL;
+	zval *table_param = NULL, _0;
+	zval table;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&table_zv);
+	ZVAL_UNDEF(&table);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(table)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&table_zv, table);
+	zephir_fetch_params(1, 1, 0, &table_param);
+	zephir_get_strval(&table, table_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "FROM");
-	zephir_update_property_array(this_ptr, SL("store"), &_0, &table_zv);
+	zephir_update_property_array(this_ptr, SL("store"), &_0, &table);
 	RETURN_THIS();
 }
 

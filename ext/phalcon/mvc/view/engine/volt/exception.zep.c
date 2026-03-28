@@ -12,9 +12,9 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
 #include "kernel/fcall.h"
+#include "kernel/memory.h"
 #include "kernel/operators.h"
 
 
@@ -53,11 +53,11 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Volt_Exception, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long code, ZEPHIR_LAST_CALL_STATUS;
 	zval statement;
-	zval message_zv, *statement_param = NULL, *code_param = NULL, *previous = NULL, previous_sub, __$null, _0;
-	zend_string *message = NULL;
+	zval *message_param = NULL, *statement_param = NULL, *code_param = NULL, *previous = NULL, previous_sub, __$null, _0;
+	zval message;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&message_zv);
+	ZVAL_UNDEF(&message);
 	ZVAL_UNDEF(&previous_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&_0);
@@ -72,20 +72,12 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Volt_Exception, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		statement_param = ZEND_CALL_ARG(execute_data, 2);
-	}
-	if (ZEND_NUM_ARGS() > 2) {
-		code_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	if (ZEND_NUM_ARGS() > 3) {
-		previous = ZEND_CALL_ARG(execute_data, 4);
-	}
-	if (!message) {
-		message = zend_string_init(ZEND_STRL(""), 0);
-		ZVAL_STR(&message_zv, message);
+	zephir_fetch_params(1, 0, 4, &message_param, &statement_param, &code_param, &previous);
+	if (!message_param) {
+		ZEPHIR_INIT_VAR(&message);
+		ZVAL_STRING(&message, "");
 	} else {
-		ZVAL_STR_COPY(&message_zv, message);
+		zephir_get_strval(&message, message_param);
 	}
 	if (!statement_param) {
 		ZEPHIR_INIT_VAR(&statement);
@@ -103,7 +95,7 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Volt_Exception, __construct)
 	}
 	zephir_update_property_zval(this_ptr, ZEND_STRL("statement"), &statement);
 	ZVAL_LONG(&_0, code);
-	ZEPHIR_CALL_PARENT(NULL, phalcon_mvc_view_engine_volt_exception_ce, getThis(), "__construct", NULL, 0, &message_zv, &_0, previous);
+	ZEPHIR_CALL_PARENT(NULL, phalcon_mvc_view_engine_volt_exception_ce, getThis(), "__construct", NULL, 0, &message, &_0, previous);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }

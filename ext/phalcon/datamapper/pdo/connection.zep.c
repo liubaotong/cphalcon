@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/string.h"
+#include "kernel/memory.h"
 #include "kernel/array.h"
 #include "kernel/exception.h"
 #include "ext/spl/spl_exceptions.h"
@@ -72,13 +72,13 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Connection, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval options, queries, available, _5;
-	zval dsn_zv, username_zv, password_zv, *options_param = NULL, *queries_param = NULL, *profiler = NULL, profiler_sub, __$true, __$null, parts, _0, _1$$3, _2$$3, _3$$3, _4$$4;
-	zend_string *dsn = NULL, *username = NULL, *password = NULL;
+	zval *dsn_param = NULL, *username_param = NULL, *password_param = NULL, *options_param = NULL, *queries_param = NULL, *profiler = NULL, profiler_sub, __$true, __$null, parts, _0, _1$$3, _2$$3, _3$$3, _4$$4;
+	zval dsn, username, password;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&dsn_zv);
-	ZVAL_UNDEF(&username_zv);
-	ZVAL_UNDEF(&password_zv);
+	ZVAL_UNDEF(&dsn);
+	ZVAL_UNDEF(&username);
+	ZVAL_UNDEF(&password);
 	ZVAL_UNDEF(&profiler_sub);
 	ZVAL_BOOL(&__$true, 1);
 	ZVAL_NULL(&__$null);
@@ -104,25 +104,17 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Connection, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 3) {
-		options_param = ZEND_CALL_ARG(execute_data, 4);
-	}
-	if (ZEND_NUM_ARGS() > 4) {
-		queries_param = ZEND_CALL_ARG(execute_data, 5);
-	}
-	if (ZEND_NUM_ARGS() > 5) {
-		profiler = ZEND_CALL_ARG(execute_data, 6);
-	}
-	ZVAL_STR_COPY(&dsn_zv, dsn);
-	if (!username) {
-		ZEPHIR_INIT_VAR(&username_zv);
+	zephir_fetch_params(1, 1, 5, &dsn_param, &username_param, &password_param, &options_param, &queries_param, &profiler);
+	zephir_get_strval(&dsn, dsn_param);
+	if (!username_param) {
+		ZEPHIR_INIT_VAR(&username);
 	} else {
-		ZVAL_STR_COPY(&username_zv, username);
+		zephir_get_strval(&username, username_param);
 	}
-	if (!password) {
-		ZEPHIR_INIT_VAR(&password_zv);
+	if (!password_param) {
+		ZEPHIR_INIT_VAR(&password);
 	} else {
-		ZVAL_STR_COPY(&password_zv, password);
+		zephir_get_strval(&password, password_param);
 	}
 	if (!options_param) {
 		ZEPHIR_INIT_VAR(&options);
@@ -143,7 +135,7 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Connection, __construct)
 		ZEPHIR_SEPARATE_PARAM(profiler);
 	}
 	ZEPHIR_INIT_VAR(&parts);
-	zephir_fast_explode_str(&parts, SL(":"), &dsn_zv, LONG_MAX);
+	zephir_fast_explode_str(&parts, SL(":"), &dsn, LONG_MAX);
 	ZEPHIR_INIT_VAR(&available);
 	zephir_create_array(&available, 4, 0);
 	zephir_array_update_string(&available, SL("mysql"), &__$true, PH_COPY | PH_SEPARATE);
@@ -157,7 +149,7 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Connection, __construct)
 		zephir_array_fetch_long(&_2$$3, &parts, 0, PH_NOISY | PH_READONLY, "phalcon/DataMapper/Pdo/Connection.zep", 67);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SVS(&_3$$3, "Driver not supported [", &_2$$3, "]");
-		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 200, &_3$$3);
+		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 201, &_3$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(&_1$$3, "phalcon/DataMapper/Pdo/Connection.zep", 68);
 		ZEPHIR_MM_RESTORE();
@@ -170,16 +162,16 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Connection, __construct)
 	}
 	ZEPHIR_INIT_VAR(&_5);
 	zephir_create_array(&_5, 5, 0);
-	zephir_array_fast_append(&_5, &dsn_zv);
-	zephir_array_fast_append(&_5, &username_zv);
-	zephir_array_fast_append(&_5, &password_zv);
+	zephir_array_fast_append(&_5, &dsn);
+	zephir_array_fast_append(&_5, &username);
+	zephir_array_fast_append(&_5, &password);
 	zephir_array_fast_append(&_5, &options);
 	zephir_array_fast_append(&_5, &queries);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("arguments"), &_5);
 	if (Z_TYPE_P(profiler) == IS_NULL) {
 		ZEPHIR_INIT_NVAR(profiler);
 		object_init_ex(profiler, phalcon_datamapper_pdo_profiler_profiler_ce);
-		ZEPHIR_CALL_METHOD(NULL, profiler, "__construct", NULL, 201);
+		ZEPHIR_CALL_METHOD(NULL, profiler, "__construct", NULL, 202);
 		zephir_check_call_status();
 	}
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "setprofiler", NULL, 0, profiler);

@@ -19,9 +19,10 @@
 #include "kernel/concat.h"
 #include "kernel/file.h"
 #include "kernel/require.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 #include "kernel/variables.h"
 #include "kernel/fcall.h"
-#include "kernel/exception.h"
 
 
 /**
@@ -96,11 +97,11 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, __construct)
 PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, read)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval key_zv, path, _0, _1, _2, _3;
-	zend_string *key = NULL;
+	zval *key_param = NULL, path, _0, _1, _2, _3;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&path);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -111,12 +112,21 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, read)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&key_zv, key);
+	zephir_fetch_params(1, 1, 0, &key_param);
+	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
+		zephir_get_strval(&key, key_param);
+	} else {
+		ZEPHIR_INIT_VAR(&key);
+	}
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("metaDataDir"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
 	ZEPHIR_INIT_VAR(&_2);
 	ZVAL_STRING(&_2, "_");
-	zephir_prepare_virtual_path(&_1, &key_zv, &_2);
+	zephir_prepare_virtual_path(&_1, &key, &_2);
 	ZEPHIR_INIT_VAR(&path);
 	ZEPHIR_CONCAT_VVS(&path, &_0, &_1, ".php");
 	if (!((zephir_file_exists(&path) == SUCCESS))) {
@@ -137,11 +147,11 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, write)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval data;
-	zval key_zv, *data_param = NULL, option, path, _6, _7, _0$$3, _1$$3, _2$$3, _3$$3, _4$$3, _5$$3;
-	zend_string *key = NULL;
+	zval *key_param = NULL, *data_param = NULL, option, path, _6, _7, _0$$3, _1$$3, _2$$3, _3$$3, _4$$3, _5$$3;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&option);
 	ZVAL_UNDEF(&path);
 	ZVAL_UNDEF(&_6);
@@ -159,8 +169,16 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, write)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	data_param = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR_COPY(&key_zv, key);
+	zephir_fetch_params(1, 2, 0, &key_param, &data_param);
+	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
+		zephir_get_strval(&key, key_param);
+	} else {
+		ZEPHIR_INIT_VAR(&key);
+	}
 	zephir_get_arrval(&data, data_param);
 	/* try_start_1: */
 
@@ -168,7 +186,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, write)
 		ZEPHIR_INIT_VAR(&_1$$3);
 		ZEPHIR_INIT_VAR(&_2$$3);
 		ZVAL_STRING(&_2$$3, "_");
-		zephir_prepare_virtual_path(&_1$$3, &key_zv, &_2$$3);
+		zephir_prepare_virtual_path(&_1$$3, &key, &_2$$3);
 		ZEPHIR_INIT_VAR(&path);
 		ZEPHIR_CONCAT_VVS(&path, &_0$$3, &_1$$3, ".php");
 		ZEPHIR_INIT_VAR(&option);
@@ -181,7 +199,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, write)
 		ZEPHIR_CONCAT_SVS(&_5$$3, "<?php return ", &_4$$3, "; ");
 		zephir_file_put_contents(&_3$$3, &path, &_5$$3);
 		if (ZEPHIR_IS_FALSE_IDENTICAL(&_3$$3)) {
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "throwwriteexception", NULL, 451, &option);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "throwwriteexception", NULL, 450, &option);
 			zephir_check_call_status_or_jump(try_end_1);
 		}
 
@@ -195,7 +213,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData_Stream, write)
 		if (zephir_is_instance_of(&_6, SL("Exception"))) {
 			zend_clear_exception();
 			ZEPHIR_CPY_WRT(&_7, &_6);
-			ZEPHIR_CALL_METHOD(NULL, this_ptr, "throwwriteexception", NULL, 451, &option);
+			ZEPHIR_CALL_METHOD(NULL, this_ptr, "throwwriteexception", NULL, 450, &option);
 			zephir_check_call_status();
 		}
 	}

@@ -163,13 +163,13 @@ PHP_METHOD(Phalcon_Config_Config, path)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_2 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval path_zv, *defaultValue = NULL, defaultValue_sub, delimiter_zv, __$null, config, key, keys, pathDelimiter, _0, _1$$4, _3$$5, _4$$5;
-	zend_string *path = NULL, *delimiter = NULL;
+	zval *path_param = NULL, *defaultValue = NULL, defaultValue_sub, *delimiter_param = NULL, __$null, config, key, keys, pathDelimiter, _0, _1$$4, _3$$5, _4$$5;
+	zval path, delimiter;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&path_zv);
+	ZVAL_UNDEF(&path);
+	ZVAL_UNDEF(&delimiter);
 	ZVAL_UNDEF(&defaultValue_sub);
-	ZVAL_UNDEF(&delimiter_zv);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&config);
 	ZVAL_UNDEF(&key);
@@ -188,27 +188,25 @@ PHP_METHOD(Phalcon_Config_Config, path)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		defaultValue = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&path_zv, path);
+	zephir_fetch_params(1, 1, 2, &path_param, &defaultValue, &delimiter_param);
+	zephir_get_strval(&path, path_param);
 	if (!defaultValue) {
 		defaultValue = &defaultValue_sub;
 		defaultValue = &__$null;
 	}
-	if (!delimiter) {
-		ZEPHIR_INIT_VAR(&delimiter_zv);
+	if (!delimiter_param) {
+		ZEPHIR_INIT_VAR(&delimiter);
 	} else {
-		ZVAL_STR_COPY(&delimiter_zv, delimiter);
+		zephir_get_strval(&delimiter, delimiter_param);
 	}
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "has", NULL, 0, &path_zv);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "has", NULL, 0, &path);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_TRUE_IDENTICAL(&_0)) {
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "get", NULL, 0, &path_zv);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "get", NULL, 0, &path);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	ZEPHIR_CPY_WRT(&pathDelimiter, &delimiter_zv);
+	ZEPHIR_CPY_WRT(&pathDelimiter, &delimiter);
 	if (1 == ZEPHIR_IS_EMPTY(&pathDelimiter)) {
 		zephir_read_property(&_1$$4, this_ptr, ZEND_STRL("pathDelimiter"), PH_NOISY_CC | PH_READONLY);
 		ZEPHIR_CPY_WRT(&pathDelimiter, &_1$$4);
@@ -218,7 +216,7 @@ PHP_METHOD(Phalcon_Config_Config, path)
 		RETURN_MM();
 	}
 	ZEPHIR_INIT_VAR(&keys);
-	zephir_fast_explode(&keys, &pathDelimiter, &path_zv, LONG_MAX);
+	zephir_fast_explode(&keys, &pathDelimiter, &path, LONG_MAX);
 	while (1) {
 		if (!(1 != ZEPHIR_IS_EMPTY(&keys))) {
 			break;
@@ -258,11 +256,11 @@ PHP_METHOD(Phalcon_Config_Config, path)
 PHP_METHOD(Phalcon_Config_Config, setPathDelimiter)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval delimiter_zv;
-	zend_string *delimiter = NULL;
+	zval *delimiter_param = NULL;
+	zval delimiter;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&delimiter_zv);
+	ZVAL_UNDEF(&delimiter);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
@@ -270,12 +268,13 @@ PHP_METHOD(Phalcon_Config_Config, setPathDelimiter)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (!delimiter) {
-		ZEPHIR_INIT_VAR(&delimiter_zv);
+	zephir_fetch_params(1, 0, 1, &delimiter_param);
+	if (!delimiter_param) {
+		ZEPHIR_INIT_VAR(&delimiter);
 	} else {
-		ZVAL_STR_COPY(&delimiter_zv, delimiter);
+		zephir_get_strval(&delimiter, delimiter_param);
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("pathDelimiter"), &delimiter_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("pathDelimiter"), &delimiter);
 	RETURN_THIS();
 }
 

@@ -15,6 +15,9 @@
 #include "kernel/fcall.h"
 #include "kernel/memory.h"
 #include "kernel/require.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
+#include "kernel/operators.h"
 #include "kernel/object.h"
 
 
@@ -75,19 +78,28 @@ PHP_METHOD(Phalcon_Config_Adapter_Php, __construct)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval filePath_zv, _0;
-	zend_string *filePath = NULL;
+	zval *filePath_param = NULL, _0;
+	zval filePath;
 
-	ZVAL_UNDEF(&filePath_zv);
+	ZVAL_UNDEF(&filePath);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(filePath)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&filePath_zv, filePath);
+	zephir_fetch_params(1, 1, 0, &filePath_param);
+	if (UNEXPECTED(Z_TYPE_P(filePath_param) != IS_STRING && Z_TYPE_P(filePath_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'filePath' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(filePath_param) == IS_STRING)) {
+		zephir_get_strval(&filePath, filePath_param);
+	} else {
+		ZEPHIR_INIT_VAR(&filePath);
+	}
 	ZEPHIR_OBSERVE_OR_NULLIFY_PPZV(&_0);
-	if (zephir_require_zval_ret(&_0, &filePath_zv) == FAILURE) {
+	if (zephir_require_zval_ret(&_0, &filePath) == FAILURE) {
 		RETURN_MM_NULL();
 	}
 	ZEPHIR_CALL_PARENT(NULL, phalcon_config_adapter_php_ce, getThis(), "__construct", NULL, 0, &_0);

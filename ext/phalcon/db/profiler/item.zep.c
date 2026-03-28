@@ -234,17 +234,21 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlBindTypes)
  */
 PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlStatement)
 {
-	zval sqlStatement_zv;
-	zend_string *sqlStatement = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *sqlStatement_param = NULL;
+	zval sqlStatement;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&sqlStatement_zv);
+	ZVAL_UNDEF(&sqlStatement);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(sqlStatement)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&sqlStatement_zv, sqlStatement);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("sqlStatement"), &sqlStatement_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &sqlStatement_param);
+	zephir_get_strval(&sqlStatement, sqlStatement_param);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("sqlStatement"), &sqlStatement);
+	RETURN_THIS();
 }
 
 /**

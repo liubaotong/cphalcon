@@ -100,12 +100,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addHttp)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval httpEquiv_zv, content_zv, _0;
-	zend_string *httpEquiv = NULL, *content = NULL;
+	zval *httpEquiv_param = NULL, *content_param = NULL, _0;
+	zval httpEquiv, content;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&httpEquiv_zv);
-	ZVAL_UNDEF(&content_zv);
+	ZVAL_UNDEF(&httpEquiv);
+	ZVAL_UNDEF(&content);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(httpEquiv)
@@ -113,11 +113,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addHttp)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&httpEquiv_zv, httpEquiv);
-	ZVAL_STR_COPY(&content_zv, content);
+	zephir_fetch_params(1, 2, 0, &httpEquiv_param, &content_param);
+	zephir_get_strval(&httpEquiv, httpEquiv_param);
+	zephir_get_strval(&content, content_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "http-equiv");
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addelement", NULL, 332, &_0, &httpEquiv_zv, &content_zv);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addelement", NULL, 334, &_0, &httpEquiv, &content);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -133,12 +134,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addName)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, content_zv, _0;
-	zend_string *name = NULL, *content = NULL;
+	zval *name_param = NULL, *content_param = NULL, _0;
+	zval name, content;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
-	ZVAL_UNDEF(&content_zv);
+	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&content);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(name)
@@ -146,11 +147,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addName)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&name_zv, name);
-	ZVAL_STR_COPY(&content_zv, content);
+	zephir_fetch_params(1, 2, 0, &name_param, &content_param);
+	zephir_get_strval(&name, name_param);
+	zephir_get_strval(&content, content_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "name");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addelement", NULL, 332, &_0, &name_zv, &content_zv);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addelement", NULL, 334, &_0, &name, &content);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -166,12 +168,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addProperty)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, content_zv, _0;
-	zend_string *name = NULL, *content = NULL;
+	zval *name_param = NULL, *content_param = NULL, _0;
+	zval name, content;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
-	ZVAL_UNDEF(&content_zv);
+	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&content);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(name)
@@ -179,11 +181,12 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addProperty)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&name_zv, name);
-	ZVAL_STR_COPY(&content_zv, content);
+	zephir_fetch_params(1, 2, 0, &name_param, &content_param);
+	zephir_get_strval(&name, name_param);
+	zephir_get_strval(&content, content_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "property");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addelement", NULL, 332, &_0, &name_zv, &content_zv);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "addelement", NULL, 334, &_0, &name, &content);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -210,13 +213,13 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addElement)
 	zval attributes;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval element_zv, value_zv, content_zv;
-	zend_string *element = NULL, *value = NULL, *content = NULL;
+	zval *element_param = NULL, *value_param = NULL, *content_param = NULL;
+	zval element, value, content;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&element_zv);
-	ZVAL_UNDEF(&value_zv);
-	ZVAL_UNDEF(&content_zv);
+	ZVAL_UNDEF(&element);
+	ZVAL_UNDEF(&value);
+	ZVAL_UNDEF(&content);
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_STR(element)
@@ -225,13 +228,14 @@ PHP_METHOD(Phalcon_Html_Helper_Meta, addElement)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&element_zv, element);
-	ZVAL_STR_COPY(&value_zv, value);
-	ZVAL_STR_COPY(&content_zv, content);
+	zephir_fetch_params(1, 3, 0, &element_param, &value_param, &content_param);
+	zephir_get_strval(&element, element_param);
+	zephir_get_strval(&value, value_param);
+	zephir_get_strval(&content, content_param);
 	ZEPHIR_INIT_VAR(&attributes);
 	zephir_create_array(&attributes, 2, 0);
-	zephir_array_update_zval(&attributes, &element_zv, &value_zv, PH_COPY);
-	zephir_array_update_string(&attributes, SL("content"), &content_zv, PH_COPY | PH_SEPARATE);
+	zephir_array_update_zval(&attributes, &element, &value, PH_COPY);
+	zephir_array_update_string(&attributes, SL("content"), &content, PH_COPY | PH_SEPARATE);
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "add", NULL, 0, &attributes);
 	zephir_check_call_status();
 	RETURN_MM();

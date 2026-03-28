@@ -94,19 +94,18 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, __construct)
  */
 PHP_METHOD(Phalcon_DataMapper_Query_Insert, column)
 {
-	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long type, ZEPHIR_LAST_CALL_STATUS;
-	zval column_zv, *value = NULL, value_sub, *type_param = NULL, __$null, _1$$3, _2$$3;
-	zend_string *column = NULL;
+	zval *column_param = NULL, *value = NULL, value_sub, *type_param = NULL, __$null, _1$$3, _2$$3;
+	zval column, _0;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&column_zv);
+	ZVAL_UNDEF(&column);
+	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
-	ZVAL_UNDEF(&_0);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 3)
 		Z_PARAM_STR(column)
@@ -116,13 +115,8 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, column)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		value = ZEND_CALL_ARG(execute_data, 2);
-	}
-	if (ZEND_NUM_ARGS() > 2) {
-		type_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	ZVAL_STR_COPY(&column_zv, column);
+	zephir_fetch_params(1, 1, 2, &column_param, &value, &type_param);
+	zephir_get_strval(&column, column_param);
 	if (!value) {
 		value = &value_sub;
 		value = &__$null;
@@ -132,12 +126,12 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, column)
 	} else {
 		}
 	ZEPHIR_INIT_VAR(&_0);
-	ZEPHIR_CONCAT_SV(&_0, ":", &column_zv);
-	zephir_update_property_array_multi(this_ptr, SL("store"), &_0, SL("sz"), 3, SL("COLUMNS"), &column_zv);
+	ZEPHIR_CONCAT_SV(&_0, ":", &column);
+	zephir_update_property_array_multi(this_ptr, SL("store"), &_0, SL("sz"), 3, SL("COLUMNS"), &column);
 	if (Z_TYPE_P(value) != IS_NULL) {
 		zephir_read_property(&_1$$3, this_ptr, ZEND_STRL("bind"), PH_NOISY_CC | PH_READONLY);
 		ZVAL_LONG(&_2$$3, type);
-		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "setvalue", NULL, 0, &column_zv, value, &_2$$3);
+		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "setvalue", NULL, 0, &column, value, &_2$$3);
 		zephir_check_call_status();
 	}
 	RETURN_THIS();
@@ -231,21 +225,22 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, columns)
 PHP_METHOD(Phalcon_DataMapper_Query_Insert, into)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval table_zv, _0;
-	zend_string *table = NULL;
+	zval *table_param = NULL, _0;
+	zval table;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&table_zv);
+	ZVAL_UNDEF(&table);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(table)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&table_zv, table);
+	zephir_fetch_params(1, 1, 0, &table_param);
+	zephir_get_strval(&table, table_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "FROM");
-	zephir_update_property_array(this_ptr, SL("store"), &_0, &table_zv);
+	zephir_update_property_array(this_ptr, SL("store"), &_0, &table);
 	RETURN_THIS();
 }
 
@@ -260,11 +255,11 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, getLastInsertId)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, _0;
-	zend_string *name = NULL;
+	zval *name_param = NULL, _0;
+	zval name;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&name);
 	ZVAL_UNDEF(&_0);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
@@ -273,13 +268,14 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, getLastInsertId)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (!name) {
-		ZEPHIR_INIT_VAR(&name_zv);
+	zephir_fetch_params(1, 0, 1, &name_param);
+	if (!name_param) {
+		ZEPHIR_INIT_VAR(&name);
 	} else {
-		ZVAL_STR_COPY(&name_zv, name);
+		zephir_get_strval(&name, name_param);
 	}
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("connection"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(&_0, "lastinsertid", NULL, 0, &name_zv);
+	ZEPHIR_RETURN_CALL_METHOD(&_0, "lastinsertid", NULL, 0, &name);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -306,7 +302,7 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, getStatement)
 	zephir_check_call_status();
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("store"), PH_NOISY_CC | PH_READONLY);
 	zephir_array_fetch_string(&_2, &_1, SL("FROM"), PH_NOISY | PH_READONLY, "phalcon/DataMapper/Query/Insert.zep", 113);
-	ZEPHIR_CALL_METHOD(&_3, this_ptr, "buildcolumns", NULL, 205);
+	ZEPHIR_CALL_METHOD(&_3, this_ptr, "buildcolumns", NULL, 206);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_4, this_ptr, "buildreturning", NULL, 0);
 	zephir_check_call_status();
@@ -394,11 +390,11 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, set)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval column_zv, *value = NULL, value_sub, __$null, _0;
-	zend_string *column = NULL;
+	zval *column_param = NULL, *value = NULL, value_sub, __$null, _0;
+	zval column;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&column_zv);
+	ZVAL_UNDEF(&column);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&_0);
@@ -410,10 +406,8 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, set)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		value = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&column_zv, column);
+	zephir_fetch_params(1, 1, 1, &column_param, &value);
+	zephir_get_strval(&column, column_param);
 	if (!value) {
 		value = &value_sub;
 		ZEPHIR_CPY_WRT(value, &__$null);
@@ -424,9 +418,9 @@ PHP_METHOD(Phalcon_DataMapper_Query_Insert, set)
 		ZEPHIR_INIT_NVAR(value);
 		ZVAL_STRING(value, "NULL");
 	}
-	zephir_update_property_array_multi(this_ptr, SL("store"), value, SL("sz"), 3, SL("COLUMNS"), &column_zv);
+	zephir_update_property_array_multi(this_ptr, SL("store"), value, SL("sz"), 3, SL("COLUMNS"), &column);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("bind"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(NULL, &_0, "remove", NULL, 0, &column_zv);
+	ZEPHIR_CALL_METHOD(NULL, &_0, "remove", NULL, 0, &column);
 	zephir_check_call_status();
 	RETURN_THIS();
 }

@@ -3,6 +3,7 @@ extern zend_class_entry *phalcon_support_debug_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Support_Debug);
 
+PHP_METHOD(Phalcon_Support_Debug, __construct);
 PHP_METHOD(Phalcon_Support_Debug, clearVars);
 PHP_METHOD(Phalcon_Support_Debug, debugVar);
 PHP_METHOD(Phalcon_Support_Debug, getCssSources);
@@ -24,15 +25,11 @@ PHP_METHOD(Phalcon_Support_Debug, escapeString);
 PHP_METHOD(Phalcon_Support_Debug, getArrayDump);
 PHP_METHOD(Phalcon_Support_Debug, getVarDump);
 PHP_METHOD(Phalcon_Support_Debug, showTraceItem);
-PHP_METHOD(Phalcon_Support_Debug, closeTable);
-PHP_METHOD(Phalcon_Support_Debug, printBacktrace);
-PHP_METHOD(Phalcon_Support_Debug, printExtraVariables);
-PHP_METHOD(Phalcon_Support_Debug, printIncludedFiles);
-PHP_METHOD(Phalcon_Support_Debug, printMemoryUsage);
-PHP_METHOD(Phalcon_Support_Debug, printSuperglobal);
-PHP_METHOD(Phalcon_Support_Debug, printTableHeader);
 PHP_METHOD(Phalcon_Support_Debug, getArrVal);
 zend_object *zephir_init_properties_Phalcon_Support_Debug(zend_class_entry *class_type);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_support_debug___construct, 0, 0, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_support_debug_clearvars, 0, 0, Phalcon\\Support\\Debug, 0)
 ZEND_END_ARG_INFO()
@@ -114,36 +111,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_getvardump
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_showtraceitem, 0, 2, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, number, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
 	ZEND_ARG_ARRAY_INFO(0, trace, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_closetable, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printbacktrace, 0, 1, IS_STRING, 0)
-	ZEND_ARG_OBJ_INFO(0, exception, Throwable, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printextravariables, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printincludedfiles, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printmemoryusage, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printsuperglobal, 0, 2, IS_STRING, 0)
-	ZEND_ARG_ARRAY_INFO(0, source, 0)
-	ZEND_ARG_TYPE_INFO(0, div, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_debug_printtableheader, 0, 3, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, divId, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, headerOne, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, headerTwo, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, colspan, IS_STRING, 0, "''")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_support_debug_getarrval, 0, 0, 2)
@@ -156,6 +125,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_support_debug_zephir_init_properties_phal
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(phalcon_support_debug_method_entry) {
+PHP_ME(Phalcon_Support_Debug, __construct, arginfo_phalcon_support_debug___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
 	PHP_ME(Phalcon_Support_Debug, clearVars, arginfo_phalcon_support_debug_clearvars, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Support_Debug, debugVar, arginfo_phalcon_support_debug_debugvar, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Support_Debug, getCssSources, arginfo_phalcon_support_debug_getcsssources, ZEND_ACC_PUBLIC)
@@ -177,13 +147,6 @@ ZEPHIR_INIT_FUNCS(phalcon_support_debug_method_entry) {
 	PHP_ME(Phalcon_Support_Debug, getArrayDump, arginfo_phalcon_support_debug_getarraydump, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalcon_Support_Debug, getVarDump, arginfo_phalcon_support_debug_getvardump, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalcon_Support_Debug, showTraceItem, arginfo_phalcon_support_debug_showtraceitem, ZEND_ACC_FINAL|ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Support_Debug, closeTable, arginfo_phalcon_support_debug_closetable, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printBacktrace, arginfo_phalcon_support_debug_printbacktrace, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printExtraVariables, arginfo_phalcon_support_debug_printextravariables, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printIncludedFiles, arginfo_phalcon_support_debug_printincludedfiles, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printMemoryUsage, arginfo_phalcon_support_debug_printmemoryusage, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printSuperglobal, arginfo_phalcon_support_debug_printsuperglobal, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Support_Debug, printTableHeader, arginfo_phalcon_support_debug_printtableheader, ZEND_ACC_PRIVATE)
 	PHP_ME(Phalcon_Support_Debug, getArrVal, arginfo_phalcon_support_debug_getarrval, ZEND_ACC_PRIVATE)
 	PHP_FE_END
 };

@@ -83,11 +83,11 @@ PHP_METHOD(Phalcon_Events_AbstractEventsAware, fireManagerEvent)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool cancellable;
-	zval eventName_zv, *data = NULL, data_sub, *cancellable_param = NULL, __$null, _0, _1$$3, _2$$3;
-	zend_string *eventName = NULL;
+	zval *eventName_param = NULL, *data = NULL, data_sub, *cancellable_param = NULL, __$null, _0, _1$$3, _2$$3;
+	zval eventName;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&eventName_zv);
+	ZVAL_UNDEF(&eventName);
 	ZVAL_UNDEF(&data_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&_0);
@@ -102,13 +102,8 @@ PHP_METHOD(Phalcon_Events_AbstractEventsAware, fireManagerEvent)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		data = ZEND_CALL_ARG(execute_data, 2);
-	}
-	if (ZEND_NUM_ARGS() > 2) {
-		cancellable_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	ZVAL_STR_COPY(&eventName_zv, eventName);
+	zephir_fetch_params(1, 1, 2, &eventName_param, &data, &cancellable_param);
+	zephir_get_strval(&eventName, eventName_param);
 	if (!data) {
 		data = &data_sub;
 		data = &__$null;
@@ -125,7 +120,7 @@ PHP_METHOD(Phalcon_Events_AbstractEventsAware, fireManagerEvent)
 		} else {
 			ZVAL_BOOL(&_2$$3, 0);
 		}
-		ZEPHIR_RETURN_CALL_METHOD(&_1$$3, "fire", NULL, 0, &eventName_zv, this_ptr, data, &_2$$3);
+		ZEPHIR_RETURN_CALL_METHOD(&_1$$3, "fire", NULL, 0, &eventName, this_ptr, data, &_2$$3);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

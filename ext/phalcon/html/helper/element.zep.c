@@ -13,8 +13,8 @@
 
 #include "kernel/main.h"
 #include "kernel/fcall.h"
-#include "kernel/memory.h"
 #include "kernel/operators.h"
+#include "kernel/memory.h"
 #include "kernel/object.h"
 
 
@@ -53,12 +53,12 @@ PHP_METHOD(Phalcon_Html_Helper_Element, __invoke)
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool raw;
 	zval attributes;
-	zval tag_zv, text_zv, *attributes_param = NULL, *raw_param = NULL, _0;
-	zend_string *tag = NULL, *text = NULL;
+	zval *tag_param = NULL, *text_param = NULL, *attributes_param = NULL, *raw_param = NULL, _0;
+	zval tag, text;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&tag_zv);
-	ZVAL_UNDEF(&text_zv);
+	ZVAL_UNDEF(&tag);
+	ZVAL_UNDEF(&text);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(2, 4)
@@ -70,14 +70,9 @@ PHP_METHOD(Phalcon_Html_Helper_Element, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 2) {
-		attributes_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	if (ZEND_NUM_ARGS() > 3) {
-		raw_param = ZEND_CALL_ARG(execute_data, 4);
-	}
-	ZVAL_STR_COPY(&tag_zv, tag);
-	ZVAL_STR_COPY(&text_zv, text);
+	zephir_fetch_params(1, 2, 2, &tag_param, &text_param, &attributes_param, &raw_param);
+	zephir_get_strval(&tag, tag_param);
+	zephir_get_strval(&text, text_param);
 	if (!attributes_param) {
 		ZEPHIR_INIT_VAR(&attributes);
 		array_init(&attributes);
@@ -93,7 +88,7 @@ PHP_METHOD(Phalcon_Html_Helper_Element, __invoke)
 	} else {
 		ZVAL_BOOL(&_0, 0);
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &tag_zv, &text_zv, &attributes, &_0);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "renderfullelement", NULL, 0, &tag, &text, &attributes, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 }

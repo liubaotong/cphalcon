@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/operators.h"
+#include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/array.h"
@@ -47,16 +47,17 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_Interpolate)
  */
 PHP_METHOD(Phalcon_Support_Helper_Str_Interpolate, __invoke)
 {
+	zend_string *_3$$3;
 	zend_ulong _2$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval context, replace;
-	zval message_zv, *context_param = NULL, leftToken_zv, rightToken_zv, key, value, *_0$$3, _1$$3, _4$$4, _5$$5;
-	zend_string *message = NULL, *leftToken = NULL, *rightToken = NULL, *_3$$3;
+	zval *message_param = NULL, *context_param = NULL, *leftToken_param = NULL, *rightToken_param = NULL, key, value, *_0$$3, _1$$3, _4$$4, _5$$5;
+	zval message, leftToken, rightToken;
 
-	ZVAL_UNDEF(&message_zv);
-	ZVAL_UNDEF(&leftToken_zv);
-	ZVAL_UNDEF(&rightToken_zv);
+	ZVAL_UNDEF(&message);
+	ZVAL_UNDEF(&leftToken);
+	ZVAL_UNDEF(&rightToken);
 	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&value);
 	ZVAL_UNDEF(&_1$$3);
@@ -73,27 +74,25 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Interpolate, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		context_param = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&message_zv, message);
+	zephir_fetch_params(1, 1, 3, &message_param, &context_param, &leftToken_param, &rightToken_param);
+	zephir_get_strval(&message, message_param);
 	if (!context_param) {
 		ZEPHIR_INIT_VAR(&context);
 		array_init(&context);
 	} else {
 		zephir_get_arrval(&context, context_param);
 	}
-	if (!leftToken) {
-		leftToken = zend_string_init(ZEND_STRL("%"), 0);
-		ZVAL_STR(&leftToken_zv, leftToken);
+	if (!leftToken_param) {
+		ZEPHIR_INIT_VAR(&leftToken);
+		ZVAL_STRING(&leftToken, "%");
 	} else {
-		ZVAL_STR_COPY(&leftToken_zv, leftToken);
+		zephir_get_strval(&leftToken, leftToken_param);
 	}
-	if (!rightToken) {
-		rightToken = zend_string_init(ZEND_STRL("%"), 0);
-		ZVAL_STR(&rightToken_zv, rightToken);
+	if (!rightToken_param) {
+		ZEPHIR_INIT_VAR(&rightToken);
+		ZVAL_STRING(&rightToken, "%");
 	} else {
-		ZVAL_STR_COPY(&rightToken_zv, rightToken);
+		zephir_get_strval(&rightToken, rightToken_param);
 	}
 	if (!(ZEPHIR_IS_EMPTY(&context))) {
 		ZEPHIR_INIT_VAR(&replace);
@@ -111,7 +110,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Interpolate, __invoke)
 				ZEPHIR_INIT_NVAR(&value);
 				ZVAL_COPY(&value, _0$$3);
 				ZEPHIR_INIT_NVAR(&_4$$4);
-				ZEPHIR_CONCAT_VVV(&_4$$4, &leftToken_zv, &key, &rightToken_zv);
+				ZEPHIR_CONCAT_VVV(&_4$$4, &leftToken, &key, &rightToken);
 				zephir_array_update_zval(&replace, &_4$$4, &value, PH_COPY | PH_SEPARATE);
 			} ZEND_HASH_FOREACH_END();
 		} else {
@@ -128,7 +127,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Interpolate, __invoke)
 				ZEPHIR_CALL_METHOD(&value, &context, "current", NULL, 0);
 				zephir_check_call_status();
 					ZEPHIR_INIT_NVAR(&_5$$5);
-					ZEPHIR_CONCAT_VVV(&_5$$5, &leftToken_zv, &key, &rightToken_zv);
+					ZEPHIR_CONCAT_VVV(&_5$$5, &leftToken, &key, &rightToken);
 					zephir_array_update_zval(&replace, &_5$$5, &value, PH_COPY | PH_SEPARATE);
 				ZEPHIR_CALL_METHOD(NULL, &context, "next", NULL, 0);
 				zephir_check_call_status();
@@ -136,10 +135,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Interpolate, __invoke)
 		}
 		ZEPHIR_INIT_NVAR(&value);
 		ZEPHIR_INIT_NVAR(&key);
-		ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 5, &message_zv, &replace);
+		ZEPHIR_RETURN_CALL_FUNCTION("strtr", NULL, 5, &message, &replace);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	RETURN_MM_STR(zend_string_copy(message));
+	RETURN_CTOR(&message);
 }
 

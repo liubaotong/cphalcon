@@ -16,6 +16,8 @@
 #include "kernel/memory.h"
 #include "kernel/require.h"
 #include "kernel/object.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 #include "kernel/operators.h"
 
 
@@ -42,15 +44,16 @@ ZEPHIR_INIT_CLASS(Phalcon_Mvc_View_Engine_Php)
  */
 PHP_METHOD(Phalcon_Mvc_View_Engine_Php, render)
 {
+	zend_string *_3$$4;
 	zend_ulong _2$$4;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool mustClean;
-	zval path_zv, *params, params_sub, *mustClean_param = NULL, key, value, *_0$$4, _1$$4, _4$$5, _5$$6, _6$$7, _7$$7;
-	zend_string *path = NULL, *_3$$4;
+	zval *path_param = NULL, *params, params_sub, *mustClean_param = NULL, key, value, *_0$$4, _1$$4, _4$$5, _5$$6, _6$$7, _7$$7;
+	zval path;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&path_zv);
+	ZVAL_UNDEF(&path);
 	ZVAL_UNDEF(&params_sub);
 	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&value);
@@ -67,17 +70,22 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Php, render)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	params = ZEND_CALL_ARG(execute_data, 2);
-	if (ZEND_NUM_ARGS() > 2) {
-		mustClean_param = ZEND_CALL_ARG(execute_data, 3);
+	zephir_fetch_params(1, 2, 1, &path_param, &params, &mustClean_param);
+	if (UNEXPECTED(Z_TYPE_P(path_param) != IS_STRING && Z_TYPE_P(path_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'path' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&path_zv, path);
+	if (EXPECTED(Z_TYPE_P(path_param) == IS_STRING)) {
+		zephir_get_strval(&path, path_param);
+	} else {
+		ZEPHIR_INIT_VAR(&path);
+	}
 	if (!mustClean_param) {
 		mustClean = 0;
 	} else {
 		}
 	if (mustClean) {
-		ZEPHIR_CALL_FUNCTION(NULL, "ob_clean", NULL, 500);
+		ZEPHIR_CALL_FUNCTION(NULL, "ob_clean", NULL, 499);
 		zephir_check_call_status();
 	}
 	if (Z_TYPE_P(params) == IS_ARRAY) {
@@ -122,12 +130,12 @@ PHP_METHOD(Phalcon_Mvc_View_Engine_Php, render)
 		ZEPHIR_INIT_NVAR(&value);
 		ZEPHIR_INIT_NVAR(&key);
 	}
-	if (zephir_require_zval(&path_zv) == FAILURE) {
+	if (zephir_require_zval(&path) == FAILURE) {
 		RETURN_MM_NULL();
 	}
 	if (mustClean) {
 		zephir_read_property(&_6$$7, this_ptr, ZEND_STRL("view"), PH_NOISY_CC | PH_READONLY);
-		ZEPHIR_CALL_FUNCTION(&_7$$7, "ob_get_contents", NULL, 499);
+		ZEPHIR_CALL_FUNCTION(&_7$$7, "ob_get_contents", NULL, 498);
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, &_6$$7, "setcontent", NULL, 0, &_7$$7);
 		zephir_check_call_status();

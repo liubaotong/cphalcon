@@ -12,9 +12,10 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/string.h"
+#include "kernel/operators.h"
+#include "kernel/memory.h"
 #include "kernel/object.h"
 
 
@@ -46,12 +47,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_SnakeCase, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval text_zv, delimiters_zv, output;
-	zend_string *text = NULL, *delimiters = NULL;
+	zval *text_param = NULL, *delimiters_param = NULL, output;
+	zval text, delimiters;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&delimiters_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&delimiters);
 	ZVAL_UNDEF(&output);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
@@ -61,13 +62,14 @@ PHP_METHOD(Phalcon_Support_Helper_Str_SnakeCase, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!delimiters) {
-		ZEPHIR_INIT_VAR(&delimiters_zv);
+	zephir_fetch_params(1, 1, 1, &text_param, &delimiters_param);
+	zephir_get_strval(&text, text_param);
+	if (!delimiters_param) {
+		ZEPHIR_INIT_VAR(&delimiters);
 	} else {
-		ZVAL_STR_COPY(&delimiters_zv, delimiters);
+		zephir_get_strval(&delimiters, delimiters_param);
 	}
-	ZEPHIR_CALL_METHOD(&output, this_ptr, "processarray", NULL, 0, &text_zv, &delimiters_zv);
+	ZEPHIR_CALL_METHOD(&output, this_ptr, "processarray", NULL, 0, &text, &delimiters);
 	zephir_check_call_status();
 	zephir_fast_join_str(return_value, SL("_"), &output);
 	RETURN_MM();

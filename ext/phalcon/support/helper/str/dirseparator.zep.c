@@ -15,6 +15,7 @@
 #include "kernel/concat.h"
 #include "kernel/memory.h"
 #include "kernel/string.h"
+#include "kernel/operators.h"
 #include "kernel/object.h"
 
 
@@ -45,10 +46,10 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_DirSeparator)
 PHP_METHOD(Phalcon_Support_Helper_Str_DirSeparator, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval directory_zv, _0, _1;
-	zend_string *directory = NULL;
+	zval *directory_param = NULL, _0, _1;
+	zval directory;
 
-	ZVAL_UNDEF(&directory_zv);
+	ZVAL_UNDEF(&directory);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
@@ -56,11 +57,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_DirSeparator, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&directory_zv, directory);
+	zephir_fetch_params(1, 1, 0, &directory_param);
+	zephir_get_strval(&directory, directory_param);
 	ZEPHIR_INIT_VAR(&_0);
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_STRING(&_1, "/");
-	zephir_fast_trim(&_0, &directory_zv, &_1, ZEPHIR_TRIM_RIGHT);
+	zephir_fast_trim(&_0, &directory, &_1, ZEPHIR_TRIM_RIGHT);
 	ZEPHIR_CONCAT_VS(return_value, &_0, "/");
 	RETURN_MM();
 }

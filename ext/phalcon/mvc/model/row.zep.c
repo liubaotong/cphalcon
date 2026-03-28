@@ -19,6 +19,7 @@
 #include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/array.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -167,20 +168,29 @@ PHP_METHOD(Phalcon_Mvc_Model_Row, offsetUnset)
 PHP_METHOD(Phalcon_Mvc_Model_Row, readAttribute)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval attribute_zv, value;
-	zend_string *attribute = NULL;
+	zval *attribute_param = NULL, value;
+	zval attribute;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&attribute_zv);
+	ZVAL_UNDEF(&attribute);
 	ZVAL_UNDEF(&value);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(attribute)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&attribute_zv, attribute);
+	zephir_fetch_params(1, 1, 0, &attribute_param);
+	if (UNEXPECTED(Z_TYPE_P(attribute_param) != IS_STRING && Z_TYPE_P(attribute_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'attribute' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(attribute_param) == IS_STRING)) {
+		zephir_get_strval(&attribute, attribute_param);
+	} else {
+		ZEPHIR_INIT_VAR(&attribute);
+	}
 	zephir_memory_observe(&value);
-	if (!(zephir_fetch_property_zval(&value, this_ptr, &attribute_zv, PH_SILENT_CC))) {
+	if (!(zephir_fetch_property_zval(&value, this_ptr, &attribute, PH_SILENT_CC))) {
 		RETURN_MM_NULL();
 	}
 	RETURN_CCTOR(&value);
@@ -212,7 +222,7 @@ PHP_METHOD(Phalcon_Mvc_Model_Row, toArray)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_RETURN_CALL_FUNCTION("get_object_vars", NULL, 432, this_ptr);
+	ZEPHIR_RETURN_CALL_FUNCTION("get_object_vars", NULL, 431, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -228,18 +238,30 @@ PHP_METHOD(Phalcon_Mvc_Model_Row, toArray)
  */
 PHP_METHOD(Phalcon_Mvc_Model_Row, writeAttribute)
 {
-	zval attribute_zv, *value, value_sub;
-	zend_string *attribute = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *attribute_param = NULL, *value, value_sub;
+	zval attribute;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&attribute_zv);
+	ZVAL_UNDEF(&attribute);
 	ZVAL_UNDEF(&value_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(attribute)
 		Z_PARAM_ZVAL(value)
 	ZEND_PARSE_PARAMETERS_END();
-	value = ZEND_CALL_ARG(execute_data, 2);
-	ZVAL_STR(&attribute_zv, attribute);
-	zephir_update_property_zval_zval(this_ptr, &attribute_zv, value);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 2, 0, &attribute_param, &value);
+	if (UNEXPECTED(Z_TYPE_P(attribute_param) != IS_STRING && Z_TYPE_P(attribute_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'attribute' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(attribute_param) == IS_STRING)) {
+		zephir_get_strval(&attribute, attribute_param);
+	} else {
+		ZEPHIR_INIT_VAR(&attribute);
+	}
+	zephir_update_property_zval_zval(this_ptr, &attribute, value);
+	ZEPHIR_MM_RESTORE();
 }
 

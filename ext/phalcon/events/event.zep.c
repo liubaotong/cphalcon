@@ -18,6 +18,7 @@
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
 #include "kernel/object.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -89,11 +90,11 @@ PHP_METHOD(Phalcon_Events_Event, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool cancelable, _0;
-	zval type_zv, *source = NULL, source_sub, *data = NULL, data_sub, *cancelable_param = NULL, __$true, __$false, __$null, _1$$3, _2$$3, _3$$3;
-	zend_string *type = NULL;
+	zval *type_param = NULL, *source = NULL, source_sub, *data = NULL, data_sub, *cancelable_param = NULL, __$true, __$false, __$null, _1$$3, _2$$3, _3$$3;
+	zval type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type_zv);
+	ZVAL_UNDEF(&type);
 	ZVAL_UNDEF(&source_sub);
 	ZVAL_UNDEF(&data_sub);
 	ZVAL_BOOL(&__$true, 1);
@@ -112,16 +113,16 @@ PHP_METHOD(Phalcon_Events_Event, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		source = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 3, &type_param, &source, &data, &cancelable_param);
+	if (UNEXPECTED(Z_TYPE_P(type_param) != IS_STRING && Z_TYPE_P(type_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'type' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	if (ZEND_NUM_ARGS() > 2) {
-		data = ZEND_CALL_ARG(execute_data, 3);
+	if (EXPECTED(Z_TYPE_P(type_param) == IS_STRING)) {
+		zephir_get_strval(&type, type_param);
+	} else {
+		ZEPHIR_INIT_VAR(&type);
 	}
-	if (ZEND_NUM_ARGS() > 3) {
-		cancelable_param = ZEND_CALL_ARG(execute_data, 4);
-	}
-	ZVAL_STR_COPY(&type_zv, type);
 	if (!source) {
 		source = &source_sub;
 		source = &__$null;
@@ -144,14 +145,14 @@ PHP_METHOD(Phalcon_Events_Event, __construct)
 		ZEPHIR_INIT_VAR(&_2$$3);
 		zephir_gettype(&_2$$3, source);
 		ZEPHIR_INIT_VAR(&_3$$3);
-		ZEPHIR_CONCAT_SVSV(&_3$$3, "The source of ", &type_zv, " event must be an object, got ", &_2$$3);
+		ZEPHIR_CONCAT_SVSV(&_3$$3, "The source of ", &type, " event must be an object, got ", &_2$$3);
 		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 33, &_3$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(&_1$$3, "phalcon/Events/Event.zep", 73);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("source"), source);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("data"), data);
 	if (cancelable) {
@@ -233,17 +234,29 @@ PHP_METHOD(Phalcon_Events_Event, setData)
  */
 PHP_METHOD(Phalcon_Events_Event, setType)
 {
-	zval type_zv;
-	zend_string *type = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *type_param = NULL;
+	zval type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type_zv);
+	ZVAL_UNDEF(&type);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(type)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&type_zv, type);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &type_param);
+	if (UNEXPECTED(Z_TYPE_P(type_param) != IS_STRING && Z_TYPE_P(type_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'type' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(type_param) == IS_STRING)) {
+		zephir_get_strval(&type, type_param);
+	} else {
+		ZEPHIR_INIT_VAR(&type);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
+	RETURN_THIS();
 }
 
 /**

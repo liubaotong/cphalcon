@@ -116,17 +116,17 @@ PHP_METHOD(Phalcon_Image_ImageFactory, load)
 	zephir_array_unset_string(config, SL("adapter"), PH_SEPARATE);
 	ZEPHIR_INIT_NVAR(&_1);
 	ZVAL_STRING(&_1, "file");
-	ZEPHIR_CALL_METHOD(&file, this_ptr, "getarrval", NULL, 414, config, &_1);
+	ZEPHIR_CALL_METHOD(&file, this_ptr, "getarrval", NULL, 413, config, &_1);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(&_1);
 	ZVAL_STRING(&_1, "height");
 	ZVAL_NULL(&_2);
-	ZEPHIR_CALL_METHOD(&height, this_ptr, "getarrval", NULL, 414, config, &_1, &_2);
+	ZEPHIR_CALL_METHOD(&height, this_ptr, "getarrval", NULL, 413, config, &_1, &_2);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(&_1);
 	ZVAL_STRING(&_1, "width");
 	ZVAL_NULL(&_2);
-	ZEPHIR_CALL_METHOD(&width, this_ptr, "getarrval", NULL, 414, config, &_1, &_2);
+	ZEPHIR_CALL_METHOD(&width, this_ptr, "getarrval", NULL, 413, config, &_1, &_2);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "newinstance", NULL, 0, &name, &file, &width, &height);
 	zephir_check_call_status();
@@ -141,12 +141,12 @@ PHP_METHOD(Phalcon_Image_ImageFactory, newInstance)
 	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long width, height, ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, file_zv, *width_param = NULL, *height_param = NULL, definition, _1;
-	zend_string *name = NULL, *file = NULL;
+	zval *name_param = NULL, *file_param = NULL, *width_param = NULL, *height_param = NULL, definition, _1;
+	zval name, file;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
-	ZVAL_UNDEF(&file_zv);
+	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&file);
 	ZVAL_UNDEF(&definition);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_0);
@@ -160,14 +160,25 @@ PHP_METHOD(Phalcon_Image_ImageFactory, newInstance)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 2) {
-		width_param = ZEND_CALL_ARG(execute_data, 3);
+	zephir_fetch_params(1, 2, 2, &name_param, &file_param, &width_param, &height_param);
+	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	if (ZEND_NUM_ARGS() > 3) {
-		height_param = ZEND_CALL_ARG(execute_data, 4);
+	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
+		zephir_get_strval(&name, name_param);
+	} else {
+		ZEPHIR_INIT_VAR(&name);
 	}
-	ZVAL_STR_COPY(&name_zv, name);
-	ZVAL_STR_COPY(&file_zv, file);
+	if (UNEXPECTED(Z_TYPE_P(file_param) != IS_STRING && Z_TYPE_P(file_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'file' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(file_param) == IS_STRING)) {
+		zephir_get_strval(&file, file_param);
+	} else {
+		ZEPHIR_INIT_VAR(&file);
+	}
 	if (!width_param) {
 		width = 0;
 	} else {
@@ -176,11 +187,11 @@ PHP_METHOD(Phalcon_Image_ImageFactory, newInstance)
 		height = 0;
 	} else {
 		}
-	ZEPHIR_CALL_METHOD(&definition, this_ptr, "getservice", NULL, 0, &name_zv);
+	ZEPHIR_CALL_METHOD(&definition, this_ptr, "getservice", NULL, 0, &name);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_0);
 	zephir_create_array(&_0, 3, 0);
-	zephir_array_fast_append(&_0, &file_zv);
+	zephir_array_fast_append(&_0, &file);
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_LONG(&_1, width);
 	zephir_array_fast_append(&_0, &_1);

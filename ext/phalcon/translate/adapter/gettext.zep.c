@@ -137,18 +137,27 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, exists)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval index_zv;
-	zend_string *index = NULL;
+	zval *index_param = NULL;
+	zval index;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&index_zv);
+	ZVAL_UNDEF(&index);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(index)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&index_zv, index);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "has", NULL, 0, &index_zv);
+	zephir_fetch_params(1, 1, 0, &index_param);
+	if (UNEXPECTED(Z_TYPE_P(index_param) != IS_STRING && Z_TYPE_P(index_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'index' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(index_param) == IS_STRING)) {
+		zephir_get_strval(&index, index_param);
+	} else {
+		ZEPHIR_INIT_VAR(&index);
+	}
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "has", NULL, 0, &index);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -200,21 +209,30 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, has)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval index_zv, result;
-	zend_string *index = NULL;
+	zval *index_param = NULL, result;
+	zval index;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&index_zv);
+	ZVAL_UNDEF(&index);
 	ZVAL_UNDEF(&result);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(index)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&index_zv, index);
-	ZEPHIR_CALL_METHOD(&result, this_ptr, "query", NULL, 0, &index_zv);
+	zephir_fetch_params(1, 1, 0, &index_param);
+	if (UNEXPECTED(Z_TYPE_P(index_param) != IS_STRING && Z_TYPE_P(index_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'index' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(index_param) == IS_STRING)) {
+		zephir_get_strval(&index, index_param);
+	} else {
+		ZEPHIR_INIT_VAR(&index);
+	}
+	ZEPHIR_CALL_METHOD(&result, this_ptr, "query", NULL, 0, &index);
 	zephir_check_call_status();
-	RETURN_MM_BOOL(!ZEPHIR_IS_IDENTICAL(&result, &index_zv));
+	RETURN_MM_BOOL(!ZEPHIR_IS_IDENTICAL(&result, &index));
 }
 
 /**
@@ -235,13 +253,13 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, nquery)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval placeholders;
 	zend_long count, ZEPHIR_LAST_CALL_STATUS;
-	zval msgid1_zv, msgid2_zv, *count_param = NULL, *placeholders_param = NULL, domain_zv, translation, _0$$3, _1$$4;
-	zend_string *msgid1 = NULL, *msgid2 = NULL, *domain = NULL;
+	zval *msgid1_param = NULL, *msgid2_param = NULL, *count_param = NULL, *placeholders_param = NULL, *domain_param = NULL, translation, _0$$3, _1$$4;
+	zval msgid1, msgid2, domain;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&msgid1_zv);
-	ZVAL_UNDEF(&msgid2_zv);
-	ZVAL_UNDEF(&domain_zv);
+	ZVAL_UNDEF(&msgid1);
+	ZVAL_UNDEF(&msgid2);
+	ZVAL_UNDEF(&domain);
 	ZVAL_UNDEF(&translation);
 	ZVAL_UNDEF(&_0$$3);
 	ZVAL_UNDEF(&_1$$4);
@@ -257,12 +275,25 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, nquery)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	count_param = ZEND_CALL_ARG(execute_data, 3);
-	if (ZEND_NUM_ARGS() > 3) {
-		placeholders_param = ZEND_CALL_ARG(execute_data, 4);
+	zephir_fetch_params(1, 3, 2, &msgid1_param, &msgid2_param, &count_param, &placeholders_param, &domain_param);
+	if (UNEXPECTED(Z_TYPE_P(msgid1_param) != IS_STRING && Z_TYPE_P(msgid1_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'msgid1' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&msgid1_zv, msgid1);
-	ZVAL_STR_COPY(&msgid2_zv, msgid2);
+	if (EXPECTED(Z_TYPE_P(msgid1_param) == IS_STRING)) {
+		zephir_get_strval(&msgid1, msgid1_param);
+	} else {
+		ZEPHIR_INIT_VAR(&msgid1);
+	}
+	if (UNEXPECTED(Z_TYPE_P(msgid2_param) != IS_STRING && Z_TYPE_P(msgid2_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'msgid2' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(msgid2_param) == IS_STRING)) {
+		zephir_get_strval(&msgid2, msgid2_param);
+	} else {
+		ZEPHIR_INIT_VAR(&msgid2);
+	}
 	if (UNEXPECTED(Z_TYPE_P(count_param) != IS_LONG)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'count' must be of the type int"));
 		RETURN_MM_NULL();
@@ -274,18 +305,26 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, nquery)
 	} else {
 		zephir_get_arrval(&placeholders, placeholders_param);
 	}
-	if (!domain) {
-		ZEPHIR_INIT_VAR(&domain_zv);
+	if (!domain_param) {
+		ZEPHIR_INIT_VAR(&domain);
 	} else {
-	ZVAL_STR_COPY(&domain_zv, domain);
+	if (UNEXPECTED(Z_TYPE_P(domain_param) != IS_STRING && Z_TYPE_P(domain_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'domain' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	if (!(!(ZEPHIR_IS_EMPTY(&domain_zv)))) {
+	if (EXPECTED(Z_TYPE_P(domain_param) == IS_STRING)) {
+		zephir_get_strval(&domain, domain_param);
+	} else {
+		ZEPHIR_INIT_VAR(&domain);
+	}
+	}
+	if (!(!(ZEPHIR_IS_EMPTY(&domain)))) {
 		ZVAL_LONG(&_0$$3, count);
-		ZEPHIR_CALL_FUNCTION(&translation, "ngettext", NULL, 0, &msgid1_zv, &msgid2_zv, &_0$$3);
+		ZEPHIR_CALL_FUNCTION(&translation, "ngettext", NULL, 0, &msgid1, &msgid2, &_0$$3);
 		zephir_check_call_status();
 	} else {
 		ZVAL_LONG(&_1$$4, count);
-		ZEPHIR_CALL_FUNCTION(&translation, "dngettext", NULL, 0, &domain_zv, &msgid1_zv, &msgid2_zv, &_1$$4);
+		ZEPHIR_CALL_FUNCTION(&translation, "dngettext", NULL, 0, &domain, &msgid1, &msgid2, &_1$$4);
 		zephir_check_call_status();
 	}
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "replaceplaceholders", NULL, 0, &translation, &placeholders);
@@ -310,11 +349,11 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, query)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval placeholders;
-	zval translateKey_zv, *placeholders_param = NULL, _0;
-	zend_string *translateKey = NULL;
+	zval *translateKey_param = NULL, *placeholders_param = NULL, _0;
+	zval translateKey;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&translateKey_zv);
+	ZVAL_UNDEF(&translateKey);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&placeholders);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
@@ -324,17 +363,23 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, query)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		placeholders_param = ZEND_CALL_ARG(execute_data, 2);
+	zephir_fetch_params(1, 1, 1, &translateKey_param, &placeholders_param);
+	if (UNEXPECTED(Z_TYPE_P(translateKey_param) != IS_STRING && Z_TYPE_P(translateKey_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'translateKey' must be of the type string"));
+		RETURN_MM_NULL();
 	}
-	ZVAL_STR_COPY(&translateKey_zv, translateKey);
+	if (EXPECTED(Z_TYPE_P(translateKey_param) == IS_STRING)) {
+		zephir_get_strval(&translateKey, translateKey_param);
+	} else {
+		ZEPHIR_INIT_VAR(&translateKey);
+	}
 	if (!placeholders_param) {
 		ZEPHIR_INIT_VAR(&placeholders);
 		array_init(&placeholders);
 	} else {
 		zephir_get_arrval(&placeholders, placeholders_param);
 	}
-	ZEPHIR_CALL_FUNCTION(&_0, "gettext", NULL, 0, &translateKey_zv);
+	ZEPHIR_CALL_FUNCTION(&_0, "gettext", NULL, 0, &translateKey);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "replaceplaceholders", NULL, 0, &_0, &placeholders);
 	zephir_check_call_status();
@@ -371,16 +416,29 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, resetDomain)
  */
 PHP_METHOD(Phalcon_Translate_Adapter_Gettext, setDefaultDomain)
 {
-	zval domain_zv;
-	zend_string *domain = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *domain_param = NULL;
+	zval domain;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&domain_zv);
+	ZVAL_UNDEF(&domain);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(domain)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&domain_zv, domain);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("defaultDomain"), &domain_zv);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &domain_param);
+	if (UNEXPECTED(Z_TYPE_P(domain_param) != IS_STRING && Z_TYPE_P(domain_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'domain' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(domain_param) == IS_STRING)) {
+		zephir_get_strval(&domain, domain_param);
+	} else {
+		ZEPHIR_INIT_VAR(&domain);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("defaultDomain"), &domain);
+	ZEPHIR_MM_RESTORE();
 }
 
 /**
@@ -483,10 +541,10 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, setDomain)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval domain_zv;
-	zend_string *domain = NULL;
+	zval *domain_param = NULL;
+	zval domain;
 
-	ZVAL_UNDEF(&domain_zv);
+	ZVAL_UNDEF(&domain);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
@@ -494,12 +552,13 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, setDomain)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (!domain) {
-		ZEPHIR_INIT_VAR(&domain_zv);
+	zephir_fetch_params(1, 0, 1, &domain_param);
+	if (!domain_param) {
+		ZEPHIR_INIT_VAR(&domain);
 	} else {
-		ZVAL_STR_COPY(&domain_zv, domain);
+		zephir_get_strval(&domain, domain_param);
 	}
-	ZEPHIR_RETURN_CALL_FUNCTION("textdomain", NULL, 0, &domain_zv);
+	ZEPHIR_RETURN_CALL_FUNCTION("textdomain", NULL, 0, &domain);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -664,14 +723,18 @@ PHP_METHOD(Phalcon_Translate_Adapter_Gettext, prepareOptions)
  */
 PHP_METHOD(Phalcon_Translate_Adapter_Gettext, phpFunctionExists)
 {
-	zval name_zv;
-	zend_string *name = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *name_param = NULL;
+	zval name;
 
-	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&name);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&name_zv, name);
-	RETURN_BOOL((zephir_function_exists(&name_zv) == SUCCESS));
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &name_param);
+	zephir_get_strval(&name, name_param);
+	RETURN_MM_BOOL((zephir_function_exists(&name) == SUCCESS));
 }
 

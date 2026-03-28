@@ -12,9 +12,10 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/concat.h"
+#include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/operators.h"
 #include "kernel/object.h"
 
 
@@ -44,18 +45,17 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_Uncamelize)
  */
 PHP_METHOD(Phalcon_Support_Helper_Str_Uncamelize, __invoke)
 {
-	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval text_zv, delimiter_zv, _1, _2, _3;
-	zend_string *text = NULL, *delimiter = NULL;
+	zval *text_param = NULL, *delimiter_param = NULL, _1, _2, _3;
+	zval text, delimiter, _0;
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&delimiter_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&delimiter);
+	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
-	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(text)
 		Z_PARAM_OPTIONAL
@@ -63,16 +63,17 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Uncamelize, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!delimiter) {
-		delimiter = zend_string_init(ZEND_STRL("_"), 0);
-		ZVAL_STR(&delimiter_zv, delimiter);
+	zephir_fetch_params(1, 1, 1, &text_param, &delimiter_param);
+	zephir_get_strval(&text, text_param);
+	if (!delimiter_param) {
+		ZEPHIR_INIT_VAR(&delimiter);
+		ZVAL_STRING(&delimiter, "_");
 	} else {
-		ZVAL_STR_COPY(&delimiter_zv, delimiter);
+		zephir_get_strval(&delimiter, delimiter_param);
 	}
 	ZEPHIR_INIT_VAR(&_0);
-	ZEPHIR_CONCAT_VS(&_0, &delimiter_zv, "\\0");
-	ZEPHIR_CALL_FUNCTION(&_1, "lcfirst", NULL, 76, &text_zv);
+	ZEPHIR_CONCAT_VS(&_0, &delimiter, "\\0");
+	ZEPHIR_CALL_FUNCTION(&_1, "lcfirst", NULL, 76, &text);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_2);
 	ZVAL_STRING(&_2, "/[A-Z]/");

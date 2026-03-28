@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/string.h"
+#include "kernel/memory.h"
 #include "kernel/array.h"
 #include "kernel/operators.h"
 #include "kernel/concat.h"
@@ -49,11 +49,11 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Decrement, __invoke)
 {
 	zend_long number = 0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval text_zv, separator_zv, parts, _0, _3, _4, _1$$3, _2$$4;
-	zend_string *text = NULL, *separator = NULL;
+	zval *text_param = NULL, *separator_param = NULL, parts, _0, _3, _4, _1$$3, _2$$4;
+	zval text, separator;
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&separator_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&separator);
 	ZVAL_UNDEF(&parts);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_3);
@@ -67,16 +67,17 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Decrement, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!separator) {
-		separator = zend_string_init(ZEND_STRL("_"), 0);
-		ZVAL_STR(&separator_zv, separator);
+	zephir_fetch_params(1, 1, 1, &text_param, &separator_param);
+	zephir_get_strval(&text, text_param);
+	if (!separator_param) {
+		ZEPHIR_INIT_VAR(&separator);
+		ZVAL_STRING(&separator, "_");
 	} else {
-		ZVAL_STR_COPY(&separator_zv, separator);
+		zephir_get_strval(&separator, separator_param);
 	}
 	number = 0;
 	ZEPHIR_INIT_VAR(&parts);
-	zephir_fast_explode(&parts, &separator_zv, &text_zv, LONG_MAX);
+	zephir_fast_explode(&parts, &separator, &text, LONG_MAX);
 	ZEPHIR_INIT_VAR(&_0);
 	if (Z_TYPE_P(&parts) != IS_ARRAY) {
 		ZEPHIR_INIT_NVAR(&_0);
@@ -98,7 +99,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Decrement, __invoke)
 	zephir_array_fetch_long(&_3, &parts, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/Decrement.zep", 43);
 	ZEPHIR_INIT_VAR(&_4);
 	ZVAL_LONG(&_4, number);
-	ZEPHIR_CONCAT_VVV(return_value, &_3, &separator_zv, &_4);
+	ZEPHIR_CONCAT_VVV(return_value, &_3, &separator, &_4);
 	RETURN_MM();
 }
 

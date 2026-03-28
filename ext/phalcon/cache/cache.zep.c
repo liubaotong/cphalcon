@@ -15,6 +15,7 @@
 #include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
 
 
 /**
@@ -68,18 +69,19 @@ PHP_METHOD(Phalcon_Cache_Cache, delete)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval key_zv;
-	zend_string *key = NULL;
+	zval *key_param = NULL;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(key)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&key_zv, key);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dodelete", NULL, 0, &key_zv);
+	zephir_fetch_params(1, 1, 0, &key_param);
+	zephir_get_strval(&key, key_param);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dodelete", NULL, 0, &key);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -122,11 +124,11 @@ PHP_METHOD(Phalcon_Cache_Cache, get)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval key_zv, *defaultValue = NULL, defaultValue_sub, __$null;
-	zend_string *key = NULL;
+	zval *key_param = NULL, *defaultValue = NULL, defaultValue_sub, __$null;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&defaultValue_sub);
 	ZVAL_NULL(&__$null);
 	bool is_null_true = 1;
@@ -137,15 +139,13 @@ PHP_METHOD(Phalcon_Cache_Cache, get)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		defaultValue = ZEND_CALL_ARG(execute_data, 2);
-	}
-	ZVAL_STR_COPY(&key_zv, key);
+	zephir_fetch_params(1, 1, 1, &key_param, &defaultValue);
+	zephir_get_strval(&key, key_param);
 	if (!defaultValue) {
 		defaultValue = &defaultValue_sub;
 		defaultValue = &__$null;
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "doget", NULL, 0, &key_zv, defaultValue);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "doget", NULL, 0, &key, defaultValue);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -195,18 +195,19 @@ PHP_METHOD(Phalcon_Cache_Cache, has)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval key_zv;
-	zend_string *key = NULL;
+	zval *key_param = NULL;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(key)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&key_zv, key);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dohas", NULL, 0, &key_zv);
+	zephir_fetch_params(1, 1, 0, &key_param);
+	zephir_get_strval(&key, key_param);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dohas", NULL, 0, &key);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -233,11 +234,11 @@ PHP_METHOD(Phalcon_Cache_Cache, set)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval key_zv, *value, value_sub, *ttl = NULL, ttl_sub, __$null;
-	zend_string *key = NULL;
+	zval *key_param = NULL, *value, value_sub, *ttl = NULL, ttl_sub, __$null;
+	zval key;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key_zv);
+	ZVAL_UNDEF(&key);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&ttl_sub);
 	ZVAL_NULL(&__$null);
@@ -250,16 +251,13 @@ PHP_METHOD(Phalcon_Cache_Cache, set)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	value = ZEND_CALL_ARG(execute_data, 2);
-	if (ZEND_NUM_ARGS() > 2) {
-		ttl = ZEND_CALL_ARG(execute_data, 3);
-	}
-	ZVAL_STR_COPY(&key_zv, key);
+	zephir_fetch_params(1, 2, 1, &key_param, &value, &ttl);
+	zephir_get_strval(&key, key_param);
 	if (!ttl) {
 		ttl = &ttl_sub;
 		ttl = &__$null;
 	}
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "doset", NULL, 0, &key_zv, value, ttl);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "doset", NULL, 0, &key, value, ttl);
 	zephir_check_call_status();
 	RETURN_MM();
 }

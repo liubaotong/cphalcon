@@ -138,11 +138,11 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, finish)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval values;
-	zval statement_zv, *values_param = NULL, __$true, ex, finish, _0, _1$$3, _2$$3, _3$$3, _4$$3, _5$$3, _6$$3, _7$$3, _8$$3, _9$$3, _10$$3, _11$$3, _12$$3, _13$$3, _14$$3, _15$$3;
-	zend_string *statement = NULL;
+	zval *statement_param = NULL, *values_param = NULL, __$true, ex, finish, _0, _1$$3, _2$$3, _3$$3, _4$$3, _5$$3, _6$$3, _7$$3, _8$$3, _9$$3, _10$$3, _11$$3, _12$$3, _13$$3, _14$$3, _15$$3;
+	zval statement;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&statement_zv);
+	ZVAL_UNDEF(&statement);
 	ZVAL_BOOL(&__$true, 1);
 	ZVAL_UNDEF(&ex);
 	ZVAL_UNDEF(&finish);
@@ -171,13 +171,11 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, finish)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 1) {
-		values_param = ZEND_CALL_ARG(execute_data, 2);
-	}
-	if (!statement) {
-		ZEPHIR_INIT_VAR(&statement_zv);
+	zephir_fetch_params(1, 0, 2, &statement_param, &values_param);
+	if (!statement_param) {
+		ZEPHIR_INIT_VAR(&statement);
 	} else {
-		ZVAL_STR_COPY(&statement_zv, statement);
+		zephir_get_strval(&statement, statement_param);
 	}
 	if (!values_param) {
 		ZEPHIR_INIT_VAR(&values);
@@ -191,9 +189,9 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, finish)
 		object_init_ex(&ex, phalcon_datamapper_pdo_exception_exception_ce);
 		ZEPHIR_CALL_METHOD(NULL, &ex, "__construct", NULL, 33);
 		zephir_check_call_status();
-		ZEPHIR_CALL_FUNCTION(&finish, "hrtime", NULL, 203, &__$true);
+		ZEPHIR_CALL_FUNCTION(&finish, "hrtime", NULL, 204, &__$true);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_1$$3, &ex, "gettraceasstring", NULL, 204);
+		ZEPHIR_CALL_METHOD(&_1$$3, &ex, "gettraceasstring", NULL, 205);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_2$$3);
 		ZVAL_STRING(&_2$$3, "backtrace");
@@ -210,7 +208,7 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, finish)
 		zephir_update_property_array(this_ptr, SL("context"), &_7$$3, &finish);
 		ZEPHIR_INIT_VAR(&_8$$3);
 		ZVAL_STRING(&_8$$3, "statement");
-		zephir_update_property_array(this_ptr, SL("context"), &_8$$3, &statement_zv);
+		zephir_update_property_array(this_ptr, SL("context"), &_8$$3, &statement);
 		ZEPHIR_INIT_NVAR(&_5$$3);
 		if (ZEPHIR_IS_EMPTY(&values)) {
 			ZEPHIR_INIT_NVAR(&_5$$3);
@@ -316,17 +314,21 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, setActive)
  */
 PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, setLogFormat)
 {
-	zval logFormat_zv;
-	zend_string *logFormat = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *logFormat_param = NULL;
+	zval logFormat;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&logFormat_zv);
+	ZVAL_UNDEF(&logFormat);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(logFormat)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&logFormat_zv, logFormat);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("logFormat"), &logFormat_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &logFormat_param);
+	zephir_get_strval(&logFormat, logFormat_param);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("logFormat"), &logFormat);
+	RETURN_THIS();
 }
 
 /**
@@ -338,17 +340,21 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, setLogFormat)
  */
 PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, setLogLevel)
 {
-	zval logLevel_zv;
-	zend_string *logLevel = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *logLevel_param = NULL;
+	zval logLevel;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&logLevel_zv);
+	ZVAL_UNDEF(&logLevel);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(logLevel)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&logLevel_zv, logLevel);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("logLevel"), &logLevel_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &logLevel_param);
+	zephir_get_strval(&logLevel, logLevel_param);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("logLevel"), &logLevel);
+	RETURN_THIS();
 }
 
 /**
@@ -361,11 +367,11 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, start)
 	zval _1$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval method_zv, __$true, _0, _2$$3;
-	zend_string *method = NULL;
+	zval *method_param = NULL, __$true, _0, _2$$3;
+	zval method;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&method_zv);
+	ZVAL_UNDEF(&method);
 	ZVAL_BOOL(&__$true, 1);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2$$3);
@@ -375,13 +381,14 @@ PHP_METHOD(Phalcon_DataMapper_Pdo_Profiler_Profiler, start)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&method_zv, method);
+	zephir_fetch_params(1, 1, 0, &method_param);
+	zephir_get_strval(&method, method_param);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("active"), PH_NOISY_CC | PH_READONLY);
 	if (UNEXPECTED(zephir_is_true(&_0))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		zephir_create_array(&_1$$3, 2, 0);
-		zephir_array_update_string(&_1$$3, SL("method"), &method_zv, PH_COPY | PH_SEPARATE);
-		ZEPHIR_CALL_FUNCTION(&_2$$3, "hrtime", NULL, 203, &__$true);
+		zephir_array_update_string(&_1$$3, SL("method"), &method, PH_COPY | PH_SEPARATE);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "hrtime", NULL, 204, &__$true);
 		zephir_check_call_status();
 		zephir_array_update_string(&_1$$3, SL("start"), &_2$$3, PH_COPY | PH_SEPARATE);
 		zephir_update_property_zval(this_ptr, ZEND_STRL("context"), &_1$$3);

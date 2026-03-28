@@ -18,6 +18,7 @@
 #include "kernel/object.h"
 #include "kernel/array.h"
 #include "kernel/concat.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 
 
@@ -78,36 +79,44 @@ ZEPHIR_INIT_CLASS(Phalcon_Di_Injectable)
 PHP_METHOD(Phalcon_Di_Injectable, __get)
 {
 	zval _2$$4;
-	zval _5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval propertyName_zv, container, service, _0, _1$$4, _3$$4, _4$$4;
-	zend_string *propertyName = NULL;
+	zval *propertyName_param = NULL, container, service, _0, _1$$4, _3$$4, _4$$4;
+	zval propertyName, _5;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&propertyName_zv);
+	ZVAL_UNDEF(&propertyName);
+	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&container);
 	ZVAL_UNDEF(&service);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1$$4);
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_4$$4);
-	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&_2$$4);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(propertyName)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&propertyName_zv, propertyName);
+	zephir_fetch_params(1, 1, 0, &propertyName_param);
+	if (UNEXPECTED(Z_TYPE_P(propertyName_param) != IS_STRING && Z_TYPE_P(propertyName_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'propertyName' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(propertyName_param) == IS_STRING)) {
+		zephir_get_strval(&propertyName, propertyName_param);
+	} else {
+		ZEPHIR_INIT_VAR(&propertyName);
+	}
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(&container, &_0);
-	if (ZEPHIR_IS_STRING_IDENTICAL(&propertyName_zv, "di")) {
+	if (ZEPHIR_IS_STRING_IDENTICAL(&propertyName, "di")) {
 		zephir_update_property_zval(this_ptr, ZEND_STRL("di"), &container);
 		RETURN_CCTOR(&container);
 	}
-	if (ZEPHIR_IS_STRING_IDENTICAL(&propertyName_zv, "persistent")) {
+	if (ZEPHIR_IS_STRING_IDENTICAL(&propertyName, "persistent")) {
 		ZEPHIR_INIT_VAR(&_2$$4);
 		zephir_create_array(&_2$$4, 2, 0);
 		ZEPHIR_INIT_VAR(&_3$$4);
@@ -123,16 +132,16 @@ PHP_METHOD(Phalcon_Di_Injectable, __get)
 		zephir_read_property(&_4$$4, this_ptr, ZEND_STRL("persistent"), PH_NOISY_CC);
 		RETURN_CCTOR(&_4$$4);
 	}
-	ZEPHIR_CALL_METHOD(&_0, &container, "has", NULL, 0, &propertyName_zv);
+	ZEPHIR_CALL_METHOD(&_0, &container, "has", NULL, 0, &propertyName);
 	zephir_check_call_status();
 	if (zephir_is_true(&_0)) {
-		ZEPHIR_CALL_METHOD(&service, &container, "getshared", NULL, 0, &propertyName_zv);
+		ZEPHIR_CALL_METHOD(&service, &container, "getshared", NULL, 0, &propertyName);
 		zephir_check_call_status();
-		zephir_update_property_zval_zval(this_ptr, &propertyName_zv, &service);
+		zephir_update_property_zval_zval(this_ptr, &propertyName, &service);
 		RETURN_CCTOR(&service);
 	}
 	ZEPHIR_INIT_VAR(&_5);
-	ZEPHIR_CONCAT_SV(&_5, "Access to undefined property ", &propertyName_zv);
+	ZEPHIR_CONCAT_SV(&_5, "Access to undefined property ", &propertyName);
 	ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 7, &_5);
 	zephir_check_call_status();
 	RETURN_MM_NULL();
@@ -145,21 +154,30 @@ PHP_METHOD(Phalcon_Di_Injectable, __isset)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval name_zv, _0;
-	zend_string *name = NULL;
+	zval *name_param = NULL, _0;
+	zval name;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&name);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&name_zv, name);
+	zephir_fetch_params(1, 1, 0, &name_param);
+	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
+		zephir_get_strval(&name, name_param);
+	} else {
+		ZEPHIR_INIT_VAR(&name);
+	}
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(&_0, "has", NULL, 0, &name_zv);
+	ZEPHIR_RETURN_CALL_METHOD(&_0, "has", NULL, 0, &name);
 	zephir_check_call_status();
 	RETURN_MM();
 }

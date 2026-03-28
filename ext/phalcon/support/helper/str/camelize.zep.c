@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/object.h"
 
@@ -48,11 +48,11 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Camelize, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool lowerFirst;
-	zval text_zv, delimiters_zv, *lowerFirst_param = NULL, result, _0$$3;
-	zend_string *text = NULL, *delimiters = NULL;
+	zval *text_param = NULL, *delimiters_param = NULL, *lowerFirst_param = NULL, result, _0$$3;
+	zval text, delimiters;
 
-	ZVAL_UNDEF(&text_zv);
-	ZVAL_UNDEF(&delimiters_zv);
+	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&delimiters);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0$$3);
 	bool is_null_true = 1;
@@ -64,20 +64,18 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Camelize, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 2) {
-		lowerFirst_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	ZVAL_STR_COPY(&text_zv, text);
-	if (!delimiters) {
-		ZEPHIR_INIT_VAR(&delimiters_zv);
+	zephir_fetch_params(1, 1, 2, &text_param, &delimiters_param, &lowerFirst_param);
+	zephir_get_strval(&text, text_param);
+	if (!delimiters_param) {
+		ZEPHIR_INIT_VAR(&delimiters);
 	} else {
-		ZVAL_STR_COPY(&delimiters_zv, delimiters);
+		zephir_get_strval(&delimiters, delimiters_param);
 	}
 	if (!lowerFirst_param) {
 		lowerFirst = 0;
 	} else {
 		}
-	ZEPHIR_CALL_PARENT(&result, phalcon_support_helper_str_camelize_ce, getThis(), "__invoke", NULL, 0, &text_zv, &delimiters_zv);
+	ZEPHIR_CALL_PARENT(&result, phalcon_support_helper_str_camelize_ce, getThis(), "__invoke", NULL, 0, &text, &delimiters);
 	zephir_check_call_status();
 	if (lowerFirst == 1) {
 		ZEPHIR_CALL_FUNCTION(&_0$$3, "lcfirst", NULL, 76, &result);

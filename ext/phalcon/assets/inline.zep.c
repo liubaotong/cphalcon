@@ -66,12 +66,12 @@ PHP_METHOD(Phalcon_Assets_Inline, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval attributes;
 	zend_bool filter;
-	zval type_zv, content_zv, *filter_param = NULL, *attributes_param = NULL, __$true, __$false;
-	zend_string *type = NULL, *content = NULL;
+	zval *type_param = NULL, *content_param = NULL, *filter_param = NULL, *attributes_param = NULL, __$true, __$false;
+	zval type, content;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type_zv);
-	ZVAL_UNDEF(&content_zv);
+	ZVAL_UNDEF(&type);
+	ZVAL_UNDEF(&content);
 	ZVAL_BOOL(&__$true, 1);
 	ZVAL_BOOL(&__$false, 0);
 	ZVAL_UNDEF(&attributes);
@@ -84,14 +84,9 @@ PHP_METHOD(Phalcon_Assets_Inline, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 2) {
-		filter_param = ZEND_CALL_ARG(execute_data, 3);
-	}
-	if (ZEND_NUM_ARGS() > 3) {
-		attributes_param = ZEND_CALL_ARG(execute_data, 4);
-	}
-	ZVAL_STR(&type_zv, type);
-	ZVAL_STR(&content_zv, content);
+	zephir_fetch_params(1, 2, 2, &type_param, &content_param, &filter_param, &attributes_param);
+	zephir_get_strval(&type, type_param);
+	zephir_get_strval(&content, content_param);
 	if (!filter_param) {
 		filter = 1;
 	} else {
@@ -102,8 +97,8 @@ PHP_METHOD(Phalcon_Assets_Inline, __construct)
 	} else {
 		zephir_get_arrval(&attributes, attributes_param);
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("content"), &content_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("content"), &content);
 	if (filter) {
 		zephir_update_property_zval(this_ptr, ZEND_STRL("filter"), &__$true);
 	} else {
@@ -229,16 +224,20 @@ PHP_METHOD(Phalcon_Assets_Inline, setFilter)
  */
 PHP_METHOD(Phalcon_Assets_Inline, setType)
 {
-	zval type_zv;
-	zend_string *type = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *type_param = NULL;
+	zval type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type_zv);
+	ZVAL_UNDEF(&type);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(type)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&type_zv, type);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &type_param);
+	zephir_get_strval(&type, type_param);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
+	RETURN_THIS();
 }
 

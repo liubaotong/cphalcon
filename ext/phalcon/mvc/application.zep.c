@@ -22,6 +22,7 @@
 #include "kernel/file.h"
 #include "kernel/concat.h"
 #include "kernel/require.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -107,11 +108,11 @@ PHP_METHOD(Phalcon_Mvc_Application, handle)
 	zend_bool returnedResponse = 0, _1, _10$$6, _13$$11, _31$$30, _33$$30;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval uri_zv, __$false, container, eventsManager, router, dispatcher, response, view, module, moduleObject, moduleName, className, path, implicitView, controller, possibleResponse, renderStatus, matchedRoute, match, _0, _2, _3, _4, _21, _22, _23, _24, _41, _5$$7, _7$$6, _8$$8, _9$$8, _11$$12, _12$$12, _14$$18, _15$$18, _16$$15, _18$$22, _19$$23, _20$$23, _25$$25, _26$$25, _27$$27, _28$$27, _29$$29, _30$$29, _32$$31, _34$$34, _35$$35, _36$$35, _37$$38, _38$$38, _39$$39, _40$$40;
-	zend_string *uri = NULL;
+	zval *uri_param = NULL, __$false, container, eventsManager, router, dispatcher, response, view, module, moduleObject, moduleName, className, path, implicitView, controller, possibleResponse, renderStatus, matchedRoute, match, _0, _2, _3, _4, _21, _22, _23, _24, _41, _5$$7, _7$$6, _8$$8, _9$$8, _11$$12, _12$$12, _14$$18, _15$$18, _16$$15, _18$$22, _19$$23, _20$$23, _25$$25, _26$$25, _27$$27, _28$$27, _29$$29, _30$$29, _32$$31, _34$$34, _35$$35, _36$$35, _37$$38, _38$$38, _39$$39, _40$$40;
+	zval uri;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&uri_zv);
+	ZVAL_UNDEF(&uri);
 	ZVAL_BOOL(&__$false, 0);
 	ZVAL_UNDEF(&container);
 	ZVAL_UNDEF(&eventsManager);
@@ -171,7 +172,16 @@ PHP_METHOD(Phalcon_Mvc_Application, handle)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	ZVAL_STR_COPY(&uri_zv, uri);
+	zephir_fetch_params(1, 1, 0, &uri_param);
+	if (UNEXPECTED(Z_TYPE_P(uri_param) != IS_STRING && Z_TYPE_P(uri_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'uri' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(uri_param) == IS_STRING)) {
+		zephir_get_strval(&uri, uri_param);
+	} else {
+		ZEPHIR_INIT_VAR(&uri);
+	}
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("container"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&container, &_0);
 	if (Z_TYPE_P(&container) == IS_NULL) {
@@ -196,7 +206,7 @@ PHP_METHOD(Phalcon_Mvc_Application, handle)
 	ZEPHIR_CALL_METHOD(&_4, &container, "getshared", NULL, 0, &_3);
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(&router, &_4);
-	ZEPHIR_CALL_METHOD(NULL, &router, "handle", NULL, 0, &uri_zv);
+	ZEPHIR_CALL_METHOD(NULL, &router, "handle", NULL, 0, &uri);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&matchedRoute, &router, "getmatchedroute", NULL, 0);
 	zephir_check_call_status();

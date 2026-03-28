@@ -48,28 +48,28 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Pluck, __invoke)
 	zend_bool _2$$3, _3$$3, _6$$6, _7$$6;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zend_string *element = NULL;
-	zval *collection_param = NULL, element_zv, item, *_0, _1, _4$$4, _5$$5, _8$$7, _9$$8;
+	zval element;
+	zval *collection_param = NULL, *element_param = NULL, item, *_0, _1, _4$$4, _5$$5, _8$$7, _9$$8;
 	zval collection, filtered;
 
 	ZVAL_UNDEF(&collection);
 	ZVAL_UNDEF(&filtered);
-	ZVAL_UNDEF(&element_zv);
 	ZVAL_UNDEF(&item);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_4$$4);
 	ZVAL_UNDEF(&_5$$5);
 	ZVAL_UNDEF(&_8$$7);
 	ZVAL_UNDEF(&_9$$8);
+	ZVAL_UNDEF(&element);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ARRAY(collection)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	collection_param = ZEND_CALL_ARG(execute_data, 1);
+	zephir_fetch_params(1, 2, 0, &collection_param, &element_param);
 	zephir_get_arrval(&collection, collection_param);
-	ZVAL_STR_COPY(&element_zv, element);
+	zephir_get_strval(&element, element_param);
 	ZEPHIR_INIT_VAR(&filtered);
 	array_init(&filtered);
 	zephir_is_iterable(&collection, 0, "phalcon/Support/Helper/Arr/Pluck.zep", 39);
@@ -80,18 +80,18 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Pluck, __invoke)
 			ZVAL_COPY(&item, _0);
 			_2$$3 = Z_TYPE_P(&item) == IS_OBJECT;
 			if (_2$$3) {
-				_2$$3 = zephir_isset_property_zval(&item, &element_zv);
+				_2$$3 = zephir_isset_property_zval(&item, &element);
 			}
 			_3$$3 = Z_TYPE_P(&item) == IS_ARRAY;
 			if (_3$$3) {
-				_3$$3 = zephir_array_isset(&item, &element_zv);
+				_3$$3 = zephir_array_isset(&item, &element);
 			}
 			if (_2$$3) {
 				ZEPHIR_OBS_NVAR(&_4$$4);
-				zephir_read_property_zval(&_4$$4, &item, &element_zv, PH_NOISY_CC);
+				zephir_read_property_zval(&_4$$4, &item, &element, PH_NOISY_CC);
 				zephir_array_append(&filtered, &_4$$4, PH_SEPARATE, "phalcon/Support/Helper/Arr/Pluck.zep", 33);
 			} else if (_3$$3) {
-				zephir_array_fetch(&_5$$5, &item, &element_zv, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
+				zephir_array_fetch(&_5$$5, &item, &element, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
 				zephir_array_append(&filtered, &_5$$5, PH_SEPARATE, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
 			}
 		} ZEND_HASH_FOREACH_END();
@@ -108,18 +108,18 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Pluck, __invoke)
 			zephir_check_call_status();
 				_6$$6 = Z_TYPE_P(&item) == IS_OBJECT;
 				if (_6$$6) {
-					_6$$6 = zephir_isset_property_zval(&item, &element_zv);
+					_6$$6 = zephir_isset_property_zval(&item, &element);
 				}
 				_7$$6 = Z_TYPE_P(&item) == IS_ARRAY;
 				if (_7$$6) {
-					_7$$6 = zephir_array_isset(&item, &element_zv);
+					_7$$6 = zephir_array_isset(&item, &element);
 				}
 				if (_6$$6) {
 					ZEPHIR_OBS_NVAR(&_8$$7);
-					zephir_read_property_zval(&_8$$7, &item, &element_zv, PH_NOISY_CC);
+					zephir_read_property_zval(&_8$$7, &item, &element, PH_NOISY_CC);
 					zephir_array_append(&filtered, &_8$$7, PH_SEPARATE, "phalcon/Support/Helper/Arr/Pluck.zep", 33);
 				} else if (_7$$6) {
-					zephir_array_fetch(&_9$$8, &item, &element_zv, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
+					zephir_array_fetch(&_9$$8, &item, &element, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
 					zephir_array_append(&filtered, &_9$$8, PH_SEPARATE, "phalcon/Support/Helper/Arr/Pluck.zep", 35);
 				}
 			ZEPHIR_CALL_METHOD(NULL, &collection, "next", NULL, 0);

@@ -183,7 +183,6 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/storage/adapter/stream.zep.c
 	phalcon/storage/adapter/weak.zep.c
 	phalcon/storage/serializer/igbinary.zep.c
-	phalcon/support/exception.zep.c
 	phalcon/acl/adapter/memory.zep.c
 	phalcon/acl/component.zep.c
 	phalcon/acl/componentawareinterface.zep.c
@@ -540,6 +539,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/support/debug.zep.c
 	phalcon/support/debug/dump.zep.c
 	phalcon/support/debug/exception.zep.c
+	phalcon/support/exception.zep.c
 	phalcon/support/helper/arr/blacklist.zep.c
 	phalcon/support/helper/arr/chunk.zep.c
 	phalcon/support/helper/arr/filter.zep.c
@@ -623,7 +623,11 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/7__closure.zep.c
 	phalcon/8__closure.zep.c
 	phalcon/9__closure.zep.c
-	phalcon/10__closure.zep.c phalcon/annotations/scanner.c
+	phalcon/10__closure.zep.c
+	phalcon/11__closure.zep.c
+	phalcon/12__closure.zep.c
+	phalcon/13__closure.zep.c
+	phalcon/14__closure.zep.c phalcon/annotations/scanner.c
 	phalcon/annotations/parser.c
 	phalcon/mvc/model/orm.c
 	phalcon/mvc/model/query/scanner.c

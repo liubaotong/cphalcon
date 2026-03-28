@@ -93,13 +93,13 @@ PHP_METHOD(Phalcon_Html_Helper_Doctype, __construct)
 PHP_METHOD(Phalcon_Html_Helper_Doctype, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_string *delimiter = NULL;
-	zval *type_param = NULL, delimiter_zv, _0;
+	zval delimiter;
+	zval *type_param = NULL, *delimiter_param = NULL, _0;
 	zend_long type;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&delimiter_zv);
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&delimiter);
 	ZEND_PARSE_PARAMETERS_START(0, 2)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(type)
@@ -107,23 +107,21 @@ PHP_METHOD(Phalcon_Html_Helper_Doctype, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (ZEND_NUM_ARGS() > 0) {
-		type_param = ZEND_CALL_ARG(execute_data, 1);
-	}
+	zephir_fetch_params(1, 0, 2, &type_param, &delimiter_param);
 	if (!type_param) {
 		type = 5;
 	} else {
 		}
-	if (!delimiter) {
-		delimiter = zend_string_init(ZEND_STRL("\n"), 0);
-		ZVAL_STR(&delimiter_zv, delimiter);
+	if (!delimiter_param) {
+		ZEPHIR_INIT_VAR(&delimiter);
+		ZVAL_STRING(&delimiter, "\n");
 	} else {
-		ZVAL_STR_COPY(&delimiter_zv, delimiter);
+		zephir_get_strval(&delimiter, delimiter_param);
 	}
 	ZVAL_UNDEF(&_0);
 	ZVAL_LONG(&_0, type);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &_0);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("delimiter"), &delimiter_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("delimiter"), &delimiter);
 	RETURN_THIS();
 }
 

@@ -57,16 +57,15 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_11 = NULL, *_16 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zend_string *leftDelimiter = NULL, *rightDelimiter = NULL, *separator = NULL;
-	zval *text_param = NULL, leftDelimiter_zv, rightDelimiter_zv, separator_zv, ldS, rdS, matches, match, words, word, sub, _0, _1, _4, _5, _2$$3, *_6$$5, _7$$5, _9$$6, _10$$6, _12$$6, _13$$6, _14$$6, _15$$6, _18$$8, _19$$8, _20$$8, _21$$8, _22$$8, _23$$8;
-	zval text, pattern, _3$$3;
+	zval *text_param = NULL, *leftDelimiter_param = NULL, *rightDelimiter_param = NULL, *separator_param = NULL, ldS, rdS, matches, match, words, word, sub, _0, _1, _4, _5, _2$$3, *_6$$5, _7$$5, _9$$6, _10$$6, _12$$6, _13$$6, _14$$6, _15$$6, _18$$8, _19$$8, _20$$8, _21$$8, _22$$8, _23$$8;
+	zval text, leftDelimiter, rightDelimiter, separator, pattern, _3$$3;
 
 	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&leftDelimiter);
+	ZVAL_UNDEF(&rightDelimiter);
+	ZVAL_UNDEF(&separator);
 	ZVAL_UNDEF(&pattern);
 	ZVAL_UNDEF(&_3$$3);
-	ZVAL_UNDEF(&leftDelimiter_zv);
-	ZVAL_UNDEF(&rightDelimiter_zv);
-	ZVAL_UNDEF(&separator_zv);
 	ZVAL_UNDEF(&ldS);
 	ZVAL_UNDEF(&rdS);
 	ZVAL_UNDEF(&matches);
@@ -93,7 +92,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 	ZVAL_UNDEF(&_22$$8);
 	ZVAL_UNDEF(&_23$$8);
 	ZEND_PARSE_PARAMETERS_START(1, 4)
-		Z_PARAM_ZVAL(text_param)
+		Z_PARAM_STR(text)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_STR(leftDelimiter)
 		Z_PARAM_STR(rightDelimiter)
@@ -101,29 +100,29 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	text_param = ZEND_CALL_ARG(execute_data, 1);
+	zephir_fetch_params(1, 1, 3, &text_param, &leftDelimiter_param, &rightDelimiter_param, &separator_param);
 	zephir_get_strval(&text, text_param);
-	if (!leftDelimiter) {
-		leftDelimiter = zend_string_init(ZEND_STRL("{"), 0);
-		ZVAL_STR(&leftDelimiter_zv, leftDelimiter);
+	if (!leftDelimiter_param) {
+		ZEPHIR_INIT_VAR(&leftDelimiter);
+		ZVAL_STRING(&leftDelimiter, "{");
 	} else {
-		ZVAL_STR_COPY(&leftDelimiter_zv, leftDelimiter);
+		zephir_get_strval(&leftDelimiter, leftDelimiter_param);
 	}
-	if (!rightDelimiter) {
-		rightDelimiter = zend_string_init(ZEND_STRL("}"), 0);
-		ZVAL_STR(&rightDelimiter_zv, rightDelimiter);
+	if (!rightDelimiter_param) {
+		ZEPHIR_INIT_VAR(&rightDelimiter);
+		ZVAL_STRING(&rightDelimiter, "}");
 	} else {
-		ZVAL_STR_COPY(&rightDelimiter_zv, rightDelimiter);
+		zephir_get_strval(&rightDelimiter, rightDelimiter_param);
 	}
-	if (!separator) {
-		separator = zend_string_init(ZEND_STRL("|"), 0);
-		ZVAL_STR(&separator_zv, separator);
+	if (!separator_param) {
+		ZEPHIR_INIT_VAR(&separator);
+		ZVAL_STRING(&separator, "|");
 	} else {
-		ZVAL_STR_COPY(&separator_zv, separator);
+		zephir_get_strval(&separator, separator_param);
 	}
-	ZEPHIR_CALL_FUNCTION(&_0, "substr_count", NULL, 0, &text, &leftDelimiter_zv);
+	ZEPHIR_CALL_FUNCTION(&_0, "substr_count", NULL, 0, &text, &leftDelimiter);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "substr_count", NULL, 0, &text, &rightDelimiter_zv);
+	ZEPHIR_CALL_FUNCTION(&_1, "substr_count", NULL, 0, &text, &rightDelimiter);
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
@@ -136,9 +135,9 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_FUNCTION(&ldS, "preg_quote", NULL, 356, &leftDelimiter_zv);
+	ZEPHIR_CALL_FUNCTION(&ldS, "preg_quote", NULL, 356, &leftDelimiter);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&rdS, "preg_quote", NULL, 356, &rightDelimiter_zv);
+	ZEPHIR_CALL_FUNCTION(&rdS, "preg_quote", NULL, 356, &rightDelimiter);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_4);
 	ZEPHIR_CONCAT_SVSVVSVS(&_4, "/", &ldS, "([^", &ldS, &rdS, "]+)", &rdS, "/");
@@ -166,13 +165,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 				}
 				zephir_array_fetch_long(&_9$$6, &match, 1, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/Dynamic.zep", 61);
 				ZEPHIR_INIT_NVAR(&words);
-				zephir_fast_explode(&words, &separator_zv, &_9$$6, LONG_MAX);
+				zephir_fast_explode(&words, &separator, &_9$$6, LONG_MAX);
 				ZEPHIR_OBS_NVAR(&word);
-				ZEPHIR_CALL_FUNCTION(&_10$$6, "array_rand", &_11, 202, &words);
+				ZEPHIR_CALL_FUNCTION(&_10$$6, "array_rand", &_11, 203, &words);
 				zephir_check_call_status();
 				zephir_array_fetch(&word, &words, &_10$$6, PH_NOISY, "phalcon/Support/Helper/Str/Dynamic.zep", 62);
 				zephir_array_fetch_long(&_12$$6, &match, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/Dynamic.zep", 63);
-				ZEPHIR_CALL_FUNCTION(&sub, "preg_quote", NULL, 356, &_12$$6, &separator_zv);
+				ZEPHIR_CALL_FUNCTION(&sub, "preg_quote", NULL, 356, &_12$$6, &separator);
 				zephir_check_call_status();
 				ZEPHIR_INIT_NVAR(&_13$$6);
 				ZEPHIR_CONCAT_SVS(&_13$$6, "/", &sub, "/");
@@ -201,13 +200,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Dynamic, __invoke)
 					}
 					zephir_array_fetch_long(&_18$$8, &match, 1, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/Dynamic.zep", 61);
 					ZEPHIR_INIT_NVAR(&words);
-					zephir_fast_explode(&words, &separator_zv, &_18$$8, LONG_MAX);
+					zephir_fast_explode(&words, &separator, &_18$$8, LONG_MAX);
 					ZEPHIR_OBS_NVAR(&word);
-					ZEPHIR_CALL_FUNCTION(&_19$$8, "array_rand", &_11, 202, &words);
+					ZEPHIR_CALL_FUNCTION(&_19$$8, "array_rand", &_11, 203, &words);
 					zephir_check_call_status();
 					zephir_array_fetch(&word, &words, &_19$$8, PH_NOISY, "phalcon/Support/Helper/Str/Dynamic.zep", 62);
 					zephir_array_fetch_long(&_20$$8, &match, 0, PH_NOISY | PH_READONLY, "phalcon/Support/Helper/Str/Dynamic.zep", 63);
-					ZEPHIR_CALL_FUNCTION(&sub, "preg_quote", NULL, 356, &_20$$8, &separator_zv);
+					ZEPHIR_CALL_FUNCTION(&sub, "preg_quote", NULL, 356, &_20$$8, &separator);
 					zephir_check_call_status();
 					ZEPHIR_INIT_NVAR(&_21$$8);
 					ZEPHIR_CONCAT_SVS(&_21$$8, "/", &sub, "/");

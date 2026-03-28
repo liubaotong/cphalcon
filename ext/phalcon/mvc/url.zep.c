@@ -20,6 +20,7 @@
 #include "kernel/array.h"
 #include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "ext/spl/spl_exceptions.h"
 #include "phalcon/mvc/url/utils.h"
 
 
@@ -296,7 +297,7 @@ PHP_METHOD(Phalcon_Mvc_Url, get)
 		zephir_check_call_status();
 	}
 	if (zephir_is_true(args)) {
-		ZEPHIR_CALL_FUNCTION(&queryString, "http_build_query", NULL, 494, args);
+		ZEPHIR_CALL_FUNCTION(&queryString, "http_build_query", NULL, 493, args);
 		zephir_check_call_status();
 		_20$$16 = Z_TYPE_P(&queryString) == IS_STRING;
 		if (_20$$16) {
@@ -455,17 +456,29 @@ PHP_METHOD(Phalcon_Mvc_Url, getStaticBaseUri)
  */
 PHP_METHOD(Phalcon_Mvc_Url, setBasePath)
 {
-	zval basePath_zv;
-	zend_string *basePath = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *basePath_param = NULL;
+	zval basePath;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&basePath_zv);
+	ZVAL_UNDEF(&basePath);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(basePath)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&basePath_zv, basePath);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("basePath"), &basePath_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &basePath_param);
+	if (UNEXPECTED(Z_TYPE_P(basePath_param) != IS_STRING && Z_TYPE_P(basePath_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'basePath' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(basePath_param) == IS_STRING)) {
+		zephir_get_strval(&basePath, basePath_param);
+	} else {
+		ZEPHIR_INIT_VAR(&basePath);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("basePath"), &basePath);
+	RETURN_THIS();
 }
 
 /**
@@ -479,22 +492,34 @@ PHP_METHOD(Phalcon_Mvc_Url, setBasePath)
  */
 PHP_METHOD(Phalcon_Mvc_Url, setBaseUri)
 {
-	zval baseUri_zv, _0;
-	zend_string *baseUri = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *baseUri_param = NULL, _0;
+	zval baseUri;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&baseUri_zv);
+	ZVAL_UNDEF(&baseUri);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(baseUri)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&baseUri_zv, baseUri);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("baseUri"), &baseUri_zv);
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &baseUri_param);
+	if (UNEXPECTED(Z_TYPE_P(baseUri_param) != IS_STRING && Z_TYPE_P(baseUri_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'baseUri' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(baseUri_param) == IS_STRING)) {
+		zephir_get_strval(&baseUri, baseUri_param);
+	} else {
+		ZEPHIR_INIT_VAR(&baseUri);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("baseUri"), &baseUri);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("staticBaseUri"), PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_0) == IS_NULL) {
-		zephir_update_property_zval(this_ptr, ZEND_STRL("staticBaseUri"), &baseUri_zv);
+		zephir_update_property_zval(this_ptr, ZEND_STRL("staticBaseUri"), &baseUri);
 	}
-	RETURN_THISW();
+	RETURN_THIS();
 }
 
 /**
@@ -506,17 +531,29 @@ PHP_METHOD(Phalcon_Mvc_Url, setBaseUri)
  */
 PHP_METHOD(Phalcon_Mvc_Url, setStaticBaseUri)
 {
-	zval staticBaseUri_zv;
-	zend_string *staticBaseUri = NULL;
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *staticBaseUri_param = NULL;
+	zval staticBaseUri;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&staticBaseUri_zv);
+	ZVAL_UNDEF(&staticBaseUri);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(staticBaseUri)
 	ZEND_PARSE_PARAMETERS_END();
-	ZVAL_STR(&staticBaseUri_zv, staticBaseUri);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("staticBaseUri"), &staticBaseUri_zv);
-	RETURN_THISW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
+	zephir_fetch_params(1, 1, 0, &staticBaseUri_param);
+	if (UNEXPECTED(Z_TYPE_P(staticBaseUri_param) != IS_STRING && Z_TYPE_P(staticBaseUri_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'staticBaseUri' must be of the type string"));
+		RETURN_MM_NULL();
+	}
+	if (EXPECTED(Z_TYPE_P(staticBaseUri_param) == IS_STRING)) {
+		zephir_get_strval(&staticBaseUri, staticBaseUri_param);
+	} else {
+		ZEPHIR_INIT_VAR(&staticBaseUri);
+	}
+	zephir_update_property_zval(this_ptr, ZEND_STRL("staticBaseUri"), &staticBaseUri);
+	RETURN_THIS();
 }
 
 /**
@@ -525,11 +562,11 @@ PHP_METHOD(Phalcon_Mvc_Url, setStaticBaseUri)
 PHP_METHOD(Phalcon_Mvc_Url, path)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval path_zv, _0;
-	zend_string *path = NULL;
+	zval *path_param = NULL, _0;
+	zval path;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&path_zv);
+	ZVAL_UNDEF(&path);
 	ZVAL_UNDEF(&_0);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
@@ -538,13 +575,14 @@ PHP_METHOD(Phalcon_Mvc_Url, path)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	if (!path) {
-		ZEPHIR_INIT_VAR(&path_zv);
+	zephir_fetch_params(1, 0, 1, &path_param);
+	if (!path_param) {
+		ZEPHIR_INIT_VAR(&path);
 	} else {
-		ZVAL_STR_COPY(&path_zv, path);
+		zephir_get_strval(&path, path_param);
 	}
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("basePath"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CONCAT_VV(return_value, &_0, &path_zv);
+	ZEPHIR_CONCAT_VV(return_value, &_0, &path);
 	RETURN_MM();
 }
 
