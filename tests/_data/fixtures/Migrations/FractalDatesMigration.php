@@ -26,9 +26,9 @@ class FractalDatesMigration extends AbstractMigration
      */
     public function insert(
         int $id,
-        string $time = null,
-        string $dateTime = null,
-        string $timeStamp = null
+        ?string $time = null,
+        ?string $dateTime = null,
+        ?string $timeStamp = null
     ) {
         if (0 === $id) {
             $id = null;

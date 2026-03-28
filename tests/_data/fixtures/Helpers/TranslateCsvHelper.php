@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Fixtures\Helpers;
 
 use Codeception\Example;
-use Phalcon\Tests\Fixtures\Traits\TranslateCsvTrait;
+use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateCsvTrait;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\InterpolatorFactory;
 use UnitTester;

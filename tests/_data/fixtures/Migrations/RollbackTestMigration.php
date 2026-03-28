@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Fixtures\Migrations;
 
-/**
- * Class InvoicesMigration
- */
 class RollbackTestMigration extends AbstractMigration
 {
     protected $table = 'co_rb_test_model';

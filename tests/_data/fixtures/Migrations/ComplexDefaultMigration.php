@@ -24,9 +24,9 @@ class ComplexDefaultMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        $id,
-        string $created = null,
-        string $updated = null
+        ?int $id,
+        ?string $created = null,
+        ?string $updated = null
     ): int {
         $id  = $id ?: 'null';
         $sql = <<<SQL

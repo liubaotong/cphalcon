@@ -20,7 +20,7 @@ class ManufacturersMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        $id,
+        ?int $id,
         string $name,
         ?string $country,
         int $foundedYear
