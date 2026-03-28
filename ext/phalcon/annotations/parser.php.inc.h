@@ -2,7 +2,9 @@
 #include "php_phalcon.h"
 #include "phalcon.h"
 
+#if PHP_VERSION_ID < 80500
 #include <ext/standard/php_smart_string.h>
+#endif
 #include <zend_smart_str.h>
 
 #include <main/spprintf.h>
