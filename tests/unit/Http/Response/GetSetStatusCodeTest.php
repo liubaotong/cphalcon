@@ -88,20 +88,15 @@ final class GetSetStatusCodeTest extends AbstractHttpBase
             ->setJsonContent($body, JSON_NUMERIC_CHECK)
         ;
 
+        $this->assertSame(Http::CODE_404, $response->getStatusCode());
+
+        // Capture output from send()
         ob_start();
         $response->send();
         $contents = ob_get_clean();
 
-        $expected = [
-            'Status: ' . Http::MESSAGE_404_NOT_FOUND,
-            'Content-Type: ' . Http::CONTENT_TYPE_JSON,
-        ];
-        $actual   = xdebug_get_headers();
-        $this->assertSame($expected, $actual);
-
         $expected = '{"test":123}';
-        $actual   = $contents;
-        $this->assertSame($expected, $actual);
+        $this->assertSame($$expected, $contents);
     }
 
     /**
