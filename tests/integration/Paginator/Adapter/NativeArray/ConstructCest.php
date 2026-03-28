@@ -33,21 +33,12 @@ class ConstructCest
     {
         $I->wantToTest('Paginator\Adapter\NativeArray - __construct()');
 
-        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
-            $message = 'Phalcon\Paginator\Adapter\AbstractAdapter::__construct() expects exactly 1 argument, 0 given';
-            $I->expectThrowable(
-                new ArgumentCountError($message),
-                function () {
-                    $paginator = new NativeArray();
-                }
-            );
-        } else {
-            $I->expectThrowable(
-                new BadMethodCallException('Wrong number of parameters'),
-                function () {
-                    $paginator = new NativeArray();
-                }
-            );
-        }
+        $message = 'Phalcon\Paginator\Adapter\AbstractAdapter::__construct() expects exactly 1 argument, 0 given';
+        $I->expectThrowable(
+            new ArgumentCountError($message),
+            function () {
+                $paginator = new NativeArray();
+            }
+        );
     }
 }
