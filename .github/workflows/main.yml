@@ -631,6 +631,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           path: reports
+          pattern: 'coverage-*.xml'
 
       - name: "Display structure of downloaded files"
         run: ls -R
