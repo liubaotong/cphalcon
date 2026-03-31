@@ -2677,12 +2677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zephir-lang/zephir.git",
-                "reference": "1d5d50fafb953b0d6ac0933d31494b16a592e30d"
+                "reference": "db0b78c8526636228ee823d734caea2d5f2ecc2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zephir-lang/zephir/zipball/1d5d50fafb953b0d6ac0933d31494b16a592e30d",
-                "reference": "1d5d50fafb953b0d6ac0933d31494b16a592e30d",
+                "url": "https://api.github.com/repos/zephir-lang/zephir/zipball/db0b78c8526636228ee823d734caea2d5f2ecc2d",
+                "reference": "db0b78c8526636228ee823d734caea2d5f2ecc2d",
                 "shasum": ""
             },
             "require": {
@@ -2754,7 +2754,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-27T14:49:30+00:00"
+            "time": "2026-03-31T16:31:36+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3173,11 +3173,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.44",
+            "version": "2.1.45",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4a88c083c668b2c364a425c9b3171b2d9ea5d218",
-                "reference": "4a88c083c668b2c364a425c9b3171b2d9ea5d218",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f8cdfd9421b7edb7686a2d150a234870464eac70",
+                "reference": "f8cdfd9421b7edb7686a2d150a234870464eac70",
                 "shasum": ""
             },
             "require": {
@@ -3222,7 +3222,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-25T17:34:21+00:00"
+            "time": "2026-03-30T13:22:02+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

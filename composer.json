@@ -102,14 +102,11 @@
     "test-unit": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter unit",
     "test-cli": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter cli",
     "test-integration": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter integration",
-    "test-db-common": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database -g common",
-    "test-db-mysql": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env mysql -g mysql",
-    "test-db-pgsql": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env pgsql -g pgsql",
-    "test-db-sqlite": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env sqlite -g sqlite",
+    "test-db-mysql": "driver=mysql dump_file=tests/_data/assets/schemas/mysql.sql php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env mysql",
+    "test-db-pgsql": "driver=pgsql dump_file=tests/_data/assets/schemas/postgresql.sql php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env pgsql",
+    "test-db-sqlite": "driver=sqlite php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env sqlite",
     "test-db": [
-      "@test-db-common",
-      "@test-db-mysql",
-      "@test-db-sqlite"
+      "@test-db-mysql"
     ],
     "test-all": [
       "@test-unit",
