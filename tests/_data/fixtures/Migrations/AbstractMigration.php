@@ -39,7 +39,7 @@ abstract class AbstractMigration
      *
      * @param PDO|Connection|null $connection
      */
-    final public function __construct(PDO $connection = null, bool $withClear = true)
+    final public function __construct(PDO|Connection|null $connection = null, bool $withClear = true)
     {
         $this->connection = $connection;
 

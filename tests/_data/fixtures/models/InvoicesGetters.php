@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Fixtures\models;
+namespace Phalcon\Tests\Models;
 
 use Phalcon\Tests\Models\Invoices;
 
