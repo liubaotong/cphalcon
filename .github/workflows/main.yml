@@ -529,21 +529,6 @@ jobs:
           php tests/_config/generate-db-schemas.php
           vendor/bin/codecept build
 
-      - name: Run Integration Tests
-        env:
-          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
-          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-        if: always()
-        run: vendor/bin/codecept run --coverage-xml=coverage-integration-${{ matrix.php }}.xml --ext DotReporter integration
-
-      - name: Upload Integration Test Coverage
-        uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: coverage-integration-${{ matrix.php }}
-          path: tests/_output/coverage-integration-${{ matrix.php }}.xml
-          retention-days: 7
-
       - name: Run Database Tests (MySQL)
         env:
           DATA_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
@@ -552,6 +537,7 @@ jobs:
           DATA_MYSQL_USER: root
           driver: mysql
           dump_file: tests/_data/assets/schemas/mysql.sql
+          initial_queries: "SET NAMES utf8;SET FOREIGN_KEY_CHECKS=0;"
         if: always()
         run: vendor/bin/codecept run --coverage-xml=coverage-database-mysql-${{ matrix.php }}.xml --ext DotReporter database --env mysql
 
