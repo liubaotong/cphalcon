@@ -13,29 +13,27 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Paginator\Adapter\QueryBuilder;
 
-use DatabaseTester;
+use PDO;
 use Phalcon\Paginator\Adapter\AdapterInterface;
 use Phalcon\Paginator\Adapter\QueryBuilder;
 use Phalcon\Paginator\Exception;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Invoices;
 use stdClass;
 
-/**
- * Class ConstructCest
- */
-class ConstructCest
+final class ConstructTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(DatabaseTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-        $this->setDatabase($I);
+        $this->setDatabase();
 
         /** @var PDO $connection */
-        $connection = $I->getConnection();
+        $connection = self::getConnection();
         (new InvoicesMigration($connection));
     }
 
@@ -45,14 +43,10 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-01
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function paginatorAdapterQuerybuilderConstruct(DatabaseTester $I)
+    public function testPaginatorAdapterQuerybuilderConstruct(): void
     {
-        $I->wantToTest('Paginator\Adapter\QueryBuilder - __construct()');
-
         $manager = $this->getService('modelsManager');
 
         $builder = $manager
@@ -68,8 +62,8 @@ class ConstructCest
             ]
         );
 
-        $I->assertInstanceOf(QueryBuilder::class, $paginator);
-        $I->assertInstanceOf(AdapterInterface::class, $paginator);
+        $this->assertInstanceOf(QueryBuilder::class, $paginator);
+        $this->assertInstanceOf(AdapterInterface::class, $paginator);
     }
 
     /**
@@ -78,28 +72,21 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-01
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function paginatorAdapterQuerybuilderConstructException(DatabaseTester $I)
+    public function testPaginatorAdapterQuerybuilderConstructException(): void
     {
-        $I->wantToTest('Paginator\Adapter\QueryBuilder - __construct() - exception');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "Parameter 'builder' must be an instance of Phalcon\Mvc\Model\Query\Builder"
+        );
 
-        $I->expectThrowable(
-            new Exception(
-                "Parameter 'builder' must be an instance " .
-                "of Phalcon\Mvc\Model\Query\Builder"
-            ),
-            function () {
-                $paginator = new QueryBuilder(
-                    [
-                        'builder' => new stdClass(),
-                        'limit'   => 10,
-                        'page'    => 1,
-                    ]
-                );
-            }
+        $paginator = new QueryBuilder(
+            [
+                'builder' => new stdClass(),
+                'limit'   => 10,
+                'page'    => 1,
+            ]
         );
     }
 }

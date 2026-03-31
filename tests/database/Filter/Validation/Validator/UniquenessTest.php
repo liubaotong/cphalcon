@@ -13,49 +13,44 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Filter\Validation\Validator;
 
-use DatabaseTester;
 use PDO;
+use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Uniqueness;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Migrations\ObjectsMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Objects;
 use Phalcon\Tests\Models\ObjectsWithColumnMap;
-use Phalcon\Filter\Validation;
-use Phalcon\Filter\Validation\Validator\Uniqueness;
 
-class UniquenessCest
+final class UniquenessTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(DatabaseTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-        $this->setDatabase($I);
+        $this->setDatabase();
 
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->clear();
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with single fields
+     * Tests Filter\Validation\Validator\Uniqueness with single fields
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-
-    public function filterValidationValidatorUniquenessSingleField(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessSingleField(): void
     {
-        $I->wantToTest('Filter\Validation\Validator\Uniqueness with single fields');
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon', 1);
 
         $validation = new Validation();
@@ -65,48 +60,35 @@ class UniquenessCest
             new Uniqueness()
         );
 
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon";
-
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon';
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
 
-        $nonExisting = new Objects();
-        $nonExisting->obj_name = "Not Phalcon";
+        $nonExisting           = new Objects();
+        $nonExisting->obj_name = 'Not Phalcon';
 
         $messages = $validation->validate(null, $nonExisting);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with single fields and a converted value
+     * Tests Filter\Validation\Validator\Uniqueness with single fields and a converted value
      *
      * @author Bas Stottelaar <basstottelaar@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-07-25
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessSingleFieldConvert(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessSingleFieldConvert(): void
     {
-        $I->wantToTest(
-            'Filter\Validation\Validator\Uniqueness with single fields and a converted value'
-        );
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon', 1);
 
         $validation = new Validation();
@@ -124,35 +106,28 @@ class UniquenessCest
             )
         );
 
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon';
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with multiple fields
+     * Tests Filter\Validation\Validator\Uniqueness with multiple fields
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessMultipleFields(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessMultipleFields(): void
     {
-        $I->wantToTest('Filter\Validation\Validator\Uniqueness with multiple fields');
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon', 1);
 
         $validation = new Validation();
@@ -163,81 +138,63 @@ class UniquenessCest
         );
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon';
         $existing->obj_type = 1;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
 
         // All values don't exist
-        $nonExisting = new Objects();
-        $nonExisting->obj_name = "Not Phalcon";
+        $nonExisting           = new Objects();
+        $nonExisting->obj_name = 'Not Phalcon';
         $nonExisting->obj_type = 2;
 
         $messages = $validation->validate(null, $nonExisting);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
         // One int value exist
-        $nonExisting = new Objects();
-        $nonExisting->obj_name = "Not Phalcon";
+        $nonExisting           = new Objects();
+        $nonExisting->obj_name = 'Not Phalcon';
         $nonExisting->obj_type = 1;
 
         $messages = $validation->validate(null, $nonExisting);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
         // One string value exist
-        $nonExisting = new Objects();
-        $nonExisting->obj_name = "Phalcon";
+        $nonExisting           = new Objects();
+        $nonExisting->obj_name = 'Phalcon';
         $nonExisting->obj_type = 2;
 
         $messages = $validation->validate(null, $nonExisting);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with multiple fields and a converted value
+     * Tests Filter\Validation\Validator\Uniqueness with multiple fields and a converted value
      *
      * @author Bas Stottelaar <basstottelaar@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-07-25
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessMultipleFieldsConvert(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessMultipleFieldsConvert(): void
     {
-        $I->wantToTest(
-            'Filter\Validation\Validator\Uniqueness with multiple fields and a converted value'
-        );
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon', 1);
 
         $validation = new Validation();
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon';
         $existing->obj_type = 1;
 
         $validation->add(
@@ -253,33 +210,25 @@ class UniquenessCest
             )
         );
 
-
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with single field and except
+     * Tests Filter\Validation\Validator\Uniqueness with single field and except
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessExceptSingleFieldSingleExcept(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessExceptSingleFieldSingleExcept(): void
     {
-        $I->wantToTest('Filter\Validation\Validator\Uniqueness with single field and except');
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon 1', 1);
         $migration->insert(2, 'Phalcon 2', 2);
         $migration->insert(3, 'Phalcon 3', 3);
@@ -295,53 +244,39 @@ class UniquenessCest
             )
         );
 
-
         // All values exist but allow duplicate due to except
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 1";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 1';
         $existing->obj_type = 1;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
-
+        $this->assertEquals(0, $messages->count());
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 2";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 2';
         $existing->obj_type = 2;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with single field and multiple except'
+     * Tests Filter\Validation\Validator\Uniqueness with single field and multiple except
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessExceptSingleFieldMultipleExcept(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessExceptSingleFieldMultipleExcept(): void
     {
-        $I->wantToTest(
-            'Filter\Validation\Validator\Uniqueness with single field and multiple except'
-        );
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon 1', 1);
         $migration->insert(2, 'Phalcon 2', 2);
         $migration->insert(3, 'Phalcon 3', 3);
@@ -358,62 +293,47 @@ class UniquenessCest
         );
 
         // All values exist but allow duplicate due to except
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 1";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 1';
         $existing->obj_type = 1;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
         // All values exist but allow duplicate due to except
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 2";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 2';
         $existing->obj_type = 2;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 3";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 3';
         $existing->obj_type = 3;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with multiple field and single except
+     * Tests Filter\Validation\Validator\Uniqueness with multiple field and single except
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessExceptMultipleFieldSingleExcept(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessExceptMultipleFieldSingleExcept(): void
     {
-        $I->wantToTest(
-            'Filter\Validation\Validator\Uniqueness with multiple field and single except'
-        );
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon 1', 1);
         $migration->insert(2, 'Phalcon 2', 2);
         $migration->insert(3, 'Phalcon 3', 3);
@@ -432,62 +352,48 @@ class UniquenessCest
             )
         );
 
-
         // All values exist but allow duplicate due to except
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 2";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 2';
         $existing->obj_type = 3;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
-        // All values exist but only name is on execpt
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 2";
+        // All values exist but only name is on except
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 2';
         $existing->obj_type = 2;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 1";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 1';
         $existing->obj_type = 1;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
     }
 
     /**
-     * Filter\Validation\Validator\Uniqueness with multiple field and except
+     * Tests Filter\Validation\Validator\Uniqueness with multiple field and except
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2016-06-05
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessExceptMultipleFieldMultipleExcept(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessExceptMultipleFieldMultipleExcept(): void
     {
-        $I->wantToTest('Filter\Validation\Validator\Uniqueness with multiple field and except');
-
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon 1', 1);
         $migration->insert(2, 'Phalcon 2', 2);
         $migration->insert(3, 'Phalcon 3', 3);
@@ -507,28 +413,22 @@ class UniquenessCest
         );
 
         // All values exist but allow duplicate due to except
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 1";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 1';
         $existing->obj_type = 1;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
 
         // All values exist
-        $existing = new Objects();
-        $existing->obj_name = "Phalcon 3";
+        $existing           = new Objects();
+        $existing->obj_name = 'Phalcon 3';
         $existing->obj_type = 3;
 
         $messages = $validation->validate(null, $existing);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
+        $this->assertEquals(1, $messages->count());
     }
 
     /**
@@ -538,15 +438,13 @@ class UniquenessCest
      * @author Ruud Boon <https://github.com/ruudboon>
      * @since  2018-06-13
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function filterValidationValidatorUniquenessIssue13398(DatabaseTester $I)
+    public function testFilterValidationValidatorUniquenessIssue13398(): void
     {
         /** @var PDO $connection */
-        $connection = $I->getConnection();
-        $migration = new ObjectsMigration($connection);
+        $connection = self::getConnection();
+        $migration  = new ObjectsMigration($connection);
         $migration->insert(1, 'Phalcon 1', 1);
         $migration->insert(2, 'Phalcon 2', 2);
         $migration->insert(3, 'Phalcon 3', 3);
@@ -560,24 +458,16 @@ class UniquenessCest
 
         $object = ObjectsWithColumnMap::findFirst(1);
 
-
         $object->theName = 'Phalcon 2';
 
         $messages = $validation->validate(null, $object);
 
-        $I->assertEquals(
-            1,
-            $messages->count()
-        );
-
+        $this->assertEquals(1, $messages->count());
 
         $object->theName = 'Not Phalcon 1';
 
         $messages = $validation->validate(null, $object);
 
-        $I->assertEquals(
-            0,
-            $messages->count()
-        );
+        $this->assertEquals(0, $messages->count());
     }
 }

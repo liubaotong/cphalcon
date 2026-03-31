@@ -13,28 +13,26 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Paginator\Adapter\Model;
 
-use DatabaseTester;
+use PDO;
 use Phalcon\Paginator\Adapter\Model;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Invoices;
 
 use function uniqid;
 
-/**
- * Class ConstructCest
- */
-class ConstructCest
+final class ConstructTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(DatabaseTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-        $this->setDatabase($I);
+        $this->setDatabase();
 
         /** @var PDO $connection */
-        $connection = $I->getConnection();
+        $connection = self::getConnection();
         (new InvoicesMigration($connection));
     }
 
@@ -44,17 +42,13 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-11-01
      *
-     * @group  mysql
-     * @group  pgsql
-     * @group  sqlite
+     * @group mysql
      */
-    public function paginatorAdapterModelConstruct(DatabaseTester $I)
+    public function testPaginatorAdapterModelConstruct(): void
     {
-        $I->wantToTest('Paginator\Adapter\Model - __construct()');
-
         $title = uniqid('inv-');
         /** @var PDO $connection */
-        $connection = $I->getConnection();
+        $connection = self::getConnection();
         $migration  = new InvoicesMigration($connection);
         $migration->insert(4, null, 0, $title);
 
@@ -66,6 +60,6 @@ class ConstructCest
             ]
         );
 
-        $I->assertInstanceOf(Model::class, $paginator);
+        $this->assertInstanceOf(Model::class, $paginator);
     }
 }
