@@ -35,7 +35,7 @@ class ColumnsCest
         $I->assertFalse($actual);
 
         $select
-            ->columns('inv_id', 'inv_cst_id', 'COUNT(inv_total)')
+            ->columns(['inv_id', 'inv_cst_id', 'COUNT(inv_total)'])
             ->from('co_invoices')
         ;
 

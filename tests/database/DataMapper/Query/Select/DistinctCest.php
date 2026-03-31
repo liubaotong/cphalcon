@@ -34,7 +34,7 @@ class DistinctCest
         $select
             ->distinct()
             ->from('co_invoices')
-            ->columns('inv_id', 'inc_cst_id')
+            ->columns(['inv_id', 'inc_cst_id'])
         ;
 
         $expected = "SELECT DISTINCT inv_id, inc_cst_id FROM co_invoices";
@@ -59,7 +59,7 @@ class DistinctCest
             ->distinct()
             ->distinct()
             ->from('co_invoices')
-            ->columns('inv_id', 'inc_cst_id')
+            ->columns(['inv_id', 'inc_cst_id'])
         ;
 
         $expected = "SELECT DISTINCT inv_id, inc_cst_id FROM co_invoices";
@@ -84,7 +84,7 @@ class DistinctCest
             ->distinct()
             ->distinct(false)
             ->from('co_invoices')
-            ->columns('inv_id', 'inc_cst_id')
+            ->columns(['inv_id', 'inc_cst_id'])
         ;
 
         $expected = "SELECT inv_id, inc_cst_id FROM co_invoices";

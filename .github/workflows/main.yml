@@ -544,30 +544,16 @@ jobs:
           path: tests/_output/coverage-integration-${{ matrix.php }}.xml
           retention-days: 7
 
-      - name: Run Database Tests (Common)
-        env:
-          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
-          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-          DATA_MYSQL_USER: root
-        if: always()
-        run: vendor/bin/codecept run --coverage-xml=coverage-database-common-${{ matrix.php }}.xml --ext DotReporter database -g common
-
-      - name: Upload Database (Common) Coverage
-        uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: coverage-database-common-${{ matrix.php }}
-          path: tests/_output/coverage-database-common-${{ matrix.php }}.xml
-          retention-days: 7
-
       - name: Run Database Tests (MySQL)
         env:
           DATA_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
           DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
           DATA_MYSQL_USER: root
+          driver: mysql
+          dump_file: tests/_data/assets/schemas/mysql.sql
         if: always()
-        run: vendor/bin/codecept run --coverage-xml=coverage-database-mysql-${{ matrix.php }}.xml --ext DotReporter database --env mysql -g mysql
+        run: vendor/bin/codecept run --coverage-xml=coverage-database-mysql-${{ matrix.php }}.xml --ext DotReporter database --env mysql
 
       - name: Upload Database (MySQL) Coverage
         uses: actions/upload-artifact@v7

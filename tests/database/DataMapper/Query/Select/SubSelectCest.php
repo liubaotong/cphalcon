@@ -35,7 +35,7 @@ class SubSelectCest
             ->from(
                 $select
                     ->subSelect()
-                    ->columns("inv_id")
+                    ->columns(['inv_id'])
                     ->from('co_invoices')
                     ->asAlias('inv')
                     ->getStatement()
