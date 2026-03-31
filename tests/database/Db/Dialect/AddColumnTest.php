@@ -68,7 +68,7 @@ final class AddColumnTest extends AbstractDatabaseTestCase
                 Sqlite::class,
                 'ALTER TABLE "schema"."table" '
                 . 'ADD COLUMN "field_primary" DOUBLE '
-                . 'DEFAULT 13.34 NOT NULL',
+                . 'DEFAULT "13.34" NOT NULL',
             ],
         ];
     }
@@ -96,7 +96,7 @@ final class AddColumnTest extends AbstractDatabaseTestCase
                 Sqlite::class,
                 'ALTER TABLE "schema"."table" '
                 . 'ADD COLUMN "field_primary" INTEGER '
-                . 'DEFAULT 13 NOT NULL',
+                . 'DEFAULT "13" NOT NULL',
             ],
         ];
     }
@@ -316,7 +316,6 @@ final class AddColumnTest extends AbstractDatabaseTestCase
             'type'          => Column::TYPE_VARCHAR,
             'isNumeric'     => false,
             'size'          => 10,
-            'scale'         => null,
             'default'       => 'NULL',
             'unsigned'      => false,
             'notNull'       => true,
@@ -353,7 +352,6 @@ final class AddColumnTest extends AbstractDatabaseTestCase
             'type'          => Column::TYPE_VARCHAR,
             'isNumeric'     => false,
             'size'          => 10,
-            'scale'         => null,
             'default'       => 'test',
             'unsigned'      => false,
             'notNull'       => true,
@@ -390,7 +388,6 @@ final class AddColumnTest extends AbstractDatabaseTestCase
             'type'          => Column::TYPE_VARCHAR,
             'isNumeric'     => false,
             'size'          => 10,
-            'scale'         => null,
             'default'       => 'CURRENT_TIMESTAMP',
             'unsigned'      => false,
             'notNull'       => true,
