@@ -533,7 +533,6 @@ jobs:
         run: |
           cp tests/_config/.env.default .env
           php tests/_config/generate-db-schemas.php
-          vendor/bin/codecept build
 
       - name: Run Database Tests (MySQL)
         env:
