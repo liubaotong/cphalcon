@@ -13,15 +13,20 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Support\Migrations;
 
-class RollbackTestMigration extends AbstractMigration
+/**
+ * Outputs the MySQL-only preamble that must appear at the top of every
+ * generated schema file.  Other drivers need no bootstrap statements.
+ */
+class BootstrapMigration extends AbstractMigration
 {
-    protected $table = 'co_rb_test_model';
+    protected $table = '';
 
     protected function getSqlMysql(): array
     {
         return [
-            'DROP TABLE IF EXISTS co_rb_test_model;',
-            'CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);',
+            "SET NAMES utf8;",
+            "SET FOREIGN_KEY_CHECKS=0;",
+            "create database if not exists `private`;",
         ];
     }
 
@@ -32,10 +37,7 @@ class RollbackTestMigration extends AbstractMigration
 
     protected function getSqlPgsql(): array
     {
-        return [
-            'DROP TABLE IF EXISTS co_rb_test_model;',
-            'CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);',
-        ];
+        return [];
     }
 
     protected function getSqlSqlsrv(): array

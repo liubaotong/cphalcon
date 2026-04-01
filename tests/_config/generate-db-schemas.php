@@ -11,7 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Phalcon\Tests\Fixtures\Migrations\AbstractMigration;
+use Phalcon\Tests\Support\Migrations\AbstractMigration;
+use Phalcon\Tests\Support\Migrations\BootstrapMigration;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -28,12 +29,18 @@ $drivers = [
 ];
 
 $migrations     = getMigrations($root);
-$migrationClass = 'Phalcon\Tests\Fixtures\Migrations\%s';
+$migrationClass = 'Phalcon\Tests\Support\Migrations\%s';
 
 foreach ($drivers as $driver) {
-    $schema = $root . '/tests/_data/assets/schemas/' . $driver . '.sql';
+    $schema = $root . '/tests/support/assets/schema/' . $driver . '.sql';
     cleanFile($schema);
     echo "Driver: " . $driver . " - ";
+
+    // Always run the bootstrap migration first
+    $bootstrap  = new BootstrapMigration();
+    $statements = $bootstrap->getSql($driver);
+    logStatements($statements, $schema);
+
     foreach ($migrations as $migration) {
         $className  = sprintf($migrationClass, $migration);
         /** @var AbstractMigration $class */
@@ -65,11 +72,11 @@ function cleanFile(string $schema)
  */
 function getMigrations(string $root): array
 {
-    $path       = $root . '/tests/_data/fixtures/Migrations/';
+    $path       = $root . '/tests/support/Migrations/';
     $migrations = [];
     foreach (glob($path . '*.php') as $file) {
         $file = str_replace([$path, '.php'], '', $file);
-        if ($file !== 'AbstractMigration') {
+        if ($file !== 'AbstractMigration' && $file !== 'BootstrapMigration') {
             $migrations[] = $file;
         }
     }

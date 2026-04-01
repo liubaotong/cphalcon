@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Fixtures\Migrations;
+namespace Phalcon\Tests\Support\Migrations;
 
 use PDO;
 use Phalcon\DataMapper\Pdo\Connection;
