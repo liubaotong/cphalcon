@@ -26,6 +26,22 @@ You can either download a binary package for the system of your choice or build 
 
 ## Installation
 
+### Using PIE (recommended)
+
+[PIE](https://github.com/php/pie) is the modern PHP extension installer:
+
+```bash
+pie install phalcon/cphalcon
+```
+
+### Using PECL
+
+```bash
+pecl install phalcon
+```
+
+### From source
+
 For detailed installation instructions you can check our [installation](https://docs.phalcon.io/latest/installation/) page in the docs.
 
 ## Generating API Documentation

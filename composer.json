@@ -1,5 +1,6 @@
 {
   "name": "phalcon/cphalcon",
+  "type": "php-ext",
   "description": "Phalcon is an open source web framework delivered as a C extension for the PHP language providing high performance and lower resource consumption.",
   "keywords": [
     "extension",
@@ -8,8 +9,11 @@
     "high load",
     "mvc"
   ],
-  "version": "5.10.0",
   "license": "BSD-3-Clause",
+  "php-ext": {
+    "extension-name": "phalcon",
+    "build-path": "build/phalcon"
+  },
   "authors": [
     {
       "name": "Phalcon Team",

@@ -58,6 +58,78 @@ jobs:
       - name: Run PHP_CodeSniffer
         run: composer cs
 
+  # Verify that committed build/phalcon/ is up-to-date with Zephir sources
+  build_freshness:
+    permissions:
+      contents: read
+    name: Build freshness check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: zephir_parser-${{ env.ZEPHIR_PARSER_VERSION }}
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update --quiet --yes 1>/dev/null
+          sudo apt-get install --no-install-recommends -q -y re2c
+
+      - run: composer install --prefer-dist --ignore-platform-reqs
+
+      - name: Regenerate build tree
+        run: |
+          vendor/bin/zephir fullclean
+          vendor/bin/zephir generate
+          (cd build && php gen-build.php)
+
+      - name: Assert no generated-build drift
+        run: |
+          if ! git diff --exit-code -- build/phalcon; then
+            echo "::error::build/phalcon is out-of-date. Please regenerate and commit."
+            exit 1
+          fi
+
+  # Validate PIE source-build from local checkout
+  pie_smoke_test:
+    permissions:
+      contents: read
+    name: PIE smoke test / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    needs: [phpcs]
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+          - '8.1'
+          - '8.4'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: pie
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update --quiet --yes 1>/dev/null
+          sudo apt-get install --no-install-recommends -q -y re2c
+
+      - name: PIE build from local checkout
+        run: pie build phalcon/cphalcon
+
+      - name: Validate extension loads
+        run: |
+          EXT_DIR=$(php-config --extension-dir)
+          php -d extension="${EXT_DIR}/phalcon.so" -r 'echo (new Phalcon\Support\Version())->get() . PHP_EOL;'
+
   # Generate IDE stubs and validate with Psalm
   stubs:
     name: Stubs / PHP ${{ matrix.php }}
