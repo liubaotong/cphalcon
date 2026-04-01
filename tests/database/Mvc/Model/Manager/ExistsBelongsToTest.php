@@ -11,85 +11,59 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Integration\Mvc\Model\Manager;
+namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
-use Codeception\Example;
-use IntegrationTester;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Relations\RelationsParts;
 use Phalcon\Tests\Models\Relations\RelationsRobots;
 use Phalcon\Tests\Models\Relations\RelationsRobotsParts;
 
-class ExistsBelongsToCest
+final class ExistsBelongsToTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(IntegrationTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-    }
-
-    public function _after(IntegrationTester $I)
-    {
-        $this->container['db']->close();
     }
 
     /**
      * Tests Phalcon\Mvc\Model\Manager :: existsBelongsTo()
      *
-     * @dataProvider adaptersProvider
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
      */
-    public function mvcModelManagerExistsBelongsTo(IntegrationTester $I, Example $example)
+    public function testMvcModelManagerExistsBelongsTo(): void
     {
-        $I->wantToTest('Mvc\Model\Manager - existsBelongsTo()');
-
-        $diFunction = 'setDi' . $example[0];
-
-        $this->{$diFunction}();
-
         $manager = $this->container->getShared('modelsManager');
 
-        $I->assertFalse(
+        $this->assertFalse(
             $manager->existsBelongsTo(
                 RelationsRobots::class,
                 RelationsRobotsParts::class
             )
         );
 
-        $I->assertFalse(
+        $this->assertFalse(
             $manager->existsBelongsTo(
                 RelationsParts::class,
                 RelationsRobotsParts::class
             )
         );
 
-        $I->assertTrue(
+        $this->assertTrue(
             $manager->existsBelongsTo(
                 RelationsRobotsParts::class,
                 RelationsRobots::class
             )
         );
 
-        $I->assertTrue(
+        $this->assertTrue(
             $manager->existsBelongsTo(
                 RelationsRobotsParts::class,
                 RelationsParts::class
             )
         );
-    }
-
-    private function adaptersProvider(): array
-    {
-        return [
-            [
-                'Mysql',
-            ],
-            [
-                'Postgresql',
-            ],
-            [
-                'Sqlite',
-            ],
-        ];
     }
 }

@@ -6,6 +6,31 @@
 
 
 
+drop table if exists albums;
+            
+create table albums
+(
+    id         integer constraint albums_pk primary key autoincrement not null,
+    artists_id integer not null,
+    name       text    not null
+);
+            
+create index albums_artists_id_index on albums (artists_id);
+            
+
+
+drop table if exists artists;
+            
+create table artists
+(
+    id   integer constraint artists_pk primary key autoincrement not null,
+    name text not null
+);
+            
+
+
+
+
 drop table if exists co_customers_defaults;
             
 create table co_customers_defaults
@@ -115,6 +140,19 @@ create table co_setters
     column2    text,
     column3    text
 );
+            
+
+
+drop table if exists songs;
+            
+create table songs
+(
+    id        integer constraint songs_pk primary key autoincrement not null,
+    albums_id integer not null,
+    name      text    not null
+);
+            
+create index songs_albums_id_index on songs (albums_id);
             
 
 

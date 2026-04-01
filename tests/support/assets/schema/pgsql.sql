@@ -4,6 +4,31 @@
 
 
 
+
+
+drop table if exists albums;
+            
+create table albums
+(
+    id         serial       constraint albums_pk primary key,
+    artists_id integer      not null,
+    name       varchar(100) not null
+);
+            
+create index albums_artists_id_index on albums (artists_id);
+            
+
+
+drop table if exists artists;
+            
+create table artists
+(
+    id   serial constraint artists_pk primary key,
+    name varchar(100) not null
+);
+            
+
+
 drop table if exists complex_default;
             
 create table complex_default
@@ -170,6 +195,19 @@ create table co_setters
     column2 varchar(100) not null,
     column3 varchar(100) not null
 );
+            
+
+
+drop table if exists songs;
+            
+create table songs
+(
+    id        serial       constraint songs_pk primary key,
+    albums_id integer      not null,
+    name      varchar(100) not null
+);
+            
+create index songs_albums_id_index on songs (albums_id);
             
 
 

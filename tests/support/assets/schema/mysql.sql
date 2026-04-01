@@ -1,8 +1,6 @@
 
-SET NAMES utf8;
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;SET FOREIGN_KEY_CHECKS=0;create database if not exists `private`;
 
-create database if not exists `private`;
 
 drop table if exists `album`;
             
@@ -34,6 +32,29 @@ CREATE TABLE `album_photo` (
 	constraint `c_fk_album_photo_album_id` foreign key (`album_id`) references `album` (`id`) on update cascade on delete cascade,
 	constraint `c_fk_album_photo_photo_id` foreign key (`photo_id`) references `photo` (`id`) on update cascade on delete cascade
 ) collate='utf8mb4_unicode_520_ci';
+            
+
+
+drop table if exists `albums`;
+            
+create table `albums`
+(
+    `id`         int(10) auto_increment primary key,
+    `artists_id` int(10)      not null,
+    `name`       varchar(100) not null
+);
+            
+create index albums_artists_id_index on `albums` (`artists_id`);
+            
+
+
+drop table if exists `artists`;
+            
+create table `artists`
+(
+    `id`   int(10) auto_increment primary key,
+    `name` varchar(100) not null
+);
             
 
 
@@ -266,6 +287,19 @@ create table co_setters
     `column2`  varchar(100) null,
     `column3`  varchar(100) null
 );
+            
+
+
+drop table if exists `songs`;
+            
+create table `songs`
+(
+    `id`        int(10) auto_increment primary key,
+    `albums_id` int(10)      not null,
+    `name`      varchar(100) not null
+);
+            
+create index songs_albums_id_index on `songs` (`albums_id`);
             
 
 

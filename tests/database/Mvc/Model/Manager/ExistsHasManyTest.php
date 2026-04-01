@@ -11,85 +11,59 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Integration\Mvc\Model\Manager;
+namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
-use Codeception\Example;
-use IntegrationTester;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Relations\RelationsParts;
 use Phalcon\Tests\Models\Relations\RelationsRobots;
 use Phalcon\Tests\Models\Relations\RelationsRobotsParts;
 
-class ExistsHasManyCest
+final class ExistsHasManyTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(IntegrationTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-    }
-
-    public function _after(IntegrationTester $I)
-    {
-        $this->container['db']->close();
     }
 
     /**
      * Tests Phalcon\Mvc\Model\Manager :: existsHasMany()
      *
-     * @dataProvider adaptersProvider
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
      */
-    public function mvcModelManagerExistsHasMany(IntegrationTester $I, Example $example)
+    public function testMvcModelManagerExistsHasMany(): void
     {
-        $I->wantToTest('Mvc\Model\Manager - existsHasMany()');
-
-        $diFunction = 'setDi' . $example[0];
-
-        $this->{$diFunction}();
-
         $manager = $this->container->getShared('modelsManager');
 
-        $I->assertFalse(
+        $this->assertFalse(
             $manager->existsHasMany(
                 RelationsRobotsParts::class,
                 RelationsRobots::class
             )
         );
 
-        $I->assertFalse(
+        $this->assertFalse(
             $manager->existsHasMany(
                 RelationsRobotsParts::class,
                 RelationsParts::class
             )
         );
 
-        $I->assertTrue(
+        $this->assertTrue(
             $manager->existsHasMany(
                 RelationsRobots::class,
                 RelationsRobotsParts::class
             )
         );
 
-        $I->assertTrue(
+        $this->assertTrue(
             $manager->existsHasMany(
                 RelationsParts::class,
                 RelationsRobotsParts::class
             )
         );
-    }
-
-    private function adaptersProvider(): array
-    {
-        return [
-            [
-                'Mysql',
-            ],
-            [
-                'Postgresql',
-            ],
-            [
-                'Sqlite',
-            ],
-        ];
     }
 }
