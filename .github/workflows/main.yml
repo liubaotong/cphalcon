@@ -94,7 +94,7 @@ jobs:
             exit 1
           fi
 
-  # Validate PIE source-build from local checkout
+  # Validate PIE metadata and source-build from local checkout
   pie_smoke_test:
     permissions:
       contents: read
@@ -115,20 +115,27 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: pie
+          tools: phpize, php-config
 
-      - name: Install System Dependencies
+      - name: Validate PIE metadata
         run: |
-          sudo apt-get update --quiet --yes 1>/dev/null
-          sudo apt-get install --no-install-recommends -q -y re2c
+          TYPE=$(php -r 'echo json_decode(file_get_contents("composer.json"))->type;')
+          EXT_NAME=$(php -r 'echo json_decode(file_get_contents("composer.json"))->{"php-ext"}->{"extension-name"};')
+          BUILD_PATH=$(php -r 'echo json_decode(file_get_contents("composer.json"))->{"php-ext"}->{"build-path"};')
+          if [ "$TYPE" != "php-ext" ]; then echo "::error::composer.json type must be php-ext, got: $TYPE"; exit 1; fi
+          if [ "$EXT_NAME" != "phalcon" ]; then echo "::error::extension-name must be phalcon, got: $EXT_NAME"; exit 1; fi
+          if [ "$BUILD_PATH" != "build/phalcon" ]; then echo "::error::build-path must be build/phalcon, got: $BUILD_PATH"; exit 1; fi
+          echo "PIE metadata OK: type=$TYPE, extension-name=$EXT_NAME, build-path=$BUILD_PATH"
 
-      - name: PIE build from local checkout
-        run: pie build phalcon/cphalcon
+      - name: Build extension from build/phalcon (same path PIE uses)
+        run: |
+          cd build/phalcon
+          phpize
+          ./configure --enable-phalcon
+          make -j"$(nproc)"
 
       - name: Validate extension loads
-        run: |
-          EXT_DIR=$(php-config --extension-dir)
-          php -d extension="${EXT_DIR}/phalcon.so" -r 'echo (new Phalcon\Support\Version())->get() . PHP_EOL;'
+        run: php -d extension=build/phalcon/modules/phalcon.so -r 'echo "phalcon " . (new Phalcon\Support\Version())->get() . PHP_EOL;'
 
   # Generate IDE stubs and validate with Psalm
   stubs:
