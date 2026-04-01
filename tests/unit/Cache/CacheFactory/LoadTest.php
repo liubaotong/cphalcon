@@ -36,7 +36,7 @@ class LoadCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function cacheCacheFactoryLoad(IntegrationTester $I)
+    public function testCacheCacheFactoryLoad(IntegrationTester $I)
     {
         $I->wantToTest('Cache\CacheFactory - load()');
 
@@ -50,7 +50,7 @@ class LoadCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function cacheCacheFactoryLoadArray(IntegrationTester $I)
+    public function testCacheCacheFactoryLoadArray(IntegrationTester $I)
     {
         $I->wantToTest('Cache\CacheFactory - load() - array');
 

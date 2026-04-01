@@ -289,5 +289,7 @@ final class FormsTest extends AbstractUnitTestCase
         $element->appendMessage(
             new Message('')
         );
+
+        $this->assertCount(1, $element->getMessages());
     }
 }

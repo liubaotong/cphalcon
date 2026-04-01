@@ -35,7 +35,7 @@ final class GetCommentTest extends AbstractDatabaseTestCase
 
         foreach ($expectedColumns as $index => $column) {
             $this->assertSame(
-                isset($columns[$index]['comment']) ? $columns[$index]['comment'] : "",
+                $columns[$index]['comment'] ?? null,
                 $column->getComment()
             );
         }

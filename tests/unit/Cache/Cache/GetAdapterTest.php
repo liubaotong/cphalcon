@@ -27,7 +27,7 @@ class GetAdapterCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheGetAdapter(IntegrationTester $I)
+    public function testCacheCacheGetAdapter(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - getAdapter()');
 

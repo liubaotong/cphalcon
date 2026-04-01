@@ -29,7 +29,7 @@ class GetSetCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheSetGet(IntegrationTester $I)
+    public function testCacheCacheSetGet(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - get()');
 
@@ -63,7 +63,7 @@ class GetSetCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheGetSetException(IntegrationTester $I)
+    public function testCacheCacheGetSetException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - get() - exception');
 

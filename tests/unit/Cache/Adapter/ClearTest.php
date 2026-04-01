@@ -13,152 +13,124 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Codeception\Stub;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
+use Phalcon\Cache\Exception\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\Integration\Cache\Adapter\CacheException;
-use Phalcon\Tests\Integration\Cache\Adapter\Exception;
-use Phalcon\Tests\Integration\Cache\Adapter\HelperException;
+use Phalcon\Support\Exception;
+use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeApcuApcuDelete;
+use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeStreamUnlink;
+use stdClass;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
 use function uniqid;
 
-class ClearCest
+final class ClearTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cache\Adapter\Apcu :: clear() - iterator error
-     *
-     * @param IntegrationTester $I
-     *
-     * @throws Exception
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return array[]
      */
-    public function cacheAdapterApcuClearIteratorError(IntegrationTester $I)
+    public static function getExamples(): array
     {
-        $I->wantToTest('Cache\Adapter\Apcu - clear() - iterator error');
-
-        $I->checkExtensionIsLoaded('apcu');
-
-        $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Apcu::class,
+        return [
             [
-                $serializer
+                Apcu::class,
+                [],
+                'apcu',
             ],
             [
-                'phpApcuIterator' => false,
-            ]
-        );
-
-        $key1 = uniqid();
-        $key2 = uniqid();
-        $adapter->set($key1, 'test');
-        $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
-
-        $adapter->set($key2, 'test');
-        $actual = $adapter->has($key2);
-        $I->assertTrue($actual);
-
-        $actual = $adapter->clear();
-        $I->assertFalse($actual);
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [],
+                '',
+            ],
+            [
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                '',
+            ],
+        ];
     }
 
     /**
      * Tests Phalcon\Cache\Adapter\Apcu :: clear() - delete error
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws Exception
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheAdapterApcuClearDeleteError(IntegrationTester $I)
+    public function testCacheAdapterApcuClearDeleteError(): void
     {
-        $I->wantToTest('Cache\Adapter\Apcu - clear() - delete error');
-
-        $I->checkExtensionIsLoaded('apcu');
+        $this->checkExtensionIsLoaded('apcu');
 
         $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Apcu::class,
-            [
-                $serializer
-            ],
-            [
-                'phpApcuDelete' => false,
-            ]
-        );
+        $adapter    = new FakeApcuApcuDelete($serializer);
 
         $key1 = uniqid();
         $key2 = uniqid();
         $adapter->set($key1, 'test');
         $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $adapter->set($key2, 'test');
         $actual = $adapter->has($key2);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $adapter->clear();
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
     }
 
     /**
-     * Tests Phalcon\Cache\Adapter\Stream :: clear() - cannot delete file
+     * Tests Phalcon\Cache\Adapter\Apcu :: clear() - iterator error
      *
-     * @param IntegrationTester $I
+     * @return void
      *
-     * @throws HelperException
-     * @throws CacheException
+     * @throws Exception
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheAdapterStreamClearCannotDeleteFile(IntegrationTester $I)
+    public function testCacheAdapterApcuClearIteratorError(): void
     {
-        $I->wantToTest('Cache\Adapter\Stream - clear() - cannot delete file');
+        $this->checkExtensionIsLoaded('apcu');
 
         $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Stream::class,
-            [
-                $serializer,
-                [
-                    'storageDir' => outputDir(),
-                ],
-            ],
-            [
-                'phpUnlink' => false,
-            ]
-        );
+        $adapter    = new FakeApcuApcuDelete($serializer);
 
         $key1 = uniqid();
         $key2 = uniqid();
         $adapter->set($key1, 'test');
         $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $adapter->set($key2, 'test');
         $actual = $adapter->has($key2);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $adapter->clear();
-        $I->assertFalse($actual);
-
-        $I->safeDeleteDirectory(outputDir('ph-strm'));
+        $this->assertFalse($actual);
     }
 
     /**
@@ -169,21 +141,13 @@ class ClearCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterClear(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - getClear()',
-                $example['className']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testCacheAdapterClear(
+        string $class,
+        array $options,
+        string $extension
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
@@ -193,116 +157,106 @@ class ClearCest
         $key2 = uniqid();
         $adapter->set($key1, 'test');
         $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $adapter->set($key2, 'test');
         $actual = $adapter->has($key2);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
 
         $actual = $adapter->has($key1);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $adapter->has($key2);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         /**
          * Call clear twice to ensure it returns true
          */
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Stream :: clear() - cannot delete file
+     *
+     * @return void
+     *
+     * @throws HelperException
+     * @throws StorageException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheAdapterStreamClearCannotDeleteFile(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new FakeStreamUnlink(
+            $serializer,
+            [
+                'storageDir' => outputDir(),
+            ],
+        );
+
+        $key1 = uniqid();
+        $key2 = uniqid();
+        $adapter->set($key1, 'test');
+        $actual = $adapter->has($key1);
+        $this->assertTrue($actual);
+
+        $adapter->set($key2, 'test');
+        $actual = $adapter->has($key2);
+        $this->assertTrue($actual);
+
+        $actual = $adapter->clear();
+        $this->assertFalse($actual);
+
+        $this->safeDeleteDirectory(outputDir('ph-strm'));
     }
 
     /**
      * Tests Phalcon\Cache\Adapter\Weak :: clear()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws HelperException
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2023-07-17
      */
-    public function cacheAdapterWealClear(IntegrationTester $I)
+    public function testCacheAdapterWealClear(): void
     {
-
-        $I->wantToTest('Cache\Adapter\Weak - getAdapter()');
-
         $serializer = new SerializerFactory();
         $adapter    = new Weak($serializer);
 
-        $obj1 = new \stdClass();
+        $obj1     = new stdClass();
         $obj1->id = 1;
-        $obj2 = new \stdClass();
+        $obj2     = new stdClass();
         $obj2->id = 2;
-        $key1 = uniqid();
-        $key2 = uniqid();
+        $key1     = uniqid();
+        $key2     = uniqid();
         $adapter->set($key1, $obj1);
         $adapter->set($key2, $obj2);
 
         $temp = $adapter->get($key1);
-        $I->assertEquals($temp, $adapter->get($key1));
-        $I->assertEquals($temp, $obj1);
+        $this->assertEquals($temp, $adapter->get($key1));
+        $this->assertEquals($temp, $obj1);
 
         $temp = $adapter->get($key2);
-        $I->assertEquals($temp, $adapter->get($key2));
-        $I->assertEquals($temp, $obj2);
+        $this->assertEquals($temp, $adapter->get($key2));
+        $this->assertEquals($temp, $obj2);
 
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
         $actual = $adapter->has($key1);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $adapter->has($key2);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $actual = $adapter->clear();
-        $I->assertTrue($actual);
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [],
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => getOptionsRedis(),
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'extension' => '',
-            ],
-        ];
+        $this->assertTrue($actual);
     }
 }

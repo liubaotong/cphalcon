@@ -61,7 +61,7 @@ class EventsCest
      * @author n[oO]ne <lominum@protonmail.com>
      * @since  2024-06-07
      */
-    public function cacheCacheEventTriggers(IntegrationTester $I, Example $example): void
+    public function testCacheCacheEventTriggers(IntegrationTester $I, Example $example): void
     {
         $I->wantToTest('Cache\Adapter\Weak() - triggered ' . $example->offsetGet(0));
 

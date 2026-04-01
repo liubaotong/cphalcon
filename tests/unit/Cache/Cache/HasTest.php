@@ -29,7 +29,7 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheHas(IntegrationTester $I)
+    public function testCacheCacheHas(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - has()');
 
@@ -52,7 +52,7 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheHasException(IntegrationTester $I)
+    public function testCacheCacheHasException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - has() - exception');
 

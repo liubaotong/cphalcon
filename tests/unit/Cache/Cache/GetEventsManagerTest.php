@@ -26,7 +26,7 @@ class GetEventsManagerCest
      * @author n[oO]ne <lominum@protonmail.com>
      * @since  2024-06-07
      */
-    public function cacheCacheGetEventsManagerNotSet(IntegrationTester $I): void
+    public function testCacheCacheGetEventsManagerNotSet(IntegrationTester $I): void
     {
         $I->wantToTest('Cache\Cache - getEventsManager() - not set');
 
@@ -45,7 +45,7 @@ class GetEventsManagerCest
      * @author n[oO]ne <lominum@protonmail.com>
      * @since  2024-06-07
      */
-    public function cacheCacheGetEventsManagerSet(IntegrationTester $I): void
+    public function testCacheCacheGetEventsManagerSet(IntegrationTester $I): void
     {
         $I->wantToTest('Cache\Cache - getEventsManager() - set');
 
@@ -67,7 +67,7 @@ class GetEventsManagerCest
      * @author n[oO]ne <lominum@protonmail.com>
      * @since  2024-06-07
      */
-    public function cacheCacheEventTriggers(IntegrationTester $I, Example $example): void
+    public function testCacheCacheEventTriggers(IntegrationTester $I, Example $example): void
     {
         $I->wantToTest('Cache\Cache - triggered ' . $example->offsetGet(0));
 

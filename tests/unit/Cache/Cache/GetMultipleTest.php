@@ -30,7 +30,7 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheGetMultiple(IntegrationTester $I)
+    public function testCacheCacheGetMultiple(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - getMultiple()');
 
@@ -72,7 +72,7 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheGetMultipleRedisMget(IntegrationTester $I): void
+    public function testCacheCacheGetMultipleRedisMget(IntegrationTester $I): void
     {
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
@@ -114,7 +114,7 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheGetMultipleException(IntegrationTester $I)
+    public function testCacheCacheGetMultipleException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - getMultiple() - exception');
 

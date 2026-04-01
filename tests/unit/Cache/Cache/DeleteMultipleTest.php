@@ -29,7 +29,7 @@ class DeleteMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDeleteMultiple(IntegrationTester $I)
+    public function testCacheCacheDeleteMultiple(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - deleteMultiple()');
 
@@ -96,7 +96,7 @@ class DeleteMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDeleteMultipleException(IntegrationTester $I)
+    public function testCacheCacheDeleteMultipleException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - deleteMultiple() - exception');
 

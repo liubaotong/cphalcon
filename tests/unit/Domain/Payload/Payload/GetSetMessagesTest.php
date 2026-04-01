@@ -24,7 +24,7 @@ final class GetSetMessagesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadGetSetMessages(): void
+    public function testHttpPayloadPayloadGetSetMessages(): void
     {
         $payload = new Payload();
         $payload->setMessages('messages');

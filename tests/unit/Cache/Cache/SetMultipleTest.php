@@ -30,7 +30,7 @@ class SetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheSetMultiple(IntegrationTester $I)
+    public function testCacheCacheSetMultiple(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - setMultiple()');
 
@@ -67,7 +67,7 @@ class SetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheSetMultipleFalse(IntegrationTester $I)
+    public function testCacheCacheSetMultipleFalse(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - setMultiple() - false');
 
@@ -102,7 +102,7 @@ class SetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheSetMultipleException(IntegrationTester $I)
+    public function testCacheCacheSetMultipleException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - setMultiple() - exception');
 

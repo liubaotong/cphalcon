@@ -26,7 +26,7 @@ final class GetSetExceptionTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-07
      */
-    public function httpPayloadPayloadGetSetException(): void
+    public function testHttpPayloadPayloadGetSetException(): void
     {
         $payload   = new Payload();
         $exception = new RuntimeException('Runtime error');

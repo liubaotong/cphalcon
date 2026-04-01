@@ -25,7 +25,7 @@ final class GetSetStatusTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadGetStatus(): void
+    public function testHttpPayloadPayloadGetStatus(): void
     {
         $payload = new Payload();
         $payload->setStatus(Status::ACCEPTED);

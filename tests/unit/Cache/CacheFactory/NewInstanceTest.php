@@ -31,7 +31,7 @@ class NewInstanceCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheFactoryNewInstance(IntegrationTester $I)
+    public function testCacheCacheFactoryNewInstance(IntegrationTester $I)
     {
         $I->wantToTest('Cache\CacheFactory - newInstance()');
 
@@ -50,7 +50,7 @@ class NewInstanceCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-03-05
      */
-    public function cacheCacheFactoryNewInstanceException(IntegrationTester $I)
+    public function testCacheCacheFactoryNewInstanceException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\CacheFactory - newInstance() - exception');
 

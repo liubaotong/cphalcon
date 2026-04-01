@@ -24,25 +24,21 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialects(): array
-    {
+    public static function getDialects(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` INT(11) NOT NULL '
-                . 'AUTO_INCREMENT FIRST',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` INT(11) NOT NULL ' . 'AUTO_INCREMENT FIRST',
             ],
             [
                 Postgresql::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" SERIAL NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" SERIAL NOT NULL',
             ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" INTEGER NOT NULL '
-                . 'PRIMARY KEY AUTOINCREMENT',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" INTEGER NOT NULL ' .
+                'PRIMARY KEY AUTOINCREMENT',
             ],
         ];
     }
@@ -50,14 +46,12 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsFloat(): array
-    {
+    public static function getDialectsFloat(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` DOUBLE(10,2) NOT NULL '
-                . 'DEFAULT 13.34 FIRST',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` DOUBLE(10,2) NOT NULL ' . 'DEFAULT 13.34 FIRST',
 
             ],
             //            [
@@ -66,9 +60,7 @@ final class AddColumnTest extends AbstractDatabaseTestCase
             //            ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" DOUBLE '
-                . 'DEFAULT "13.34" NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" DOUBLE ' . 'DEFAULT "13.34" NOT NULL',
             ],
         ];
     }
@@ -76,27 +68,21 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsInt(): array
-    {
+    public static function getDialectsInt(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` INT(10) NOT NULL '
-                . 'DEFAULT 13 FIRST',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` INT(10) NOT NULL ' . 'DEFAULT 13 FIRST',
 
             ],
             [
                 Postgresql::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" INT '
-                . 'DEFAULT 13 NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" INT ' . 'DEFAULT 13 NOT NULL',
             ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" INTEGER '
-                . 'DEFAULT "13" NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" INTEGER ' . 'DEFAULT "13" NOT NULL',
             ],
         ];
     }
@@ -104,27 +90,22 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsNull(): array
-    {
+    public static function getDialectsNull(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` VARCHAR(10) NOT NULL '
-                . 'DEFAULT NULL FIRST',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` VARCHAR(10) NOT NULL ' . 'DEFAULT NULL FIRST',
 
             ],
             [
                 Postgresql::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) '
-                . 'DEFAULT \'NULL\' NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) ' .
+                'DEFAULT \'NULL\' NOT NULL',
             ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" VARCHAR(10) '
-                . 'DEFAULT "NULL" NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" VARCHAR(10) ' . 'DEFAULT "NULL" NOT NULL',
             ],
         ];
     }
@@ -132,27 +113,24 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsString(): array
-    {
+    public static function getDialectsTimestamp(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` VARCHAR(10) NOT NULL '
-                . 'DEFAULT "test" AFTER `field_first`',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` VARCHAR(10) NOT NULL ' .
+                'DEFAULT CURRENT_TIMESTAMP FIRST',
 
             ],
             [
                 Postgresql::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) '
-                . 'DEFAULT \'test\' NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) ' .
+                'DEFAULT CURRENT_TIMESTAMP NOT NULL',
             ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" VARCHAR(10) DEFAULT '
-                . '"test" NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" VARCHAR(10) ' .
+                'DEFAULT CURRENT_TIMESTAMP NOT NULL',
             ],
         ];
     }
@@ -160,66 +138,25 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsTimestamp(): array
-    {
+    public static function getDialectsString(): array {
+
         return [
             [
                 Mysql::class,
-                'ALTER TABLE `schema`.`table` '
-                . 'ADD `field_primary` VARCHAR(10) NOT NULL '
-                . 'DEFAULT CURRENT_TIMESTAMP FIRST',
+                'ALTER TABLE `schema`.`table` ' . 'ADD `field_primary` VARCHAR(10) NOT NULL ' .
+                'DEFAULT "test" AFTER `field_first`',
 
             ],
             [
                 Postgresql::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) '
-                . 'DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" CHARACTER VARYING(10) ' .
+                'DEFAULT \'test\' NOT NULL',
             ],
             [
                 Sqlite::class,
-                'ALTER TABLE "schema"."table" '
-                . 'ADD COLUMN "field_primary" VARCHAR(10) '
-                . 'DEFAULT CURRENT_TIMESTAMP NOT NULL',
+                'ALTER TABLE "schema"."table" ' . 'ADD COLUMN "field_primary" VARCHAR(10) DEFAULT ' . '"test" NOT NULL',
             ],
         ];
-    }
-
-    /**
-     * Tests Phalcon\Db\Dialect :: addColumn
-     *
-     * @dataProvider getDialects
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-01-20
-     *
-     * @group mysql
-     */
-    public function testDbDialectAddColumn(
-        string $dialectClass,
-        string $expected
-    ): void {
-        $dialect = new $dialectClass();
-
-        $options = [
-            'type'          => Column::TYPE_INTEGER,
-            'isNumeric'     => true,
-            'size'          => 11,
-            'scale'         => 0,
-            'default'       => 13,
-            'unsigned'      => false,
-            'notNull'       => true,
-            'autoIncrement' => true,
-            'primary'       => true,
-            'first'         => true,
-            'after'         => null,
-            'bindType'      => Column::BIND_PARAM_INT,
-        ];
-
-        $column = new Column('field_primary', $options);
-
-        $actual = $dialect->addColumn('table', 'schema', $column);
-        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -230,12 +167,10 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-01-20
      *
-     * @group mysql
+     * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultFloat(
-        string $dialectClass,
-        string $expected
-    ): void {
+    public function testDbDialectAddColumnDefaultFloat(string $dialectClass, string $expected): void {
+
         $dialect = new $dialectClass();
 
         $options = [
@@ -267,12 +202,10 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-01-20
      *
-     * @group mysql
+     * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultInt(
-        string $dialectClass,
-        string $expected
-    ): void {
+    public function testDbDialectAddColumnDefaultInt(string $dialectClass, string $expected): void {
+
         $dialect = new $dialectClass();
 
         $options = [
@@ -299,17 +232,50 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * Tests Phalcon\Db\Dialect :: addColumn
      *
+     * @dataProvider getDialects
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-01-20
+     *
+     * @group        mysql
+     */
+    public function testDbDialectAddColumn(string $dialectClass, string $expected): void {
+
+        $dialect = new $dialectClass();
+
+        $options = [
+            'type'          => Column::TYPE_INTEGER,
+            'isNumeric'     => true,
+            'size'          => 11,
+            'scale'         => 0,
+            'default'       => 13,
+            'unsigned'      => false,
+            'notNull'       => true,
+            'autoIncrement' => true,
+            'primary'       => true,
+            'first'         => true,
+            'after'         => null,
+            'bindType'      => Column::BIND_PARAM_INT,
+        ];
+
+        $column = new Column('field_primary', $options);
+
+        $actual = $dialect->addColumn('table', 'schema', $column);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Tests Phalcon\Db\Dialect :: addColumn
+     *
      * @dataProvider getDialectsNull
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-01-20
      *
-     * @group mysql
+     * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultNull(
-        string $dialectClass,
-        string $expected
-    ): void {
+    public function testDbDialectAddColumnDefaultNull(string $dialectClass, string $expected): void {
+
         $dialect = new $dialectClass();
 
         $options = [
@@ -340,12 +306,10 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-01-20
      *
-     * @group mysql
+     * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultString(
-        string $dialectClass,
-        string $expected
-    ): void {
+    public function testDbDialectAddColumnDefaultString(string $dialectClass, string $expected): void {
+
         $dialect = new $dialectClass();
 
         $options = [
@@ -376,12 +340,10 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-01-20
      *
-     * @group mysql
+     * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultTimestamp(
-        string $dialectClass,
-        string $expected
-    ): void {
+    public function testDbDialectAddColumnDefaultTimestamp(string $dialectClass, string $expected): void {
+
         $dialect = new $dialectClass();
 
         $options = [

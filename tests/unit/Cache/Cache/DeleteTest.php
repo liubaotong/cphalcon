@@ -29,7 +29,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDelete(IntegrationTester $I)
+    public function testCacheCacheDelete(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - delete()');
 
@@ -59,7 +59,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDeleteException(IntegrationTester $I)
+    public function testCacheCacheDeleteException(IntegrationTester $I)
     {
         $I->wantToTest('Cache\Cache - delete() - exception');
 

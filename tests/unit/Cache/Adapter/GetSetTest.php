@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use IntegrationTester;
-use Memcached as NativeMemcached;
+use ArrayObject;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
@@ -23,16 +21,285 @@ use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
-use Redis as NativeRedis;
+use Phalcon\Tests\AbstractUnitTestCase;
+use SplObjectStorage;
+use SplQueue;
+use stdClass;
 
+use function array_merge;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
-use function sprintf;
 use function uniqid;
 
-class GetSetCest
+final class GetSetTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function getExamples(): array
+    {
+        return [
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                null,
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                true,
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                false,
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                123456,
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                123.456,
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                uniqid(),
+            ],
+            [
+                'apcu',
+                Apcu::class,
+                [],
+                new stdClass(),
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                null,
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                true,
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                false,
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                123456,
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                123.456,
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                uniqid(),
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                new stdClass(),
+            ],
+            [
+                'memcached',
+                Libmemcached::class,
+                array_merge(
+                    getOptionsLibmemcached(),
+                    [
+                        'defaultSerializer' => 'Base64',
+                    ]
+                ),
+                uniqid(),
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                null,
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                true,
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                false,
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                123456,
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                123.456,
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                uniqid(),
+            ],
+            [
+                '',
+                Memory::class,
+                [],
+                new stdClass(),
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                null,
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                true,
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                false,
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                123456,
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                123.456,
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                uniqid(),
+            ],
+            [
+                'redis',
+                Redis::class,
+                getOptionsRedis(),
+                new stdClass(),
+            ],
+            [
+                'redis',
+                Redis::class,
+                array_merge(
+                    getOptionsRedis(),
+                    [
+                        'defaultSerializer' => 'Base64',
+                    ]
+                ),
+                uniqid(),
+            ],
+            [
+                'redis',
+                Redis::class,
+                array_merge(
+                    getOptionsRedis(),
+                    [
+                        'persistent' => true,
+                    ]
+                ),
+                uniqid(),
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                null,
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                true,
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                false,
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                123456,
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                123.456,
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                uniqid(),
+            ],
+            [
+                '',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                new stdClass(),
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* :: get()/set()
      *
@@ -41,21 +308,88 @@ class GetSetCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterGetSetWithZeroTtl(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - get()/set()',
-                $example['className']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testStorageAdapterGetSet(
+        string $extension,
+        string $class,
+        array $options,
+        mixed $value
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
+        }
+
+        $serializer = new SerializerFactory();
+        $adapter    = new $class($serializer, $options);
+
+        $key = uniqid('k-');
+
+        $result = $adapter->set($key, $value);
+        $this->assertTrue($result);
+
+        $result = $adapter->has($key);
+        $this->assertTrue($result);
+
+        /**
+         * This will issue delete
+         */
+        $result = $adapter->set($key, $value, 0);
+        $this->assertTrue($result);
+
+        $result = $adapter->has($key);
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function getAdapters(): array
+    {
+        return [
+            [
+                Apcu::class,
+                [],
+                'apcu',
+            ],
+            [
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [],
+                '',
+            ],
+            [
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                '',
+            ],
+        ];
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\* :: get()/set()
+     *
+     * @dataProvider getAdapters
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testStorageAdapterGetSetWithZeroTtl(
+        string $class,
+        array $options,
+        string $extension
+    ): void {
+        if (!empty($extension)) {
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
@@ -64,100 +398,18 @@ class GetSetCest
         $key = uniqid();
 
         $result = $adapter->set($key, "test");
-        $I->assertTrue($result);
+        $this->assertTrue($result);
 
         $result = $adapter->has($key);
-        $I->assertTrue($result);
+        $this->assertTrue($result);
 
         /**
          * This will issue delete
          */
         $result = $adapter->set($key, "test", 0);
-        $I->assertTrue($result);
+        $this->assertTrue($result);
 
         $result = $adapter->has($key);
-        $I->assertFalse($result);
-    }
-
-     /**
-     * Tests Phalcon\Cache\Adapter\Weak :: get()/set()
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2023-07-17
-     */
-    public function cacheAdapterWeakGetSet(IntegrationTester $I)
-    {
-        $I->wantToTest('Cache\Adapter\Weak - get()/set()');
-
-
-        $serializer = new SerializerFactory();
-        $adapter    = new Weak($serializer);
-
-        $key = uniqid();
-        $obj = new \stdClass();
-        $result = $adapter->set($key, "test");
-        $I->assertFalse($result);
-        $result = $adapter->set($key, $obj);
-        $I->assertTrue($result);
-        $result = $adapter->has($key);
-        $I->assertTrue($result);
-
-        /**
-         * There is no TTl.
-         */
-        $result = $adapter->set($key, $obj, 0);
-        $I->assertTrue($result);
-
-        $result = $adapter->has($key);
-        $I->assertTrue($result);
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'expected'  => null,
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'expected'  => NativeMemcached::class,
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [],
-                'expected'  => null,
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => getOptionsRedis(),
-                'expected'  => NativeRedis::class,
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'expected'  => null,
-                'extension' => '',
-            ],
-        ];
+        $this->assertFalse($result);
     }
 }

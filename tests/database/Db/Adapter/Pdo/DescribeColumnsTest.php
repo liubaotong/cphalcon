@@ -77,7 +77,7 @@ final class DescribeColumnsTest extends AbstractDatabaseTestCase
 
         $columns = $db->describeColumns($migration->getTable());
 
-        $this->assertSame('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP', $columns[2]->getDefault());
+        $this->assertSame('CURRENT_TIMESTAMP DEFAULT_GENERATED on update CURRENT_TIMESTAMP', $columns[2]->getDefault());
         $this->assertSame('NULL on update CURRENT_TIMESTAMP', $columns[3]->getDefault());
     }
 
@@ -98,7 +98,7 @@ final class DescribeColumnsTest extends AbstractDatabaseTestCase
         $migration = new DialectMigration(self::getConnection());
         $columns   = $db->describeColumns($migration->getTable());
 
-        $expected = 41;
+        $expected = 40;
         $this->assertCount($expected, $columns);
 
         $expected = Column::class;

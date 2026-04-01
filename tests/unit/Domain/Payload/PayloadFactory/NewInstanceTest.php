@@ -25,7 +25,7 @@ final class NewInstanceTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadFactoryNewInstance(): void
+    public function testHttpPayloadPayloadFactoryNewInstance(): void
     {
         $factory = new PayloadFactory();
         $payload = $factory->newInstance();

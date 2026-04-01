@@ -48,20 +48,21 @@ if (!function_exists('loadFolders')) {
     function loadFolders()
     {
         $folders = [
-            'annotations',
-            'assets',
-            'cache',
-            'cache/models',
-            'image',
-            'image/gd',
-            'image/imagick',
-            'logs',
-            'session',
-            'stream',
+            'coverage',
+            'tests' . DIRECTORY_SEPARATOR . 'annotations',
+            'tests' . DIRECTORY_SEPARATOR . 'assets',
+            'tests' . DIRECTORY_SEPARATOR . 'cache',
+            'tests' . DIRECTORY_SEPARATOR . 'cache/models',
+            'tests' . DIRECTORY_SEPARATOR . 'image',
+            'tests' . DIRECTORY_SEPARATOR . 'image/gd',
+            'tests' . DIRECTORY_SEPARATOR . 'image/imagick',
+            'tests' . DIRECTORY_SEPARATOR . 'logs',
+            'tests' . DIRECTORY_SEPARATOR . 'session',
+            'tests' . DIRECTORY_SEPARATOR . 'stream',
         ];
 
         foreach ($folders as $folder) {
-            $item = outputDir('tests' . DIRECTORY_SEPARATOR . $folder);
+            $item = outputDir($folder);
 
             if (true !== file_exists($item)) {
                 mkdir($item, 0777, true);
@@ -284,10 +285,24 @@ if (!function_exists('getOptionsMysql')) {
     }
 }
 
-if (!function_exists('getOptionsPostgresql')) {
+if (!function_exists('getOptionsMariadb')) {
     /**
-     * Get postgresql db options
+     * Get mariadb db options
      */
+    function getOptionsMariadb(): array
+    {
+        return [
+            'host'     => env('DATA_MARIADB_HOST'),
+            'username' => env('DATA_MARIADB_USER'),
+            'password' => env('DATA_MARIADB_PASS'),
+            'dbname'   => env('DATA_MARIADB_NAME'),
+            'port'     => env('DATA_MARIADB_PORT'),
+            'charset'  => env('DATA_MARIADB_CHARSET'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsPostgresql')) {
     function getOptionsPostgresql(): array
     {
         return [
@@ -308,6 +323,16 @@ if (!function_exists('getOptionsRedis')) {
             'host'  => env('DATA_REDIS_HOST'),
             'port'  => env('DATA_REDIS_PORT'),
             'index' => env('DATA_REDIS_NAME'),
+        ];
+    }
+}
+
+if (!function_exists('getOptionsRedisCluster')) {
+    function getOptionsRedisCluster(): array
+    {
+        return [
+            'hosts' => explode(',', env('DATA_REDIS_CLUSTER_HOSTS')),
+            'auth' => env('DATA_REDIS_CLUSTER_AUTH')
         ];
     }
 }

@@ -24,7 +24,7 @@ final class GetSetOutputTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadGetSetOutput(): void
+    public function testHttpPayloadPayloadGetSetOutput(): void
     {
         $payload = new Payload();
         $payload->setOutput('output');
