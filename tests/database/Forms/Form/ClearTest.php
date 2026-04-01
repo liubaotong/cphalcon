@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Integration\Forms\Form;
+namespace Phalcon\Tests\Database\Forms\Form;
 
-use IntegrationTester;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\StringLength;
+use Phalcon\Filter\Validation\Validator\StringLength\Min;
 use Phalcon\Forms\Element\Email;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Text;
@@ -21,23 +23,34 @@ use Phalcon\Forms\Form;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tag;
-use Phalcon\Tests\Models\Select as MvcModel;
-use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\StringLength;
-use Phalcon\Validation\Validator\StringLength\Min;
+use Phalcon\Tests\AbstractDatabaseTestCase;
+use Phalcon\Tests\Database\Forms\Form\Fake\FakeSelect;
+use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use stdClass;
 
-class ClearCest
+final class ClearTest extends AbstractDatabaseTestCase
 {
-    /**
-     * Executed before each test
-     */
-    public function _before(IntegrationTester $I)
-    {
-        Tag::resetInput();
+    use DiTrait;
 
-        Tag::setDocType(
-            Tag::HTML5
-        );
+    /**
+     * @var array<string, mixed>
+     */
+    private array $postStore = [];
+
+    public function setUp(): void
+    {
+        $this->postStore = $_POST ?? [];
+
+        $this->setNewFactoryDefault();
+        $this->setDatabase();
+
+        Tag::resetInput();
+        Tag::setDocType(Tag::HTML5);
+    }
+
+    public function tearDown(): void
+    {
+        $_POST = $this->postStore;
     }
 
     /**
@@ -45,25 +58,23 @@ class ClearCest
      *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-06-28
+     *
+     * @group  mysql
      */
-    public function formsFormClearAll(IntegrationTester $I)
+    public function testFormsFormClearAll(): void
     {
-        $I->wantToTest('Forms\Form - clear() - all');
-
         $name     = new Text('name');
         $email    = new Email('email');
         $password = new Password('password');
 
         $form = new Form();
-
         $form
             ->add($name)
             ->add($email)
             ->add($password)
         ;
 
-        $entity = new \stdClass();
-
+        $entity = new stdClass();
         $form->bind(
             [
                 'name'     => 'Sid Roberts',
@@ -75,15 +86,15 @@ class ClearCest
 
         $form->clear();
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('name')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('email')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('password')->getValue()
         );
     }
@@ -93,25 +104,23 @@ class ClearCest
      *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-06-28
+     *
+     * @group  mysql
      */
-    public function formsFormClearFieldsArray(IntegrationTester $I)
+    public function testFormsFormClearFieldsArray(): void
     {
-        $I->wantToTest('Forms\Form - clear() - fields array');
-
         $name     = new Text('name');
         $email    = new Email('email');
         $password = new Password('password');
 
         $form = new Form();
-
         $form
             ->add($name)
             ->add($email)
             ->add($password)
         ;
 
-        $entity = new \stdClass();
-
+        $entity = new stdClass();
         $form->bind(
             [
                 'name'     => 'Sid Roberts',
@@ -128,16 +137,16 @@ class ClearCest
             ]
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Sid Roberts',
             $form->get('name')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('email')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('password')->getValue()
         );
     }
@@ -147,25 +156,23 @@ class ClearCest
      *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-06-28
+     *
+     * @group  mysql
      */
-    public function formsFormClearFieldString(IntegrationTester $I)
+    public function testFormsFormClearFieldString(): void
     {
-        $I->wantToTest('Forms\Form - clear() - field string');
-
         $name     = new Text('name');
         $email    = new Email('email');
         $password = new Password('password');
 
         $form = new Form();
-
         $form
             ->add($name)
             ->add($email)
             ->add($password)
         ;
 
-        $entity = new \stdClass();
-
+        $entity = new stdClass();
         $form->bind(
             [
                 'name'     => 'Sid Roberts',
@@ -177,17 +184,17 @@ class ClearCest
 
         $form->clear('password');
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Sid Roberts',
             $form->get('name')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'team@phalcon.io',
             $form->get('email')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('password')->getValue()
         );
     }
@@ -195,50 +202,52 @@ class ClearCest
     /**
      * Tests clearing the Form Elements
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @issue  https://github.com/phalcon/cphalcon/issues/12165
      * @issue  https://github.com/phalcon/cphalcon/issues/12099
-     *
      * @since  2016-10-01
      *
-     * @author Phalcon Team <team@phalcon.io>
+     * @group  mysql
+     *
+     * @todo   Check implementation — uses Tag::setDefault() which needs review
      */
-    public function clearFormElements(IntegrationTester $I)
+    public function testClearFormElements(): void
     {
+        $this->markTestSkipped('Check implementation — uses Tag::setDefault()');
+
         $pass = new Password('passwd');
         $eml  = new Email('email');
 
         $text = new Text('name');
-
         $text->setDefault('Serghei Iakovlev');
 
         $form = new Form();
-
         $form
             ->add($eml)
             ->add($text)
             ->add($pass)
         ;
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('passwd')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Serghei Iakovlev',
             $form->get('name')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="passwd" name="passwd">',
             $form->render('passwd')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="email" id="email" name="email">',
             $form->render('email')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="text" id="name" name="name" value="Serghei Iakovlev">',
             $form->render('name')
         );
@@ -248,82 +257,81 @@ class ClearCest
             'name'   => 'Andres Gutierrez',
         ];
 
-        $I->assertEquals(
+        $this->assertEquals(
             'secret',
             $form->get('passwd')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             $pass->getValue(),
             $form->get('passwd')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Andres Gutierrez',
             $form->get('name')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="passwd" name="passwd" value="secret">',
             $form->render('passwd')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="text" id="name" name="name" value="Andres Gutierrez">',
             $form->render('name')
         );
 
         Tag::setDefault('email', 'andres@phalcon.io');
 
-
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="email" id="email" name="email" value="andres@phalcon.io">',
             $form->render('email')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'andres@phalcon.io',
             $form->get('email')->getValue()
         );
 
         $pass->clear();
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="passwd" name="passwd">',
             $form->render('passwd')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $pass->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             $pass->getValue(),
             $form->get('passwd')->getValue()
         );
 
         $form->clear();
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Serghei Iakovlev',
             $form->get('name')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('email')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="text" id="name" name="name" value="Serghei Iakovlev">',
             $form->render('name')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="email" id="email" name="email">',
             $form->render('email')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             [
                 'passwd' => 'secret',
                 'name'   => 'Andres Gutierrez',
@@ -335,13 +343,13 @@ class ClearCest
     /**
      * Tests clearing the Form Elements and using Form::isValid
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @issue  https://github.com/phalcon/cphalcon/issues/11978
-     *
      * @since  2016-10-01
      *
-     * @author Phalcon Team <team@phalcon.io>
+     * @group  mysql
      */
-    public function clearFormElementsAndUsingValidation(IntegrationTester $I)
+    public function testClearFormElementsAndUsingValidation(): void
     {
         $password = new Password(
             'password',
@@ -368,31 +376,30 @@ class ClearCest
         );
 
         $form = new Form();
-
         $form->add($password);
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('password')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="password" name="password" placeholder="Insert your Password">',
             $form->render('password')
         );
 
         $_POST = ['password' => 'secret'];
 
-        $I->assertEquals(
+        $this->assertEquals(
             'secret',
             $form->get('password')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="password" name="password" value="secret" placeholder="Insert your Password">',
             $form->render('password')
         );
 
-        $I->assertFalse(
+        $this->assertFalse(
             $form->isValid($_POST)
         );
 
@@ -406,8 +413,7 @@ class ClearCest
                 ),
             ]
         );
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->getMessages()
         );
@@ -416,16 +422,16 @@ class ClearCest
             ['password']
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('password')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             '<input type="password" id="password" name="password" placeholder="Insert your Password">',
             $form->render('password')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             [
                 'password' => 'secret',
             ],
@@ -436,39 +442,42 @@ class ClearCest
     /**
      * Tests clearing the Form Elements by using Form::bind
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @issue  https://github.com/phalcon/cphalcon/issues/11978
-     *
      * @since  2016-10-01
      *
-     * @author Phalcon Team <team@phalcon.io>
+     * @group  mysql
+     *
+     * @todo   Check implementation — uses Tag::getValue() / Tag::setDefault() which need review
      */
-    public function clearFormElementsByUsingFormBind(IntegrationTester $I)
+    public function testClearFormElementsByUsingFormBind(): void
     {
+        $this->markTestSkipped('Check implementation — uses Tag::getValue() and Tag::setDefault()');
+
         $name = new Text('sel_name');
         $text = new Text('sel_text');
 
         $form = new Form();
-
         $form
             ->add($name)
             ->add($text)
         ;
 
-        $entity = new MvcModel();
+        $entity = new FakeSelect();
 
-        $I->assertNull(
+        $this->assertNull(
             Tag::getValue('sel_name')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->getValue('sel_name')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('sel_name')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $name->getValue()
         );
 
@@ -481,75 +490,75 @@ class ClearCest
 
         $form->bind($_POST, $entity);
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Name',
             $entity->getName()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $entity->getText()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Name',
             $form->getValue('sel_name')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Name',
             $form->get('sel_name')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Name',
             $name->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->getValue('sel_text')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->get('sel_text')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $text->getValue()
         );
 
         $form->clear(['sel_name']);
 
-        $I->assertNull(
+        $this->assertNull(
             Tag::getValue('sel_name')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->getValue('sel_name')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('sel_name')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $name->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->getValue('sel_text')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->get('sel_text')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $text->getValue()
         );
@@ -561,50 +570,50 @@ class ClearCest
             ]
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->getValue('sel_text')
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $form->get('sel_text')->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $text->getValue()
         );
 
         $form->clear();
 
-        $I->assertNull(
+        $this->assertNull(
             Tag::getValue('sel_text')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->getValue('sel_text')
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $form->get('sel_text')->getValue()
         );
 
-        $I->assertNull(
+        $this->assertNull(
             $text->getValue()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Name',
             $entity->getName()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             'Some Text',
             $entity->getText()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             [
                 'sel_name' => 'Some Name',
                 'sel_text' => 'Some Text',

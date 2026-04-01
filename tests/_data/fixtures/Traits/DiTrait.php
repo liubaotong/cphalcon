@@ -125,16 +125,12 @@ trait DiTrait
     }
 
     /**
-     * @param mixed|null $I Codeception actor (Cest mode) or null (PHPUnit mode)
-     *
      * @return AdapterInterface
      */
-    protected function newDbService($I = null): AdapterInterface
+    protected function newDbService(): AdapterInterface
     {
         /** @var PDO $connection */
-        $connection = ($I !== null && method_exists($I, 'getConnection'))
-            ? $I->getConnection()
-            : $this->getConnection();
+        $connection = $this->getConnection();
         $driver     = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 
         return $this->newDbConnection($driver);
@@ -254,12 +250,9 @@ trait DiTrait
         Di::reset();
     }
 
-    /**
-     * @param mixed|null $I Codeception actor (Cest mode) or null (PHPUnit mode)
-     */
-    protected function setDatabase($I = null): void
+    protected function setDatabase(): void
     {
-        $db = $this->newDbService($I);
+        $db = $this->newDbService();
 
         $this->container->setShared('db', $db);
     }

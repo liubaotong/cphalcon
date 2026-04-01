@@ -9,23 +9,38 @@
  * file that was distributed with this source code.
  */
 
-namespace Phalcon\Tests\Integration\Forms;
+declare(strict_types=1);
 
-use IntegrationTester;
+namespace Phalcon\Tests\Database\Forms;
+
+use Phalcon\Filter\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\Regex;
+use Phalcon\Filter\Validation\Validator\StringLength;
+use Phalcon\Filter\Validation\Validator\StringLength\Min;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use Phalcon\Tag;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\Regex;
-use Phalcon\Validation\Validator\StringLength;
-use Phalcon\Validation\Validator\StringLength\Min;
 
-class FormCest
+final class FormTest extends AbstractDatabaseTestCase
 {
-    public function testLabels(IntegrationTester $I)
+    use DiTrait;
+
+    public function setUp(): void
+    {
+        $this->setNewFactoryDefault();
+        $this->setDatabase();
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-01
+     *
+     * @group  mysql
+     */
+    public function testLabels(): void
     {
         $form = new Form();
 
@@ -34,64 +49,54 @@ class FormCest
         );
 
         $telephone = new Text('telephone');
-
         $telephone->setLabel('The Telephone');
 
         $form->add($telephone);
 
-
         $expected = 'name';
         $actual   = $form->getLabel('name');
-
-        $I->assertEquals($expected, $actual);
-
+        $this->assertEquals($expected, $actual);
 
         $expected = 'The Telephone';
         $actual   = $form->getLabel('telephone');
-
-        $I->assertEquals($expected, $actual);
-
+        $this->assertEquals($expected, $actual);
 
         $expected = '<label for="name">name</label>';
         $actual   = $form->label('name');
-
-        $I->assertEquals($expected, $actual);
-
+        $this->assertEquals($expected, $actual);
 
         $expected = '<label for="telephone">The Telephone</label>';
         $actual   = $form->label('telephone');
-
-        $I->assertEquals($expected, $actual);
-
+        $this->assertEquals($expected, $actual);
 
         // https://github.com/phalcon/cphalcon/issues/1029
         $expected = '<label for="name" class="form-control">name</label>';
-
-        $actual = $form->label(
+        $actual   = $form->label(
             'name',
             [
                 'class' => 'form-control',
             ]
         );
-
-        $I->assertEquals($expected, $actual);
-
+        $this->assertEquals($expected, $actual);
 
         $expected = '<label for="telephone" class="form-control">The Telephone</label>';
-
-        $actual = $form->label(
+        $actual   = $form->label(
             'telephone',
             [
                 'class' => 'form-control',
             ]
         );
-
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
-    public function testFormValidator(IntegrationTester $I)
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-01
+     *
+     * @group  mysql
+     */
+    public function testFormValidator(): void
     {
-        //First element
         $telephone = new Text('telephone');
 
         $telephone->addValidator(
@@ -102,12 +107,10 @@ class FormCest
             )
         );
 
-
-        $I->assertCount(
+        $this->assertCount(
             1,
             $telephone->getValidators()
         );
-
 
         $telephone->addValidators(
             [
@@ -126,16 +129,12 @@ class FormCest
             ]
         );
 
-
-        $I->assertCount(
+        $this->assertCount(
             3,
             $telephone->getValidators()
         );
 
-
-        //Second element
         $address = new Text('address');
-
         $address->addValidator(
             new PresenceOf(
                 [
@@ -144,25 +143,17 @@ class FormCest
             )
         );
 
-
-        $I->assertCount(
+        $this->assertCount(
             3,
             $telephone->getValidators()
         );
 
-
         $form = new Form();
-
         $form->add($telephone);
         $form->add($address);
 
-
-        $actual = $form->isValid(
-            []
-        );
-
-        $I->assertFalse($actual);
-
+        $actual = $form->isValid([]);
+        $this->assertFalse($actual);
 
         $expected = new Messages(
             [
@@ -192,22 +183,18 @@ class FormCest
                 ),
             ]
         );
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->getMessages()
         );
 
-
         $actual = $form->isValid(
             [
-                'telephone' => '12345',
+                'telephone' => '123456',
                 'address'   => 'hello',
             ]
         );
-
-        $I->assertFalse($actual);
-
+        $this->assertFalse($actual);
 
         $expected = new Messages(
             [
@@ -219,12 +206,10 @@ class FormCest
                 ),
             ]
         );
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->getMessages()
         );
-
 
         $actual = $form->isValid(
             [
@@ -232,8 +217,7 @@ class FormCest
                 'address'   => 'hello',
             ]
         );
-
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
@@ -242,12 +226,13 @@ class FormCest
      * @author Mohamad Rostami <rostami@outlook.com>
      * @issue  https://github.com/phalcon/cphalcon/issues/11135
      * @issue  https://github.com/phalcon/cphalcon/issues/3167
+     * @since  2026-04-01
+     *
+     * @group  mysql
      */
-    public function testElementMessages(IntegrationTester $I)
+    public function testElementMessages(): void
     {
-        // First element
         $telephone = new Text('telephone');
-
         $telephone->addValidators(
             [
                 new Regex(
@@ -259,15 +244,13 @@ class FormCest
             ]
         );
 
-        // Second element
         $address = new Text('address');
         $form    = new Form();
 
         $form->add($telephone);
         $form->add($address);
 
-
-        $I->assertFalse(
+        $this->assertFalse(
             $form->isValid(
                 [
                     'telephone' => '12345',
@@ -276,15 +259,13 @@ class FormCest
             )
         );
 
-
-        $I->assertTrue(
+        $this->assertTrue(
             $form->get('telephone')->hasMessages()
         );
 
-        $I->assertFalse(
+        $this->assertFalse(
             $form->get('address')->hasMessages()
         );
-
 
         $expected = new Messages(
             [
@@ -296,29 +277,24 @@ class FormCest
                 ),
             ]
         );
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->get('telephone')->getMessages()
         );
 
-        $I->assertEquals(
+        $this->assertEquals(
             $form->getMessages(),
             $form->get('telephone')->getMessages()
         );
 
-
         $expected = new Messages();
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->get('address')->getMessages()
         );
 
-
         $expected = new Messages();
-
-        $I->assertEquals(
+        $this->assertEquals(
             $expected,
             $form->getMessagesFor('notelement')
         );

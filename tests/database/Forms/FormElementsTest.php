@@ -1,51 +1,52 @@
 <?php
 
-namespace Phalcon\Tests\Integration\Forms;
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
 
-use IntegrationTester;
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Database\Forms;
+
+use Phalcon\Filter\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\StringLength;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
-use Phalcon\Tag;
-use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\StringLength;
+use Phalcon\Tests\AbstractDatabaseTestCase;
+use Phalcon\Tests\Fixtures\Traits\DiTrait;
 
-/**
- * Phalcon\Tests\Integration\Forms\FormCest
- * Tests the \Phalcon\Forms\Form component
- *
- * @copyright (c) 2011-2017 Phalcon Team
- * @link          https://www.phalcon.io
- * @author        Andres Gutierrez <andres@phalcon.io>
- * @author        Phalcon Team <team@phalcon.io>
- *
- * The contents of this file are subject to the New BSD License that is
- * bundled with this package in the file LICENSE.txt
- *
- * If you did not receive a copy of the license and are unable to obtain it
- * through the world-wide-web, please send an email to license@phalcon.io
- * so that we can send you a copy immediately.
- */
-class FormElementsCest
+final class FormElementsTest extends AbstractDatabaseTestCase
 {
+    use DiTrait;
+
+    public function setUp(): void
+    {
+        $this->setNewFactoryDefault();
+        $this->setDatabase();
+    }
+
     /**
      * Tests cancelling validation on first fail
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @issue  https://github.com/phalcon/cphalcon/issues/13149
-     *
      * @since  2017-11-19
      *
-     * @author Phalcon Team <team@phalcon.io>
+     * @group  mysql
      */
-    public function shouldCancelValidationOnFirstFail(IntegrationTester $I)
+    public function testShouldCancelValidationOnFirstFail(): void
     {
         $form = new Form();
 
         $lastName = new Text('lastName');
-
         $lastName->setLabel('user.lastName');
-
         $lastName->setFilters(
             [
                 'string',
@@ -53,7 +54,6 @@ class FormElementsCest
                 'trim',
             ]
         );
-
         $lastName->addValidators(
             [
                 new PresenceOf(
@@ -73,11 +73,8 @@ class FormElementsCest
             ]
         );
 
-
         $firstName = new Text('firstName');
-
         $firstName->setLabel('user.firstName');
-
         $firstName->setFilters(
             [
                 'string',
@@ -85,7 +82,6 @@ class FormElementsCest
                 'trim',
             ]
         );
-
         $firstName->addValidators(
             [
                 new PresenceOf(
@@ -108,13 +104,11 @@ class FormElementsCest
         $form->add($lastName);
         $form->add($firstName);
 
-
         $_POST = [];
 
-        $I->assertFalse(
+        $this->assertFalse(
             $form->isValid($_POST)
         );
-
 
         $expected = new Messages(
             [
@@ -133,6 +127,6 @@ class FormElementsCest
 
         $actual = $form->getMessages();
 
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 }
