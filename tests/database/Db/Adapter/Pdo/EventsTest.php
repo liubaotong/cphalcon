@@ -11,7 +11,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 
 final class EventsTest extends AbstractUnitTestCase
 {
-    public function eventsProvider(): array
+    public static function eventsProvider(): array
     {
         return [
             ['SELECT 1', 'query', ['beforeQuery', 'afterQuery']],

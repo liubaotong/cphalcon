@@ -17,7 +17,7 @@ use PDO;
 use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Mvc\Model\Manager;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Invoices;
 use Phalcon\Tests\Models\InvoicesGetters;

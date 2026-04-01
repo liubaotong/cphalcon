@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Integration\Mvc\Model\Resultset\Simple;
 
 use IntegrationTester;
 use Phalcon\Mvc\Model\Query\Builder;
-use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Invoices;
 use Phalcon\Tests\Models\InvoicesWithColumnMap;

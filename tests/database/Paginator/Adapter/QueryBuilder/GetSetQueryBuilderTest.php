@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Paginator\Adapter\QueryBuilder;
 use PDO;
 use Phalcon\Paginator\Adapter\QueryBuilder;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
 use Phalcon\Tests\Models\Invoices;

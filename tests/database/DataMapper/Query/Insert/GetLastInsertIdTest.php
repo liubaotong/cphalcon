@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\DataMapper\Query\Insert;
 use Phalcon\DataMapper\Pdo\Connection;
 use Phalcon\DataMapper\Query\QueryFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 
 use function uniqid;
 

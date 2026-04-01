@@ -17,7 +17,7 @@ use Phalcon\Events\Event;
 use Phalcon\Events\Manager;
 use Phalcon\Support\Collection;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\CustomersMigration;
+use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Customers;
 use Phalcon\Tests\Models\CustomersDymanicUpdate;

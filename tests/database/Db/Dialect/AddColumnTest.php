@@ -24,7 +24,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialects(): array {
+    public static function getDialects(): array
+    {
 
         return [
             [
@@ -46,7 +47,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsFloat(): array {
+    public static function getDialectsFloat(): array
+    {
 
         return [
             [
@@ -68,7 +70,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsInt(): array {
+    public static function getDialectsInt(): array
+    {
 
         return [
             [
@@ -90,7 +93,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsNull(): array {
+    public static function getDialectsNull(): array
+    {
 
         return [
             [
@@ -113,7 +117,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsTimestamp(): array {
+    public static function getDialectsTimestamp(): array
+    {
 
         return [
             [
@@ -138,7 +143,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
     /**
      * @return array[]
      */
-    public static function getDialectsString(): array {
+    public static function getDialectsString(): array
+    {
 
         return [
             [
@@ -169,7 +175,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultFloat(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumnDefaultFloat(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 
@@ -204,7 +211,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultInt(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumnDefaultInt(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 
@@ -239,7 +247,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumn(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumn(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 
@@ -274,7 +283,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultNull(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumnDefaultNull(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 
@@ -308,7 +318,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultString(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumnDefaultString(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 
@@ -342,7 +353,8 @@ final class AddColumnTest extends AbstractDatabaseTestCase
      *
      * @group        mysql
      */
-    public function testDbDialectAddColumnDefaultTimestamp(string $dialectClass, string $expected): void {
+    public function testDbDialectAddColumnDefaultTimestamp(string $dialectClass, string $expected): void
+    {
 
         $dialect = new $dialectClass();
 

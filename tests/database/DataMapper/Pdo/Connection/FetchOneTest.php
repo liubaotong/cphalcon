@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\DataMapper\Pdo\Connection;
 use PDO;
 use Phalcon\DataMapper\Pdo\Connection;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class FetchOneTest extends AbstractDatabaseTestCase

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Integration\Mvc\Model;
 
 use IntegrationTester;
-use Phalcon\Tests\Fixtures\Migrations\ObjectsMigration;
+use Phalcon\Tests\Support\Migrations\ObjectsMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\Objects;
 

@@ -14,7 +14,7 @@ namespace Phalcon\Tests\Integration\Mvc;
 use Codeception\Example;
 use IntegrationTester;
 use Phalcon\Mvc\Model;
-use Phalcon\Tests\Fixtures\Migrations\StringPrimaryMigration;
+use Phalcon\Tests\Support\Migrations\StringPrimaryMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Models\AlbumORama\Albums;
 use Phalcon\Tests\Models\ModelWithStringPrimary;

@@ -15,7 +15,7 @@ use PDOException;
 use Phalcon\Mvc\Model\Manager;
 use Phalcon\Support\Debug;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\RollbackTestMigration;
+use Phalcon\Tests\Support\Migrations\RollbackTestMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
 use RuntimeException;

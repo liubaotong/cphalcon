@@ -36,19 +36,15 @@ final class CreateBuilderTest extends AbstractDatabaseTestCase
     {
         $this->setNewFactoryDefault();
         $this->setDatabase();
-
         /** @var ManagerInterface $manager */
-        $manager = $this->getService('modelsManager');
-
+        $manager = $this->getService("modelsManager");
         $actual = $manager->getBuilder();
         $this->assertNull($actual);
-
         $builder    = $manager->createBuilder();
         $getBuilder = $manager->getBuilder();
         $expected   = spl_object_hash($builder);
         $actual     = spl_object_hash($getBuilder);
         $this->assertSame($expected, $actual);
-
         $builder  = $manager->createBuilder();
         $expected = spl_object_hash($builder);
         $this->assertNotSame($expected, $actual);

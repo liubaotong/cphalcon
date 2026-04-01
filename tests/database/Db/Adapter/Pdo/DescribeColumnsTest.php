@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Db\Column;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Migrations\ComplexDefaultMigration;
-use Phalcon\Tests\Fixtures\Migrations\DialectMigration;
+use Phalcon\Tests\Support\Migrations\ComplexDefaultMigration;
+use Phalcon\Tests\Support\Migrations\DialectMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 
 final class DescribeColumnsTest extends AbstractDatabaseTestCase
