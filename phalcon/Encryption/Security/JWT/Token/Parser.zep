@@ -131,11 +131,11 @@ class Parser
     {
         var algo, decoded;
 
-        let algo = headers->get(Enum::ALGO, "none");
+        let decoded = "";
+        let algo    = headers->get(Enum::ALGO, "none");
 
         if "none" === algo {
-            let decoded   = "",
-                signature = "";
+            let signature = "";
         } else {
             let decoded = this->decodeUrl(signature);
         }
