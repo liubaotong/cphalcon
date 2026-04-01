@@ -13,23 +13,23 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 
-use DatabaseTester;
 use Phalcon\Db\Enum;
 use Phalcon\Db\Result\PdoResult;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 
 use function is_array;
 use function is_object;
 
-class QueryCest
+final class QueryTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
 
-    public function _before(DatabaseTester $I)
+    public function setUp(): void
     {
         $this->setNewFactoryDefault();
-        $this->setDatabase($I);
+        $this->setDatabase();
     }
 
     /**
@@ -38,15 +38,11 @@ class QueryCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-22
      *
-     * @group  pgsql
-     * @group  mysql
-     * @group  sqlite
+     * @group mysql
      */
-    public function dbAdapterPdoQuery(DatabaseTester $I)
+    public function testDbAdapterPdoQuery(): void
     {
-        $I->wantToTest('Db\Adapter\Pdo - query()');
-
-        $connection = $I->getConnection();
+        $connection = self::getConnection();
         $db         = $this->container->get('db');
 
         $migration = new InvoicesMigration($connection);
@@ -64,64 +60,64 @@ class QueryCest
         // Simple Select
         $result = $db->query('SELECT * FROM co_invoices LIMIT 3');
 
-        $I->assertTrue(is_object($result));
-        $I->assertInstanceOf(PdoResult::class, $result);
+        $this->assertTrue(is_object($result));
+        $this->assertInstanceOf(PdoResult::class, $result);
 
         $row = $result->fetch();
-        $I->assertEquals(1, $row['inv_id']);
+        $this->assertEquals(1, $row['inv_id']);
         $row = $result->fetch();
-        $I->assertEquals(2, $row['inv_id']);
+        $this->assertEquals(2, $row['inv_id']);
         $row = $result->fetch();
-        $I->assertEquals(3, $row['inv_id']);
+        $this->assertEquals(3, $row['inv_id']);
 
         $row = $result->fetch();
-        $I->assertFalse($row);
-        $I->assertEquals(3, $result->numRows());
+        $this->assertFalse($row);
+        $this->assertEquals(3, $result->numRows());
 
         // Number count
         $number = 0;
         $result = $db->query('SELECT * FROM co_invoices LIMIT 5');
 
-        $I->assertTrue(is_object($result));
-        $I->assertInstanceOf(PdoResult::class, $result);
+        $this->assertTrue(is_object($result));
+        $this->assertInstanceOf(PdoResult::class, $result);
 
         while ($result->fetch()) {
             $number++;
         }
-        $I->assertEquals(5, $number);
+        $this->assertEquals(5, $number);
 
         // FETCH_NUM
         $result = $db->query('SELECT * FROM co_invoices LIMIT 5');
         $result->setFetchMode(Enum::FETCH_NUM);
         $row = $result->fetch();
 
-        $I->assertTrue(is_array($row));
-        $I->assertEquals(1, $row[0]);
+        $this->assertTrue(is_array($row));
+        $this->assertEquals(1, $row[0]);
 
         // FETCH_ASSOC
         $result = $db->query('SELECT * FROM co_invoices LIMIT 5');
         $result->setFetchMode(Enum::FETCH_ASSOC);
         $row = $result->fetch();
 
-        $I->assertTrue(is_array($row));
-        $I->assertEquals(1, $row['inv_id']);
+        $this->assertTrue(is_array($row));
+        $this->assertEquals(1, $row['inv_id']);
 
         // FETCH_OBJ
         $result = $db->query('SELECT * FROM co_invoices LIMIT 5');
         $result->setFetchMode(Enum::FETCH_OBJ);
         $row = $result->fetch();
 
-        $I->assertTrue(is_object($row));
-        $I->assertEquals(1, $row->inv_id);
+        $this->assertTrue(is_object($row));
+        $this->assertEquals(1, $row->inv_id);
 
         // FETCH_BOTH
         $result = $db->query('SELECT * FROM co_invoices LIMIT 5');
         $result->setFetchMode(Enum::FETCH_BOTH);
         $row = $result->fetch();
 
-        $I->assertTrue(is_array($row));
-        $I->assertEquals(1, $row[0]);
-        $I->assertEquals(1, $row['inv_id']);
+        $this->assertTrue(is_array($row));
+        $this->assertEquals(1, $row[0]);
+        $this->assertEquals(1, $row['inv_id']);
 
         // FETCH_COLUMN
         $result = $db->fetchAll(
@@ -129,9 +125,9 @@ class QueryCest
             Enum::FETCH_COLUMN
         );
 
-        $I->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result));
 
         $expected = ['1', '2', '3', '4', '5'];
-        $I->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 }
