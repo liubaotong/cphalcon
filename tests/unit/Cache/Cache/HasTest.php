@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function uniqid;
 
-class HasCest
+final class HasTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache :: has()
@@ -29,10 +29,8 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheHas(IntegrationTester $I)
+    public function testCacheCacheHas(): void
     {
-        $I->wantToTest('Cache\Cache - has()');
-
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance('apcu');
@@ -40,10 +38,10 @@ class HasCest
         $adapter = new Cache($instance);
         $key     = uniqid();
 
-        $I->assertFalse($adapter->has($key));
+        $this->assertFalse($adapter->has($key));
 
         $adapter->set($key, 'test');
-        $I->assertTrue($adapter->has($key));
+        $this->assertTrue($adapter->has($key));
     }
 
     /**
@@ -52,21 +50,17 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheHasException(IntegrationTester $I)
+    public function testCacheCacheHasException(): void
     {
-        $I->wantToTest('Cache\Cache - has() - exception');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The key contains invalid characters');
 
-        $I->expectThrowable(
-            new InvalidArgumentException('The key contains invalid characters'),
-            function () {
-                $serializer = new SerializerFactory();
-                $factory    = new AdapterFactory($serializer);
-                $instance   = $factory->newInstance('apcu');
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('apcu');
 
-                $adapter = new Cache($instance);
+        $adapter = new Cache($instance);
 
-                $value = $adapter->has('abc$^');
-            }
-        );
+        $value = $adapter->has('abc$^');
     }
 }

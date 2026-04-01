@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function getOptionsRedis;
 use function uniqid;
 
-class GetMultipleCest
+final class GetMultipleTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache :: getMultiple()
@@ -30,10 +30,8 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheGetMultiple(IntegrationTester $I)
+    public function testCacheCacheGetMultiple(): void
     {
-        $I->wantToTest('Cache\Cache - getMultiple()');
-
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance('apcu');
@@ -44,17 +42,17 @@ class GetMultipleCest
         $key2 = uniqid();
 
         $adapter->set($key1, 'test1');
-        $I->assertTrue($adapter->has($key1));
+        $this->assertTrue($adapter->has($key1));
 
         $adapter->set($key2, 'test2');
-        $I->assertTrue($adapter->has($key2));
+        $this->assertTrue($adapter->has($key2));
 
         $expected = [
             $key1 => 'test1',
             $key2 => 'test2',
         ];
         $actual   = $adapter->getMultiple([$key1, $key2]);
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
 
         $expected = [
             $key1     => 'test1',
@@ -62,9 +60,8 @@ class GetMultipleCest
             'unknown' => 'default-unknown',
         ];
         $actual   = $adapter->getMultiple([$key1, $key2, 'unknown'], 'default-unknown');
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
-
 
     /**
      * Tests Phalcon\Cache :: getMultiple() - Redis mget
@@ -72,8 +69,10 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheGetMultipleRedisMget(IntegrationTester $I): void
+    public function testCacheCacheGetMultipleRedisMget(): void
     {
+        $this->checkExtensionIsLoaded('redis');
+
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance(
@@ -87,17 +86,17 @@ class GetMultipleCest
         $key2 = uniqid();
 
         $adapter->set($key1, 'test1');
-        $I->assertTrue($adapter->has($key1));
+        $this->assertTrue($adapter->has($key1));
 
         $adapter->set($key2, 'test2');
-        $I->assertTrue($adapter->has($key2));
+        $this->assertTrue($adapter->has($key2));
 
         $expected = [
             $key1 => 'test1',
             $key2 => 'test2',
         ];
         $actual   = $adapter->getMultiple([$key1, $key2]);
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
 
         $expected = [
             $key1     => 'test1',
@@ -105,7 +104,7 @@ class GetMultipleCest
             'unknown' => 'default-unknown',
         ];
         $actual   = $adapter->getMultiple([$key1, $key2, 'unknown'], 'default-unknown');
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -114,22 +113,18 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheGetMultipleException(IntegrationTester $I)
+    public function testCacheCacheGetMultipleException(): void
     {
-        $I->wantToTest('Cache\Cache - getMultiple() - exception');
-
-        $I->expectThrowable(
-            new InvalidArgumentException(
-                'The keys need to be an array or instance of Traversable'
-            ),
-            function () {
-                $serializer = new SerializerFactory();
-                $factory    = new AdapterFactory($serializer);
-                $instance   = $factory->newInstance('apcu');
-
-                $adapter = new Cache($instance);
-                $actual  = $adapter->getMultiple(1234);
-            }
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The keys need to be an array or instance of Traversable'
         );
+
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('apcu');
+
+        $adapter = new Cache($instance);
+        $adapter->getMultiple(1234);
     }
 }

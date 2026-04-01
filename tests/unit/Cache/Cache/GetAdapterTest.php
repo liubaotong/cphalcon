@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
-class GetAdapterCest
+final class GetAdapterTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache :: getAdapter()
@@ -27,10 +27,8 @@ class GetAdapterCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function testCacheCacheGetAdapter(IntegrationTester $I)
+    public function testCacheCacheGetAdapter(): void
     {
-        $I->wantToTest('Cache\Cache - getAdapter()');
-
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance('apcu');
@@ -39,6 +37,6 @@ class GetAdapterCest
 
         $class  = AdapterInterface::class;
         $actual = $adapter->getAdapter();
-        $I->assertInstanceOf($class, $actual);
+        $this->assertInstanceOf($class, $actual);
     }
 }

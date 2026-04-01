@@ -27,9 +27,11 @@ use SplQueue;
 use stdClass;
 
 use function array_merge;
+use function file_get_contents;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
+use function sort;
 use function uniqid;
 
 final class GetSetTest extends AbstractUnitTestCase
@@ -411,5 +413,102 @@ final class GetSetTest extends AbstractUnitTestCase
 
         $result = $adapter->has($key);
         $this->assertFalse($result);
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Stream :: set() - file content
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheAdapterStreamSet(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Stream(
+            $serializer,
+            [
+                'storageDir' => outputDir(),
+            ]
+        );
+
+        $data   = 'Phalcon Framework';
+        $actual = $adapter->set('test-key', $data);
+        $this->assertTrue($actual);
+
+        $target   = outputDir() . 'ph-strm/te/st/-k/';
+        $expected = 's:3:"ttl";i:3600;s:7:"content";s:25:"s:17:"Phalcon Framework";";}';
+        $actual   = file_get_contents($target . 'test-key');
+        $this->assertStringContainsString($expected, $actual);
+
+        $this->safeDeleteFile($target . 'test-key');
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Stream :: get() - with prefix
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2023-06-01
+     * @issue  16348
+     */
+    public function testCacheAdapterStreamGetWithPrefix(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Stream(
+            $serializer,
+            [
+                'storageDir' => outputDir(),
+                'prefix'     => 'en',
+            ]
+        );
+
+        $target = outputDir() . 'en/';
+
+        $actual = $adapter->set('men', 123);
+        $this->assertTrue($actual);
+        $this->assertEquals(123, $adapter->get('men'));
+
+        $actual = $adapter->set('barmen', 'abc');
+        $this->assertTrue($actual);
+        $this->assertEquals('abc', $adapter->get('barmen'));
+
+        $actual = $adapter->set('bar', 'xyz');
+        $this->assertTrue($actual);
+        $this->assertEquals('xyz', $adapter->get('bar'));
+
+        $expected = ['enbar', 'enbarmen', 'enmen'];
+        $actual   = $adapter->getKeys();
+        sort($actual);
+        $this->assertEquals($expected, $actual);
+
+        $this->safeDeleteDirectory($target);
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Weak :: get()/set()
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheAdapterWeakGetSet(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Weak($serializer);
+
+        $objects = [
+            new stdClass(),
+            new ArrayObject(),
+            new SplObjectStorage(),
+            new SplQueue(),
+        ];
+
+        foreach ($objects as $object) {
+            $key    = uniqid();
+            $result = $adapter->set($key, $object);
+            $this->assertTrue($result);
+
+            $expected = $object;
+            $actual   = $adapter->get($key);
+            $this->assertEquals($expected, $actual);
+        }
     }
 }

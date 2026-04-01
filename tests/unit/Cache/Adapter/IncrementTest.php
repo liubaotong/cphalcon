@@ -13,20 +13,67 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function getOptionsLibmemcached;
+use function getOptionsRedis;
 use function outputDir;
 use function uniqid;
 
-class IncrementCest
+final class IncrementTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function getExamples(): array
+    {
+        return [
+            [
+                'Apcu',
+                Apcu::class,
+                [],
+                'apcu',
+                1,
+            ],
+            [
+                'Libmemcached',
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+                false,
+            ],
+            [
+                'Memory',
+                Memory::class,
+                [],
+                '',
+                false,
+            ],
+            [
+                'Redis',
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+                1
+            ],
+            [
+                'Stream',
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                '',
+                false,
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* :: increment()
      *
@@ -35,96 +82,48 @@ class IncrementCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterClear(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - increment()',
-                $example['className']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testCacheAdapterIncrement(
+        string $className,
+        string $class,
+        array $options,
+        string $extension,
+        mixed $unknown
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
         $adapter    = new $class($serializer, $options);
 
         $key    = uniqid();
-        $result = $adapter->set($key, 1);
-        $I->assertTrue($result);
+        $result = $adapter->set($key, 10);
+        $this->assertTrue($result);
 
-        $expected = 2;
+        $expected = 11;
         $actual   = $adapter->increment($key);
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
 
         $actual = $adapter->get($key);
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
 
-        $expected = 10;
-        $actual   = $adapter->increment($key, 8);
-        $I->assertEquals($expected, $actual);
+        $expected = 20;
+        $actual   = $adapter->increment($key, 9);
+        $this->assertEquals($expected, $actual);
 
         $actual = $adapter->get($key);
-        $I->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
 
         /**
          * unknown key
          */
         $key      = uniqid();
-        $expected = $example['unknown'];
+        $expected = $unknown;
         $actual   = $adapter->increment($key);
-        $I->assertEquals($expected, $actual);
-    }
+        $this->assertEquals($expected, $actual);
 
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'extension' => 'apcu',
-                'unknown'   => 1,
-            ],
-            [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'extension' => 'memcached',
-                'unknown'   => false,
-            ],
-            [
-                'className' => 'Memory',
-                'class'     => Memory::class,
-                'options'   => [],
-                'extension' => '',
-                'unknown'   => false,
-            ],
-//            [
-//                'className' => 'Redis',
-//                'class'     => Redis::class,
-//                'options'   => getOptionsRedis(),
-//                'extension' => 'redis',
-//                'unknown'   => 1,
-//            ],
-            [
-                'className' => 'Stream',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'extension' => '',
-                'unknown'   => false,
-            ],
-        ];
+        if ('Stream' === $className) {
+            $this->safeDeleteDirectory(outputDir('ph-strm'));
+        }
     }
 }
