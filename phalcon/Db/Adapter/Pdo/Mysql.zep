@@ -357,7 +357,7 @@ class Mysql extends PdoAdapter
                  * VARBINARY
                  */
                 case starts_with(columnType, "varbinary", true):
-                    let definition["type"] = Column::TYPE_BINARY;
+                    let definition["type"] = Column::TYPE_VARBINARY;
 
                     break;
 

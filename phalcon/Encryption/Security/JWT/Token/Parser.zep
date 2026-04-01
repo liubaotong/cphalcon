@@ -54,7 +54,7 @@ class Parser
         let results          = this->parseToken(token),
             encodedHeaders   = results[0],
             encodedClaims    = results[1],
-            encodedSignature = results[2],
+            encodedSignature = (string) results[2],
             headers          = this->decodeHeaders(encodedHeaders),
             claims           = this->decodeClaims(encodedClaims),
             signature        = this->decodeSignature(headers, encodedSignature);
@@ -127,20 +127,20 @@ class Parser
      *
      * @return Signature
      */
-    private function decodeSignature(<Item> headers, string signature) -> <Signature>
+    private function decodeSignature(<Item> headers, string! signature) -> <Signature>
     {
-        var algo, decoded;
+        var algo, decoded, encodedSignature;
 
-        let decoded = "";
-        let algo    = headers->get(Enum::ALGO, "none");
+        let decoded          = "",
+            encodedSignature = "",
+            algo             = headers->get(Enum::ALGO, "none");
 
-        if "none" === algo {
-            let signature = "";
-        } else {
-            let decoded = this->decodeUrl(signature);
+        if "none" !== algo {
+            let decoded          = (string) this->decodeUrl(signature),
+                encodedSignature = signature;
         }
 
-        return new Signature(decoded, signature);
+        return new Signature(decoded, encodedSignature);
     }
 
     /**
