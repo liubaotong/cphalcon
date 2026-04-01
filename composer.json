@@ -40,13 +40,6 @@
     "ext-redis": "*",
     "ext-sqlite3": "*",
     "ext-xml": "*",
-    "codeception/codeception": "^5.2",
-    "codeception/module-apc": "^3.0",
-    "codeception/module-cli": "^2.0",
-    "codeception/module-filesystem": "^3.0",
-    "codeception/module-memcache": "^3.0",
-    "codeception/module-phalcon5": "^2.0",
-    "codeception/module-redis": "^3.0",
     "friendsofphp/php-cs-fixer": "~3.0",
     "mustache/mustache": "^2.14",
     "phalcon/ide-stubs": "^5.4",
@@ -97,12 +90,16 @@
     "rss": "https://blog.phalcon.io/rss"
   },
   "scripts": {
+    "analyze": "php -d extension=ext/modules/phalcon.so ./vendor/bin/psalm --no-cache",
     "cs": "php -d extension=ext/modules/phalcon.so ./vendor/bin/phpcs --standard=phpcs.xml",
-    "cs-fix": "php -d extension=ext/modules/phalcon.so  ./vendor/bin/phpcbf --standard=phpcs.xml",
-    "test-unit": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter unit",
-    "test-cli": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter cli",
-    "test-integration": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter integration",
-    "test-db-mysql": "driver=mysql dump_file=tests/_data/assets/schemas/mysql.sql php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env mysql",
+    "cs-fix": "php -d extension=ext/modules/phalcon.so ./vendor/bin/phpcbf --standard=phpcs.xml",
+    "test-unit": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.xml.dist",
+    "test-unit-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.xml.dist --fail-on-all-issues --testdox",
+    "test-unit-coverage": "vendor/bin/phpunit  -c phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
+    "test-unit-coverage-html": "vendor/bin/phpunit  -c phpunit.xml.dist --coverage-html tests/_output/coverage/",
+    "test-db-mysql": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.mysql.xml",
+    "test-db-mysql-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.mysql.xml --fail-on-all-issues --testdox",
+    "test-db-mysql-coverage": "vendor/bin/phpunit -c phpunit.mysql.xml  --coverage-clover tests/_output/coverage.xml",
     "test-db-pgsql": "driver=pgsql dump_file=tests/_data/assets/schemas/postgresql.sql php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env pgsql",
     "test-db-sqlite": "driver=sqlite php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env sqlite",
     "test-db": [
@@ -114,7 +111,6 @@
       "@test-integration",
       "@test-db"
     ],
-    "analyze": "php -d extension=ext/modules/phalcon.so ./vendor/bin/psalm --no-cache",
     "clean-build-stubs": [
       "./vendor/bin/zephir fullclean",
       "Composer\\Config::disableProcessTimeout",
