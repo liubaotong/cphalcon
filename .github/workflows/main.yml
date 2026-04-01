@@ -403,21 +403,23 @@ jobs:
       - name: Setup Tests
         shell: bash
         run: |
-          ./.ci/linux-setup-locales.sh
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            ./.ci/linux-setup-locales.sh
+          fi
+
           cp tests/_config/.env.default .env
           php tests/_config/generate-db-schemas.php
-          vendor/bin/codecept build
 
       - name: Run Unit Tests
         if: always()
-        run: vendor/bin/codecept run --coverage-xml=coverage-unit-${{ matrix.php }}-${{ matrix.ts }}.xml --ext DotReporter unit
+        run: composer test-unit-coverage
 
       - name: Upload Unit Test Coverage
         uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: coverage-unit-${{ matrix.php }}-${{ matrix.ts }}-${{ matrix.name }}-${{ matrix.arch }}
-          path: tests/_output/coverage-unit-${{ matrix.php }}-${{ matrix.ts }}.xml
+          name: "unit-${{ matrix.php }}.coverage"
+          path: "tests/_output/coverage.xml"
           retention-days: 7
 
       - name: Check Release notes parser
@@ -451,7 +453,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       postgres:
-        image: postgres:12-alpine
+        image: postgres:18-alpine
         ports:
           - "5432:5432"
         env:
@@ -483,6 +485,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+
+      - name: "Setup platform specific environment"
+        shell: pwsh
+        run: git config --global core.autocrlf false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -532,21 +538,17 @@ jobs:
       - name: Run Database Tests (MySQL)
         env:
           DATA_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DATA_MYSQL_USER: root
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
           DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-          DATA_MYSQL_USER: root
-          driver: mysql
-          dump_file: tests/_data/assets/schemas/mysql.sql
-          initial_queries: "SET NAMES utf8;SET FOREIGN_KEY_CHECKS=0;"
-        if: always()
-        run: vendor/bin/codecept run --coverage-xml=coverage-database-mysql-${{ matrix.php }}.xml --ext DotReporter database --env mysql
+        run: composer test-db-mysql-coverage
 
       - name: Upload Database (MySQL) Coverage
         uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: coverage-database-mysql-${{ matrix.php }}
-          path: tests/_output/coverage-database-mysql-${{ matrix.php }}.xml
+          name: "db-mysql-${{ matrix.php }}.coverage"
+          path: "tests/_output/coverage.xml"
           retention-days: 7
 
 #      - name: Run Database Tests (Sqlite)
