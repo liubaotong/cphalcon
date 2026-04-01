@@ -57,7 +57,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_LastKey, __invoke)
 	ZVAL_UNDEF(&filtered);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(method)
 	ZEND_PARSE_PARAMETERS_END();

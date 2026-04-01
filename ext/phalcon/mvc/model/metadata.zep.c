@@ -18,8 +18,8 @@
 #include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/array.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -712,32 +712,32 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, hasAttribute)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval attribute;
-	zval *model, model_sub, *attribute_param = NULL, columnMap, _0, _1;
+	zend_string *attribute = NULL;
+	zval *model, model_sub, attribute_zv, columnMap, _0, _1;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&model_sub);
+	ZVAL_UNDEF(&attribute_zv);
 	ZVAL_UNDEF(&columnMap);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&attribute);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(model, phalcon_mvc_modelinterface_ce)
 		Z_PARAM_STR(attribute)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &model, &attribute_param);
-	zephir_get_strval(&attribute, attribute_param);
+	model = ZEND_CALL_ARG(execute_data, 1);
+	ZVAL_STR_COPY(&attribute_zv, attribute);
 	ZEPHIR_CALL_METHOD(&columnMap, this_ptr, "getreversecolumnmap", NULL, 0, model);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&columnMap) == IS_ARRAY) {
-		RETURN_MM_BOOL(zephir_array_isset(&columnMap, &attribute));
+		RETURN_MM_BOOL(zephir_array_isset(&columnMap, &attribute_zv));
 	}
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "readmetadata", NULL, 26, model);
 	zephir_check_call_status();
 	zephir_array_fetch_long(&_1, &_0, 4, PH_READONLY, "phalcon/Mvc/Model/MetaData.zep", 490);
-	RETURN_MM_BOOL(zephir_array_isset(&_1, &attribute));
+	RETURN_MM_BOOL(zephir_array_isset(&_1, &attribute_zv));
 }
 
 /**
@@ -766,29 +766,20 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, read)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, _0;
-	zval key;
+	zval key_zv, _0;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(key)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &key_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("adapter"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(&_0, "get", NULL, 0, &key);
+	ZEPHIR_RETURN_CALL_METHOD(&_0, "get", NULL, 0, &key_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -1011,7 +1002,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, setAutomaticCreateAttributes)
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(model, phalcon_mvc_modelinterface_ce)
-		Z_PARAM_ARRAY(attributes)
+		ZEPHIR_Z_PARAM_ARRAY(attributes, attributes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -1048,7 +1039,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, setAutomaticUpdateAttributes)
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(model, phalcon_mvc_modelinterface_ce)
-		Z_PARAM_ARRAY(attributes)
+		ZEPHIR_Z_PARAM_ARRAY(attributes, attributes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -1085,7 +1076,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, setEmptyStringAttributes)
 	ZVAL_UNDEF(&attributes);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(model, phalcon_mvc_modelinterface_ce)
-		Z_PARAM_ARRAY(attributes)
+		ZEPHIR_Z_PARAM_ARRAY(attributes, attributes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -1137,11 +1128,11 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, write)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval data;
-	zval *key_param = NULL, *data_param = NULL, result, option, _1, _2, _0$$3;
-	zval key;
+	zval key_zv, *data_param = NULL, result, option, _1, _2, _0$$3;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&option);
 	ZVAL_UNDEF(&_1);
@@ -1150,27 +1141,19 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, write)
 	ZVAL_UNDEF(&data);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(key)
-		Z_PARAM_ARRAY(data)
+		ZEPHIR_Z_PARAM_ARRAY(data, data_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &key_param, &data_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	data_param = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_get_arrval(&data, data_param);
 	/* try_start_1: */
 
 		ZEPHIR_INIT_VAR(&option);
 		ZVAL_BOOL(&option, ZEPHIR_GLOBAL(orm).exception_on_failed_metadata_save);
 		zephir_read_property(&_0$$3, this_ptr, ZEND_STRL("adapter"), PH_NOISY_CC | PH_READONLY);
-		ZEPHIR_CALL_METHOD(&result, &_0$$3, "set", NULL, 0, &key, &data);
+		ZEPHIR_CALL_METHOD(&result, &_0$$3, "set", NULL, 0, &key_zv, &data);
 		zephir_check_call_status_or_jump(try_end_1);
 		if (ZEPHIR_IS_FALSE_IDENTICAL(&result)) {
 			ZEPHIR_CALL_METHOD(NULL, this_ptr, "throwwriteexception", NULL, 30, &option);
@@ -1454,7 +1437,7 @@ PHP_METHOD(Phalcon_Mvc_Model_MetaData, getArrVal)
 	ZVAL_UNDEF(&value);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(index)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(defaultValue)

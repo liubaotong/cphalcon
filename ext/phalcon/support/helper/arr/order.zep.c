@@ -70,7 +70,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Order, __invoke)
 	ZVAL_UNDEF(&_6$$5);
 	ZVAL_UNDEF(&_7$$6);
 	ZEND_PARSE_PARAMETERS_START(2, 4)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(attribute)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(order)
@@ -161,7 +161,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Order, checkObject)
 	ZVAL_UNDEF(&item_sub);
 	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(sorted)
+		ZEPHIR_Z_PARAM_ARRAY(sorted, sorted_param)
 		Z_PARAM_ZVAL(attribute)
 		Z_PARAM_ZVAL(item)
 	ZEND_PARSE_PARAMETERS_END();
@@ -195,7 +195,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Order, checkNonObject)
 	ZVAL_UNDEF(&item_sub);
 	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(sorted)
+		ZEPHIR_Z_PARAM_ARRAY(sorted, sorted_param)
 		Z_PARAM_ZVAL(attribute)
 		Z_PARAM_ZVAL(item)
 	ZEND_PARSE_PARAMETERS_END();

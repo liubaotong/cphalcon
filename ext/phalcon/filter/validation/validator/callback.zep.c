@@ -99,7 +99,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Callback, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -151,7 +151,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Callback, validate)
 			ZEPHIR_CALL_METHOD(&data, validation, "getdata", NULL, 0);
 			zephir_check_call_status();
 		}
-		ZEPHIR_CALL_FUNCTION(&returnedValue, "call_user_func", NULL, 189, &callback, &data);
+		ZEPHIR_CALL_FUNCTION(&returnedValue, "call_user_func", NULL, 190, &callback, &data);
 		zephir_check_call_status();
 		_1$$3 = Z_TYPE_P(&returnedValue) == IS_OBJECT;
 		if (_1$$3) {

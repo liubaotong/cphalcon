@@ -52,13 +52,13 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_IsUnique, __invoke)
 	ZVAL_UNDEF(&collection);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &collection_param);
 	zephir_get_arrval(&collection, collection_param);
-	ZEPHIR_CALL_FUNCTION(&_0, "array_unique", NULL, 181, &collection);
+	ZEPHIR_CALL_FUNCTION(&_0, "array_unique", NULL, 182, &collection);
 	zephir_check_call_status();
 	RETURN_MM_BOOL(zephir_fast_count_int(&collection) == zephir_fast_count_int(&_0));
 }

@@ -198,7 +198,7 @@ PHP_METHOD(Phalcon_Session_Adapter_AbstractAdapter, getArrVal)
 	ZVAL_UNDEF(&value);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(index)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(defaultValue)

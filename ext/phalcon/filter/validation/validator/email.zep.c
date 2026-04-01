@@ -100,7 +100,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Email, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -161,7 +161,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Email, validate)
 		ZVAL_LONG(&flags, 1048576);
 	}
 	ZVAL_LONG(&_3, 274);
-	ZEPHIR_CALL_FUNCTION(&_4, "filter_var", NULL, 284, &value, &_3, &flags);
+	ZEPHIR_CALL_FUNCTION(&_4, "filter_var", NULL, 285, &value, &_3, &flags);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_4))) {
 		ZEPHIR_CALL_METHOD(&_5$$5, this_ptr, "messagefactory", NULL, 0, validation, field);

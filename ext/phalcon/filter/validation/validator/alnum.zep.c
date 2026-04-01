@@ -89,7 +89,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Alnum, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -138,7 +138,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Alnum, validate)
 		RETURN_MM_BOOL(1);
 	}
 	zephir_cast_to_string(&_1, &value);
-	ZEPHIR_CALL_FUNCTION(&_2, "ctype_alnum", NULL, 294, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "ctype_alnum", NULL, 295, &_1);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_2))) {
 		ZEPHIR_CALL_METHOD(&_3$$4, this_ptr, "messagefactory", NULL, 0, validation, field);

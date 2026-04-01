@@ -18,7 +18,6 @@
 #include "kernel/memory.h"
 #include "kernel/exception.h"
 #include "kernel/object.h"
-#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -51,11 +50,11 @@ PHP_METHOD(Phalcon_Mvc_Model_Behavior_SoftDelete, notify)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_6 = NULL, *_7 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *type_param = NULL, *model, model_sub, options, value, field, updateModel, message, modelsManager, metaData, _0, _1, _2, _8, _3$$7, *_4$$7, _5$$7, _10$$10, _11$$10;
-	zval type;
+	zval type_zv, *model, model_sub, options, value, field, updateModel, message, modelsManager, metaData, _0, _1, _2, _8, _3$$7, *_4$$7, _5$$7, _10$$10, _11$$10;
+	zend_string *type = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type);
+	ZVAL_UNDEF(&type_zv);
 	ZVAL_UNDEF(&model_sub);
 	ZVAL_UNDEF(&options);
 	ZVAL_UNDEF(&value);
@@ -78,17 +77,9 @@ PHP_METHOD(Phalcon_Mvc_Model_Behavior_SoftDelete, notify)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &type_param, &model);
-	if (UNEXPECTED(Z_TYPE_P(type_param) != IS_STRING && Z_TYPE_P(type_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'type' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(type_param) == IS_STRING)) {
-		zephir_get_strval(&type, type_param);
-	} else {
-		ZEPHIR_INIT_VAR(&type);
-	}
-	if (!ZEPHIR_IS_STRING_IDENTICAL(&type, "beforeDelete")) {
+	model = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&type_zv, type);
+	if (!ZEPHIR_IS_STRING_IDENTICAL(&type_zv, "beforeDelete")) {
 		RETURN_MM_NULL();
 	}
 	ZEPHIR_CALL_METHOD(&options, this_ptr, "getoptions", NULL, 0);

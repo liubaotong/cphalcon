@@ -13,11 +13,8 @@
 
 #include "kernel/main.h"
 #include "kernel/fcall.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
+#include "kernel/memory.h"
 #include "phalcon/mvc/model/query/scanner.h"
 #include "phalcon/mvc/model/query/phql.h"
 
@@ -57,26 +54,17 @@ PHP_METHOD(Phalcon_Mvc_Model_Query_Lang, parsePHQL)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *phql_param = NULL;
-	zval phql;
+	zval phql_zv;
+	zend_string *phql = NULL;
 
-	ZVAL_UNDEF(&phql);
+	ZVAL_UNDEF(&phql_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(phql)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &phql_param);
-	if (UNEXPECTED(Z_TYPE_P(phql_param) != IS_STRING && Z_TYPE_P(phql_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'phql' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(phql_param) == IS_STRING)) {
-		zephir_get_strval(&phql, phql_param);
-	} else {
-		ZEPHIR_INIT_VAR(&phql);
-	}
-	ZEPHIR_LAST_CALL_STATUS = phql_parse_phql(return_value, &phql);
+	ZVAL_STR_COPY(&phql_zv, phql);
+	ZEPHIR_LAST_CALL_STATUS = phql_parse_phql(return_value, &phql_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }

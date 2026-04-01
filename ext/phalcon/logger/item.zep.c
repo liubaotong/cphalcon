@@ -80,12 +80,12 @@ PHP_METHOD(Phalcon_Logger_Item, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval context;
 	zend_long level;
-	zval *message_param = NULL, *levelName_param = NULL, *level_param = NULL, *dateTime, dateTime_sub, *context_param = NULL, _0;
-	zval message, levelName;
+	zval message_zv, levelName_zv, *level_param = NULL, *dateTime, dateTime_sub, *context_param = NULL, _0;
+	zend_string *message = NULL, *levelName = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&message);
-	ZVAL_UNDEF(&levelName);
+	ZVAL_UNDEF(&message_zv);
+	ZVAL_UNDEF(&levelName_zv);
 	ZVAL_UNDEF(&dateTime_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&context);
@@ -95,21 +95,25 @@ PHP_METHOD(Phalcon_Logger_Item, __construct)
 		Z_PARAM_LONG(level)
 		Z_PARAM_OBJECT_OF_CLASS(dateTime, php_date_get_immutable_ce())
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(context)
+		ZEPHIR_Z_PARAM_ARRAY(context, context_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 4, 1, &message_param, &levelName_param, &level_param, &dateTime, &context_param);
-	zephir_get_strval(&message, message_param);
-	zephir_get_strval(&levelName, levelName_param);
+	level_param = ZEND_CALL_ARG(execute_data, 3);
+	dateTime = ZEND_CALL_ARG(execute_data, 4);
+	if (ZEND_NUM_ARGS() > 4) {
+		context_param = ZEND_CALL_ARG(execute_data, 5);
+	}
+	ZVAL_STR(&message_zv, message);
+	ZVAL_STR(&levelName_zv, levelName);
 	if (!context_param) {
 		ZEPHIR_INIT_VAR(&context);
 		array_init(&context);
 	} else {
 		zephir_get_arrval(&context, context_param);
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("levelName"), &levelName);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("levelName"), &levelName_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_LONG(&_0, level);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("level"), &_0);

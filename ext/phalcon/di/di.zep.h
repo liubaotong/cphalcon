@@ -7,6 +7,7 @@ PHP_METHOD(Phalcon_Di_Di, __construct);
 PHP_METHOD(Phalcon_Di_Di, __call);
 PHP_METHOD(Phalcon_Di_Di, attempt);
 PHP_METHOD(Phalcon_Di_Di, get);
+PHP_METHOD(Phalcon_Di_Di, getAlias);
 PHP_METHOD(Phalcon_Di_Di, getDefault);
 PHP_METHOD(Phalcon_Di_Di, getInternalEventsManager);
 PHP_METHOD(Phalcon_Di_Di, getRaw);
@@ -25,10 +26,12 @@ PHP_METHOD(Phalcon_Di_Di, register);
 PHP_METHOD(Phalcon_Di_Di, remove);
 PHP_METHOD(Phalcon_Di_Di, reset);
 PHP_METHOD(Phalcon_Di_Di, set);
+PHP_METHOD(Phalcon_Di_Di, setAlias);
 PHP_METHOD(Phalcon_Di_Di, setDefault);
 PHP_METHOD(Phalcon_Di_Di, setInternalEventsManager);
 PHP_METHOD(Phalcon_Di_Di, setService);
 PHP_METHOD(Phalcon_Di_Di, setShared);
+PHP_METHOD(Phalcon_Di_Di, resolveAlias);
 zend_object *zephir_init_properties_Phalcon_Di_Di(zend_class_entry *class_type);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_di_di___construct, 0, 0, 0)
@@ -48,6 +51,10 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_di_di_get, 0, 0, 1)
 	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
 	ZEND_ARG_INFO(0, parameters)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_di_di_getalias, 0, 1, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_di_di_getdefault, 0, 0, Phalcon\\Di\\DiInterface, 1)
@@ -130,6 +137,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_di_di_set, 0, 2, Phalcon\
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, shared, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_di_di_setalias, 0, 2, Phalcon\\Di\\Di, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+	ZEND_ARG_INFO(0, aliases)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_di_di_setdefault, 0, 1, IS_VOID, 0)
 
 	ZEND_ARG_OBJ_INFO(0, container, Phalcon\\Di\\DiInterface, 0)
@@ -149,6 +161,10 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_di_di_setshared, 0, 2, Ph
 	ZEND_ARG_INFO(0, definition)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_di_di_resolvealias, 0, 1, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_di_di_zephir_init_properties_phalcon_di_di, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
@@ -157,6 +173,7 @@ PHP_ME(Phalcon_Di_Di, __construct, arginfo_phalcon_di_di___construct, ZEND_ACC_P
 	PHP_ME(Phalcon_Di_Di, __call, arginfo_phalcon_di_di___call, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, attempt, arginfo_phalcon_di_di_attempt, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, get, arginfo_phalcon_di_di_get, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Di_Di, getAlias, arginfo_phalcon_di_di_getalias, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, getDefault, arginfo_phalcon_di_di_getdefault, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Di_Di, getInternalEventsManager, arginfo_phalcon_di_di_getinternaleventsmanager, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, getRaw, arginfo_phalcon_di_di_getraw, ZEND_ACC_PUBLIC)
@@ -175,9 +192,11 @@ PHP_ME(Phalcon_Di_Di, __construct, arginfo_phalcon_di_di___construct, ZEND_ACC_P
 	PHP_ME(Phalcon_Di_Di, remove, arginfo_phalcon_di_di_remove, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, reset, arginfo_phalcon_di_di_reset, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Di_Di, set, arginfo_phalcon_di_di_set, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Di_Di, setAlias, arginfo_phalcon_di_di_setalias, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, setDefault, arginfo_phalcon_di_di_setdefault, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalcon_Di_Di, setInternalEventsManager, arginfo_phalcon_di_di_setinternaleventsmanager, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, setService, arginfo_phalcon_di_di_setservice, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Di_Di, setShared, arginfo_phalcon_di_di_setshared, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Di_Di, resolveAlias, arginfo_phalcon_di_di_resolvealias, ZEND_ACC_PRIVATE)
 	PHP_FE_END
 };

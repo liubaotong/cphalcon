@@ -13,8 +13,6 @@
 
 #include "kernel/main.h"
 #include "kernel/exception.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
 
 
@@ -41,19 +39,15 @@ ZEPHIR_INIT_CLASS(Phalcon_Support_Collection_ReadOnlyCollection)
  */
 PHP_METHOD(Phalcon_Support_Collection_ReadOnlyCollection, remove)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *element_param = NULL;
-	zval element;
+	zval element_zv;
+	zend_string *element = NULL;
 
-	ZVAL_UNDEF(&element);
+	ZVAL_UNDEF(&element_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(element)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &element_param);
-	zephir_get_strval(&element, element_param);
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_support_collection_exception_ce, "The object is read only", "phalcon/Support/Collection/ReadOnlyCollection.zep", 25);
+	ZVAL_STR(&element_zv, element);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(phalcon_support_collection_exception_ce, "The object is read only", "phalcon/Support/Collection/ReadOnlyCollection.zep", 25);
 	return;
 }
 
@@ -62,21 +56,18 @@ PHP_METHOD(Phalcon_Support_Collection_ReadOnlyCollection, remove)
  */
 PHP_METHOD(Phalcon_Support_Collection_ReadOnlyCollection, set)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *element_param = NULL, *value, value_sub;
-	zval element;
+	zval element_zv, *value, value_sub;
+	zend_string *element = NULL;
 
-	ZVAL_UNDEF(&element);
+	ZVAL_UNDEF(&element_zv);
 	ZVAL_UNDEF(&value_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(element)
 		Z_PARAM_ZVAL(value)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &element_param, &value);
-	zephir_get_strval(&element, element_param);
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_support_collection_exception_ce, "The object is read only", "phalcon/Support/Collection/ReadOnlyCollection.zep", 33);
+	value = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR(&element_zv, element);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(phalcon_support_collection_exception_ce, "The object is read only", "phalcon/Support/Collection/ReadOnlyCollection.zep", 33);
 	return;
 }
 

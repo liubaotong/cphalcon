@@ -16,11 +16,11 @@
 #include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/operators.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
 #include "kernel/concat.h"
+#include "kernel/exception.h"
 #include "kernel/string.h"
 #include "ext/date/php_date.h"
+#include "ext/spl/spl_exceptions.h"
 #include "kernel/array.h"
 
 
@@ -102,11 +102,11 @@ PHP_METHOD(Phalcon_Http_Response, __construct)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *content_param = NULL, *code = NULL, code_sub, *status = NULL, status_sub, __$null, _0, _1;
-	zval content;
+	zval content_zv, *code = NULL, code_sub, *status = NULL, status_sub, __$null, _0, _1;
+	zend_string *content = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&content);
+	ZVAL_UNDEF(&content_zv);
 	ZVAL_UNDEF(&code_sub);
 	ZVAL_UNDEF(&status_sub);
 	ZVAL_NULL(&__$null);
@@ -121,19 +121,16 @@ PHP_METHOD(Phalcon_Http_Response, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 0, 3, &content_param, &code, &status);
-	if (!content_param) {
-		ZEPHIR_INIT_VAR(&content);
-	} else {
-	if (UNEXPECTED(Z_TYPE_P(content_param) != IS_STRING && Z_TYPE_P(content_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'content' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		code = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(content_param) == IS_STRING)) {
-		zephir_get_strval(&content, content_param);
-	} else {
-		ZEPHIR_INIT_VAR(&content);
+	if (ZEND_NUM_ARGS() > 2) {
+		status = ZEND_CALL_ARG(execute_data, 3);
 	}
+	if (!content) {
+		ZEPHIR_INIT_VAR(&content_zv);
+	} else {
+	ZVAL_STR_COPY(&content_zv, content);
 	}
 	if (!code) {
 		code = &code_sub;
@@ -159,8 +156,8 @@ PHP_METHOD(Phalcon_Http_Response, __construct)
 	}
 
 	zephir_update_property_zval(this_ptr, ZEND_STRL("encode"), &_1);
-	if (!ZEPHIR_IS_NULL(&content)) {
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setcontent", NULL, 0, &content);
+	if (!ZEPHIR_IS_NULL(&content_zv)) {
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setcontent", NULL, 0, &content_zv);
 		zephir_check_call_status();
 	}
 	if (Z_TYPE_P(code) != IS_NULL) {
@@ -368,22 +365,21 @@ PHP_METHOD(Phalcon_Http_Response, hasHeader)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, headers;
-	zval name;
+	zval name_zv, headers;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&headers);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	zephir_get_strval(&name, name_param);
+	ZVAL_STR_COPY(&name_zv, name);
 	ZEPHIR_CALL_METHOD(&headers, this_ptr, "getheaders", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(&headers, "has", NULL, 0, &name);
+	ZEPHIR_RETURN_CALL_METHOD(&headers, "has", NULL, 0, &name_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -477,7 +473,7 @@ PHP_METHOD(Phalcon_Http_Response, redirect)
 		if (_0$$5) {
 			ZEPHIR_INIT_VAR(&_1$$5);
 			ZVAL_STRING(&_1$$5, "://");
-			ZEPHIR_CALL_FUNCTION(&_2$$5, "strstr", NULL, 360, location, &_1$$5);
+			ZEPHIR_CALL_FUNCTION(&_2$$5, "strstr", NULL, 362, location, &_1$$5);
 			zephir_check_call_status();
 			_0$$5 = zephir_is_true(&_2$$5);
 		}
@@ -553,21 +549,20 @@ PHP_METHOD(Phalcon_Http_Response, removeHeader)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, _0;
-	zval name;
+	zval name_zv, _0;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(name)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &name_param);
-	zephir_get_strval(&name, name_param);
+	ZVAL_STR_COPY(&name_zv, name);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("headers"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(NULL, &_0, "remove", NULL, 0, &name);
+	ZEPHIR_CALL_METHOD(NULL, &_0, "remove", NULL, 0, &name_zv);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -634,7 +629,7 @@ PHP_METHOD(Phalcon_Http_Response, send)
 			_3$$5 = ((zephir_fast_strlen_ev(&file)) ? 1 : 0);
 		}
 		if (_3$$5) {
-			ZEPHIR_CALL_FUNCTION(NULL, "readfile", NULL, 361, &file);
+			ZEPHIR_CALL_FUNCTION(NULL, "readfile", NULL, 363, &file);
 			zephir_check_call_status();
 		}
 	}
@@ -783,21 +778,17 @@ PHP_METHOD(Phalcon_Http_Response, setCache)
  */
 PHP_METHOD(Phalcon_Http_Response, setContent)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *content_param = NULL;
-	zval content;
+	zval content_zv;
+	zend_string *content = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&content);
+	ZVAL_UNDEF(&content_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(content)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &content_param);
-	zephir_get_strval(&content, content_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("content"), &content);
-	RETURN_THIS();
+	ZVAL_STR(&content_zv, content);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("content"), &content_zv);
+	RETURN_THISW();
 }
 
 /**
@@ -853,7 +844,7 @@ PHP_METHOD(Phalcon_Http_Response, setContentType)
 	ZVAL_UNDEF(&_1);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_STR(contentType)
+		Z_PARAM_ZVAL(contentType_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(charset)
 	ZEND_PARSE_PARAMETERS_END();
@@ -925,22 +916,21 @@ PHP_METHOD(Phalcon_Http_Response, setEtag)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *etag_param = NULL, _0;
-	zval etag;
+	zval etag_zv, _0;
+	zend_string *etag = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&etag);
+	ZVAL_UNDEF(&etag_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(etag)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &etag_param);
-	zephir_get_strval(&etag, etag_param);
+	ZVAL_STR_COPY(&etag_zv, etag);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "Etag");
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "setheader", NULL, 0, &_0, &etag);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "setheader", NULL, 0, &_0, &etag_zv);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -1021,11 +1011,11 @@ PHP_METHOD(Phalcon_Http_Response, setFileToSend)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *filePath_param = NULL, *attachmentName = NULL, attachmentName_sub, *attachment = NULL, attachment_sub, __$true, __$null, basePath, basePathEncoding, _0$$6, _1$$5, _2$$7, _3$$7, _4$$7, _5$$8, _6$$8, _7$$8;
-	zval filePath;
+	zval filePath_zv, *attachmentName = NULL, attachmentName_sub, *attachment = NULL, attachment_sub, __$true, __$null, basePath, basePathEncoding, _0$$6, _1$$5, _2$$7, _3$$7, _4$$7, _5$$8, _6$$8, _7$$8;
+	zend_string *filePath = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&filePath);
+	ZVAL_UNDEF(&filePath_zv);
 	ZVAL_UNDEF(&attachmentName_sub);
 	ZVAL_UNDEF(&attachment_sub);
 	ZVAL_BOOL(&__$true, 1);
@@ -1049,8 +1039,13 @@ PHP_METHOD(Phalcon_Http_Response, setFileToSend)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 2, &filePath_param, &attachmentName, &attachment);
-	zephir_get_strval(&filePath, filePath_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		attachmentName = ZEND_CALL_ARG(execute_data, 2);
+	}
+	if (ZEND_NUM_ARGS() > 2) {
+		attachment = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&filePath_zv, filePath);
 	if (!attachmentName) {
 		attachmentName = &attachmentName_sub;
 		attachmentName = &__$null;
@@ -1062,14 +1057,14 @@ PHP_METHOD(Phalcon_Http_Response, setFileToSend)
 	ZEPHIR_INIT_VAR(&basePathEncoding);
 	ZVAL_STRING(&basePathEncoding, "ASCII");
 	if (Z_TYPE_P(attachmentName) != IS_STRING) {
-		ZEPHIR_CALL_METHOD(&basePath, this_ptr, "getbasename", NULL, 362, &filePath);
+		ZEPHIR_CALL_METHOD(&basePath, this_ptr, "getbasename", NULL, 364, &filePath_zv);
 		zephir_check_call_status();
 	} else {
 		ZEPHIR_CPY_WRT(&basePath, attachmentName);
 	}
 	if (zephir_is_true(attachment)) {
 		if ((zephir_function_exists_ex(ZEND_STRL("mb_detect_encoding")) == SUCCESS)) {
-			ZEPHIR_CALL_FUNCTION(&_0$$6, "mb_detect_order", NULL, 363);
+			ZEPHIR_CALL_FUNCTION(&_0$$6, "mb_detect_order", NULL, 365);
 			zephir_check_call_status();
 			ZEPHIR_CALL_FUNCTION(&basePathEncoding, "mb_detect_encoding", NULL, 326, &basePath, &_0$$6, &__$true);
 			zephir_check_call_status();
@@ -1099,7 +1094,7 @@ PHP_METHOD(Phalcon_Http_Response, setFileToSend)
 		} else {
 			ZEPHIR_INIT_VAR(&_5$$8);
 			ZVAL_STRING(&_5$$8, "\15\17\\\"");
-			ZEPHIR_CALL_FUNCTION(&_6$$8, "addcslashes", NULL, 216, &basePath, &_5$$8);
+			ZEPHIR_CALL_FUNCTION(&_6$$8, "addcslashes", NULL, 217, &basePath, &_5$$8);
 			zephir_check_call_status();
 			ZEPHIR_CPY_WRT(&basePath, &_6$$8);
 			ZEPHIR_INIT_VAR(&_7$$8);
@@ -1108,7 +1103,7 @@ PHP_METHOD(Phalcon_Http_Response, setFileToSend)
 			zephir_check_call_status();
 		}
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("file"), &filePath);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("file"), &filePath_zv);
 	RETURN_THIS();
 }
 
@@ -1123,11 +1118,11 @@ PHP_METHOD(Phalcon_Http_Response, setHeader)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *name_param = NULL, *value, value_sub, _0;
-	zval name;
+	zval name_zv, *value, value_sub, _0;
+	zend_string *name = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
@@ -1136,10 +1131,10 @@ PHP_METHOD(Phalcon_Http_Response, setHeader)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &name_param, &value);
-	zephir_get_strval(&name, name_param);
+	value = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&name_zv, name);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("headers"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(NULL, &_0, "set", NULL, 0, &name, value);
+	ZEPHIR_CALL_METHOD(NULL, &_0, "set", NULL, 0, &name_zv, value);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -1388,7 +1383,7 @@ PHP_METHOD(Phalcon_Http_Response, setStatusCode)
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_LONG(code)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_STR_OR_NULL(message)
+		Z_PARAM_ZVAL_OR_NULL(message_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -1418,7 +1413,7 @@ PHP_METHOD(Phalcon_Http_Response, setStatusCode)
 			if (_6$$3) {
 				ZEPHIR_INIT_NVAR(&_7$$3);
 				ZVAL_STRING(&_7$$3, "HTTP/");
-				ZEPHIR_CALL_FUNCTION(&_8$$3, "strstr", &_9, 360, &key, &_7$$3);
+				ZEPHIR_CALL_FUNCTION(&_8$$3, "strstr", &_9, 362, &key, &_7$$3);
 				zephir_check_call_status();
 				_6$$3 = zephir_is_true(&_8$$3);
 			}
@@ -1445,7 +1440,7 @@ PHP_METHOD(Phalcon_Http_Response, setStatusCode)
 				if (_11$$5) {
 					ZEPHIR_INIT_NVAR(&_12$$5);
 					ZVAL_STRING(&_12$$5, "HTTP/");
-					ZEPHIR_CALL_FUNCTION(&_13$$5, "strstr", &_9, 360, &key, &_12$$5);
+					ZEPHIR_CALL_FUNCTION(&_13$$5, "strstr", &_9, 362, &key, &_12$$5);
 					zephir_check_call_status();
 					_11$$5 = zephir_is_true(&_13$$5);
 				}
@@ -1589,21 +1584,20 @@ PHP_METHOD(Phalcon_Http_Response, setRawHeader)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *header_param = NULL, _0;
-	zval header;
+	zval header_zv, _0;
+	zend_string *header = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&header);
+	ZVAL_UNDEF(&header_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(header)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &header_param);
-	zephir_get_strval(&header, header_param);
+	ZVAL_STR_COPY(&header_zv, header);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("headers"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(NULL, &_0, "setraw", NULL, 0, &header);
+	ZEPHIR_CALL_METHOD(NULL, &_0, "setraw", NULL, 0, &header_zv);
 	zephir_check_call_status();
 	RETURN_THIS();
 }
@@ -1635,7 +1629,7 @@ PHP_METHOD(Phalcon_Http_Response, getBasename)
 	ZVAL_UNDEF(&_9$$3);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_STR(uri)
+		Z_PARAM_ZVAL(uri_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(suffix)
 	ZEND_PARSE_PARAMETERS_END();
@@ -1664,7 +1658,7 @@ PHP_METHOD(Phalcon_Http_Response, getBasename)
 	ZVAL_STRING(&_2, "/");
 	ZEPHIR_INIT_VAR(&_3);
 	ZVAL_STRING(&_3, "@");
-	ZEPHIR_CALL_FUNCTION(&_4, "preg_quote", NULL, 356, &_2, &_3);
+	ZEPHIR_CALL_FUNCTION(&_4, "preg_quote", NULL, 358, &_2, &_3);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_5);
 	ZEPHIR_CONCAT_SVS(&_5, "@[^", &_4, "]+$@");
@@ -1680,7 +1674,7 @@ PHP_METHOD(Phalcon_Http_Response, getBasename)
 	if (zephir_is_true(suffix)) {
 		ZEPHIR_INIT_VAR(&_6$$3);
 		ZVAL_STRING(&_6$$3, "@");
-		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 356, suffix, &_6$$3);
+		ZEPHIR_CALL_FUNCTION(&_7$$3, "preg_quote", NULL, 358, suffix, &_6$$3);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_8$$3);
 		ZEPHIR_CONCAT_SVS(&_8$$3, "@", &_7$$3, "$@");
