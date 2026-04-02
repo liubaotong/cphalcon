@@ -26,7 +26,7 @@ class BootstrapMigration extends AbstractMigration
         return [
             "SET NAMES utf8;",
             "SET FOREIGN_KEY_CHECKS=0;",
-            "create database if not exists `private`;",
+            "CREATE DATABASE IF NOT EXISTS `private`;",
         ];
     }
 

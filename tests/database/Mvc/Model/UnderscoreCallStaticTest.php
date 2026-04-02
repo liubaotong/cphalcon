@@ -34,7 +34,7 @@ final class UnderscoreCallStaticTest extends AbstractDatabaseTestCase
 
     public function tearDown(): void
     {
-        $this->container['db']->close();
+        $this->tearDownDatabase();
     }
 
     /**

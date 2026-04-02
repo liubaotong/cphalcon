@@ -52,6 +52,7 @@ final class ClearTest extends AbstractDatabaseTestCase
     public function tearDown(): void
     {
         $_POST = $this->postStore;
+        $this->tearDownDatabase();
     }
 
     /**

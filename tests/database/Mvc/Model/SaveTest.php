@@ -72,7 +72,7 @@ final class SaveTest extends AbstractDatabaseTestCase
 
     public function tearDown(): void
     {
-        $this->container['db']->close();
+        $this->tearDownDatabase();
     }
 
     /**

@@ -60,6 +60,7 @@ final class SumTest extends AbstractDatabaseTestCase
         if ($transactionManager->has()) {
             $transactionManager->rollback();
         }
+        $this->tearDownDatabase();
     }
 
     /**

@@ -1,9 +1,15 @@
 
-SET NAMES utf8;SET FOREIGN_KEY_CHECKS=0;create database if not exists `private`;
+SET NAMES utf8;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+CREATE DATABASE IF NOT EXISTS `private`;
 
 
 drop table if exists `album`;
             
+
+
 CREATE TABLE `album` (
 	`id`       int(11) UNSIGNED not null AUTO_INCREMENT,
 	`name`     varchar(100)     not null collate 'utf8mb4_unicode_520_ci',
@@ -20,6 +26,8 @@ CREATE TABLE `album` (
 
 drop table if exists `album_photo`;
             
+
+
 CREATE TABLE `album_photo` (
 	`id`       int(11) unsigned not null AUTO_INCREMENT,
 	`photo_id` int(11) unsigned null default null,
@@ -37,6 +45,8 @@ CREATE TABLE `album_photo` (
 
 drop table if exists `albums`;
             
+
+
 create table `albums`
 (
     `id`         int(10) auto_increment primary key,
@@ -44,12 +54,16 @@ create table `albums`
     `name`       varchar(100) not null
 );
             
+
+
 create index albums_artists_id_index on `albums` (`artists_id`);
             
 
 
 drop table if exists `artists`;
             
+
+
 create table `artists`
 (
     `id`   int(10) auto_increment primary key,
@@ -60,6 +74,8 @@ create table `artists`
 
 drop table if exists `complex_default`;
             
+
+
 create table complex_default
 (
     `id`           int(10) auto_increment primary key,
@@ -72,6 +88,8 @@ create table complex_default
 
 drop table if exists `co_customers_defaults`;
             
+
+
 create table co_customers_defaults
 (
     `cst_id`          int(10) auto_increment primary key,
@@ -80,12 +98,18 @@ create table co_customers_defaults
     `cst_name_first`  varchar(50)  not null DEFAULT 'cst_default_firstName'
 );
             
+
+
 create index co_customers_defaults_cst_status_flag_index
     on `co_customers_defaults` (`cst_status_flag`);
             
+
+
 create index co_customers_defaults_cst_name_last_index
     on `co_customers_defaults` (`cst_name_last`);
             
+
+
 create index co_customers_defaults_cst_name_first_index
     on `co_customers_defaults` (`cst_name_first`);
             
@@ -93,6 +117,8 @@ create index co_customers_defaults_cst_name_first_index
 
 drop table if exists `co_customers`;
             
+
+
 create table co_customers
 (
     `cst_id`          int(10) auto_increment primary key,
@@ -101,12 +127,18 @@ create table co_customers
     `cst_name_first`  varchar(50)  null
 );
             
+
+
 create index co_customers_cst_status_flag_index
     on `co_customers` (`cst_status_flag`);
             
+
+
 create index co_customers_cst_name_last_index
     on `co_customers` (`cst_name_last`);
             
+
+
 create index co_customers_cst_name_first_index
     on `co_customers` (`cst_name_first`);
             
@@ -114,6 +146,8 @@ create index co_customers_cst_name_first_index
 
 drop table if exists `co_dialect`;
             
+
+
 create table co_dialect
 (
   field_primary            int auto_increment primary key                   comment 'field_primary field',
@@ -165,6 +199,8 @@ create table co_dialect
 
 drop table if exists `fractal_dates`;
             
+
+
 create table fractal_dates
 (
     `id`           int(10)      auto_increment primary key,
@@ -177,6 +213,8 @@ create table fractal_dates
 
 drop table if exists `co_invoices`;
             
+
+
 create table co_invoices
 (
     `inv_id`          int(10) auto_increment primary key,
@@ -187,18 +225,26 @@ create table co_invoices
     `inv_created_at`  datetime     null
 );
             
+
+
 create index co_invoices_inv_cst_id_index
     on `co_invoices` (`inv_cst_id`);
             
+
+
 create index co_invoices_inv_status_flag_index
     on `co_invoices` (`inv_status_flag`);
             
+
+
 create index co_invoices_inv_created_at_index
     on `co_invoices` (`inv_created_at`);
             
 
 
 drop table if exists `co_manufacturers`;
+
+
 CREATE TABLE `co_manufacturers` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
@@ -211,6 +257,8 @@ CREATE TABLE `co_manufacturers` (
 
 drop table if exists objects;
             
+
+
 create table objects
 (
     `obj_id`   int(10) auto_increment primary key,
@@ -222,6 +270,8 @@ create table objects
 
 drop table if exists `co_orders`;
             
+
+
 CREATE TABLE `co_orders` (
     `ord_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `ord_name` VARCHAR(70) NULL,
@@ -232,6 +282,8 @@ CREATE TABLE `co_orders` (
 
 drop table if exists private.`co_orders_x_products`;
             
+
+
 CREATE TABLE private.`co_orders_x_products` (
   `oxp_ord_id` int(10) unsigned NOT NULL,
   `oxp_prd_id` int(10) unsigned NOT NULL,
@@ -241,8 +293,27 @@ CREATE TABLE private.`co_orders_x_products` (
             
 
 
+drop table if exists `personas`;
+            
+
+
+create table `personas`
+(
+    `cedula`            char(15)        not null,
+    `tipo_documento_id` int(3) unsigned not null,
+    `nombres`           varchar(100)    not null default '',
+    `telefono`          varchar(20)              default null,
+    `cupo`              decimal(16, 2)  not null,
+    `estado`            enum ('A','I','X') not null,
+    primary key (`cedula`)
+);
+            
+
+
 drop table if exists `photo`;
             
+
+
 CREATE TABLE `photo` (
 	`id`                int(10) unsigned not null auto_increment,
 	`date_uploaded`     datetime not null default current_timestamp(),
@@ -268,6 +339,8 @@ CREATE TABLE `photo` (
 
 drop table if exists `co_products`;
             
+
+
 CREATE TABLE `co_products` (
     `prd_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `prd_name` VARCHAR(70) NULL,
@@ -275,11 +348,29 @@ CREATE TABLE `co_products` (
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             
 
-DROP TABLE IF EXISTS co_rb_test_model;CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);
+DROP TABLE IF EXISTS co_rb_test_model;
+
+CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);
+
+
+drop table if exists `ph_select`;
+            
+
+
+create table `ph_select`
+(
+    `sel_id`   int(11) unsigned not null auto_increment,
+    `sel_name` varchar(16)      not null,
+    `sel_text` varchar(32)               default null,
+    primary key (`sel_id`)
+);
+            
 
 
 drop table if exists `co_setters`;
             
+
+
 create table co_setters
 (
     `id`       int(10) auto_increment primary key,
@@ -292,6 +383,8 @@ create table co_setters
 
 drop table if exists `songs`;
             
+
+
 create table `songs`
 (
     `id`        int(10) auto_increment primary key,
@@ -299,12 +392,16 @@ create table `songs`
     `name`      varchar(100) not null
 );
             
+
+
 create index songs_albums_id_index on `songs` (`albums_id`);
             
 
 
 drop table if exists `co_sources`;
             
+
+
 create table co_sources
 (
     `id`       int(10) auto_increment primary key,
@@ -312,6 +409,8 @@ create table co_sources
     `source`   varchar(100) null
 );
             
+
+
 create index co_sources_username_index
     on co_sources (username);
             
@@ -319,6 +418,8 @@ create index co_sources_username_index
 
 drop table if exists `table_with_uuid_primary`;
             
+
+
 create table table_with_uuid_primary
 (
     `uuid`          char(36) not null primary key,
@@ -329,6 +430,8 @@ create table table_with_uuid_primary
 
 drop table if exists `stuff`;
             
+
+
 create table stuff
 (
     `stf_id`   int(10) auto_increment primary key,
@@ -336,3 +439,5 @@ create table stuff
     `stf_type` tinyint(3) unsigned not null
 );
             
+
+SET FOREIGN_KEY_CHECKS=1;

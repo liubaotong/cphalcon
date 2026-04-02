@@ -115,13 +115,55 @@ trait DiTrait
                 $options = [];
         }
 
-        $options['options'][PDO::ATTR_TIMEOUT] = 0;
-
-        if ($driver !== 'sqlite') {
-            $options['options'][PDO::ATTR_PERSISTENT] = 1;
-        }
+        $options['options'][PDO::ATTR_TIMEOUT] = 5;
 
         return (new PdoFactory())->newInstance($driver, $options);
+    }
+
+    /**
+     * Closes the DB connection so MySQL does not accumulate idle connections
+     * that hold metadata locks between test classes.
+     * Call this from tearDown() in any test that uses DiTrait.
+     */
+    protected function tearDownDatabase(): void
+    {
+        if (isset($this->container) && $this->container instanceof DiInterface) {
+            // Roll back any pending transactions BEFORE closing the connection.
+            // The Transaction Manager registers a PHP shutdown function that
+            // calls rollbackPendent(); if the connection is already closed by
+            // then, it crashes. Rolling back now (while the connection is still
+            // open) empties the manager's transaction list so the shutdown
+            // handler becomes a no-op.
+            if ($this->container->has('transactionManager')) {
+                try {
+                    /** @var \Phalcon\Mvc\Model\Transaction\Manager $manager */
+                    $manager = $this->container->get('transactionManager');
+                    if ($manager->has()) {
+                        $manager->rollback();
+                    }
+                } catch (\Throwable $e) {
+                    // ignore rollback errors during teardown
+                }
+            }
+
+            if ($this->container->has('db')) {
+                try {
+                    $this->container->get('db')->close();
+                } catch (\Throwable $e) {
+                    // ignore close errors during teardown
+                }
+            }
+        }
+    }
+
+    /**
+     * Default tearDown — closes the DB connection so MySQL does not accumulate
+     * idle connections that hold metadata locks between test classes.
+     * Tests that define their own tearDown() must call $this->tearDownDatabase().
+     */
+    public function tearDown(): void
+    {
+        $this->tearDownDatabase();
     }
 
     /**

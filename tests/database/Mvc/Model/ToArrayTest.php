@@ -216,9 +216,8 @@ final class ToArrayTest extends AbstractDatabaseTestCase
         $migration->insert(4, 1, 0, $title, 111.26, $date);
         $migration->insert(5, 2, 1, $title, 222.19, $date);
 
-        $options               = getOptionsMysql();
-        $options['persistent'] = true;
-        $options['options']    = [
+        $options            = getOptionsMysql();
+        $options['options'] = [
             PDO::ATTR_EMULATE_PREPARES  => false,
             PDO::ATTR_STRINGIFY_FETCHES => false,
         ];
@@ -261,6 +260,8 @@ final class ToArrayTest extends AbstractDatabaseTestCase
         ];
         $actual   = $invoices->toArray();
         $this->assertSame($expected, $actual);
+
+        $db->close();
 
         Invoices::setup(
             [

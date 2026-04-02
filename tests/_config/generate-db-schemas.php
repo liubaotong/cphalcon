@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use Phalcon\Tests\Support\Migrations\AbstractMigration;
 use Phalcon\Tests\Support\Migrations\BootstrapMigration;
+use Phalcon\Tests\Support\Migrations\FooterMigration;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -50,6 +51,11 @@ foreach ($drivers as $driver) {
         logStatements($statements, $schema);
     }
 
+    // Always run the footer migration last
+    $footer     = new FooterMigration();
+    $statements = $footer->getSql($driver);
+    logStatements($statements, $schema);
+
     echo PHP_EOL;
 }
 
@@ -76,7 +82,7 @@ function getMigrations(string $root): array
     $migrations = [];
     foreach (glob($path . '*.php') as $file) {
         $file = str_replace([$path, '.php'], '', $file);
-        if ($file !== 'AbstractMigration' && $file !== 'BootstrapMigration') {
+        if ($file !== 'AbstractMigration' && $file !== 'BootstrapMigration' && $file !== 'FooterMigration') {
             $migrations[] = $file;
         }
     }
@@ -88,13 +94,8 @@ function getMigrations(string $root): array
 
 function logStatements(array $statements, string $schema)
 {
-
-    error_log(PHP_EOL, 3, $schema);
-
     foreach ($statements as $statement) {
-        error_log($statement, 3, $schema);
+        error_log(PHP_EOL . $statement . PHP_EOL, 3, $schema);
         echo ".";
     }
-
-    error_log(PHP_EOL, 3, $schema);
 }

@@ -59,5 +59,7 @@ final class ConnectTest extends AbstractDatabaseTestCase
         $actual   = $connection->getDescriptor();
 
         $this->assertEquals($expected, $actual);
+
+        $connection->close();
     }
 }

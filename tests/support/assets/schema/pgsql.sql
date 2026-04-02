@@ -2,12 +2,10 @@
 CREATE SCHEMA IF NOT EXISTS private;
 
 
-
-
-
-
 drop table if exists albums;
             
+
+
 create table albums
 (
     id         serial       constraint albums_pk primary key,
@@ -15,12 +13,16 @@ create table albums
     name       varchar(100) not null
 );
             
+
+
 create index albums_artists_id_index on albums (artists_id);
             
 
 
 drop table if exists artists;
             
+
+
 create table artists
 (
     id   serial constraint artists_pk primary key,
@@ -31,6 +33,8 @@ create table artists
 
 drop table if exists complex_default;
             
+
+
 create table complex_default
 (
     id           SERIAL PRIMARY KEY,
@@ -39,6 +43,8 @@ create table complex_default
     updated_null TIMESTAMP NULL DEFAULT NULL
 );
             
+
+
 CREATE OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -48,6 +54,8 @@ BEGIN
 END;
 $$ language 'plpgsql';
             
+
+
 CREATE TRIGGER update_timestamp BEFORE UPDATE
 ON complex_default FOR EACH ROW EXECUTE PROCEDURE 
 update_timestamp();
@@ -56,6 +64,8 @@ update_timestamp();
 
 drop table if exists co_customers_defaults;
             
+
+
 create table co_customers_defaults
 (
     cst_id          serial not null constraint co_customers_defaults_pk primary key,
@@ -64,12 +74,18 @@ create table co_customers_defaults
     cst_name_first  varchar(50)  not null DEFAULT 'cst_default_firstName'
 );
             
+
+
 create index co_customers_defaults_cst_status_flag_index
     on co_customers_defaults (cst_status_flag);
             
+
+
 create index co_customers_defaults_cst_name_last_index
     on co_customers_defaults (cst_name_last);
             
+
+
 create index co_customers_defaults_cst_name_first_index
     on co_customers_defaults (cst_name_first);
             
@@ -77,6 +93,8 @@ create index co_customers_defaults_cst_name_first_index
 
 drop table if exists co_customers;
             
+
+
 create table co_customers
 (
     cst_id          serial not null constraint co_customers_pk primary key,
@@ -85,23 +103,27 @@ create table co_customers
     cst_name_first  varchar(50)  null
 );
             
+
+
 create index co_customers_cst_status_flag_index
     on co_customers (cst_status_flag);
             
+
+
 create index co_customers_cst_name_last_index
     on co_customers (cst_name_last);
             
+
+
 create index co_customers_cst_name_first_index
     on co_customers (cst_name_first);
             
 
 
-
-
-
-
 drop table if exists co_invoices;
             
+
+
 create table co_invoices
 (
     inv_id          serial constraint co_invoices_pk primary key,
@@ -112,18 +134,26 @@ create table co_invoices
     inv_created_at  timestamp
 );
             
+
+
 create index co_invoices_inv_created_at_index
     on co_invoices (inv_created_at);
             
+
+
 create index co_invoices_inv_cst_id_index
     on co_invoices (inv_cst_id);
             
+
+
 create index co_invoices_inv_status_flag_index
     on co_invoices (inv_status_flag);
             
 
 
 drop table if exists co_manufacturers;
+
+
 create table co_manufacturers
 (
     id serial not null
@@ -138,6 +168,8 @@ create table co_manufacturers
 
 drop table if exists objects;
             
+
+
 create table objects
 (
     obj_id serial not null constraint objects_pk primary key,
@@ -149,6 +181,8 @@ create table objects
 
 drop table if exists co_orders;
             
+
+
 create table co_orders
 (
     ord_id serial not null
@@ -161,6 +195,8 @@ create table co_orders
 
 drop table if exists private.co_orders_x_products;
             
+
+
 create table private.co_orders_x_products
 (
     oxp_ord_id int not null,
@@ -170,10 +206,27 @@ create table private.co_orders_x_products
             
 
 
+drop table if exists personas;
+            
+
+
+create table personas
+(
+    cedula            char(15)       not null,
+    tipo_documento_id smallint       not null,
+    nombres           varchar(100)   not null default '',
+    telefono          varchar(20)             default null,
+    cupo              numeric(16, 2) not null,
+    estado            char(1)        not null default 'A',
+    primary key (cedula)
+);
+            
 
 
 drop table if exists co_products;
             
+
+
 create table co_products
 (
     prd_id serial not null
@@ -183,11 +236,28 @@ create table co_products
 );
             
 
-DROP TABLE IF EXISTS co_rb_test_model;CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);
+DROP TABLE IF EXISTS co_rb_test_model;
+
+CREATE TABLE co_rb_test_model (id SMALLINT, name VARCHAR(10) NOT NULL);
+
+
+drop table if exists ph_select;
+            
+
+
+create table ph_select
+(
+    sel_id   serial      not null constraint ph_select_pk primary key,
+    sel_name varchar(16) not null,
+    sel_text varchar(32)          default null
+);
+            
 
 
 drop table if exists co_setters;
             
+
+
 create table co_setters
 (
     id      SERIAL PRIMARY KEY,
@@ -200,6 +270,8 @@ create table co_setters
 
 drop table if exists songs;
             
+
+
 create table songs
 (
     id        serial       constraint songs_pk primary key,
@@ -207,19 +279,19 @@ create table songs
     name      varchar(100) not null
 );
             
+
+
 create index songs_albums_id_index on songs (albums_id);
             
 
 
-
-
 drop table if exists table_with_uuid_primary;
             
+
+
 create table table_with_uuid_primary
 (
     uuid char(36) not null primary key,
     int_field int null
 );
             
-
-
