@@ -19,8 +19,8 @@ use Phalcon\Support\Collection;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Customers;
-use Phalcon\Tests\Models\CustomersDymanicUpdate;
+use Phalcon\Tests\Support\Models\Customers;
+use Phalcon\Tests\Support\Models\CustomersDymanicUpdate;
 
 final class DynamicUpdateTest extends AbstractDatabaseTestCase
 {

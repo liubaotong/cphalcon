@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Database\Mvc\Model\MetaData;
 use Phalcon\Mvc\Model\MetaData;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\InvoicesMap;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesMap;
 
 final class GetColumnMapTest extends AbstractDatabaseTestCase
 {

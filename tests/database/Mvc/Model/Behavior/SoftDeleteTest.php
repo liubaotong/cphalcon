@@ -18,8 +18,8 @@ use Phalcon\Events\Manager as EventManager;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\InvoicesBehavior;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesBehavior;
 
 use function uniqid;
 

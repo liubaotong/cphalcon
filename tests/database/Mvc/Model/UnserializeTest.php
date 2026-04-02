@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Mvc\Model;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
+use Phalcon\Tests\Support\Models\Invoices;
 
 use function date;
 use function uniqid;

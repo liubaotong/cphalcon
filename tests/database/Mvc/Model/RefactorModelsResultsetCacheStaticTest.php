@@ -35,8 +35,8 @@ final class RefactorModelsResultsetCacheStaticTest extends AbstractDatabaseTestC
 //
 // use IntegrationTester;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\Cacheable\Parts;
-// use Phalcon\Tests\Models\Cacheable\Robots;
+// use Phalcon\Tests\Support\Models\Cacheable\Parts;
+// use Phalcon\Tests\Support\Models\Cacheable\Robots;
 //
 // use function cacheDir;
 //

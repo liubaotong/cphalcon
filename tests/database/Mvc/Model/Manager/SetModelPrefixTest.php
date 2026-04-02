@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 use Phalcon\Mvc\Model\Manager;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Robots;
+use Phalcon\Tests\Support\Models\Robots;
 
 final class SetModelPrefixTest extends AbstractDatabaseTestCase
 {

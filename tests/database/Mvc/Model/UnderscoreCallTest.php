@@ -19,7 +19,7 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models;
+use Phalcon\Tests\Support\Models;
 
 final class UnderscoreCallTest extends AbstractDatabaseTestCase
 {

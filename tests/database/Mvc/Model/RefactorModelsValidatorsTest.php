@@ -53,7 +53,7 @@ final class RefactorModelsValidatorsTest extends AbstractDatabaseTestCase
 //
 // use IntegrationTester;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\Abonnes;
+// use Phalcon\Tests\Support\Models\Abonnes;
 // use Phalcon\Validation\Validator\Email;
 // use Phalcon\Validation\Validator\ExclusionIn;
 // use Phalcon\Validation\Validator\InclusionIn;

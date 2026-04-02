@@ -18,8 +18,8 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\PersonasMigration;
 use Phalcon\Tests\Support\Migrations\SelectMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Personas;
-use Phalcon\Tests\Models\Select;
+use Phalcon\Tests\Support\Models\Personas;
+use Phalcon\Tests\Support\Models\Select;
 
 final class ManagerTest extends AbstractDatabaseTestCase
 {

@@ -22,11 +22,11 @@ use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Migrations\StringPrimaryMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Customers;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\InvoicesExtended;
-use Phalcon\Tests\Models\InvoicesMap;
-use Phalcon\Tests\Models\ModelWithStringPrimary;
+use Phalcon\Tests\Support\Models\Customers;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesExtended;
+use Phalcon\Tests\Support\Models\InvoicesMap;
+use Phalcon\Tests\Support\Models\ModelWithStringPrimary;
 
 use function uniqid;
 

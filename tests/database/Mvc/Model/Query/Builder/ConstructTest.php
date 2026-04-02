@@ -17,7 +17,7 @@ use Phalcon\Mvc\Model\Query\Builder;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
+use Phalcon\Tests\Support\Models\Invoices;
 
 final class ConstructTest extends AbstractDatabaseTestCase
 {

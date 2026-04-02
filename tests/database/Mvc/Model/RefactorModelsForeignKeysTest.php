@@ -46,12 +46,12 @@ final class RefactorModelsForeignKeysTest extends AbstractDatabaseTestCase
 // use IntegrationTester;
 // use Phalcon\Messages\Message;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\Deles;
-// use Phalcon\Tests\Models\Parts;
-// use Phalcon\Tests\Models\Robots;
-// use Phalcon\Tests\Models\RobotsParts;
-// use Phalcon\Tests\Models\Robotters;
-// use Phalcon\Tests\Models\RobottersDeles;
+// use Phalcon\Tests\Support\Models\Deles;
+// use Phalcon\Tests\Support\Models\Parts;
+// use Phalcon\Tests\Support\Models\Robots;
+// use Phalcon\Tests\Support\Models\RobotsParts;
+// use Phalcon\Tests\Support\Models\Robotters;
+// use Phalcon\Tests\Support\Models\RobottersDeles;
 //
 // class ModelsForeignKeysCest
 // {

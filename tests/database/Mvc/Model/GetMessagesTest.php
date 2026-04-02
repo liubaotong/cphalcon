@@ -17,7 +17,7 @@ use PDO;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\ObjectsMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Objects;
+use Phalcon\Tests\Support\Models\Objects;
 
 final class GetMessagesTest extends AbstractDatabaseTestCase
 {

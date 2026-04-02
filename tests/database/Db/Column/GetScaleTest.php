@@ -17,7 +17,7 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\FractalDatesMigration;
 use Phalcon\Tests\Fixtures\Traits\DbTrait;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\FractalDates;
+use Phalcon\Tests\Support\Models\FractalDates;
 
 final class GetScaleTest extends AbstractDatabaseTestCase
 {

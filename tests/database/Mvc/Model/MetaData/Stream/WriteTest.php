@@ -17,7 +17,7 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Mvc\Model\Exception;
 use Phalcon\Mvc\Model\MetaData\Stream;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Robots;
+use Phalcon\Tests\Support\Models\Robots;
 
 use function file_exists;
 use function file_put_contents;

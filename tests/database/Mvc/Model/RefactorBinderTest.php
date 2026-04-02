@@ -214,8 +214,8 @@ final class RefactorBinderTest extends AbstractDatabaseTestCase
 // use Phalcon\Mvc\Model\Binder;
 // use Phalcon\Mvc\Model\Manager;
 // use Phalcon\Mvc\Model\MetaData\Memory;
-// use Phalcon\Tests\Models\People;
-// use Phalcon\Tests\Models\Robots;
+// use Phalcon\Tests\Support\Models\People;
+// use Phalcon\Tests\Support\Models\Robots;
 // use Test10Controller;
 // use Test11Controller;
 // use Test9Controller;

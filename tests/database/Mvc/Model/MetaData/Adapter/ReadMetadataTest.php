@@ -19,9 +19,9 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\AlbumMigration;
 use Phalcon\Tests\Support\Migrations\AlbumPhotoMigration;
 use Phalcon\Tests\Support\Migrations\PhotoMigration;
-use Phalcon\Tests\Models\Album;
-use Phalcon\Tests\Models\AlbumPhoto;
-use Phalcon\Tests\Models\Photo;
+use Phalcon\Tests\Support\Models\Album;
+use Phalcon\Tests\Support\Models\AlbumPhoto;
+use Phalcon\Tests\Support\Models\Photo;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 
 use function array_keys;

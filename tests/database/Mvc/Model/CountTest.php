@@ -19,8 +19,8 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\InvoicesMap;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesMap;
 
 final class CountTest extends AbstractDatabaseTestCase
 {

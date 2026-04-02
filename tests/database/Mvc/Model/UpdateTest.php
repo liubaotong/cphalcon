@@ -20,9 +20,9 @@ use Phalcon\Tests\Support\Migrations\CustomersDefaultsMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Migrations\SettersMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\CustomersDefaults;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\Setters;
+use Phalcon\Tests\Support\Models\CustomersDefaults;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\Setters;
 
 use function uniqid;
 

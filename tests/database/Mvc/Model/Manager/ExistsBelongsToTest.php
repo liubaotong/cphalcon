@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Relations\RelationsParts;
-use Phalcon\Tests\Models\Relations\RelationsRobots;
-use Phalcon\Tests\Models\Relations\RelationsRobotsParts;
+use Phalcon\Tests\Support\Models\Relations\RelationsParts;
+use Phalcon\Tests\Support\Models\Relations\RelationsRobots;
+use Phalcon\Tests\Support\Models\Relations\RelationsRobotsParts;
 
 final class ExistsBelongsToTest extends AbstractDatabaseTestCase
 {

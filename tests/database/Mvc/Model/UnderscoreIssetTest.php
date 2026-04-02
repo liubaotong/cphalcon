@@ -15,7 +15,7 @@ use PDO;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models;
+use Phalcon\Tests\Support\Models;
 
 final class UnderscoreIssetTest extends AbstractDatabaseTestCase
 {

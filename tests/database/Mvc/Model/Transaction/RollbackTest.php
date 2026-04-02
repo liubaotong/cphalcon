@@ -17,7 +17,7 @@ use Phalcon\Mvc\Model\Transaction\Failed;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\PersonasMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Personas;
+use Phalcon\Tests\Support\Models\Personas;
 
 final class RollbackTest extends AbstractDatabaseTestCase
 {

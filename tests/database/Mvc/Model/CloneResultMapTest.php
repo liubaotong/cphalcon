@@ -18,7 +18,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\InvoicesMap;
+use Phalcon\Tests\Support\Models\InvoicesMap;
 
 final class CloneResultMapTest extends AbstractDatabaseTestCase
 {

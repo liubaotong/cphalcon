@@ -22,14 +22,14 @@ use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Migrations\SourcesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Customers;
-use Phalcon\Tests\Models\CustomersDefaults;
-use Phalcon\Tests\Models\CustomersKeepSnapshots;
-use Phalcon\Tests\Models\Invoices;
-use Phalcon\Tests\Models\InvoicesKeepSnapshots;
-use Phalcon\Tests\Models\InvoicesSchema;
-use Phalcon\Tests\Models\InvoicesValidationFails;
-use Phalcon\Tests\Models\Sources;
+use Phalcon\Tests\Support\Models\Customers;
+use Phalcon\Tests\Support\Models\CustomersDefaults;
+use Phalcon\Tests\Support\Models\CustomersKeepSnapshots;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesKeepSnapshots;
+use Phalcon\Tests\Support\Models\InvoicesSchema;
+use Phalcon\Tests\Support\Models\InvoicesValidationFails;
+use Phalcon\Tests\Support\Models\Sources;
 
 use function uniqid;
 

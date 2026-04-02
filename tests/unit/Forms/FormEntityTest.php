@@ -18,7 +18,7 @@ use Phalcon\Filter\Validation\Validator\StringLength\Max;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Form;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Products;
+use Phalcon\Tests\Support\Models\Products;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class FormEntityTest extends AbstractUnitTestCase

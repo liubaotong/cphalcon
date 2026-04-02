@@ -20,8 +20,8 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models;
-use Phalcon\Tests\Models\Invoices;
+use Phalcon\Tests\Support\Models;
+use Phalcon\Tests\Support\Models\Invoices;
 
 final class UnderscoreGetTest extends AbstractDatabaseTestCase
 {

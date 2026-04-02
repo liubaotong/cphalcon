@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Mvc\Model;
 use Phalcon\Mvc\Model\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
+use Phalcon\Tests\Support\Models\Invoices;
 
 final class GetUpdatedFieldsTest extends AbstractDatabaseTestCase
 {
