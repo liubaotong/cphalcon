@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
-use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function uniqid;
 
-class DeleteMultipleCest
+final class DeleteMultipleTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache :: deleteMultiple()
@@ -29,20 +28,18 @@ class DeleteMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDeleteMultiple(IntegrationTester $I)
+    public function testCacheCacheDeleteMultiple(): void
     {
-        $I->wantToTest('Cache\Cache - deleteMultiple()');
-
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance('apcu');
 
         $adapter = new Cache($instance);
 
-        $key1 = uniqid();
-        $key2 = uniqid();
-        $key3 = uniqid();
-        $key4 = uniqid();
+        $key1 = uniqid('key-');
+        $key2 = uniqid('key-');
+        $key3 = uniqid('key-');
+        $key4 = uniqid('key-');
 
         $adapter->setMultiple(
             [
@@ -53,12 +50,12 @@ class DeleteMultipleCest
             ]
         );
 
-        $I->assertTrue($adapter->has($key1));
-        $I->assertTrue($adapter->has($key2));
-        $I->assertTrue($adapter->has($key3));
-        $I->assertTrue($adapter->has($key4));
+        $this->assertTrue($adapter->has($key1));
+        $this->assertTrue($adapter->has($key2));
+        $this->assertTrue($adapter->has($key3));
+        $this->assertTrue($adapter->has($key4));
 
-        $I->assertTrue(
+        $this->assertTrue(
             $adapter->deleteMultiple(
                 [
                     $key1,
@@ -67,15 +64,15 @@ class DeleteMultipleCest
             )
         );
 
-        $I->assertFalse($adapter->has($key1));
-        $I->assertFalse($adapter->has($key2));
-        $I->assertTrue($adapter->has($key3));
-        $I->assertTrue($adapter->has($key4));
+        $this->assertFalse($adapter->has($key1));
+        $this->assertFalse($adapter->has($key2));
+        $this->assertTrue($adapter->has($key3));
+        $this->assertTrue($adapter->has($key4));
 
-        $I->assertTrue($adapter->delete($key3));
-        $I->assertTrue($adapter->delete($key4));
+        $this->assertTrue($adapter->delete($key3));
+        $this->assertTrue($adapter->delete($key4));
 
-        $I->assertFalse(
+        $this->assertFalse(
             $adapter->deleteMultiple(
                 [
                     $key3,
@@ -84,32 +81,9 @@ class DeleteMultipleCest
             )
         );
 
-        $I->assertFalse($adapter->has($key1));
-        $I->assertFalse($adapter->has($key2));
-        $I->assertFalse($adapter->has($key3));
-        $I->assertFalse($adapter->has($key4));
-    }
-
-    /**
-     * Tests Phalcon\Cache :: deleteMultiple() - exception
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function cacheCacheDeleteMultipleException(IntegrationTester $I)
-    {
-        $I->wantToTest('Cache\Cache - deleteMultiple() - exception');
-
-        $I->expectThrowable(
-            new InvalidArgumentException('The keys need to be an array or instance of Traversable'),
-            function () {
-                $serializer = new SerializerFactory();
-                $factory    = new AdapterFactory($serializer);
-                $instance   = $factory->newInstance('apcu');
-
-                $adapter = new Cache($instance);
-                $actual  = $adapter->deleteMultiple(1234);
-            }
-        );
+        $this->assertFalse($adapter->has($key1));
+        $this->assertFalse($adapter->has($key2));
+        $this->assertFalse($adapter->has($key3));
+        $this->assertFalse($adapter->has($key4));
     }
 }

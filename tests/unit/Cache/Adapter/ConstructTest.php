@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
 use DateInterval;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
@@ -23,55 +21,97 @@ use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
-use Phalcon\Storage\Exception as CacheException;
+use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
-use Phalcon\Tests\Fixtures\Cache\Adapter\Libmemcached as LibmemcachedFixture;
+use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Cache\Fake\Adapter\Libmemcached as LibmemcachedFixture;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
-use function sprintf;
 
-class ConstructCest
+final class ConstructTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cache\Adapter\Stream :: __construct() - exception
-     *
-     * @param IntegrationTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return array[]
      */
-    public function cacheAdapterStreamConstructException(IntegrationTester $I)
+    public static function getExamples(): array
     {
-        $I->wantToTest('Cache\Adapter\Stream - __construct() - exception');
+        return [
+            [
+                Apcu::class,
+                [],
+                'apcu',
+            ],
+            [
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [],
+                '',
+            ],
+            [
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                '',
+            ],
+            [
+                Weak::class,
+                [],
+                '',
+            ],
+        ];
+    }
 
-        $I->expectThrowable(
-            new CacheException("The 'storageDir' must be specified in the options"),
-            function () {
-                $serializer = new SerializerFactory();
-                (new Stream($serializer));
-            }
-        );
+    /**
+     * Tests Phalcon\Cache\Adapter\* :: __construct()
+     *
+     * @dataProvider getExamples
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2020-09-09
+     */
+    public function testCacheAdapterConstruct(
+        string $class,
+        array $options,
+        string $extension
+    ): void {
+        if (!empty($extension)) {
+            $this->checkExtensionIsLoaded($extension);
+        }
+
+        $serializer = new SerializerFactory();
+        $adapter    = new $class($serializer, $options);
+
+        $this->assertInstanceOf($class, $adapter);
+        $this->assertInstanceOf(AdapterInterface::class, $adapter);
     }
 
     /**
      * Tests Phalcon\Cache\Adapter\Libmemcached :: __construct() - empty
      * options
      *
-     * @param IntegrationTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return void
      *
      * @throws SupportException
+     * @since  2020-09-09
+     *
+     * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterLibmemcachedConstructEmptyOptions(IntegrationTester $I)
+    public function testCacheAdapterLibmemcachedConstructEmptyOptions(): void
     {
-        $I->wantToTest('Cache\Adapter\Libmemcached - __construct() - empty options');
-
-        $I->checkExtensionIsLoaded('memcached');
+        $this->checkExtensionIsLoaded('memcached');
         $serializer = new SerializerFactory();
         $adapter    = new LibmemcachedFixture($serializer);
 
@@ -85,25 +125,23 @@ class ConstructCest
             ],
         ];
         $actual   = $adapter->getOptions();
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Cache\Adapter\Libmemcached :: __construct() - getTtl
      * options
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @throws SupportException
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheAdapterLibmemcachedConstructGetTtl(IntegrationTester $I)
+    public function testCacheAdapterLibmemcachedConstructGetTtl(): void
     {
-        $I->wantToTest('Cache\Adapter\Libmemcached - __construct() - getTtl');
-
-        $I->checkExtensionIsLoaded('memcached');
+        $this->checkExtensionIsLoaded('memcached');
         $serializer = new SerializerFactory();
         $adapter    = new LibmemcachedFixture(
             $serializer,
@@ -112,98 +150,34 @@ class ConstructCest
 
         $expected = 3600;
         $actual   = $adapter->getTtl(null);
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $expected = 20;
         $actual   = $adapter->getTtl(20);
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $time     = new DateInterval('PT5S');
         $expected = 5;
         $actual   = $adapter->getTtl($time);
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
-     * Tests Phalcon\Cache\Adapter\* :: __construct()
+     * Tests Phalcon\Cache\Adapter\Stream :: __construct() - exception
      *
-     * @dataProvider getExamples
+     * @return void
      *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    public function cacheAdapterConstruct(IntegrationTester $I, Example $example)
+    public function testCacheAdapterStreamConstructException(): void
     {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - __construct()',
-                $example['className']
-            )
+        $this->expectException(StorageException::class);
+        $this->expectExceptionMessage(
+            "The 'storageDir' must be specified in the options"
         );
 
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
-        if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
-        }
-
         $serializer = new SerializerFactory();
-        $adapter    = new $class($serializer, $options);
-
-        $I->assertInstanceOf($class, $adapter);
-        $I->assertInstanceOf(AdapterInterface::class, $adapter);
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [],
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => getOptionsRedis(),
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'extension' => '',
-            ],
-            [
-                'className' => 'Weak',
-                'label'     => 'default',
-                'class'     => Weak::class,
-                'options'   => [],
-                'extension' => '',
-            ],
-        ];
+        (new Stream($serializer));
     }
 }

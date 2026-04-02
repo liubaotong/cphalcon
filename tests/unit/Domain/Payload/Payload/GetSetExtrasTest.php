@@ -24,7 +24,7 @@ final class GetSetExtrasTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadGetSetExtras(): void
+    public function testHttpPayloadPayloadGetSetExtras(): void
     {
         $payload = new Payload();
         $payload->setExtras('extras');

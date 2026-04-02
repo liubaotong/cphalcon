@@ -24,7 +24,7 @@ final class GetSetInputTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadGetSetInput(): void
+    public function testHttpPayloadPayloadGetSetInput(): void
     {
         $payload = new Payload();
         $payload->setInput('input');

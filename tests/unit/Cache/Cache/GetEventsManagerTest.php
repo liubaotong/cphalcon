@@ -11,97 +11,18 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Events\Manager;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
-class GetEventsManagerCest
+final class GetEventsManagerTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cache :: getEventsManager()
-     *
-     * @author n[oO]ne <lominum@protonmail.com>
-     * @since  2024-06-07
+     * @return array[]
      */
-    public function cacheCacheGetEventsManagerNotSet(IntegrationTester $I): void
-    {
-        $I->wantToTest('Cache\Cache - getEventsManager() - not set');
-
-        $serializer = new SerializerFactory();
-        $factory = new AdapterFactory($serializer);
-        $instance = $factory->newInstance('memory');
-
-        $adapter = new Cache($instance);
-
-        $I->assertNull($adapter->getEventsManager());
-    }
-
-    /**
-     * Tests Phalcon\Cache :: getEventsManager()
-     *
-     * @author n[oO]ne <lominum@protonmail.com>
-     * @since  2024-06-07
-     */
-    public function cacheCacheGetEventsManagerSet(IntegrationTester $I): void
-    {
-        $I->wantToTest('Cache\Cache - getEventsManager() - set');
-
-        $serializer = new SerializerFactory();
-        $factory = new AdapterFactory($serializer);
-        $instance = $factory->newInstance('memory');
-
-        $adapter = new Cache($instance);
-
-        $adapter->setEventsManager(new Manager());
-
-        $I->assertInstanceOf(Manager::class, $adapter->getEventsManager());
-    }
-
-    /**
-     * Tests Phalcon\Cache :: trigger cache events
-     *
-     * @dataProvider getEvents
-     * @author n[oO]ne <lominum@protonmail.com>
-     * @since  2024-06-07
-     */
-    public function cacheCacheEventTriggers(IntegrationTester $I, Example $example): void
-    {
-        $I->wantToTest('Cache\Cache - triggered ' . $example->offsetGet(0));
-
-        $serializer = new SerializerFactory();
-        $factory = new AdapterFactory($serializer);
-        $instance = $factory->newInstance('memory');
-
-        $counter = 0;
-        $adapter = new Cache($instance);
-        $manager = new Manager();
-
-        $manager->attach(
-            'cache:' . $example->offsetGet(0),
-            static function () use (&$counter) {
-                $counter++;
-            }
-        );
-
-        $adapter->setEventsManager($manager);
-
-        // Avoid unset warning.
-        if ($example->offsetGet(1) !== 'set' && $example->offsetGet(1) !== 'setMultiple') {
-            $adapter->set('test', 'test');
-            $adapter->set('test2', 'test2');
-        }
-
-        $I->assertInstanceOf($manager::class, $adapter->getEventsManager());
-
-        call_user_func_array([$adapter, $example->offsetGet(1)], $example->offsetGet(2));
-        call_user_func_array([$adapter, $example->offsetGet(1)], $example->offsetGet(2));
-        $I->assertEquals(2, $counter);
-    }
-
-    public function getEvents(): array
+    public static function getEvents(): array
     {
         // Event, Method, Data
         return [
@@ -118,7 +39,88 @@ class GetEventsManagerCest
             ['beforeSet', 'set', ['test', 'test']],
             ['afterSet', 'set', ['test', 'test']],
             ['beforeSetMultiple', 'setMultiple', [['test' => 'test', 'test2' => 'test2']]],
-            ['afterSetMultiple', 'setMultiple', [['test', 'test', 'test2' => 'test2']]],
+            ['afterSetMultiple', 'setMultiple', [['test' => 'test', 'test2' => 'test2']]],
         ];
+    }
+
+    /**
+     * Tests Phalcon\Cache :: trigger cache events
+     *
+     * @dataProvider getEvents
+     * @author       n[oO]ne <lominum@protonmail.com>
+     * @since        2024-06-07
+     */
+    public function testCacheCacheEventTriggers(
+        string $event,
+        string $method,
+        array $data
+    ): void {
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('memory');
+
+        $counter = 0;
+        $adapter = new Cache($instance);
+        $manager = new Manager();
+
+        $manager->attach(
+            'cache:' . $event,
+            static function () use (&$counter) {
+                $counter++;
+            }
+        );
+
+        $adapter->setEventsManager($manager);
+
+        $this->assertInstanceOf($manager::class, $adapter->getEventsManager());
+
+        // Seed keys so Memory adapter does not throw on get/getMultiple
+        if ($method === 'get') {
+            $adapter->set('test', 'value');
+        } elseif ($method === 'getMultiple') {
+            $adapter->setMultiple(['test' => 'value', 'test2' => 'value']);
+        }
+
+        call_user_func_array([$adapter, $method], $data);
+        call_user_func_array([$adapter, $method], $data);
+
+        $expected = 2;
+        $this->assertEquals($expected, $counter);
+    }
+
+    /**
+     * Tests Phalcon\Cache :: getEventsManager()
+     *
+     * @author n[oO]ne <lominum@protonmail.com>
+     * @since  2024-06-07
+     */
+    public function testCacheCacheGetEventsManagerNotSet(): void
+    {
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('memory');
+
+        $adapter = new Cache($instance);
+
+        $this->assertNull($adapter->getEventsManager());
+    }
+
+    /**
+     * Tests Phalcon\Cache :: getEventsManager()
+     *
+     * @author n[oO]ne <lominum@protonmail.com>
+     * @since  2024-06-07
+     */
+    public function testCacheCacheGetEventsManagerSet(): void
+    {
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('memory');
+
+        $adapter = new Cache($instance);
+
+        $adapter->setEventsManager(new Manager());
+
+        $this->assertInstanceOf(Manager::class, $adapter->getEventsManager());
     }
 }

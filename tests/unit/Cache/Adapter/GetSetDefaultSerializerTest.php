@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
@@ -22,13 +20,50 @@ use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
 
-class GetSetDefaultSerializerCest
+final class GetSetDefaultSerializerTest extends AbstractUnitTestCase
 {
+    /**
+     * @return array[]
+     */
+    public static function getExamples(): array
+    {
+        return [
+            [
+                Apcu::class,
+                [],
+                'apcu',
+            ],
+            [
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [],
+                '',
+            ],
+            [
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                '',
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* ::
      * getDefaultSerializer()/setDefaultSerializer()
@@ -38,21 +73,13 @@ class GetSetDefaultSerializerCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterGetSetDefaultSerializer(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - getDefaultSerializer()/setDefaultSerializer()',
-                $example['className']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testCacheAdapterGetSetDefaultSerializer(
+        string $class,
+        array $options,
+        string $extension
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
@@ -60,79 +87,33 @@ class GetSetDefaultSerializerCest
 
         $expected = 'php';
         $actual   = $adapter->getDefaultSerializer();
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
         $adapter->setDefaultSerializer('Base64');
         $expected = 'base64';
         $actual   = $adapter->getDefaultSerializer();
-        $I->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**
      * Tests Phalcon\Cache\Adapter\Weak :: GetSetDefaultSerializer()
      *
-     * @param IntegrationTester $I
+     * @return void
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2023-07-17
      */
-    public function cacheAdapterWeakGetSetDefaultSerializerNone(IntegrationTester $I)
+    public function testCacheAdapterWeakGetSetDefaultSerializerNone(): void
     {
-
-        $I->wantToTest('Cache\Adapter\Weak - GetSetDefaultSerializer()');
-
         $serializer = new SerializerFactory();
         $adapter    = new Weak($serializer);
 
-        $actual = $adapter->getDefaultSerializer();
-        $I->assertEquals('none', $actual);
+        $expected = 'none';
+        $actual   = $adapter->getDefaultSerializer();
+        $this->assertEquals($expected, $actual);
 
         $adapter->setDefaultSerializer('Base64');
         $actual = $adapter->getDefaultSerializer();
-        $I->assertEquals('none', $actual);
-    }
-
-    /**
-     * @return array[]
-     */
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [],
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => getOptionsRedis(),
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'extension' => '',
-            ],
-        ];
+        $this->assertEquals($expected, $actual);
     }
 }

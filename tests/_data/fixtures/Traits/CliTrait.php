@@ -31,7 +31,7 @@ trait CliTrait
     /**
      * @return array[]
      */
-    protected function getExamplesShortPaths(): array
+    public static function getExamplesShortPaths(): array
     {
         return [
             [
@@ -82,7 +82,7 @@ trait CliTrait
         ];
     }
 
-    private function getServices(): array
+    public static function getServices(): array
     {
         return [
             [

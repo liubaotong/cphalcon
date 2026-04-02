@@ -13,33 +13,33 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Fixtures\Traits;
 
-use DatabaseTester;
 use PDO;
 use Phalcon\Annotations\Adapter\Memory as AnnotationsMemory;
 use Phalcon\Cache\Adapter\Libmemcached as StorageLibmemcached;
 use Phalcon\Cache\Adapter\Stream as StorageStream;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cli\Console;
-use Phalcon\Db\Profiler;
-use Phalcon\Encryption\Crypt;
 use Phalcon\Db\Adapter\AdapterInterface;
 use Phalcon\Db\Adapter\PdoFactory;
+use Phalcon\Db\Profiler;
 use Phalcon\Di\Di;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\FactoryDefault\Cli as CliFactoryDefault;
-use Phalcon\Html\Escaper;
+use Phalcon\Encryption\Crypt;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Filter;
+use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Http\Request;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
-use Phalcon\Mvc\Model\Metadata\Apcu as MetadataApcu;
-use Phalcon\Mvc\Model\Metadata\Memory as MetadataMemory;
-use Phalcon\Mvc\Model\Metadata\Libmemcached as MetadataMemcached;
-use Phalcon\Mvc\Model\Metadata\Redis as MetadataRedis;
-use Phalcon\Mvc\Model\Metadata\Stream as MetadataStream;
+use Phalcon\Mvc\Model\MetaData\Apcu as MetaDataApcu;
+use Phalcon\Mvc\Model\MetaData\Libmemcached as MetaDataMemcached;
+use Phalcon\Mvc\Model\MetaData\Memory as MetaDataMemory;
+use Phalcon\Mvc\Model\MetaData\Redis as MetaDataRedis;
+use Phalcon\Mvc\Model\MetaData\Stream as MetaDataStream;
+use Phalcon\Mvc\Url;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Simple;
 use Phalcon\Session\Adapter\Libmemcached as SessionLibmemcached;
@@ -50,7 +50,6 @@ use Phalcon\Session\Manager;
 use Phalcon\Storage\AdapterFactory as StorageAdapterFactory;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Mvc\Url;
 
 use function getOptionsLibmemcached;
 use function getOptionsModelCacheStream;
@@ -106,7 +105,7 @@ trait DiTrait
                 break;
             case 'pgsql':
                 $options = getOptionsPostgresql();
-                $driver = 'postgresql';
+                $driver  = 'postgresql';
                 break;
             case 'sqlite':
                 $options = getOptionsSqlite();
@@ -116,24 +115,64 @@ trait DiTrait
                 $options = [];
         }
 
-        $options['options'][PDO::ATTR_TIMEOUT] = 0;
-
-        if ($driver !== 'sqlite') {
-            $options['options'][PDO::ATTR_PERSISTENT] = 1;
-        }
+        $options['options'][PDO::ATTR_TIMEOUT] = 5;
 
         return (new PdoFactory())->newInstance($driver, $options);
     }
 
     /**
-     * @param DatabaseTester $I
-     *
+     * Closes the DB connection so MySQL does not accumulate idle connections
+     * that hold metadata locks between test classes.
+     * Call this from tearDown() in any test that uses DiTrait.
+     */
+    protected function tearDownDatabase(): void
+    {
+        if (isset($this->container) && $this->container instanceof DiInterface) {
+            // Roll back any pending transactions BEFORE closing the connection.
+            // The Transaction Manager registers a PHP shutdown function that
+            // calls rollbackPendent(); if the connection is already closed by
+            // then, it crashes. Rolling back now (while the connection is still
+            // open) empties the manager's transaction list so the shutdown
+            // handler becomes a no-op.
+            if ($this->container->has('transactionManager')) {
+                try {
+                    /** @var \Phalcon\Mvc\Model\Transaction\Manager $manager */
+                    $manager = $this->container->get('transactionManager');
+                    if ($manager->has()) {
+                        $manager->rollback();
+                    }
+                } catch (\Throwable $e) {
+                    // ignore rollback errors during teardown
+                }
+            }
+
+            if ($this->container->has('db')) {
+                try {
+                    $this->container->get('db')->close();
+                } catch (\Throwable $e) {
+                    // ignore close errors during teardown
+                }
+            }
+        }
+    }
+
+    /**
+     * Default tearDown — closes the DB connection so MySQL does not accumulate
+     * idle connections that hold metadata locks between test classes.
+     * Tests that define their own tearDown() must call $this->tearDownDatabase().
+     */
+    public function tearDown(): void
+    {
+        $this->tearDownDatabase();
+    }
+
+    /**
      * @return AdapterInterface
      */
-    protected function newDbService(DatabaseTester $I): AdapterInterface
+    protected function newDbService(): AdapterInterface
     {
         /** @var PDO $connection */
-        $connection = $I->getConnection();
+        $connection = $this->getConnection();
         $driver     = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 
         return $this->newDbConnection($driver);
@@ -176,26 +215,25 @@ trait DiTrait
             case 'filter':
                 return (new Filter\FilterFactory())->newInstance();
             case 'metadataMemory':
-                return new MetadataMemory();
+                return new MetaDataMemory();
             case 'metadataApcu':
-                return new MetadataApcu(
+                return new MetaDataApcu(
                     new AdapterFactory(new SerializerFactory()),
                     []
                 );
             case 'metadataLibmemcached':
-                return new MetadataMemcached(
+                return new MetaDataMemcached(
                     new AdapterFactory(new SerializerFactory()),
                     getOptionsLibmemcached()
                 );
             case 'metadataRedis':
-                return new MetadataRedis(
+                return new MetaDataRedis(
                     new AdapterFactory(new SerializerFactory()),
                     getOptionsRedis()
                 );
             case 'metadataStream':
-                return new MetadataStream(
-                    new AdapterFactory(new SerializerFactory()),
-                    ['options' => ['storageDir' => outputDir()] ],
+                return new MetaDataStream(
+                    ['metaDataDir' => outputDir()],
                 );
             case 'modelsCacheLibmemcached':
                 return new StorageLibmemcached(
@@ -254,12 +292,9 @@ trait DiTrait
         Di::reset();
     }
 
-    /**
-     * @param DatabaseTester $I
-     */
-    protected function setDatabase(DatabaseTester $I)
+    protected function setDatabase(): void
     {
-        $db = $this->newDbService($I);
+        $db = $this->newDbService();
 
         $this->container->setShared('db', $db);
     }
@@ -308,10 +343,15 @@ trait DiTrait
             case 'sessionLibmemcached':
             case 'sessionNoop':
             case 'sessionRedis':
-                $this->container->set(
+                $container = $this->container;
+                $container->set(
                     'session',
-                    function () use ($class) {
-                        return (new Manager())->setAdapter($class);
+                    function () use ($class, $container) {
+                        $manager = new Manager();
+                        $manager->setDI($container);
+                        $manager->setAdapter($class);
+
+                        return $manager;
                     }
                 );
                 break;
@@ -361,9 +401,9 @@ trait DiTrait
      */
     protected function setNewCliFactoryDefault()
     {
-        FactoryDefault::reset();
+        CliFactoryDefault::reset();
         $this->container = $this->newService('cliFactoryDefault');
-        FactoryDefault::setDefault($this->container);
+        CliFactoryDefault::setDefault($this->container);
     }
 
     /**
@@ -373,8 +413,8 @@ trait DiTrait
      */
     protected function setNewFactoryDefault()
     {
-        Di::reset();
+        FactoryDefault::reset();
         $this->container = $this->newService('factoryDefault');
-        Di::setDefault($this->container);
+        FactoryDefault::setDefault($this->container);
     }
 }

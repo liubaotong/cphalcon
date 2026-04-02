@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function uniqid;
 
-class DeleteCest
+final class DeleteTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache :: delete()
@@ -29,28 +29,25 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDelete(IntegrationTester $I)
+    public function testCacheCacheDelete(): void
     {
-        $I->wantToTest('Cache\Cache - delete()');
-
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
         $instance   = $factory->newInstance('apcu');
 
         $adapter = new Cache($instance);
 
-
         $key1 = uniqid();
         $key2 = uniqid();
 
         $adapter->set($key1, 'test');
-        $I->assertTrue($adapter->has($key1));
+        $this->assertTrue($adapter->has($key1));
 
         $adapter->set($key2, 'test');
-        $I->assertTrue($adapter->has($key2));
-        $I->assertTrue($adapter->delete($key1));
-        $I->assertFalse($adapter->has($key1));
-        $I->assertTrue($adapter->has($key2));
+        $this->assertTrue($adapter->has($key2));
+        $this->assertTrue($adapter->delete($key1));
+        $this->assertFalse($adapter->has($key1));
+        $this->assertTrue($adapter->has($key2));
     }
 
     /**
@@ -59,20 +56,16 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheDeleteException(IntegrationTester $I)
+    public function testCacheCacheDeleteException(): void
     {
-        $I->wantToTest('Cache\Cache - delete() - exception');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The key contains invalid characters');
 
-        $I->expectThrowable(
-            new InvalidArgumentException('The key contains invalid characters'),
-            function () {
-                $serializer = new SerializerFactory();
-                $factory    = new AdapterFactory($serializer);
-                $instance   = $factory->newInstance('apcu');
+        $serializer = new SerializerFactory();
+        $factory    = new AdapterFactory($serializer);
+        $instance   = $factory->newInstance('apcu');
 
-                $adapter = new Cache($instance);
-                $value   = $adapter->delete('abc$^');
-            }
-        );
+        $adapter = new Cache($instance);
+        $value   = $adapter->delete('abc$^');
     }
 }

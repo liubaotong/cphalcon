@@ -13,124 +13,61 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use Codeception\Stub;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
+use Phalcon\Cache\Exception\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Tests\Integration\Cache\Adapter\HelperException;
-use Phalcon\Tests\Integration\Cache\Adapter\StorageException;
+use Phalcon\Support\Exception as HelperException;
+use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeStreamFileGetContents;
+use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeStreamFopen;
+use stdClass;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
-use function sprintf;
 use function uniqid;
 
-class HasCest
+final class HasTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cache\Adapter\Stream :: has() - cannot open file
-     *
-     * @param IntegrationTester $I
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @return array[]
      */
-    public function cacheAdapterStreamHasCannotOpenFile(IntegrationTester $I)
+    public static function getExamples(): array
     {
-        $I->wantToTest('Cache\Adapter\Stream - has() - cannot open file');
-
-        $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Stream::class,
+        return [
             [
-                $serializer,
+                Apcu::class,
+                [],
+                'apcu',
+            ],
+            [
+                Libmemcached::class,
+                getOptionsLibmemcached(),
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [],
+                '',
+            ],
+            [
+                Redis::class,
+                getOptionsRedis(),
+                'redis',
+            ],
+            [
+                Stream::class,
                 [
                     'storageDir' => outputDir(),
                 ],
+                '',
             ],
-            [
-                'phpFopen' => false,
-            ]
-        );
-
-        $key    = uniqid();
-        $actual = $adapter->set($key, 'test');
-        $I->assertTrue($actual);
-
-        $actual = $adapter->has($key);
-        $I->assertFalse($actual);
-    }
-
-    /**
-     * Tests Phalcon\Cache\Adapter\Stream :: has() - empty payload
-     *
-     * @param IntegrationTester $I
-     *
-     * @throws HelperException
-     * @throws StorageException
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function cacheAdapterStreamHasEmptyPayload(IntegrationTester $I)
-    {
-        $I->wantToTest('Cache\Adapter\Stream - has() - empty payload');
-
-        $serializer = new SerializerFactory();
-        $adapter    = Stub::construct(
-            Stream::class,
-            [
-                $serializer,
-                [
-                    'storageDir' => outputDir(),
-                ],
-            ],
-            [
-                'phpFileGetContents' => false,
-            ]
-        );
-
-        $key    = uniqid();
-        $actual = $adapter->set($key, 'test');
-        $I->assertTrue($actual);
-
-        $actual = $adapter->has($key);
-        $I->assertFalse($actual);
-    }
-
-    /**
-     * Tests Phalcon\Cache\Adapter\Weak :: has()
-     *
-     * @param IntegrationTester $I
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2023-07-17
-     */
-    public function cacheAdapterWeakHas(IntegrationTester $I)
-    {
-
-        $I->wantToTest('Cache\Adapter\Weak - has()');
-
-        $serializer = new SerializerFactory();
-        $adapter    = new Weak($serializer);
-
-        $obj1 = new \stdClass();
-
-        $key1 = uniqid();
-        $actual = $adapter->has($key1);
-        $I->assertFalse($actual);
-
-        $adapter->set($key1, $obj1);
-
-        $actual = $adapter->has($key1);
-        $I->assertTrue($actual);
+        ];
     }
 
     /**
@@ -141,21 +78,13 @@ class HasCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterHas(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - has()',
-                $example['className']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testCacheAdapterHas(
+        string $class,
+        array $options,
+        ?string $extension
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
@@ -164,54 +93,93 @@ class HasCest
         $key = uniqid();
 
         $actual = $adapter->has($key);
-        $I->assertFalse($actual);
+        $this->assertFalse($actual);
 
         $adapter->set($key, 'test');
         $actual = $adapter->has($key);
-        $I->assertTrue($actual);
+        $this->assertTrue($actual);
     }
 
     /**
-     * @return array[]
+     * Tests Phalcon\Cache\Adapter\Stream :: has() - cannot open file
+     *
+     * @return void
+     *
+     * @throws HelperException
+     * @throws StorageException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    private function getExamples(): array
+    public function testCacheAdapterStreamHasCannotOpenFile(): void
     {
-        return [
+        $serializer = new SerializerFactory();
+        $adapter    = new FakeStreamFopen(
+            $serializer,
             [
-                'className' => 'Apcu',
-                'class'     => Apcu::class,
-                'options'   => [],
-                'extension' => 'apcu',
+                'storageDir' => outputDir(),
             ],
+        );
+
+        $key    = uniqid();
+        $actual = $adapter->set($key, 'test');
+        $this->assertTrue($actual);
+
+        $actual = $adapter->has($key);
+        $this->assertFalse($actual);
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Stream :: has() - empty payload
+     *
+     * @return void
+     *
+     * @throws HelperException
+     * @throws StorageException
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testCacheAdapterStreamHasEmptyPayload(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new FakeStreamFileGetContents(
+            $serializer,
             [
-                'className' => 'Libmemcached',
-                'class'     => Libmemcached::class,
-                'options'   => getOptionsLibmemcached(),
-                'extension' => 'memcached',
+                'storageDir' => outputDir(),
             ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [],
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => getOptionsRedis(),
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'extension' => '',
-            ],
-        ];
+        );
+
+        $key    = uniqid();
+        $actual = $adapter->set($key, 'test');
+        $this->assertTrue($actual);
+
+        $actual = $adapter->has($key);
+        $this->assertFalse($actual);
+    }
+
+    /**
+     * Tests Phalcon\Cache\Adapter\Weak :: has()
+     *
+     * @return void
+     *
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2023-07-17
+     */
+    public function testCacheAdapterWeakHas(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Weak($serializer);
+
+        $obj1 = new stdClass();
+
+        $key1   = uniqid();
+        $actual = $adapter->has($key1);
+        $this->assertFalse($actual);
+
+        $adapter->set($key1, $obj1);
+
+        $actual = $adapter->has($key1);
+        $this->assertTrue($actual);
     }
 }

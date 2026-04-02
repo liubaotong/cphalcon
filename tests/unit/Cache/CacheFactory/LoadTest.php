@@ -13,19 +13,21 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\CacheFactory;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\CacheFactory;
 use Phalcon\Cache\CacheInterface;
+use Phalcon\Cache\Exception\Exception;
+use Phalcon\Config\Config;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
 
-class LoadCest
+final class LoadTest extends AbstractUnitTestCase
 {
     use FactoryTrait;
 
-    public function _before(IntegrationTester $I)
+    public function setUp(): void
     {
         $this->init();
     }
@@ -36,12 +38,10 @@ class LoadCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function cacheCacheFactoryLoad(IntegrationTester $I)
+    public function testCacheCacheFactoryLoad(): void
     {
-        $I->wantToTest('Cache\CacheFactory - load()');
-
         $options = $this->config->cache;
-        $this->runTests($I, $options);
+        $this->runTests($options);
     }
 
     /**
@@ -50,15 +50,35 @@ class LoadCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-18
      */
-    public function cacheCacheFactoryLoadArray(IntegrationTester $I)
+    public function testCacheCacheFactoryLoadArray(): void
     {
-        $I->wantToTest('Cache\CacheFactory - load() - array');
-
         $options = $this->arrayConfig['cache'];
-        $this->runTests($I, $options);
+        $this->runTests($options);
     }
 
-    private function runTests(IntegrationTester $I, $options)
+    /**
+     * Tests Phalcon\Cache\CacheFactory :: load() - exception
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2022-03-05
+     */
+    public function testCacheCacheFactoryLoadException(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            'You must provide the \'adapter\' option in the factory config parameter.'
+        );
+
+        $cacheFactory = new CacheFactory(
+            new AdapterFactory(
+                new SerializerFactory()
+            )
+        );
+
+        $cacheFactory->load([]);
+    }
+
+    private function runTests(Config | array $options): void
     {
         $cacheFactory = new CacheFactory(
             new AdapterFactory(
@@ -68,7 +88,7 @@ class LoadCest
 
         $adapter = $cacheFactory->load($options);
 
-        $I->assertInstanceOf(Cache::class, $adapter);
-        $I->assertInstanceOf(CacheInterface::class, $adapter);
+        $this->assertInstanceOf(Cache::class, $adapter);
+        $this->assertInstanceOf(CacheInterface::class, $adapter);
     }
 }

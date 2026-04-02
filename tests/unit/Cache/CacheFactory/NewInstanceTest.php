@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\CacheFactory;
 
-use IntegrationTester;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Cache;
 use Phalcon\Cache\CacheFactory;
 use Phalcon\Cache\CacheInterface;
 use Phalcon\Cache\Exception\Exception;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function uniqid;
 
-class NewInstanceCest
+final class NewInstanceTest extends AbstractUnitTestCase
 {
     /**
      * Tests Phalcon\Cache\CacheFactory :: newInstance()
@@ -31,17 +31,15 @@ class NewInstanceCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
-    public function cacheCacheFactoryNewInstance(IntegrationTester $I)
+    public function testCacheCacheFactoryNewInstance(): void
     {
-        $I->wantToTest('Cache\CacheFactory - newInstance()');
-
         $serializer     = new SerializerFactory();
         $adapterFactory = new AdapterFactory($serializer);
         $cacheFactory   = new CacheFactory($adapterFactory);
         $adapter        = $cacheFactory->newInstance('apcu');
 
-        $I->assertInstanceOf(Cache::class, $adapter);
-        $I->assertInstanceOf(CacheInterface::class, $adapter);
+        $this->assertInstanceOf(Cache::class, $adapter);
+        $this->assertInstanceOf(CacheInterface::class, $adapter);
     }
 
     /**
@@ -50,22 +48,19 @@ class NewInstanceCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2022-03-05
      */
-    public function cacheCacheFactoryNewInstanceException(IntegrationTester $I)
+    public function testCacheCacheFactoryNewInstanceException(): void
     {
-        $I->wantToTest('Cache\CacheFactory - newInstance() - exception');
-
         $name = uniqid();
-        $I->expectThrowable(
-            new Exception('Service ' . $name . ' is not registered'),
-            function () use ($name) {
-                $cacheFactory = new CacheFactory(
-                    new AdapterFactory(
-                        new SerializerFactory()
-                    )
-                );
 
-                $cacheFactory->newInstance($name);
-            }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service ' . $name . ' is not registered');
+
+        $cacheFactory = new CacheFactory(
+            new AdapterFactory(
+                new SerializerFactory()
+            )
         );
+
+        $cacheFactory->newInstance($name);
     }
 }

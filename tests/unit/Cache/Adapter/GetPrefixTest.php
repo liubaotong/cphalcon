@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Cache\Adapter;
 
-use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
@@ -22,14 +20,179 @@ use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Tests\AbstractUnitTestCase;
 
 use function array_merge;
 use function getOptionsRedis;
 use function outputDir;
-use function sprintf;
 
-class GetPrefixCest
+final class GetPrefixTest extends AbstractUnitTestCase
 {
+    public static function getExamples(): array
+    {
+        return [
+            [
+                Apcu::class,
+                [
+                ],
+                'ph-apcu-',
+                'apcu',
+            ],
+            [
+                Apcu::class,
+                [
+                    'prefix' => '',
+                ],
+                '',
+                'apcu',
+            ],
+            [
+                Apcu::class,
+                [
+                    'prefix' => 'my-prefix',
+                ],
+                'my-prefix',
+                'apcu',
+            ],
+            [
+                Libmemcached::class,
+                array_merge(
+                    getOptionsLibmemcached(),
+                    [
+                    ]
+                ),
+                'ph-memc-',
+                'memcached',
+            ],
+            [
+                Libmemcached::class,
+                array_merge(
+                    getOptionsLibmemcached(),
+                    [
+                        'prefix' => '',
+                    ]
+                ),
+                '',
+                'memcached',
+            ],
+            [
+                Libmemcached::class,
+                array_merge(
+                    getOptionsLibmemcached(),
+                    [
+                        'prefix' => 'my-prefix',
+                    ]
+                ),
+                'my-prefix',
+                'memcached',
+            ],
+            [
+                Memory::class,
+                [
+                ],
+                'ph-memo-',
+                '',
+            ],
+            [
+                Memory::class,
+                [
+                    'prefix' => '',
+                ],
+                '',
+                '',
+            ],
+            [
+                Memory::class,
+                [
+                    'prefix' => 'my-prefix',
+                ],
+                'my-prefix',
+                '',
+            ],
+            [
+                Redis::class,
+                array_merge(
+                    getOptionsRedis(),
+                    [
+                    ]
+                ),
+                'ph-reds-',
+                'redis',
+            ],
+            [
+                Redis::class,
+                array_merge(
+                    getOptionsRedis(),
+                    [
+                        'prefix' => '',
+                    ]
+                ),
+                '',
+                'redis',
+            ],
+            [
+                Redis::class,
+                array_merge(
+                    getOptionsRedis(),
+                    [
+                        'prefix' => 'my-prefix',
+                    ]
+                ),
+                'my-prefix',
+                'redis',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                ],
+                'ph-strm',
+                '',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                    'prefix'     => '',
+                ],
+                '',
+                '',
+            ],
+            [
+                Stream::class,
+                [
+                    'storageDir' => outputDir(),
+                    'prefix'     => 'my-prefix',
+                ],
+                'my-prefix',
+                '',
+            ],
+            [
+                Weak::class,
+                [
+                ],
+                '',
+                '',
+            ],
+            [
+                Weak::class,
+                [
+                    'prefix' => '',
+                ],
+                '',
+                '',
+            ],
+            [
+                Weak::class,
+                [
+                    'prefix' => 'my-prefix',
+                ],
+                '',
+                '',
+            ],
+        ];
+    }
+
     /**
      * Tests Phalcon\Cache\Adapter\* :: getPrefix()
      *
@@ -38,230 +201,20 @@ class GetPrefixCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09
      */
-    public function cacheAdapterGetSetPrefix(IntegrationTester $I, Example $example)
-    {
-        $I->wantToTest(
-            sprintf(
-                'Cache\Adapter\%s - getPrefix() - %s',
-                $example['className'],
-                $example['label']
-            )
-        );
-
-        $extension = $example['extension'];
-        $class     = $example['class'];
-        $options   = $example['options'];
-
+    public function testCacheAdapterGetSetPrefix(
+        string $class,
+        array $options,
+        string $expected,
+        string $extension
+    ): void {
         if (!empty($extension)) {
-            $I->checkExtensionIsLoaded($extension);
+            $this->checkExtensionIsLoaded($extension);
         }
 
         $serializer = new SerializerFactory();
         $adapter    = new $class($serializer, $options);
 
-        $expected = $example['expected'];
-        $actual   = $adapter->getPrefix();
-        $I->assertEquals($expected, $actual);
-    }
-
-    private function getExamples(): array
-    {
-        return [
-            [
-                'className' => 'Apcu',
-                'label'     => 'default',
-                'class'     => Apcu::class,
-                'options'   => [
-                ],
-                'expected'  => 'ph-apcu-',
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Apcu',
-                'label'     => 'empty',
-                'class'     => Apcu::class,
-                'options'   => [
-                    'prefix' => '',
-                ],
-                'expected'  => '',
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Apcu',
-                'label'     => 'prefix set',
-                'class'     => Apcu::class,
-                'options'   => [
-                    'prefix' => 'my-prefix',
-                ],
-                'expected'  => 'my-prefix',
-                'extension' => 'apcu',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'label'     => 'default',
-                'class'     => Libmemcached::class,
-                'options'   => array_merge(
-                    getOptionsLibmemcached(),
-                    [
-                    ]
-                ),
-                'expected'  => 'ph-memc-',
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'label'     => 'empty',
-                'class'     => Libmemcached::class,
-                'options'   => array_merge(
-                    getOptionsLibmemcached(),
-                    [
-                        'prefix' => '',
-                    ]
-                ),
-                'expected'  => '',
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Libmemcached',
-                'label'     => 'prefix set',
-                'class'     => Libmemcached::class,
-                'options'   => array_merge(
-                    getOptionsLibmemcached(),
-                    [
-                        'prefix' => 'my-prefix',
-                    ]
-                ),
-                'expected'  => 'my-prefix',
-                'extension' => 'memcached',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'default',
-                'class'     => Memory::class,
-                'options'   => [
-                ],
-                'expected'  => 'ph-memo-',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'empty',
-                'class'     => Memory::class,
-                'options'   => [
-                    'prefix' => '',
-                ],
-                'expected'  => '',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Memory',
-                'label'     => 'prefix set',
-                'class'     => Memory::class,
-                'options'   => [
-                    'prefix' => 'my-prefix',
-                ],
-                'expected'  => 'my-prefix',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'default',
-                'class'     => Redis::class,
-                'options'   => array_merge(
-                    getOptionsRedis(),
-                    [
-                    ]
-                ),
-                'expected'  => 'ph-reds-',
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'empty',
-                'class'     => Redis::class,
-                'options'   => array_merge(
-                    getOptionsRedis(),
-                    [
-                        'prefix' => '',
-                    ]
-                ),
-                'expected'  => '',
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Redis',
-                'label'     => 'prefix set',
-                'class'     => Redis::class,
-                'options'   => array_merge(
-                    getOptionsRedis(),
-                    [
-                        'prefix' => 'my-prefix',
-                    ]
-                ),
-                'expected'  => 'my-prefix',
-                'extension' => 'redis',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'default',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                ],
-                'expected'  => 'ph-strm',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'empty',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                    'prefix'     => '',
-                ],
-                'expected'  => '',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Stream',
-                'label'     => 'prefix set',
-                'class'     => Stream::class,
-                'options'   => [
-                    'storageDir' => outputDir(),
-                    'prefix'     => 'my-prefix',
-                ],
-                'expected'  => 'my-prefix',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Weak',
-                'label'     => 'default',
-                'class'     => Weak::class,
-                'options'   => [
-                ],
-                'expected'  => '',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Weak',
-                'label'     => 'empty',
-                'class'     => Weak::class,
-                'options'   => [
-                    'prefix' => '',
-                ],
-                'expected'  => '',
-                'extension' => '',
-            ],
-            [
-                'className' => 'Weak',
-                'label'     => 'prefix set',
-                'class'     => Weak::class,
-                'options'   => [
-                    'prefix' => 'my-prefix',
-                ],
-                'expected'  => '',
-                'extension' => '',
-            ],
-        ];
+        $actual = $adapter->getPrefix();
+        $this->assertSame($expected, $actual);
     }
 }

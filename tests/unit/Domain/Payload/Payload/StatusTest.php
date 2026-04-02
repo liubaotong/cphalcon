@@ -24,7 +24,7 @@ final class StatusTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
-    public function httpPayloadPayloadStatus(): void
+    public function testHttpPayloadPayloadStatus(): void
     {
         $this->assertSame('ACCEPTED', Status::ACCEPTED);
         $this->assertSame('AUTHENTICATED', Status::AUTHENTICATED);
