@@ -194,8 +194,8 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_File_Size_Equal, getConditional)
 	double source, target;
 
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ZVAL(source)
-		Z_PARAM_ZVAL(target)
+		Z_PARAM_ZVAL(source_param)
+		Z_PARAM_ZVAL(target_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(included)
 	ZEND_PARSE_PARAMETERS_END();

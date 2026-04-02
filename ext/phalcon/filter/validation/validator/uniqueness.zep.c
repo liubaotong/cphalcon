@@ -135,7 +135,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -192,11 +192,12 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, getColumnNameReal)
 	zend_bool _0, _7;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval field;
-	zval *record, record_sub, *field_param = NULL, _1, _6, _8, _2$$3, _3$$3, _4$$3, _5$$3, _9$$4, _10$$4;
+	zend_string *field = NULL;
+	zval *record, record_sub, field_zv, _1, _6, _8, _2$$3, _3$$3, _4$$3, _5$$3, _9$$4, _10$$4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&record_sub);
+	ZVAL_UNDEF(&field_zv);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&_8);
@@ -206,23 +207,14 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, getColumnNameReal)
 	ZVAL_UNDEF(&_5$$3);
 	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&_10$$4);
-	ZVAL_UNDEF(&field);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ZVAL(record)
 		Z_PARAM_STR(field)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &record, &field_param);
-	if (UNEXPECTED(Z_TYPE_P(field_param) != IS_STRING && Z_TYPE_P(field_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'field' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(field_param) == IS_STRING)) {
-		zephir_get_strval(&field, field_param);
-	} else {
-		ZEPHIR_INIT_VAR(&field);
-	}
+	record = ZEND_CALL_ARG(execute_data, 1);
+	ZVAL_STR_COPY(&field_zv, field);
 	_0 = ZEPHIR_GLOBAL(orm).column_renaming;
 	if (_0) {
 		zephir_read_property(&_1, this_ptr, ZEND_STRL("columnMap"), PH_NOISY_CC | PH_READONLY);
@@ -244,14 +236,14 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, getColumnNameReal)
 	_7 = Z_TYPE_P(&_6) == IS_ARRAY;
 	if (_7) {
 		zephir_read_property(&_8, this_ptr, ZEND_STRL("columnMap"), PH_NOISY_CC | PH_READONLY);
-		_7 = zephir_array_isset(&_8, &field);
+		_7 = zephir_array_isset(&_8, &field_zv);
 	}
 	if (_7) {
 		zephir_read_property(&_9$$4, this_ptr, ZEND_STRL("columnMap"), PH_NOISY_CC | PH_READONLY);
-		zephir_array_fetch(&_10$$4, &_9$$4, &field, PH_NOISY | PH_READONLY, "phalcon/Filter/Validation/Validator/Uniqueness.zep", 147);
+		zephir_array_fetch(&_10$$4, &_9$$4, &field_zv, PH_NOISY | PH_READONLY, "phalcon/Filter/Validation/Validator/Uniqueness.zep", 147);
 		RETURN_CTOR(&_10$$4);
 	}
-	RETURN_CTOR(&field);
+	RETURN_MM_STR(zend_string_copy(field));
 }
 
 PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, isUniqueness)
@@ -554,8 +546,8 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Uniqueness, isUniquenessModel)
 	ZVAL_UNDEF(&_154$$63);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_ZVAL(record)
-		Z_PARAM_ARRAY(field)
-		Z_PARAM_ARRAY(values)
+		ZEPHIR_Z_PARAM_ARRAY(field, field_param)
+		ZEPHIR_Z_PARAM_ARRAY(values, values_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

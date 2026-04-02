@@ -234,10 +234,10 @@ PHP_METHOD(Phalcon_Logger_LoggerFactory, newInstance)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval adapters;
-	zval *name_param = NULL, *adapters_param = NULL, *timezone = NULL, timezone_sub, __$null;
-	zval name;
+	zval name_zv, *adapters_param = NULL, *timezone = NULL, timezone_sub, __$null;
+	zend_string *name = NULL;
 
-	ZVAL_UNDEF(&name);
+	ZVAL_UNDEF(&name_zv);
 	ZVAL_UNDEF(&timezone_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&adapters);
@@ -245,13 +245,18 @@ PHP_METHOD(Phalcon_Logger_LoggerFactory, newInstance)
 	ZEND_PARSE_PARAMETERS_START(1, 3)
 		Z_PARAM_STR(name)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(adapters)
+		ZEPHIR_Z_PARAM_ARRAY(adapters, adapters_param)
 		Z_PARAM_OBJECT_OF_CLASS_OR_NULL(timezone, php_date_get_timezone_ce())
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 2, &name_param, &adapters_param, &timezone);
-	zephir_get_strval(&name, name_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		adapters_param = ZEND_CALL_ARG(execute_data, 2);
+	}
+	if (ZEND_NUM_ARGS() > 2) {
+		timezone = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&name_zv, name);
 	if (!adapters_param) {
 		ZEPHIR_INIT_VAR(&adapters);
 		array_init(&adapters);
@@ -263,7 +268,7 @@ PHP_METHOD(Phalcon_Logger_LoggerFactory, newInstance)
 		timezone = &__$null;
 	}
 	object_init_ex(return_value, phalcon_logger_logger_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 419, &name, &adapters, timezone);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 421, &name_zv, &adapters, timezone);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -284,7 +289,7 @@ PHP_METHOD(Phalcon_Logger_LoggerFactory, getArrVal)
 	ZVAL_UNDEF(&value);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(index)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(defaultValue)

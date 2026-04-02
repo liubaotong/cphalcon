@@ -113,7 +113,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Ip, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -226,7 +226,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_Ip, validate)
 	zephir_bitwise_or_function(&_10, &_9, &allowReserved);
 	zephir_array_update_string(&options, SL("flags"), &_10, PH_COPY | PH_SEPARATE);
 	ZVAL_LONG(&_2, 275);
-	ZEPHIR_CALL_FUNCTION(&_11, "filter_var", NULL, 284, &value, &_2, &options);
+	ZEPHIR_CALL_FUNCTION(&_11, "filter_var", NULL, 285, &value, &_2, &options);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_11))) {
 		ZEPHIR_CALL_METHOD(&_12$$7, this_ptr, "messagefactory", NULL, 0, validation, field);

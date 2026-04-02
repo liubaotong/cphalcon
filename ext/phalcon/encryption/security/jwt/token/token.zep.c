@@ -283,11 +283,12 @@ PHP_METHOD(Phalcon_Encryption_Security_JWT_Token_Token, verify)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval key;
-	zval *signer, signer_sub, *key_param = NULL, _0, _1, _2, _3, _4, _5, _6;
+	zend_string *key = NULL;
+	zval *signer, signer_sub, key_zv, _0, _1, _2, _3, _4, _5, _6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&signer_sub);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -295,15 +296,14 @@ PHP_METHOD(Phalcon_Encryption_Security_JWT_Token_Token, verify)
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&_6);
-	ZVAL_UNDEF(&key);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(signer, phalcon_encryption_security_jwt_signer_signerinterface_ce)
 		Z_PARAM_STR(key)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &signer, &key_param);
-	zephir_get_strval(&key, key_param);
+	signer = ZEND_CALL_ARG(execute_data, 1);
+	ZVAL_STR_COPY(&key_zv, key);
 	ZEPHIR_CALL_METHOD(&_0, signer, "getalgheader", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, this_ptr, "getheaders", NULL, 0);
@@ -320,7 +320,7 @@ PHP_METHOD(Phalcon_Encryption_Security_JWT_Token_Token, verify)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_6, this_ptr, "getpayload", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(signer, "verify", NULL, 0, &_5, &_6, &key);
+	ZEPHIR_RETURN_CALL_METHOD(signer, "verify", NULL, 0, &_5, &_6, &key_zv);
 	zephir_check_call_status();
 	RETURN_MM();
 }

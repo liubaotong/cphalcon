@@ -72,7 +72,7 @@ PHP_METHOD(Phalcon_Mvc_Model_ValidationFailed, __construct)
 	ZVAL_UNDEF(&validationMessages);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(model, phalcon_mvc_modelinterface_ce)
-		Z_PARAM_ARRAY(validationMessages)
+		ZEPHIR_Z_PARAM_ARRAY(validationMessages, validationMessages_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

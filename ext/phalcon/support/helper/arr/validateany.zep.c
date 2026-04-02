@@ -55,7 +55,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_ValidateAny, __invoke)
 	ZVAL_UNDEF(&method_sub);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(method)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);

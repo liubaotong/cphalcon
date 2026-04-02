@@ -65,7 +65,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Flatten, __invoke)
 	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&_10$$4);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(deep)
 	ZEND_PARSE_PARAMETERS_END();
@@ -158,7 +158,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Flatten, processNotArray)
 	ZVAL_UNDEF(&data);
 	ZVAL_UNDEF(&item_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_ARRAY(data)
+		ZEPHIR_Z_PARAM_ARRAY(data, data_param)
 		Z_PARAM_ZVAL(item)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
@@ -191,7 +191,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Flatten, processArray)
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(data)
+		ZEPHIR_Z_PARAM_ARRAY(data, data_param)
 		Z_PARAM_ZVAL(item)
 		Z_PARAM_BOOL(deep)
 	ZEND_PARSE_PARAMETERS_END();
@@ -235,7 +235,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Flatten, processArrayDeep)
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(data)
+		ZEPHIR_Z_PARAM_ARRAY(data, data_param)
 		Z_PARAM_ZVAL(item)
 		Z_PARAM_BOOL(deep)
 	ZEND_PARSE_PARAMETERS_END();

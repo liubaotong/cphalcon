@@ -60,7 +60,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, __invoke)
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_6$$4);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(method)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
@@ -161,7 +161,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processCallable)
 	ZVAL_UNDEF(&output);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(filtered)
+		ZEPHIR_Z_PARAM_ARRAY(filtered, filtered_param)
 		Z_PARAM_ZVAL(method)
 		Z_PARAM_ZVAL(element)
 	ZEND_PARSE_PARAMETERS_END();
@@ -173,7 +173,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processCallable)
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "iscallable", NULL, 0, method);
 	zephir_check_call_status();
 	if (ZEPHIR_IS_TRUE_IDENTICAL(&_0)) {
-		ZEPHIR_CALL_FUNCTION(&key, "call_user_func", NULL, 189, method, element);
+		ZEPHIR_CALL_FUNCTION(&key, "call_user_func", NULL, 190, method, element);
 		zephir_check_call_status();
 		zephir_array_update_multi(&output, element, SL("za"), 2, &key);
 	}
@@ -203,7 +203,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processObject)
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&key$$3);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(filtered)
+		ZEPHIR_Z_PARAM_ARRAY(filtered, filtered_param)
 		Z_PARAM_ZVAL(method)
 		Z_PARAM_ZVAL(element)
 	ZEND_PARSE_PARAMETERS_END();
@@ -221,6 +221,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processObject)
 	if (_1) {
 		zephir_memory_observe(&key$$3);
 		zephir_read_property_zval(&key$$3, element, method, PH_NOISY_CC);
+		ZEPHIR_CPY_WRT(&key$$3, &key$$3);
 		zephir_array_update_multi(&output, element, SL("za"), 2, &key$$3);
 	}
 	RETURN_CCTOR(&output);
@@ -249,7 +250,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processOther)
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&key$$3);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(filtered)
+		ZEPHIR_Z_PARAM_ARRAY(filtered, filtered_param)
 		Z_PARAM_ZVAL(method)
 		Z_PARAM_ZVAL(element)
 	ZEND_PARSE_PARAMETERS_END();
@@ -271,6 +272,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Group, processOther)
 	if (_2) {
 		zephir_memory_observe(&key$$3);
 		zephir_array_fetch(&key$$3, element, method, PH_NOISY, "phalcon/Support/Helper/Arr/Group.zep", 116);
+		ZEPHIR_CPY_WRT(&key$$3, &key$$3);
 		zephir_array_update_multi(&output, element, SL("za"), 2, &key$$3);
 	}
 	RETURN_CCTOR(&output);

@@ -266,7 +266,7 @@ PHP_METHOD(Phalcon_Di_Service, resolve)
 					zephir_check_call_status();
 				}
 
-				ZEPHIR_CALL_METHOD(&instance, &builder, "build", NULL, 223, container, &definition, parameters);
+				ZEPHIR_CALL_METHOD(&instance, &builder, "build", NULL, 224, container, &definition, parameters);
 				zephir_check_call_status();
 			} else {
 				found = 0;
@@ -329,7 +329,7 @@ PHP_METHOD(Phalcon_Di_Service, setParameter)
 	ZVAL_UNDEF(&parameter);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_LONG(position)
-		Z_PARAM_ARRAY(parameter)
+		ZEPHIR_Z_PARAM_ARRAY(parameter, parameter_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

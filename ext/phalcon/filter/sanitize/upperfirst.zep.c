@@ -13,10 +13,6 @@
 
 #include "kernel/main.h"
 #include "kernel/string.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
 #include "kernel/object.h"
 
 
@@ -47,27 +43,15 @@ ZEPHIR_INIT_CLASS(Phalcon_Filter_Sanitize_UpperFirst)
  */
 PHP_METHOD(Phalcon_Filter_Sanitize_UpperFirst, __invoke)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *input_param = NULL;
-	zval input;
+	zval input_zv;
+	zend_string *input = NULL;
 
-	ZVAL_UNDEF(&input);
+	ZVAL_UNDEF(&input_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(input)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &input_param);
-	if (UNEXPECTED(Z_TYPE_P(input_param) != IS_STRING && Z_TYPE_P(input_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'input' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(input_param) == IS_STRING)) {
-		zephir_get_strval(&input, input_param);
-	} else {
-		ZEPHIR_INIT_VAR(&input);
-	}
-	zephir_ucfirst(return_value, &input);
-	RETURN_MM();
+	ZVAL_STR(&input_zv, input);
+	zephir_ucfirst(return_value, &input_zv);
+	return;
 }
 

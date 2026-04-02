@@ -12,11 +12,10 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "kernel/memory.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
 #include "kernel/object.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/memory.h"
 
 
 /**
@@ -56,12 +55,12 @@ ZEPHIR_INIT_CLASS(Phalcon_Acl_Component)
 PHP_METHOD(Phalcon_Acl_Component, __construct)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *name_param = NULL, *description_param = NULL;
-	zval name, description;
+	zval name_zv, description_zv;
+	zend_string *name = NULL, *description = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&name);
-	ZVAL_UNDEF(&description);
+	ZVAL_UNDEF(&name_zv);
+	ZVAL_UNDEF(&description_zv);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_STR(name)
@@ -70,27 +69,18 @@ PHP_METHOD(Phalcon_Acl_Component, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 1, &name_param, &description_param);
-	if (UNEXPECTED(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(name_param) == IS_STRING)) {
-		zephir_get_strval(&name, name_param);
+	ZVAL_STR_COPY(&name_zv, name);
+	if (!description) {
+		ZEPHIR_INIT_VAR(&description_zv);
 	} else {
-		ZEPHIR_INIT_VAR(&name);
+		ZVAL_STR_COPY(&description_zv, description);
 	}
-	if (!description_param) {
-		ZEPHIR_INIT_VAR(&description);
-	} else {
-		zephir_get_strval(&description, description_param);
-	}
-	if (UNEXPECTED(ZEPHIR_IS_STRING_IDENTICAL(&name, "*"))) {
+	if (UNEXPECTED(ZEPHIR_IS_STRING_IDENTICAL(&name_zv, "*"))) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_acl_exception_ce, "Component name cannot be '*'", "phalcon/Acl/Component.zep", 38);
 		return;
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("description"), &description);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("name"), &name_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("description"), &description_zv);
 	ZEPHIR_MM_RESTORE();
 }
 
