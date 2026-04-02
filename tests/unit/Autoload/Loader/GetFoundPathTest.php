@@ -41,7 +41,7 @@ final class GetFoundPathTest extends AbstractUnitTestCase
         }
 
         $loader = new Loader();
-        $file   = dataDir('fixtures/Loader/Example/Functions/FunctionsNoClass.php');
+        $file   = supportDir('assets/Loader/Example/Functions/FunctionsNoClass.php');
         $loader->addFile($file);
 
         $loader->loadFiles();

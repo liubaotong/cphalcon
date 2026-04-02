@@ -30,7 +30,7 @@ final class ReadWriteTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterApcuReadWrite(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $prefix  = 'nova_prefix';
         $key     = 'testwrite';

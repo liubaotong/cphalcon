@@ -57,7 +57,7 @@ final class HandleTest extends AbstractUnitTestCase
                 $view = new View();
 
                 $view->setViewsDir(
-                    dataDir('fixtures/views/simple/')
+                    supportDir('assets/views/simple/')
                 );
 
                 return $view;
@@ -72,7 +72,7 @@ final class HandleTest extends AbstractUnitTestCase
             function () use ($eventsManager) {
                 $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace(
-                    'Phalcon\Tests\Controllers'
+                    'Phalcon\Tests\Support\Controllers'
                 );
 
                 $eventsManager->attach(
@@ -121,7 +121,7 @@ final class HandleTest extends AbstractUnitTestCase
                 $view = new View();
 
                 $view->setViewsDir(
-                    dataDir('fixtures/views/simple/')
+                    supportDir('assets/views/simple/')
                 );
 
                 return $view;
@@ -136,7 +136,7 @@ final class HandleTest extends AbstractUnitTestCase
             function () use ($eventsManager) {
                 $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace(
-                    'Phalcon\Tests\Controllers'
+                    'Phalcon\Tests\Support\Controllers'
                 );
 
                 $eventsManager->attach(
@@ -186,7 +186,7 @@ final class HandleTest extends AbstractUnitTestCase
                 $view = new View();
 
                 $view->setViewsDir(
-                    dataDir('fixtures/views/simple/')
+                    supportDir('assets/views/simple/')
                 );
 
                 return $view;
@@ -199,7 +199,7 @@ final class HandleTest extends AbstractUnitTestCase
             function () {
                 $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace(
-                    'Phalcon\Tests\Controllers'
+                    'Phalcon\Tests\Support\Controllers'
                 );
 
                 return $dispatcher;

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Mvc\Controller;
 
 use Phalcon\Events\Manager as EventsManager;
-use Phalcon\Tests\Controllers\ViewRequestController;
+use Phalcon\Tests\Support\Controllers\ViewRequestController;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
 

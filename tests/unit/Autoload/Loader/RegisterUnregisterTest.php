@@ -47,17 +47,17 @@ final class RegisterUnregisterTest extends AbstractUnitTestCase
         $loader
             ->setDirectories(
                 [
-                    dataDir('fixtures/Loader/Example/Events/'),
+                    supportDir('assets/Loader/Example/Events/'),
                 ]
             )
             ->setClasses(
                 [
-                    'OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'OtherClass' => supportDir('assets/Loader/Example/Events/Other/'),
                 ]
             )
             ->setNamespaces(
                 [
-                    'Other\OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'Other\OtherClass' => supportDir('assets/Loader/Example/Events/Other/'),
                 ]
             )
         ;
@@ -86,10 +86,10 @@ final class RegisterUnregisterTest extends AbstractUnitTestCase
                 0 => null,
             ],
             'beforeCheckPath'  => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => supportDir('assets/Loader/Example/Events/LoaderEvent.php'),
             ],
             'pathFound'        => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => supportDir('assets/Loader/Example/Events/LoaderEvent.php'),
             ],
         ];
 

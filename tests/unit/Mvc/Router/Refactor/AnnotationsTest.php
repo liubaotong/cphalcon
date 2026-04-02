@@ -46,9 +46,9 @@ final class AnnotationsTest extends AbstractUnitTestCase
 
         $router->setDI($container);
 
-        $router->addResource("Phalcon\Tests\Controllers\Robots", '/');
-        $router->addResource("Phalcon\Tests\Controllers\Products", '/products');
-        $router->addResource("Phalcon\Tests\Controllers\About", '/about');
+        $router->addResource("Phalcon\Tests\Support\Controllers\Robots", '/');
+        $router->addResource("Phalcon\Tests\Support\Controllers\Products", '/products');
+        $router->addResource("Phalcon\Tests\Support\Controllers\About", '/about');
 
         $router->handle('/products');
 
@@ -58,9 +58,9 @@ final class AnnotationsTest extends AbstractUnitTestCase
 
         $router->setDI($container);
 
-        $router->addResource("Phalcon\Tests\Controllers\Robots", '/');
-        $router->addResource("Phalcon\Tests\Controllers\Products", '/products');
-        $router->addResource("Phalcon\Tests\Controllers\About", '/about');
+        $router->addResource("Phalcon\Tests\Support\Controllers\Robots", '/');
+        $router->addResource("Phalcon\Tests\Support\Controllers\Products", '/products');
+        $router->addResource("Phalcon\Tests\Support\Controllers\About", '/about');
 
         $router->handle('/about');
 
@@ -75,7 +75,7 @@ final class AnnotationsTest extends AbstractUnitTestCase
      */
     public function testMvcRouterAnnotationsRouterFullResourcesNamespaced(): void
     {
-        require_once dataDir('fixtures/controllers/NamespacedAnnotationController.php');
+        require_once supportDir('Controllers/NamespacedAnnotationController.php');
 
         $container = $this->getDi();
 
@@ -124,10 +124,10 @@ final class AnnotationsTest extends AbstractUnitTestCase
 
         $router->setDI($container);
 
-        $router->addResource("Phalcon\Tests\Controllers\Robots");
-        $router->addResource("Phalcon\Tests\Controllers\Products");
-        $router->addResource("Phalcon\Tests\Controllers\About");
-        $router->addResource("Phalcon\Tests\Controllers\Main");
+        $router->addResource("Phalcon\Tests\Support\Controllers\Robots");
+        $router->addResource("Phalcon\Tests\Support\Controllers\Products");
+        $router->addResource("Phalcon\Tests\Support\Controllers\About");
+        $router->addResource("Phalcon\Tests\Support\Controllers\Main");
 
         $router->handle('/');
 

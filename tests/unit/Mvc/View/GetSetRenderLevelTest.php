@@ -45,7 +45,7 @@ class GetSetRenderLevelTest extends AbstractUnitTestCase
         $this->setDiService('view');
         $view = $this->getService('view');
 
-        $view->setViewsDir(dataDir('fixtures/views' . DIRECTORY_SEPARATOR));
+        $view->setViewsDir(supportDir('assets/views' . DIRECTORY_SEPARATOR));
         $view->setEventsManager($eventsManager);
 
         $view->start();

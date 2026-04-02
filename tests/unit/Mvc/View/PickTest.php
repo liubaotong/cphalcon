@@ -36,7 +36,7 @@ class PickTest extends AbstractUnitTestCase
         $view      = new View();
 
         $view->setViewsDir(
-            $this->getDirSeparator(dataDir('fixtures/views'))
+            $this->getDirSeparator(supportDir('assets/views'))
         );
 
         $view->setDI($container);

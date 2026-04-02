@@ -50,7 +50,7 @@ class RenderTest extends AbstractUnitTestCase
     public function testMvcViewRenderChildobject(): void
     {
         $this->safeDeleteFile(
-            dataDir('fixtures/views/currentrender/subobject.volt.php')
+            supportDir('assets/views/currentrender/subobject.volt.php')
         );
 
         $view = $this->container->get('viewSimple');
@@ -71,7 +71,7 @@ class RenderTest extends AbstractUnitTestCase
         $this->assertEquals($expected, $actual);
 
         $this->safeDeleteFile(
-            dataDir('fixtures/views/currentrender/subobject.volt.php')
+            supportDir('assets/views/currentrender/subobject.volt.php')
         );
     }
 
@@ -160,11 +160,11 @@ class RenderTest extends AbstractUnitTestCase
         );
 
         $this->assertFileExists(
-            dataDir('fixtures/views/mustache') . '/index.mhtml.php'
+            supportDir('assets/views/mustache') . '/index.mhtml.php'
         );
 
         $this->safeDeleteFile(
-            dataDir('fixtures/views/mustache') . '/index.mhtml.php'
+            supportDir('assets/views/mustache') . '/index.mhtml.php'
         );
     }
 

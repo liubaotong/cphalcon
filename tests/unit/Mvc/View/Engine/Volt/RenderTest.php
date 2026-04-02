@@ -64,7 +64,7 @@ class RenderTest extends AbstractUnitTestCase
         // render() echoes out its result
         ob_start();
         $volt->render(
-            dataDir('fixtures/views/compiler/partial.volt'),
+            supportDir('assets/views/compiler/partial.volt'),
             [
                 'some_var' => 'aaa',
             ]

@@ -25,12 +25,12 @@ $configFile = [
         'baseUri'        => '/',
         'staticUri'      => '/',
         'timezone'       => 'UTC',
-        'controllersDir' => rootDir('tests/_data/fixtures/controllers/'),
-        'modelsDir'      => rootDir('tests/_data/fixtures/models/'),
-        'modulesDir'     => rootDir('tests/_data/fixtures/modules/'),
-        'viewsDir'       => rootDir('tests/_data/fixtures/views/'),
+        'controllersDir' => rootDir('tests/support/Controllers/'),
+        'modelsDir'      => rootDir('tests/support/Models/'),
+        'modulesDir'     => rootDir('tests/support/Modules/'),
+        'viewsDir'       => rootDir('tests/support/assets/views/'),
         'resultsetsDir'  => rootDir('tests/_data/fixtures/resultsets/'),
-        'tasksDir'       => rootDir('tests/_data/fixtures/tasks/'),
+        'tasksDir'       => rootDir('tests/_data/fixtures/Tasks/'),
     ]
 ];
 

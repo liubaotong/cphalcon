@@ -29,7 +29,7 @@ final class GetPropertiesTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterMemoryGetProperties(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Memory();
 

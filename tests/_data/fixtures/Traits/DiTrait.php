@@ -382,7 +382,7 @@ trait DiTrait
                 $this->container->set(
                     $service,
                     function () use ($class) {
-                        $class->setViewsDir(dataDir('fixtures/views/'));
+                        $class->setViewsDir(supportDir('assets/views/'));
 
                         return $class;
                     }

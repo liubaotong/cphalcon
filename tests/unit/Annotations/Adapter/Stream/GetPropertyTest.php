@@ -29,7 +29,7 @@ final class GetPropertyTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterStreamGetProperty(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Stream(
             [

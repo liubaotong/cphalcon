@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di\FactoryDefault\Cli;
 
 use Phalcon\Di\FactoryDefault\Cli as Di;
-use Phalcon\Tests\Fixtures\Di\SomeComponent;
-use Phalcon\Tests\Fixtures\Di\SomeServiceProvider;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Di\SomeComponent;
+use Phalcon\Tests\Support\Di\SomeServiceProvider;
 
 final class RegisterTest extends AbstractUnitTestCase
 {
@@ -28,8 +28,8 @@ final class RegisterTest extends AbstractUnitTestCase
      */
     public function testDiFactorydefaultCliRegister(): void
     {
-        require_once dataDir('fixtures/Di/SomeComponent.php');
-        require_once dataDir('fixtures/Di/SomeServiceProvider.php');
+        require_once supportDir('Di/SomeComponent.php');
+        require_once supportDir('Di/SomeServiceProvider.php');
 
         $di = new Di();
 

@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di\Injectable;
 
 use Phalcon\Di\Di;
-use Phalcon\Tests\Fixtures\Di\InjectableComponent;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Di\InjectableComponent;
 use stdClass;
-
 use function spl_object_hash;
 
 final class UnderscoreGetTest extends AbstractUnitTestCase

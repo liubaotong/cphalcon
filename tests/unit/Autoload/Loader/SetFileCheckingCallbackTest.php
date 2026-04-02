@@ -78,12 +78,12 @@ final class SetFileCheckingCallbackTest extends AbstractUnitTestCase
         $loader
             ->setFiles(
                 [
-                    dataDir('fixtures/Loader/Example/Functions/FunctionsNoClassThree.php'),
+                    supportDir('assets/Loader/Example/Functions/FunctionsNoClassThree.php'),
                 ]
             )
             ->setNamespaces(
                 [
-                    'Example' => dataDir('fixtures/Loader/Example/'),
+                    'Example' => supportDir('assets/Loader/Example/'),
                 ],
                 true
             )
@@ -128,12 +128,12 @@ final class SetFileCheckingCallbackTest extends AbstractUnitTestCase
         $loader
             ->setFiles(
                 [
-                    dataDir('fixtures/Loader/Example/Functions/FunctionsNoClassThree.php'),
+                    supportDir('assets/Loader/Example/Functions/FunctionsNoClassThree.php'),
                 ]
             )
             ->setNamespaces(
                 [
-                    'Example\Namespaces' => dataDir('fixtures/Loader/Example/Namespaces'),
+                    'Example\Namespaces' => supportDir('assets/Loader/Example/Namespaces'),
                 ],
                 true
             )

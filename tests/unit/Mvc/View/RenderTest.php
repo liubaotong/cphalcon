@@ -29,8 +29,8 @@ class RenderTest extends AbstractUnitTestCase
         $view = $this->getService('view');
         $view->setViewsDir(
             [
-                dataDir('fixtures/views'),
-                dataDir('fixtures/views-alt'),
+                supportDir('assets/views'),
+                supportDir('assets/views-alt'),
             ]
         );
 

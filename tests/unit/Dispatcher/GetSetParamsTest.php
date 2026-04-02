@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Dispatcher;
 
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Tests\Controllers\DispatcherParametersController;
+use Phalcon\Tests\Support\Controllers\DispatcherParametersController;
 use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
 

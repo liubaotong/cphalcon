@@ -30,7 +30,7 @@ final class GetSetParametersTest extends AbstractUnitTestCase
         $dispatcher->setDI($this->container);
 
         // Test $this->dispatcher->getParams()
-        $dispatcher->setNamespaceName('Phalcon\Tests\Fixtures\Tasks');
+        $dispatcher->setNamespaceName('Phalcon\Tests\Support\Tasks');
         $dispatcher->setTaskName('params');
         $dispatcher->setActionName('params');
 

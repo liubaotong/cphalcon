@@ -44,7 +44,7 @@ final class LoadFilesTest extends AbstractUnitTestCase
 
         $loader
             ->addFile(
-                dataDir('fixtures/Loader/Example/Functions/FunctionsNoClassTwo.php')
+                supportDir('assets/Loader/Example/Functions/FunctionsNoClassTwo.php')
             )
             ->addFile(
                 '/path/to/unknown/file'

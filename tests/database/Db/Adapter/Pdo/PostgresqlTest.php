@@ -200,7 +200,7 @@ final class PostgresqlTest extends AbstractDatabaseTestCase
     {
         $sql = rtrim(
             (string) file_get_contents(
-                dataDir('fixtures/Db/postgresql/example9.sql')
+                supportDir('assets/Db/postgresql/example9.sql')
             )
         );
 

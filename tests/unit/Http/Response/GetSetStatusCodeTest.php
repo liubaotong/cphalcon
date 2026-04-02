@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Response;
 
 use Phalcon\Mvc\Micro;
-use Phalcon\Tests\_data\fixtures\Micro\HttpResponseContentMiddleware;
+use Phalcon\Tests\Unit\Http\Response\Fake\FakeHttpResponseContentMiddleware;
 use Phalcon\Tests\Fixtures\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
 
@@ -117,7 +117,7 @@ final class GetSetStatusCodeTest extends AbstractHttpBase
         $this->markTestSkipped('TODO: Enable with MVC');
         $application = new Micro($this->container);
 
-        $application->before(new HttpResponseContentMiddleware());
+        $application->before(new FakeHttpResponseContentMiddleware());
         $application->notFound(
             function () {
                 return '404 - handler';

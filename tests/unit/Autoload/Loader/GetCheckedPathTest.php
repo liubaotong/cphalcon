@@ -40,7 +40,7 @@ final class GetCheckedPathTest extends AbstractUnitTestCase
         }
 
         $loader    = new Loader(true);
-        $directory = dataDir('fixtures/Loader/Example/Folders/Types/');
+        $directory = supportDir('assets/Loader/Example/Folders/Types/');
         $loader->addDirectory($directory);
 
         $loader->autoload('Integer');

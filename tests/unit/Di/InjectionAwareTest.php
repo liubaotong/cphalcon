@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Di;
 
 use Phalcon\Di\Di;
-use Phalcon\Tests\Fixtures\Di\InjectionAwareComponent;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Di\InjectionAwareComponent;
 use function spl_object_hash;
 
 final class InjectionAwareTest extends AbstractUnitTestCase
