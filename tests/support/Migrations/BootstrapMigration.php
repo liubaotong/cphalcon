@@ -37,7 +37,9 @@ class BootstrapMigration extends AbstractMigration
 
     protected function getSqlPgsql(): array
     {
-        return [];
+        return [
+            "CREATE SCHEMA IF NOT EXISTS private;",
+        ];
     }
 
     protected function getSqlSqlsrv(): array
