@@ -13,12 +13,12 @@
 
 #include "kernel/main.h"
 #include "ext/json/php_json.h"
+#include "kernel/memory.h"
 #include "kernel/object.h"
+#include "kernel/operators.h"
+#include "kernel/array.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
-#include "kernel/operators.h"
-#include "kernel/memory.h"
-#include "kernel/array.h"
 
 
 /**
@@ -73,13 +73,13 @@ PHP_METHOD(Phalcon_Messages_Message, __construct)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval metaData;
 	zend_long code;
-	zval *message_param = NULL, *field = NULL, field_sub, *type_param = NULL, *code_param = NULL, *metaData_param = NULL, _0;
-	zval message, type;
+	zval message_zv, *field = NULL, field_sub, type_zv, *code_param = NULL, *metaData_param = NULL, _0;
+	zend_string *message = NULL, *type = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&message);
-	ZVAL_UNDEF(&type);
+	ZVAL_UNDEF(&message_zv);
 	ZVAL_UNDEF(&field_sub);
+	ZVAL_UNDEF(&type_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&metaData);
 	ZEND_PARSE_PARAMETERS_START(1, 5)
@@ -88,30 +88,30 @@ PHP_METHOD(Phalcon_Messages_Message, __construct)
 		Z_PARAM_ZVAL(field)
 		Z_PARAM_STR(type)
 		Z_PARAM_LONG(code)
-		Z_PARAM_ARRAY(metaData)
+		ZEPHIR_Z_PARAM_ARRAY(metaData, metaData_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 4, &message_param, &field, &type_param, &code_param, &metaData_param);
-	if (UNEXPECTED(Z_TYPE_P(message_param) != IS_STRING && Z_TYPE_P(message_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'message' must be of the type string"));
-		RETURN_MM_NULL();
+	if (ZEND_NUM_ARGS() > 1) {
+		field = ZEND_CALL_ARG(execute_data, 2);
 	}
-	if (EXPECTED(Z_TYPE_P(message_param) == IS_STRING)) {
-		zephir_get_strval(&message, message_param);
-	} else {
-		ZEPHIR_INIT_VAR(&message);
+	if (ZEND_NUM_ARGS() > 3) {
+		code_param = ZEND_CALL_ARG(execute_data, 4);
 	}
+	if (ZEND_NUM_ARGS() > 4) {
+		metaData_param = ZEND_CALL_ARG(execute_data, 5);
+	}
+	ZVAL_STR_COPY(&message_zv, message);
 	if (!field) {
 		field = &field_sub;
 		ZEPHIR_INIT_VAR(field);
 		ZVAL_STRING(field, "");
 	}
-	if (!type_param) {
-		ZEPHIR_INIT_VAR(&type);
-		ZVAL_STRING(&type, "");
+	if (!type) {
+		type = zend_string_init(ZEND_STRL(""), 0);
+		ZVAL_STR(&type_zv, type);
 	} else {
-		zephir_get_strval(&type, type_param);
+		ZVAL_STR_COPY(&type_zv, type);
 	}
 	if (!code_param) {
 		code = 0;
@@ -123,9 +123,9 @@ PHP_METHOD(Phalcon_Messages_Message, __construct)
 	} else {
 		zephir_get_arrval(&metaData, metaData_param);
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message_zv);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("field"), field);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_LONG(&_0, code);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("code"), &_0);
@@ -261,29 +261,17 @@ PHP_METHOD(Phalcon_Messages_Message, setField)
  */
 PHP_METHOD(Phalcon_Messages_Message, setMessage)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *message_param = NULL;
-	zval message;
+	zval message_zv;
+	zend_string *message = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&message);
+	ZVAL_UNDEF(&message_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(message)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &message_param);
-	if (UNEXPECTED(Z_TYPE_P(message_param) != IS_STRING && Z_TYPE_P(message_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'message' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(message_param) == IS_STRING)) {
-		zephir_get_strval(&message, message_param);
-	} else {
-		ZEPHIR_INIT_VAR(&message);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message);
-	RETURN_THIS();
+	ZVAL_STR(&message_zv, message);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("message"), &message_zv);
+	RETURN_THISW();
 }
 
 /**
@@ -298,7 +286,7 @@ PHP_METHOD(Phalcon_Messages_Message, setMetaData)
 
 	ZVAL_UNDEF(&metaData);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(metaData)
+		ZEPHIR_Z_PARAM_ARRAY(metaData, metaData_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -313,29 +301,17 @@ PHP_METHOD(Phalcon_Messages_Message, setMetaData)
  */
 PHP_METHOD(Phalcon_Messages_Message, setType)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *type_param = NULL;
-	zval type;
+	zval type_zv;
+	zend_string *type = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&type);
+	ZVAL_UNDEF(&type_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(type)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &type_param);
-	if (UNEXPECTED(Z_TYPE_P(type_param) != IS_STRING && Z_TYPE_P(type_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'type' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(type_param) == IS_STRING)) {
-		zephir_get_strval(&type, type_param);
-	} else {
-		ZEPHIR_INIT_VAR(&type);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type);
-	RETURN_THIS();
+	ZVAL_STR(&type_zv, type);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("type"), &type_zv);
+	RETURN_THISW();
 }
 
 zend_object *zephir_init_properties_Phalcon_Messages_Message(zend_class_entry *class_type)

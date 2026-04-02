@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
 #include "kernel/memory.h"
+#include "kernel/object.h"
 #include "kernel/operators.h"
 #include "kernel/concat.h"
 #include "kernel/fcall.h"
@@ -62,12 +62,12 @@ PHP_METHOD(Phalcon_Html_Helper_AbstractList, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval attributes;
-	zval *indent_param = NULL, *delimiter_param = NULL, *attributes_param = NULL, _0, _1;
-	zval indent, delimiter;
+	zval indent_zv, delimiter_zv, *attributes_param = NULL, _0, _1;
+	zend_string *indent = NULL, *delimiter = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&indent);
-	ZVAL_UNDEF(&delimiter);
+	ZVAL_UNDEF(&indent_zv);
+	ZVAL_UNDEF(&delimiter_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&attributes);
@@ -76,21 +76,23 @@ PHP_METHOD(Phalcon_Html_Helper_AbstractList, __invoke)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_STR(indent)
 		Z_PARAM_STR_OR_NULL(delimiter)
-		Z_PARAM_ARRAY(attributes)
+		ZEPHIR_Z_PARAM_ARRAY(attributes, attributes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 0, 3, &indent_param, &delimiter_param, &attributes_param);
-	if (!indent_param) {
-		ZEPHIR_INIT_VAR(&indent);
-		ZVAL_STRING(&indent, "    ");
-	} else {
-		zephir_get_strval(&indent, indent_param);
+	if (ZEND_NUM_ARGS() > 2) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 3);
 	}
-	if (!delimiter_param) {
-		ZEPHIR_INIT_VAR(&delimiter);
+	if (!indent) {
+		indent = zend_string_init(ZEND_STRL("    "), 0);
+		ZVAL_STR(&indent_zv, indent);
 	} else {
-		zephir_get_strval(&delimiter, delimiter_param);
+		ZVAL_STR_COPY(&indent_zv, indent);
+	}
+	if (!delimiter) {
+		ZEPHIR_INIT_VAR(&delimiter_zv);
+	} else {
+		ZVAL_STR_COPY(&delimiter_zv, delimiter);
 	}
 	if (!attributes_param) {
 		ZEPHIR_INIT_VAR(&attributes);
@@ -100,14 +102,14 @@ PHP_METHOD(Phalcon_Html_Helper_AbstractList, __invoke)
 	}
 	zephir_update_property_zval(this_ptr, ZEND_STRL("attributes"), &attributes);
 	ZEPHIR_INIT_VAR(&_0);
-	if (ZEPHIR_IS_EMPTY(&delimiter)) {
+	if (ZEPHIR_IS_EMPTY(&delimiter_zv)) {
 		ZEPHIR_INIT_NVAR(&_0);
 		ZEPHIR_GET_CONSTANT(&_0, "PHP_EOL");
 	} else {
-		ZEPHIR_CPY_WRT(&_0, &delimiter);
+		ZEPHIR_CPY_WRT(&_0, &delimiter_zv);
 	}
 	zephir_update_property_zval(this_ptr, ZEND_STRL("delimiter"), &_0);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("indent"), &indent);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("indent"), &indent_zv);
 	ZEPHIR_INIT_VAR(&_1);
 	array_init(&_1);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("store"), &_1);

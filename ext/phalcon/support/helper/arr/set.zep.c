@@ -59,7 +59,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Set, __invoke)
 	ZVAL_UNDEF(&source);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(value)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_ZVAL_OR_NULL(index)
@@ -96,7 +96,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Set, checkNull)
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&index_sub);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(value)
 		Z_PARAM_ZVAL(index)
 	ZEND_PARSE_PARAMETERS_END();
@@ -127,7 +127,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Set, checkNotNull)
 	ZVAL_UNDEF(&value_sub);
 	ZVAL_UNDEF(&index_sub);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_ZVAL(value)
 		Z_PARAM_ZVAL(index)
 	ZEND_PARSE_PARAMETERS_END();

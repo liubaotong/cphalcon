@@ -57,8 +57,8 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Whitelist, __invoke)
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_ARRAY(collection)
-		Z_PARAM_ARRAY(whiteList)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
+		ZEPHIR_Z_PARAM_ARRAY(whiteList, whiteList_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -70,7 +70,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_Whitelist, __invoke)
 	zephir_create_closure_ex(&_0, NULL, phalcon_14__closure_ce, SL("__invoke"));
 	ZEPHIR_CALL_METHOD(&filtered, this_ptr, "tofilter", NULL, 0, &whiteList, &_0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&_1, "array_flip", NULL, 101, &filtered);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_flip", NULL, 103, &filtered);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_FUNCTION("array_intersect_key", NULL, 2, &collection, &_1);
 	zephir_check_call_status();

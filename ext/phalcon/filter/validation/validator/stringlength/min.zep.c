@@ -105,7 +105,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_StringLength_Min, __construct)
 	ZVAL_UNDEF(&options);
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ARRAY(options)
+		ZEPHIR_Z_PARAM_ARRAY(options, options_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -164,7 +164,7 @@ PHP_METHOD(Phalcon_Filter_Validation_Validator_StringLength_Min, validate)
 	}
 	if ((zephir_function_exists_ex(ZEND_STRL("mb_strlen")) == SUCCESS)) {
 		zephir_cast_to_string(&_1$$4, &value);
-		ZEPHIR_CALL_FUNCTION(&length, "mb_strlen", NULL, 247, &_1$$4);
+		ZEPHIR_CALL_FUNCTION(&length, "mb_strlen", NULL, 248, &_1$$4);
 		zephir_check_call_status();
 	} else {
 		zephir_cast_to_string(&_2$$5, &value);

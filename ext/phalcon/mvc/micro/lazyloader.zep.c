@@ -13,12 +13,11 @@
 
 #include "kernel/main.h"
 #include "kernel/object.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/concat.h"
+#include "kernel/operators.h"
 #include "kernel/array.h"
 
 
@@ -55,29 +54,16 @@ ZEPHIR_INIT_CLASS(Phalcon_Mvc_Micro_LazyLoader)
  */
 PHP_METHOD(Phalcon_Mvc_Micro_LazyLoader, __construct)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *definition_param = NULL;
-	zval definition;
+	zval definition_zv;
+	zend_string *definition = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&definition);
+	ZVAL_UNDEF(&definition_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(definition)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &definition_param);
-	if (UNEXPECTED(Z_TYPE_P(definition_param) != IS_STRING && Z_TYPE_P(definition_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'definition' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(definition_param) == IS_STRING)) {
-		zephir_get_strval(&definition, definition_param);
-	} else {
-		ZEPHIR_INIT_VAR(&definition);
-	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("definition"), &definition);
-	ZEPHIR_MM_RESTORE();
+	ZVAL_STR(&definition_zv, definition);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("definition"), &definition_zv);
 }
 
 /**
@@ -91,11 +77,11 @@ PHP_METHOD(Phalcon_Mvc_Micro_LazyLoader, callMethod)
 	zval _4;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *method_param = NULL, *arguments = NULL, arguments_sub, *modelBinder = NULL, modelBinder_sub, __$null, handler, definition, bindCacheKey, _0, _5, _1$$4, _2$$4, _3$$5;
-	zval method;
+	zval method_zv, *arguments = NULL, arguments_sub, *modelBinder = NULL, modelBinder_sub, __$null, handler, definition, bindCacheKey, _0, _5, _1$$4, _2$$4, _3$$5;
+	zend_string *method = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&method);
+	ZVAL_UNDEF(&method_zv);
 	ZVAL_UNDEF(&arguments_sub);
 	ZVAL_UNDEF(&modelBinder_sub);
 	ZVAL_NULL(&__$null);
@@ -117,16 +103,11 @@ PHP_METHOD(Phalcon_Mvc_Micro_LazyLoader, callMethod)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 1, &method_param, &arguments, &modelBinder);
-	if (UNEXPECTED(Z_TYPE_P(method_param) != IS_STRING && Z_TYPE_P(method_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'method' must be of the type string"));
-		RETURN_MM_NULL();
+	arguments = ZEND_CALL_ARG(execute_data, 2);
+	if (ZEND_NUM_ARGS() > 2) {
+		modelBinder = ZEND_CALL_ARG(execute_data, 3);
 	}
-	if (EXPECTED(Z_TYPE_P(method_param) == IS_STRING)) {
-		zephir_get_strval(&method, method_param);
-	} else {
-		ZEPHIR_INIT_VAR(&method);
-	}
+	ZVAL_STR_COPY(&method_zv, method);
 	ZEPHIR_SEPARATE_PARAM(arguments);
 	if (!modelBinder) {
 		modelBinder = &modelBinder_sub;
@@ -155,15 +136,15 @@ PHP_METHOD(Phalcon_Mvc_Micro_LazyLoader, callMethod)
 	}
 	if (Z_TYPE_P(modelBinder) != IS_NULL) {
 		ZEPHIR_INIT_VAR(&bindCacheKey);
-		ZEPHIR_CONCAT_SVSV(&bindCacheKey, "_PHMB_", &definition, "_", &method);
-		ZEPHIR_CALL_METHOD(&_3$$5, modelBinder, "bindtohandler", NULL, 0, &handler, arguments, &bindCacheKey, &method);
+		ZEPHIR_CONCAT_SVSV(&bindCacheKey, "_PHMB_", &definition, "_", &method_zv);
+		ZEPHIR_CALL_METHOD(&_3$$5, modelBinder, "bindtohandler", NULL, 0, &handler, arguments, &bindCacheKey, &method_zv);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(arguments, &_3$$5);
 	}
 	ZEPHIR_INIT_VAR(&_4);
 	zephir_create_array(&_4, 2, 0);
 	zephir_array_fast_append(&_4, &handler);
-	zephir_array_fast_append(&_4, &method);
+	zephir_array_fast_append(&_4, &method_zv);
 	ZEPHIR_CALL_FUNCTION(&_5, "array_values", NULL, 14, arguments);
 	zephir_check_call_status();
 	ZEPHIR_CALL_USER_FUNC_ARRAY(return_value, &_4, &_5);

@@ -45,10 +45,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_ReduceSlashes, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *text_param = NULL, result, _0, _1;
-	zval text;
+	zval text_zv, result, _0, _1;
+	zend_string *text = NULL;
 
-	ZVAL_UNDEF(&text);
+	ZVAL_UNDEF(&text_zv);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -57,13 +57,12 @@ PHP_METHOD(Phalcon_Support_Helper_Str_ReduceSlashes, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &text_param);
-	zephir_get_strval(&text, text_param);
+	ZVAL_STR_COPY(&text_zv, text);
 	ZEPHIR_INIT_VAR(&_0);
 	ZVAL_STRING(&_0, "#(?<!:)//+#");
 	ZEPHIR_INIT_VAR(&_1);
 	ZVAL_STRING(&_1, "/");
-	ZEPHIR_CALL_FUNCTION(&result, "preg_replace", NULL, 41, &_0, &_1, &text);
+	ZEPHIR_CALL_FUNCTION(&result, "preg_replace", NULL, 41, &_0, &_1, &text_zv);
 	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(&_0);
 	if (Z_TYPE_P(&result) == IS_NULL) {

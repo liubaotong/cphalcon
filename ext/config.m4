@@ -183,6 +183,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/storage/adapter/stream.zep.c
 	phalcon/storage/adapter/weak.zep.c
 	phalcon/storage/serializer/igbinary.zep.c
+	phalcon/support/exception.zep.c
 	phalcon/acl/adapter/memory.zep.c
 	phalcon/acl/component.zep.c
 	phalcon/acl/componentawareinterface.zep.c
@@ -539,7 +540,6 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/support/debug.zep.c
 	phalcon/support/debug/dump.zep.c
 	phalcon/support/debug/exception.zep.c
-	phalcon/support/exception.zep.c
 	phalcon/support/helper/arr/blacklist.zep.c
 	phalcon/support/helper/arr/chunk.zep.c
 	phalcon/support/helper/arr/filter.zep.c
@@ -679,6 +679,24 @@ if test "$PHP_PHALCON" = "yes"; then
 		[[#include "php_config.h"]]
 	)
 
+	CPPFLAGS=$old_CPPFLAGS
+
+	AC_MSG_CHECKING([whether zend_parse_arg_array uses zval**])
+	old_CPPFLAGS=$CPPFLAGS
+	CPPFLAGS="$CPPFLAGS $INCLUDES"
+	AC_COMPILE_IFELSE(
+		[AC_LANG_PROGRAM(
+			[[#include "main/php.h"
+			  #include "Zend/zend_API.h"]],
+			[[zval *p = (void*)0;
+			  zend_parse_arg_array((void*)0, &p, 0, 0);]]
+		)],
+		[
+			AC_DEFINE([ZEPHIR_ARRAY_PARAM_DOUBLE_PTR], [1], [Whether zend_parse_arg_array accepts zval**])
+			AC_MSG_RESULT([yes])
+		],
+		[AC_MSG_RESULT([no])]
+	)
 	CPPFLAGS=$old_CPPFLAGS
 
 	PHP_INSTALL_HEADERS([ext/phalcon], [php_PHALCON.h])
