@@ -49,10 +49,26 @@ final class DescribeIndexesTest extends AbstractDatabaseTestCase
         $table     = $migration->getTable();
 
         $expected = [
-            'PRIMARY'                  => new Index('PRIMARY', ['field_primary'], 'PRIMARY'),
-            'dialect_table_unique'     => new Index('dialect_table_unique', ['field_integer'], 'UNIQUE'),
-            'dialect_table_index'      => new Index('dialect_table_index', ['field_bigint'], ''),
-            'dialect_table_two_fields' => new Index('dialect_table_two_fields', ['field_char', 'field_char_default'], ''),
+            'PRIMARY'                  => new Index(
+                'PRIMARY',
+                ['field_primary'],
+                'PRIMARY'
+            ),
+            'dialect_table_unique'     => new Index(
+                'dialect_table_unique',
+                ['field_integer'],
+                'UNIQUE'
+            ),
+            'dialect_table_index'      => new Index(
+                'dialect_table_index',
+                ['field_bigint'],
+                ''
+            ),
+            'dialect_table_two_fields' => new Index(
+                'dialect_table_two_fields',
+                ['field_char', 'field_char_default'],
+                ''
+            ),
         ];
 
         $this->assertEquals(

@@ -23,7 +23,7 @@ final class ListTablesTest extends AbstractDatabaseTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2016-08-03
      */
-    public function test_before(): void
+    public function testListTables(): void
     {
         $this->markTestSkipped('Need implementation');
     }
