@@ -47,6 +47,11 @@ abstract class AbstractDatabaseTestCase extends AbstractUnitTestCase
     private static ?PDO $connection = null;
 
     /**
+     * @var bool
+     */
+    private static bool $schemaLoaded = false;
+
+    /**
      * @var string
      */
     private static string $driver = 'sqlite';
@@ -208,36 +213,35 @@ abstract class AbstractDatabaseTestCase extends AbstractUnitTestCase
     {
         self::$driver = env('driver');
 
-        /**
-         * username and password are populated here
-         */
-        $dsn = self::getDatabaseDsn();
+        if (self::$connection === null) {
+            /**
+             * username and password are populated here
+             */
+            $dsn = self::getDatabaseDsn();
 
-        self::$connection = new PDO(
-            $dsn,
-            self::$username,
-            self::$password
-        );
+            self::$connection = new PDO(
+                $dsn,
+                self::$username,
+                self::$password
+            );
 
-        $queries = explode(';', env('initial_queries', ''));
-        $queries = array_filter($queries);
-        foreach ($queries as $query) {
-            self::$connection->exec($query);
+            $queries = explode(';', env('initial_queries', ''));
+            $queries = array_filter($queries);
+            foreach ($queries as $query) {
+                self::$connection->exec($query);
+            }
         }
 
-        /**
-         * Clean DB
-         */
+        if (!self::$schemaLoaded) {
+            $dumpFile = env('dump_file', '');
+            if (file_exists($dumpFile)) {
+                $sql = file_get_contents($dumpFile);
+                self::load(
+                    preg_split('#\r\n|\n|\r#', $sql, -1, PREG_SPLIT_NO_EMPTY)
+                );
+            }
 
-        /**
-         * Populate DB
-         */
-        $dumpFile = env('dump_file', '');
-        if (file_exists($dumpFile)) {
-            $sql = file_get_contents($dumpFile);
-            self::load(
-                preg_split('#\r\n|\n|\r#', $sql, -1, PREG_SPLIT_NO_EMPTY)
-            );
+            self::$schemaLoaded = true;
         }
     }
 
@@ -246,7 +250,6 @@ abstract class AbstractDatabaseTestCase extends AbstractUnitTestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$connection = null;
     }
 
     /**

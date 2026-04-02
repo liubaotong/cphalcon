@@ -90,8 +90,24 @@ abstract class AbstractMigration
             return 0;
         }
 
+        $driver = $this->getDriverName();
+
+        if ($driver === 'mysql') {
+            $this->connection->exec('SET FOREIGN_KEY_CHECKS=0;');
+            $result = (int) $this->connection->exec('TRUNCATE TABLE ' . $this->table . ';');
+            $this->connection->exec('SET FOREIGN_KEY_CHECKS=1;');
+
+            return $result;
+        }
+
+        if ($driver === 'pgsql' || $driver === 'postgres') {
+            return (int) $this->connection->exec(
+                'TRUNCATE TABLE ' . $this->table . ' RESTART IDENTITY CASCADE;'
+            );
+        }
+
         return $this->connection->exec(
-            'delete from ' . $this->table . ';'
+            'DELETE FROM ' . $this->table . ';'
         );
     }
 
