@@ -13,18 +13,26 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Db\Dialect\Mysql;
 
+use Phalcon\Db\Dialect\Mysql;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 
 final class GetForeignKeyChecksTest extends AbstractDatabaseTestCase
 {
     /**
-     * Tests Phalcon\Db\Dialect\Mysql :: getForeignKeyChecks()
+     * Tests Phalcon\Db\Dialect\Mysql :: getForeignKeyChecks
      *
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
+     * @since  2020-01-20
+     *
+     * @group mysql
      */
     public function testDbDialectMysqlGetForeignKeyChecks(): void
     {
-        $this->markTestSkipped('Need implementation');
+        /** @var Mysql $dialect */
+        $dialect = new Mysql();
+
+        $expected = 'SELECT @@foreign_key_checks';
+        $actual   = $dialect->getForeignKeyChecks();
+        $this->assertSame($expected, $actual);
     }
 }
