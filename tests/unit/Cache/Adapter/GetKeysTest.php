@@ -18,6 +18,7 @@ use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
+use Phalcon\Cache\Adapter\RedisCluster;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Cache\Exception\Exception as StorageException;
@@ -30,6 +31,7 @@ use stdClass;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
+use function getOptionsRedisCluster;
 use function outputDir;
 use function phpversion;
 use function uniqid;
@@ -60,6 +62,12 @@ final class GetKeysTest extends AbstractUnitTestCase
                 Redis::class,
                 getOptionsRedis(),
                 'ph-reds-'
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                'ph-redc-'
             ],
             [
                 '',
