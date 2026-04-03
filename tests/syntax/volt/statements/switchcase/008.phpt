@@ -77,7 +77,7 @@ array(1) {
         ["type"]=>
         int(357)
         ["value"]=>
-        string(28) "
+        string(30) "
         Hello username
     "
         ["file"]=>
@@ -110,7 +110,7 @@ array(1) {
         ["type"]=>
         int(357)
         ["value"]=>
-        string(9) "
+        string(10) "
         "
         ["file"]=>
         string(9) "eval code"
@@ -142,7 +142,7 @@ array(1) {
         ["type"]=>
         int(357)
         ["value"]=>
-        string(10) "!
+        string(11) "!
         "
         ["file"]=>
         string(9) "eval code"
@@ -163,7 +163,7 @@ array(1) {
         ["type"]=>
         int(357)
         ["value"]=>
-        string(5) "
+        string(6) "
     "
         ["file"]=>
         string(9) "eval code"
@@ -184,7 +184,7 @@ array(1) {
         ["type"]=>
         int(357)
         ["value"]=>
-        string(22) "
+        string(24) "
         Who are you?
 "
         ["file"]=>
