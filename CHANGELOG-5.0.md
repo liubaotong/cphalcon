@@ -1,5 +1,17 @@
 # Changelog
-## 5.11.0 (2026-04-03)
+## 5.12.1 (2026-XX-XX)
+
+### Changed
+
+### Added
+
+- Added `Phalcon\Storage\Adapter\RedisCluster` adapter to support Redis Cluster connections [#16867](https://github.com/phalcon/cphalcon/issues/16867)
+
+### Fixed
+
+### Removed
+
+## 5.12.0 (2026-04-03)
 
 ### Changed
 
