@@ -17,8 +17,7 @@ use Phalcon\Db\Enum;
 use Phalcon\Db\Result\PdoResult;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function is_array;
 use function is_object;
 

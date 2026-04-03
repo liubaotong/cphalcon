@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Response\Cookies;
 
 use Phalcon\Http\Response\Cookies;
-use Phalcon\Tests\Fixtures\Traits\CookieTrait;
+use Phalcon\Tests\Unit\Http\Fake\CookieTrait;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
-
 use function uniqid;
 
 final class HasTest extends AbstractHttpBase

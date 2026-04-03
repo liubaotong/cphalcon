@@ -16,10 +16,9 @@ namespace Phalcon\Tests\Database\Mvc\Model\Resultset\Simple;
 use Phalcon\Mvc\Model\Query\Builder;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Models\InvoicesWithColumnMap;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function date;
 
 final class ToArrayTest extends AbstractDatabaseTestCase

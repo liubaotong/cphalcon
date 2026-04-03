@@ -16,9 +16,7 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-
-use function dataDir;
+use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
 
 final class GetCheckedPathTest extends AbstractUnitTestCase
 {

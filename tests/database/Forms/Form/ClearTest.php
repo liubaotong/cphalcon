@@ -25,7 +25,7 @@ use Phalcon\Messages\Messages;
 use Phalcon\Tag;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Database\Forms\Form\Fake\FakeSelect;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use stdClass;
 
 final class ClearTest extends AbstractDatabaseTestCase

@@ -17,9 +17,9 @@ use Phalcon\Mvc\Model\Exception as ModelException;
 use Phalcon\Mvc\Model\MetaData\Strategy\Introspection;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Models\InvoicesMap;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class IntrospectionTest extends AbstractDatabaseTestCase
 {

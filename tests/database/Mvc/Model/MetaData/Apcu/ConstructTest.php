@@ -19,10 +19,9 @@ use Phalcon\Mvc\Model\MetaData\Apcu;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function apcu_clear_cache;
 
 final class ConstructTest extends AbstractDatabaseTestCase

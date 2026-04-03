@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Relations\RelationsParts;
 use Phalcon\Tests\Support\Models\Relations\RelationsRobots;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class ExistsHasManyToManyTest extends AbstractDatabaseTestCase
 {

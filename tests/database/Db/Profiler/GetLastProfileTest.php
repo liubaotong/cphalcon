@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Db\Profiler;
 
 use Phalcon\Db\Profiler\Item;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetLastProfileTest extends AbstractDatabaseTestCase
 {

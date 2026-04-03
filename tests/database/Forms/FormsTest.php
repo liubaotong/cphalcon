@@ -21,9 +21,9 @@ use Phalcon\Forms\Form;
 use Phalcon\Messages\Message;
 use Phalcon\Tag;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Forms\ContactFormPublicProperties;
-use Phalcon\Tests\Fixtures\Forms\ContactFormSettersGetters;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Forms\ContactFormPublicProperties;
+use Phalcon\Tests\Support\Forms\ContactFormSettersGetters;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class FormsTest extends AbstractDatabaseTestCase
 {

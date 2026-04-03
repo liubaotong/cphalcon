@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo\Sqlite;
 
 use Phalcon\Db\Reference;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class DescribeReferencesTest extends AbstractDatabaseTestCase
 {

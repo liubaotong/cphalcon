@@ -17,13 +17,13 @@ use PDO;
 use Phalcon\Mvc\Model\Manager;
 use Phalcon\Mvc\Model\Resultset;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Support\Models\AlbumORama\Albums;
-use Phalcon\Tests\Support\Models\AlbumORama\Artists;
-use Phalcon\Tests\Support\Models\AlbumORama\Songs;
 use Phalcon\Tests\Support\Migrations\AlbumsMigration;
 use Phalcon\Tests\Support\Migrations\ArtistsMigration;
 use Phalcon\Tests\Support\Migrations\SongsMigration;
+use Phalcon\Tests\Support\Models\AlbumORama\Albums;
+use Phalcon\Tests\Support\Models\AlbumORama\Artists;
+use Phalcon\Tests\Support\Models\AlbumORama\Songs;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetRelationRecordsTest extends AbstractDatabaseTestCase
 {

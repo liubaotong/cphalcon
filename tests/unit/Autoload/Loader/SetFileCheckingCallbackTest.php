@@ -17,10 +17,8 @@ use Phalcon\Autoload\Exception;
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Exception as EventsException;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
-
+use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
 use function class_exists;
-use function dataDir;
 use function function_exists;
 
 final class SetFileCheckingCallbackTest extends AbstractUnitTestCase

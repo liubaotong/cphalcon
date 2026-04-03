@@ -17,9 +17,9 @@ use Phalcon\Mvc\Model\Transaction\Failed;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\PersonasMigration;
 use Phalcon\Tests\Support\Migrations\SelectMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Personas;
 use Phalcon\Tests\Support\Models\Select;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class ManagerTest extends AbstractDatabaseTestCase
 {

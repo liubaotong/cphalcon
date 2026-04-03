@@ -15,10 +15,8 @@ namespace Phalcon\Tests\Unit\Mvc\View;
 
 use Phalcon\Di\Di;
 use Phalcon\Mvc\View;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
-use function dataDir;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 class PickTest extends AbstractUnitTestCase
 {

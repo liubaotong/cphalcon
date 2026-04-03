@@ -15,12 +15,11 @@ namespace Phalcon\Tests\Unit\Mvc\View\Simple;
 
 use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\Mvc\View\Exception;
-use Phalcon\Tests\Fixtures\Objects\ChildObject;
-use Phalcon\Tests\Fixtures\Objects\ParentObject;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Fixtures\Traits\ViewTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Objects\ChildObject;
+use Phalcon\Tests\Support\Objects\ParentObject;
+use Phalcon\Tests\Support\Traits\DiTrait;
+use Phalcon\Tests\Unit\Mvc\Fake\ViewTrait;
 use function dataDir;
 use function ob_end_clean;
 use function ob_get_level;

@@ -15,9 +15,8 @@ namespace Phalcon\Tests\Unit\Session\Manager;
 
 use Phalcon\Session\Exception;
 use Phalcon\Session\Manager;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function uniqid;
 
 final class GetSetIdTest extends AbstractUnitTestCase

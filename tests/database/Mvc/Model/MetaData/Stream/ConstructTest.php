@@ -17,10 +17,9 @@ use PDO;
 use Phalcon\Mvc\Model\MetaData\Stream;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function cacheDir;
 
 final class ConstructTest extends AbstractDatabaseTestCase
@@ -62,8 +61,8 @@ final class ConstructTest extends AbstractDatabaseTestCase
      */
     public function tearDown(): void
     {
-        $this->safeDeleteFile(cacheDir('meta-phalcon_tests_models_invoices.php'));
-        $this->safeDeleteFile(cacheDir('map-phalcon_tests_models_invoices.php'));
+        $this->safeDeleteFile(cacheDir('meta-phalcon_tests_support_models_invoices.php'));
+        $this->safeDeleteFile(cacheDir('map-phalcon_tests_support_models_invoices.php'));
 
         $this->tearDownDatabase();
     }
@@ -87,11 +86,11 @@ final class ConstructTest extends AbstractDatabaseTestCase
         Invoices::findFirst();
 
         $this->assertTrue(
-            file_exists(cacheDir('meta-phalcon_tests_models_invoices.php'))
+            file_exists(cacheDir('meta-phalcon_tests_support_models_invoices.php'))
         );
 
         $this->assertTrue(
-            file_exists(cacheDir('map-phalcon_tests_models_invoices.php'))
+            file_exists(cacheDir('map-phalcon_tests_support_models_invoices.php'))
         );
 
         $this->assertFalse($md->isEmpty());

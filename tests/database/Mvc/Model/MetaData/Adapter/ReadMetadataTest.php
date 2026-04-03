@@ -22,8 +22,7 @@ use Phalcon\Tests\Support\Migrations\PhotoMigration;
 use Phalcon\Tests\Support\Models\Album;
 use Phalcon\Tests\Support\Models\AlbumPhoto;
 use Phalcon\Tests\Support\Models\Photo;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function array_keys;
 
 final class ReadMetadataTest extends AbstractDatabaseTestCase
@@ -171,7 +170,7 @@ final class ReadMetadataTest extends AbstractDatabaseTestCase
     private static function getKeyData(): array
     {
         return [
-        'meta-phalcon\tests\models\albumphoto' => [
+        'meta-phalcon\tests\support\models\albumphoto' => [
             0 => [
                 'id',
                 'photo_id',
@@ -218,15 +217,15 @@ final class ReadMetadataTest extends AbstractDatabaseTestCase
             ],
             13 => [],
         ],
-        'map-phalcon\tests\models\album' => [
+        'map-phalcon\tests\support\models\album' => [
             0 => null,
             1 => null,
         ],
-        'map-phalcon\tests\models\albumphoto' => [
+        'map-phalcon\tests\support\models\albumphoto' => [
             0 => null,
             1 => null,
         ],
-        'meta-phalcon\tests\models\photo' => [
+        'meta-phalcon\tests\support\models\photo' => [
             0 => [
                 'id',
                 'date_uploaded',
@@ -347,11 +346,11 @@ final class ReadMetadataTest extends AbstractDatabaseTestCase
             ],
             13 => [],
         ],
-        'map-phalcon\tests\models\photo' => [
+        'map-phalcon\tests\support\models\photo' => [
             0 => null,
             1 => null,
         ],
-        'meta-phalcon\tests\models\album' => [
+        'meta-phalcon\tests\support\models\album' => [
             0 => [
                 'id',
                 'name',

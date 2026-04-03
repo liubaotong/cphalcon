@@ -20,11 +20,10 @@ use Phalcon\Session\Exception;
 use Phalcon\Storage\AdapterFactory;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Session\Fake\Adapter\FakeStreamIsWritable;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Support\Traits\SessionTrait;
+use Phalcon\Tests\Unit\Session\Fake\Adapter\FakeStreamIsWritable;
 use SessionHandlerInterface;
-
 use function getOptionsRedis;
 use function getOptionsSessionStream;
 

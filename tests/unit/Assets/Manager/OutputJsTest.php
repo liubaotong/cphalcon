@@ -19,16 +19,14 @@ use Phalcon\Assets\Filters\None;
 use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
-use function supportDir;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function ob_get_clean;
 use function ob_start;
 use function outputDir;
 use function sprintf;
+use function supportDir;
 use function uniqid;
-
 use const PHP_EOL;
 
 final class OutputJsTest extends AbstractUnitTestCase

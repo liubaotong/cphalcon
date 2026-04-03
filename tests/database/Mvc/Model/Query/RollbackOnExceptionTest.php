@@ -13,17 +13,12 @@ namespace Phalcon\Tests\Database\Mvc\Model\Query;
 
 use PDOException;
 use Phalcon\Mvc\Model\Manager;
-use Phalcon\Support\Debug;
 use Phalcon\Tests\AbstractDatabaseTestCase;
+use Phalcon\Tests\Database\Mvc\RecordsTrait;
 use Phalcon\Tests\Support\Migrations\RollbackTestMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use RuntimeException;
 use Throwable;
-
-use function ob_end_clean;
-use function ob_get_contents;
-use function ob_start;
 
 final class RollbackOnExceptionTest extends AbstractDatabaseTestCase
 {

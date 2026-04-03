@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\CustomersVisible;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class IsVisibleModelPropertyTest extends AbstractDatabaseTestCase
 {

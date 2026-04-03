@@ -18,11 +18,11 @@ use Phalcon\Mvc\Model\Query\Builder;
 use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Customers;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Models\Orders;
 use Phalcon\Tests\Support\Models\Products;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class JoinTest extends AbstractDatabaseTestCase
 {

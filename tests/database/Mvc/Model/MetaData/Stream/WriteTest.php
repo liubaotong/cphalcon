@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Mvc\Model\MetaData\Stream;
 
-use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Mvc\Model\Exception;
 use Phalcon\Mvc\Model\MetaData\Stream;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Models\Robots;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function file_exists;
 use function file_put_contents;
 use function unlink;

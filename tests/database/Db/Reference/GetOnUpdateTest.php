@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Db\Reference;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DialectTrait;
+use Phalcon\Tests\Database\Db\Fake\DialectTrait;
 
 final class GetOnUpdateTest extends AbstractDatabaseTestCase
 {

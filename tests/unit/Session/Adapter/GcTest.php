@@ -15,9 +15,8 @@ namespace Phalcon\Tests\Unit\Session\Adapter;
 
 use Phalcon\Session\Exception;
 use Phalcon\Tests\AbstractServicesTestCase;
-use Phalcon\Tests\Unit\Session\Adapter\Fake\FakeStreamGlob;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
+use Phalcon\Tests\Unit\Session\Fake\FakeStreamGlob;
 use function cacheDir;
 use function file_put_contents;
 use function getOptionsSessionStream;

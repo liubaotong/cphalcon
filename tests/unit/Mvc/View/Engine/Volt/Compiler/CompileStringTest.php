@@ -16,12 +16,10 @@ namespace Phalcon\Tests\Unit\Mvc\View\Engine\Volt\Compiler;
 use Phalcon\Html\TagFactory;
 use Phalcon\Mvc\View\Engine\Volt\Compiler;
 use Phalcon\Mvc\View\Exception;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function ob_get_clean;
 use function ob_start;
-
 use const PHP_EOL;
 
 class CompileStringTest extends AbstractUnitTestCase

@@ -18,11 +18,9 @@ use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\ConfigFactory;
 use Phalcon\Config\Exception;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
-
+use Phalcon\Tests\Support\Traits\FactoryTrait;
 use function hash;
 use function supportDir;
-
 use const INI_SCANNER_NORMAL;
 
 final class LoadTest extends AbstractUnitTestCase

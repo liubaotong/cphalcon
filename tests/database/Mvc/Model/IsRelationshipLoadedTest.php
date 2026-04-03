@@ -16,13 +16,13 @@ namespace Phalcon\Tests\Database\Mvc\Model;
 use PDO;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Support\Models\AlbumORama\Albums;
-use Phalcon\Tests\Support\Models\AlbumORama\Artists;
-use Phalcon\Tests\Support\Models\AlbumORama\Songs;
 use Phalcon\Tests\Support\Migrations\AlbumsMigration;
 use Phalcon\Tests\Support\Migrations\ArtistsMigration;
 use Phalcon\Tests\Support\Migrations\SongsMigration;
+use Phalcon\Tests\Support\Models\AlbumORama\Albums;
+use Phalcon\Tests\Support\Models\AlbumORama\Artists;
+use Phalcon\Tests\Support\Models\AlbumORama\Songs;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
 {

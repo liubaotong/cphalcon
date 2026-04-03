@@ -18,10 +18,9 @@ use Phalcon\Mvc\Model\Transaction\Manager;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\Support\Models\Customers;
 use Phalcon\Tests\Support\Models\Invoices;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function date;
 use function uniqid;
 

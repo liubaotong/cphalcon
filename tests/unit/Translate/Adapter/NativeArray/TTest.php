@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter\NativeArray;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateNativeArrayHelperTrait;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateNativeArrayTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateNativeArrayHelperTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateNativeArrayTrait;
 
 final class TTest extends AbstractUnitTestCase
 {

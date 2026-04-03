@@ -23,7 +23,7 @@ use Phalcon\Filter\Validation\Validator\Url;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeUsersModel;
 
 final class ValidationTest extends AbstractUnitTestCase

@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Di\FactoryDefault\Cli;
 
 use Phalcon\Di\Exception;
 use Phalcon\Di\FactoryDefault\Cli;
-use Phalcon\Tests\Fixtures\Traits\CliTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Di\Fake\CliTrait;
 
 final class ConstructTest extends AbstractUnitTestCase
 {

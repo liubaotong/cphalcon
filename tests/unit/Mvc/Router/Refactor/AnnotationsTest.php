@@ -15,9 +15,8 @@ namespace Phalcon\Tests\Unit\Mvc\Router\Refactor;
 
 use Phalcon\Mvc\Router\Annotations;
 use Phalcon\Mvc\Router\Route;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function is_object;
 
 final class AnnotationsTest extends AbstractUnitTestCase

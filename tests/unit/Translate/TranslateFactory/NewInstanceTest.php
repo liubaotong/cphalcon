@@ -14,13 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\TranslateFactory;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateCsvTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateCsvTrait;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
 use Phalcon\Translate\TranslateFactory;
-
 use function uniqid;
 
 final class NewInstanceTest extends AbstractUnitTestCase

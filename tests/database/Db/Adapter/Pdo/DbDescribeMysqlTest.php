@@ -14,8 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function env;
 
 final class DbDescribeMysqlTest extends AbstractDatabaseTestCase

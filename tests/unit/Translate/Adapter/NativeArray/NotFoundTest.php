@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter\NativeArray;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\NativeArray\Fake\FakeNativeAdapter;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateNativeArrayTrait;
+use Phalcon\Tests\Unit\Translate\Fake\FakeNativeAdapter;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateNativeArrayTrait;
 use Phalcon\Translate\Adapter\NativeArray;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;

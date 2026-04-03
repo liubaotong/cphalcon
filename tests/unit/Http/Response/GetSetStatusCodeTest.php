@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Response;
 
 use Phalcon\Mvc\Micro;
-use Phalcon\Tests\Unit\Http\Response\Fake\FakeHttpResponseContentMiddleware;
-use Phalcon\Tests\Fixtures\Page\Http;
+use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
-
+use Phalcon\Tests\Unit\Http\Response\Fake\FakeHttpResponseContentMiddleware;
 use function ob_get_clean;
 use function ob_start;
 use function uniqid;

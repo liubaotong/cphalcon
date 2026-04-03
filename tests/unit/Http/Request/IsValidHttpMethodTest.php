@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Request;
 
 use Phalcon\Http\Request;
-use Phalcon\Tests\Fixtures\Page\Http;
 use Phalcon\Tests\AbstractUnitTestCase;
-
+use Phalcon\Tests\Support\Page\Http;
 use function uniqid;
 
 final class IsValidHttpMethodTest extends AbstractUnitTestCase

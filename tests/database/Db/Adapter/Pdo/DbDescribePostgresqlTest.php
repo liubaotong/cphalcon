@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 
 use Phalcon\Db\Column;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class DbDescribePostgresqlTest extends AbstractDatabaseTestCase
 {

@@ -18,13 +18,11 @@ use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Assets\Fake\TrimFilter;
 use Phalcon\Tests\Unit\Assets\Fake\UppercaseFilter;
-
 use function file_get_contents;
 use function outputDir;
-
 use const PHP_EOL;
 
 final class OutputCssTest extends AbstractUnitTestCase

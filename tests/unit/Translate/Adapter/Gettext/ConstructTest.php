@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Translate\Adapter\Gettext;
 
 use ArrayAccess;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Gettext\Fake\FakeGettextFunctionExists;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateGettextTrait;
+use Phalcon\Tests\Unit\Translate\Fake\FakeGettextFunctionExists;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateGettextTrait;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Gettext;
 use Phalcon\Translate\Exception;

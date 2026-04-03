@@ -19,11 +19,10 @@ use Phalcon\Paginator\Adapter\QueryBuilder;
 use Phalcon\Paginator\Repository;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
+use Phalcon\Tests\Database\Mvc\RecordsTrait;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
 use Phalcon\Tests\Support\Models\Invoices;
-
+use Phalcon\Tests\Support\Traits\DiTrait;
 use function is_int;
 
 final class PaginateTest extends AbstractDatabaseTestCase

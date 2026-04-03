@@ -22,11 +22,10 @@ use Phalcon\Storage\Adapter\Weak;
 use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as HelperException;
-use Phalcon\Tests\Unit\Storage\Adapter\Fake\FakeStreamFileGetContents;
-use Phalcon\Tests\Unit\Storage\Adapter\Fake\FakeStreamFopen;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\Fake\FakeStreamFileGetContents;
+use Phalcon\Tests\Unit\Storage\Fake\FakeStreamFopen;
 use stdClass;
-
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Http\Request;
 
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Request;
+use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Unit\Http\Fake\FakeRequest;
-use Phalcon\Tests\Fixtures\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
 
 final class GetClientAddressTest extends AbstractHttpBase
