@@ -25,6 +25,7 @@ use Phalcon\Tests\Support\Models\Customers;
 use Phalcon\Tests\Support\Models\CustomersKeepSnapshots;
 use Phalcon\Tests\Support\Models\InvoicesKeepSnapshots;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function uniqid;
 
 final class QueryTest extends AbstractDatabaseTestCase

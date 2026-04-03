@@ -24,10 +24,12 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Modules\Backend\Module as BackendModule;
 use Phalcon\Tests\Support\Modules\Frontend\Module as FrontendModule;
 use Phalcon\Tests\Support\Tasks\Issue787Task;
+
 use function ob_end_clean;
 use function ob_start;
 use function rootDir;
 use function shell_exec;
+
 use const PHP_OS_FAMILY;
 
 final class HandleTest extends AbstractUnitTestCase

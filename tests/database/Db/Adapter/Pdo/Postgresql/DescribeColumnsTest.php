@@ -16,6 +16,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo\Postgresql;
 use Phalcon\Db\Column;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function env;
 
 final class DescribeColumnsTest extends AbstractDatabaseTestCase

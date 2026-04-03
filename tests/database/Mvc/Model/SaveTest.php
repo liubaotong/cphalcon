@@ -30,6 +30,7 @@ use Phalcon\Tests\Support\Models\InvoicesSchema;
 use Phalcon\Tests\Support\Models\InvoicesValidationFails;
 use Phalcon\Tests\Support\Models\Sources;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function uniqid;
 
 final class SaveTest extends AbstractDatabaseTestCase

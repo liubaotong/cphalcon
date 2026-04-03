@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Unit\Http\Request;
 
 use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
+
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;

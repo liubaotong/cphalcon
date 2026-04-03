@@ -17,6 +17,7 @@ use Phalcon\Http\Request\File;
 use Phalcon\Http\Request\FileInterface;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Page\Http;
+
 use function supportDir;
 
 final class ConstructTest extends AbstractUnitTestCase

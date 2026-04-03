@@ -17,6 +17,7 @@ use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Forms\Fake\FormsTrait;
+
 use function uniqid;
 
 final class GetSetHasAppendMessagesTest extends AbstractUnitTestCase

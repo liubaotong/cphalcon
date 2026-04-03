@@ -17,6 +17,7 @@ use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Image\Fake\GdTrait;
+
 use function outputDir;
 
 final class WatermarkTest extends AbstractUnitTestCase

@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Unit\Mvc\View\Simple;
 
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function ob_end_clean;
 use function ob_start;
 

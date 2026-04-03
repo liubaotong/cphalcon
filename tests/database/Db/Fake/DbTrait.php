@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Db\Fake;
 
 use Phalcon\Db\Column;
+
 use function array_shift;
 
 trait DbTrait

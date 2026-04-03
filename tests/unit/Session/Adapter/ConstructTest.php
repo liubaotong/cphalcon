@@ -24,6 +24,7 @@ use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Support\Traits\SessionTrait;
 use Phalcon\Tests\Unit\Session\Fake\Adapter\FakeStreamIsWritable;
 use SessionHandlerInterface;
+
 use function getOptionsRedis;
 use function getOptionsSessionStream;
 

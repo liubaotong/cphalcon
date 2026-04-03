@@ -17,6 +17,7 @@ use PDO;
 use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function getOptionsMysql;
 
 final class ConnectTest extends AbstractDatabaseTestCase

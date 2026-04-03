@@ -17,6 +17,7 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Forms\Fake\FormsTrait;
+
 use function uniqid;
 
 final class GetSetLabelTest extends AbstractUnitTestCase

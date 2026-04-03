@@ -18,9 +18,11 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function ob_end_clean;
 use function ob_get_contents;
 use function ob_start;
+
 use const PHP_EOL;
 
 final class AddInlineCssTest extends AbstractUnitTestCase

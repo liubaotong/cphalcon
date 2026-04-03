@@ -18,7 +18,9 @@ use Phalcon\Tests\Support\Traits\FactoryTrait;
 use Phalcon\Translate\Adapter\Gettext;
 use Phalcon\Translate\InterpolatorFactory;
 use Phalcon\Translate\TranslateFactory;
+
 use function strtolower;
+
 use const PHP_OS;
 
 final class LoadTest extends AbstractUnitTestCase

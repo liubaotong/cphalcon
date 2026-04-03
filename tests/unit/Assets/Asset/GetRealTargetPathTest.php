@@ -18,6 +18,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileExistsPositive;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use function supportDir;
 
 final class GetRealTargetPathTest extends AbstractUnitTestCase

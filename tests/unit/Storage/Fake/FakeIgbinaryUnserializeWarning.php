@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Storage\Fake;
 
 use Phalcon\Storage\Serializer\Igbinary;
+
 use function trigger_error;
+
 use const E_USER_WARNING;
 
 final class FakeIgbinaryUnserializeWarning extends Igbinary

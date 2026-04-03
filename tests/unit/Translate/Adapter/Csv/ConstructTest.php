@@ -21,6 +21,7 @@ use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\Exception;
 use Phalcon\Translate\InterpolatorFactory;
+
 use function supportDir;
 
 final class ConstructTest extends AbstractUnitTestCase

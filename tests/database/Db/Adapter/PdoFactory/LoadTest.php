@@ -17,6 +17,7 @@ use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Traits\FactoryTrait;
+
 use function array_intersect_assoc;
 
 final class LoadTest extends AbstractDatabaseTestCase

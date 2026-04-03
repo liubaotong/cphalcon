@@ -17,6 +17,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Translate\Fake\TranslateGettextTrait;
 use Phalcon\Translate\Adapter\Gettext;
 use Phalcon\Translate\InterpolatorFactory;
+
 use function dataDir;
 use function supportDir;
 

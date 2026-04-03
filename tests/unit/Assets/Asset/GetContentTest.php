@@ -20,8 +20,10 @@ use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileExists;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileGetContents;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use function file_get_contents;
 use function supportDir;
+
 use const PHP_EOL;
 
 final class GetContentTest extends AbstractUnitTestCase

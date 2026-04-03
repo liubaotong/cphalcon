@@ -18,6 +18,7 @@ use Phalcon\Flash\Session;
 use Phalcon\Html\Escaper;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function spl_object_hash;
 
 final class GetSetEscaperServiceTest extends AbstractUnitTestCase

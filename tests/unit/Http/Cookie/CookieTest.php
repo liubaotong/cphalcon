@@ -15,6 +15,7 @@ use Exception;
 use Phalcon\Http\Cookie;
 use Phalcon\Tests\Unit\Http\Fake\CookieTrait;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
+
 use function explode;
 use function uniqid;
 

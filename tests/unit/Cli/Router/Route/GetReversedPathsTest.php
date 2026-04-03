@@ -18,6 +18,7 @@ use Phalcon\Cli\Router\Route;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Di\Fake\CliTrait;
+
 use function array_flip;
 
 final class GetReversedPathsTest extends AbstractUnitTestCase

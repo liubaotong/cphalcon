@@ -17,6 +17,7 @@ use Phalcon\Session\Adapter\Redis;
 use Phalcon\Tests\AbstractServicesTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Session\Fake\Adapter\FakeStreamFileGetContents;
+
 use function cacheDir;
 use function getOptionsSessionStream;
 use function uniqid;

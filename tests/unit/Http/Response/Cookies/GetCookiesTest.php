@@ -16,6 +16,7 @@ namespace Phalcon\Tests\Unit\Http\Response\Cookies;
 use Phalcon\Http\Response\Cookies;
 use Phalcon\Tests\Unit\Http\Fake\CookieTrait;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
+
 use function uniqid;
 
 final class GetCookiesTest extends AbstractHttpBase

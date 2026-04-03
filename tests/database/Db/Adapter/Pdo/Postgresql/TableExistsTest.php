@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo\Postgresql;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function env;
 
 final class TableExistsTest extends AbstractDatabaseTestCase

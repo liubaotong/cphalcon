@@ -16,6 +16,7 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Image\Fake\GdTrait;
+
 use const IMAGETYPE_GIF;
 use const IMAGETYPE_JPEG;
 use const IMAGETYPE_PNG;

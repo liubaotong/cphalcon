@@ -16,7 +16,9 @@ namespace Phalcon\Tests\Unit\Http\Response;
 use Phalcon\Http\Response;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Page\Http;
+
 use function json_encode;
+
 use const JSON_HEX_TAG;
 
 final class SetJsonContentTest extends AbstractUnitTestCase

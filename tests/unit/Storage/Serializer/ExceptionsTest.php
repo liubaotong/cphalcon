@@ -26,6 +26,7 @@ use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinarySerialize;
 use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinaryUnserialize;
 use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinaryUnserializeWarning;
 use stdClass;
+
 use function json_encode;
 
 final class ExceptionsTest extends AbstractUnitTestCase

@@ -27,6 +27,7 @@ use Phalcon\Support\Exception as HelperException;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Storage\Fake\FakeApcuIterator;
 use stdClass;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

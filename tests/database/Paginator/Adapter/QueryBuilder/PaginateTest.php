@@ -23,6 +23,7 @@ use Phalcon\Tests\Database\Mvc\RecordsTrait;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function is_int;
 
 final class PaginateTest extends AbstractDatabaseTestCase

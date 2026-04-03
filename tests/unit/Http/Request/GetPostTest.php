@@ -16,6 +16,7 @@ namespace Phalcon\Tests\Unit\Http\Request;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
+
 use function strtolower;
 use function uniqid;
 

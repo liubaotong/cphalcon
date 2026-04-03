@@ -18,6 +18,7 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function supportDir;
 
 final class AddInlineJsTest extends AbstractUnitTestCase

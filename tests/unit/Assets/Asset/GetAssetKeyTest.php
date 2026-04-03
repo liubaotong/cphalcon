@@ -17,6 +17,7 @@ use Phalcon\Assets\Asset;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use function hash;
 
 final class GetAssetKeyTest extends AbstractUnitTestCase

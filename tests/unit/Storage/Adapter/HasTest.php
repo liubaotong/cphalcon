@@ -26,6 +26,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Storage\Fake\FakeStreamFileGetContents;
 use Phalcon\Tests\Unit\Storage\Fake\FakeStreamFopen;
 use stdClass;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

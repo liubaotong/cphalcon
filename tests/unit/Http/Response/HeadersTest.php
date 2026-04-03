@@ -16,6 +16,7 @@ use Phalcon\Http\Response\Headers;
 use Phalcon\Http\Response\HeadersInterface;
 use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Unit\Http\Helper\AbstractHttpBase;
+
 use function uniqid;
 
 final class HeadersTest extends AbstractHttpBase

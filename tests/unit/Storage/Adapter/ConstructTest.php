@@ -26,6 +26,7 @@ use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception as SupportException;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Storage\Fake\FakeLibmemcached;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

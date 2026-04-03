@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Database\Mvc;
 
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use PHPUnit\Framework\Assert;
+
 use function uniqid;
 
 trait RecordsTrait

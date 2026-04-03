@@ -15,6 +15,7 @@ namespace Phalcon\Tests\Unit\Forms\Element;
 
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Forms\Fake\FormsTrait;
+
 use function uniqid;
 
 final class GetSetUserOptionTest extends AbstractUnitTestCase

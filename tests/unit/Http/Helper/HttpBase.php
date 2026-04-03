@@ -17,6 +17,7 @@ use Phalcon\Http\Request;
 use Phalcon\Http\Response;
 use Phalcon\Tests\Support\Traits\DiTrait;
 use UnitTester;
+
 use function header_remove;
 
 class HttpBase

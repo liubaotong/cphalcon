@@ -18,6 +18,7 @@ use Phalcon\Filter\Validation\Validator\Digit;
 use Phalcon\Filter\Validation\Validator\StringLength;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Forms\Fake\FormsTrait;
+
 use function uniqid;
 
 final class GetAddValidatorsTest extends AbstractUnitTestCase

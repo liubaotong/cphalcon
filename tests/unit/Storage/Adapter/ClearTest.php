@@ -27,6 +27,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Storage\Fake\FakeApcuApcuDelete;
 use Phalcon\Tests\Unit\Storage\Fake\FakeStreamUnlink;
 use stdClass;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

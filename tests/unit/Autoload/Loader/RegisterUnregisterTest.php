@@ -18,6 +18,7 @@ use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
+
 use function array_pop;
 use function spl_autoload_functions;
 

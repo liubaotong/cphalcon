@@ -21,6 +21,7 @@ use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Models\InvoicesBehavior;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function uniqid;
 
 final class TimestampableTest extends AbstractDatabaseTestCase

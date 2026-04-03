@@ -16,6 +16,7 @@ namespace Phalcon\Tests\Unit\Http\Request\File;
 use Phalcon\Http\Request\File;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Page\Http;
+
 use function supportDir;
 
 final class GetExtensionTest extends AbstractUnitTestCase

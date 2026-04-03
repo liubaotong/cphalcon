@@ -23,6 +23,7 @@ use Phalcon\Tests\Support\Models\Album;
 use Phalcon\Tests\Support\Models\AlbumPhoto;
 use Phalcon\Tests\Support\Models\Photo;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function array_keys;
 
 final class ReadMetadataTest extends AbstractDatabaseTestCase

@@ -20,6 +20,7 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Page\Http;
 use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Http\Fake\FakePhpStream;
+
 use function header_remove;
 use function stream_wrapper_register;
 use function stream_wrapper_restore;

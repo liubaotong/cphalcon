@@ -31,4 +31,3 @@ final class FakeHttpResponseContentMiddleware implements MiddlewareInterface
         $application->stop();
     }
 }
-

@@ -19,6 +19,7 @@ use Phalcon\Tests\Unit\Support\Version\Fake\FakeVersionAlpha;
 use Phalcon\Tests\Unit\Support\Version\Fake\FakeVersionBeta;
 use Phalcon\Tests\Unit\Support\Version\Fake\FakeVersionRc;
 use Phalcon\Tests\Unit\Support\Version\Fake\FakeVersionStable;
+
 use function is_string;
 
 final class GetIdTest extends AbstractUnitTestCase

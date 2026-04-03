@@ -27,6 +27,7 @@ use Phalcon\Tests\Support\Models\InvoicesExtended;
 use Phalcon\Tests\Support\Models\InvoicesMap;
 use Phalcon\Tests\Support\Models\ModelWithStringPrimary;
 use Phalcon\Tests\Support\Traits\DiTrait;
+
 use function uniqid;
 
 final class FindFirstTest extends AbstractDatabaseTestCase
