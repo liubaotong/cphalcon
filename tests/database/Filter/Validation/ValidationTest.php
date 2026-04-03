@@ -23,8 +23,8 @@ use Phalcon\Filter\Validation\Validator\Url;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Users;
+use Phalcon\Tests\Support\Models\Users;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use stdClass;
 
 final class ValidationTest extends AbstractDatabaseTestCase

@@ -18,7 +18,7 @@ use Phalcon\Assets\Manager;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Assets\Fake\TrimFilter;
 use Phalcon\Tests\Unit\Assets\Fake\UppercaseFilter;
 

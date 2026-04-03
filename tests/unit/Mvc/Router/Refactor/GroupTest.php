@@ -17,8 +17,8 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Router\Group;
 use Phalcon\Mvc\Router\Route;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GroupTest extends AbstractUnitTestCase
 {

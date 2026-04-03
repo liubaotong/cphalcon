@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Mvc\Model\MetaData;
 use Phalcon\Mvc\Model\Exception as ExpectedException;
 use Phalcon\Mvc\Model\MetaData\Memory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetSetDITest extends AbstractDatabaseTestCase
 {

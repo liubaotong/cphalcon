@@ -30,7 +30,7 @@ final class LoadFromPhpTest extends AbstractUnitTestCase
         $di = new Di();
 
         // load php
-        $di->loadFromPhp(dataDir('fixtures/Di/services.php'));
+        $di->loadFromPhp(supportDir('assets/Di/services.php'));
 
         // there are 3 new + 12 from Default
         $this->assertCount(15, $di->getServices());

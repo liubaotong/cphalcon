@@ -41,7 +41,7 @@ final class AllTest extends AbstractUnitTestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir('fixtures/Support/Dump/variables_output.txt'),
+                supportDir('assets/Support/Dump/variables_output.txt'),
             ),
         );
 

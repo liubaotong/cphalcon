@@ -18,13 +18,13 @@ use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Mvc\Model\Row;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
+use Phalcon\Tests\Database\Mvc\RecordsTrait;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Fixtures\Traits\RecordsTrait;
-use Phalcon\Tests\Models\Customers;
-use Phalcon\Tests\Models\CustomersKeepSnapshots;
-use Phalcon\Tests\Models\InvoicesKeepSnapshots;
+use Phalcon\Tests\Support\Models\Customers;
+use Phalcon\Tests\Support\Models\CustomersKeepSnapshots;
+use Phalcon\Tests\Support\Models\InvoicesKeepSnapshots;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 use function uniqid;
 

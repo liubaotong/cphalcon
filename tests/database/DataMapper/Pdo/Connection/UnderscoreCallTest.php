@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\DataMapper\Pdo\Connection;
 use BadMethodCallException;
 use Phalcon\DataMapper\Pdo\Connection;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\DataMapper\Pdo\ConnectionFixture;
+use Phalcon\Tests\Database\DataMapper\Fake\FakeConnection;
 
 final class UnderscoreCallTest extends AbstractDatabaseTestCase
 {
@@ -27,7 +27,7 @@ final class UnderscoreCallTest extends AbstractDatabaseTestCase
     public function testDMPdoConnectionUnderscoreCall(): void
     {
         /** @var Connection $connection */
-        $connection = new ConnectionFixture(
+        $connection = new FakeConnection(
             self::getDatabaseDsn(),
             self::getDatabaseUsername(),
             self::getDatabasePassword()

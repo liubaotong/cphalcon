@@ -17,7 +17,7 @@ use Phalcon\Mvc\Model\Query;
 use Phalcon\Mvc\Model\Transaction;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetSetTransactionTest extends AbstractDatabaseTestCase
 {

@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\PdoFactory;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
+use Phalcon\Tests\Support\Traits\FactoryTrait;
 
 use function array_intersect_assoc;
 

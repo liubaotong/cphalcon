@@ -14,8 +14,8 @@ namespace Phalcon\Tests\Database\Mvc\Model;
 use PDO;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models;
+use Phalcon\Tests\Support\Models;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class UnderscoreIssetTest extends AbstractDatabaseTestCase
 {

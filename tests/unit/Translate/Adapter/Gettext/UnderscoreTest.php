@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter\Gettext;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateGettextHelperTrait;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateGettextTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateGettextHelperTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateGettextTrait;
 
 final class UnderscoreTest extends AbstractUnitTestCase
 {

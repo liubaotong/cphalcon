@@ -29,7 +29,7 @@ final class GetMethodTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterStreamGetMethod(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Stream(
             [

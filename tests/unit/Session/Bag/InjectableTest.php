@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Session\Bag;
 
 use Phalcon\Session\Bag;
-use Phalcon\Tests\Unit\Session\Fake\FakeInjectableBag;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Traits\DiTrait;
+use Phalcon\Tests\Unit\Session\Fake\FakeInjectableBag;
 
 final class InjectableTest extends AbstractUnitTestCase
 {

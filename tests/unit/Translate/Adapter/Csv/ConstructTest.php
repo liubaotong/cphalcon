@@ -15,8 +15,8 @@ namespace Phalcon\Tests\Unit\Translate\Adapter\Csv;
 
 use ArrayAccess;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Csv\Fake\FakeCsvFopen;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateCsvTrait;
+use Phalcon\Tests\Unit\Translate\Fake\FakeCsvFopen;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateCsvTrait;
 use Phalcon\Translate\Adapter\AdapterInterface;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\Exception;

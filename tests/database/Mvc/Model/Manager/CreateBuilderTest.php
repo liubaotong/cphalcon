@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Mvc\Model\Manager;
 
 use Phalcon\Mvc\Model\ManagerInterface;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 use function spl_object_hash;
 

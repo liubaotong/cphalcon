@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Collection;
 
-use Phalcon\Tests\Unit\Support\Fake\Collection\FakeCollectionPhpJsonEncode;
+use Phalcon\Tests\Unit\Support\Fake\FakeCollectionPhpJsonEncode;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ToJsonTest extends AbstractCollectionTestCase

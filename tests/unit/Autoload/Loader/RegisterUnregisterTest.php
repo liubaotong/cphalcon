@@ -17,7 +17,7 @@ use LoaderEvent;
 use Phalcon\Autoload\Loader;
 use Phalcon\Events\Manager;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
+use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
 
 use function array_pop;
 use function spl_autoload_functions;
@@ -47,17 +47,17 @@ final class RegisterUnregisterTest extends AbstractUnitTestCase
         $loader
             ->setDirectories(
                 [
-                    dataDir('fixtures/Loader/Example/Events/'),
+                    supportDir('assets/Loader/Example/Events/'),
                 ]
             )
             ->setClasses(
                 [
-                    'OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'OtherClass' => supportDir('assets/Loader/Example/Events/Other/'),
                 ]
             )
             ->setNamespaces(
                 [
-                    'Other\OtherClass' => dataDir('fixtures/Loader/Example/Events/Other/'),
+                    'Other\OtherClass' => supportDir('assets/Loader/Example/Events/Other/'),
                 ]
             )
         ;
@@ -86,10 +86,10 @@ final class RegisterUnregisterTest extends AbstractUnitTestCase
                 0 => null,
             ],
             'beforeCheckPath'  => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => supportDir('assets/Loader/Example/Events/LoaderEvent.php'),
             ],
             'pathFound'        => [
-                0 => dataDir('fixtures/Loader/Example/Events/LoaderEvent.php'),
+                0 => supportDir('assets/Loader/Example/Events/LoaderEvent.php'),
             ],
         ];
 

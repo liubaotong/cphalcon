@@ -20,7 +20,7 @@ use Phalcon\Mvc\Application;
 use Phalcon\Mvc\Application\Exception;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\View;
-use Phalcon\Tests\Modules\Backend\Module;
+use Phalcon\Tests\Support\Modules\Backend\Module;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class RegisterModulesTest extends AbstractUnitTestCase
@@ -46,7 +46,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                     [
                         'controller' => 'index',
                         'module'     => 'frontend',
-                        'namespace'  => 'Phalcon\Tests\Modules\Frontend\Controllers',
+                        'namespace'  => 'Phalcon\Tests\Support\Modules\Frontend\Controllers',
                     ]
                 );
 
@@ -59,11 +59,11 @@ final class RegisterModulesTest extends AbstractUnitTestCase
         $application->registerModules(
             [
                 'frontend' => [
-                    'path'      => dataDir('fixtures/modules/frontend/Module.php'),
-                    'className' => \Phalcon\Tests\Modules\Frontend\Module::class,
+                    'path'      => supportDir('Modules/Frontend/Module.php'),
+                    'className' => \Phalcon\Tests\Support\Modules\Frontend\Module::class,
                 ],
                 'backend'  => [
-                    'path'      => dataDir('fixtures/modules/backend/Module.php'),
+                    'path'      => supportDir('Modules/Backend/Module.php'),
                     'className' => Module::class,
                 ],
             ]
@@ -94,7 +94,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                     [
                         'controller' => 'index',
                         'module'     => 'frontend',
-                        'namespace'  => 'Phalcon\Tests\Modules\Frontend\Controllers',
+                        'namespace'  => 'Phalcon\Tests\Support\Modules\Frontend\Controllers',
                     ]
                 );
 
@@ -103,7 +103,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                     [
                         'controller' => 'login',
                         'module'     => 'backend',
-                        'namespace'  => 'Phalcon\Tests\Modules\Backend\Controllers',
+                        'namespace'  => 'Phalcon\Tests\Support\Modules\Backend\Controllers',
                     ]
                 );
 
@@ -121,7 +121,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                         'view',
                         function () use ($view) {
                             $view->setViewsDir(
-                                dataDir('fixtures/modules/frontend/views/')
+                                supportDir('Modules/Frontend/views/')
                             );
 
                             return $view;
@@ -133,7 +133,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                         'view',
                         function () use ($view) {
                             $view->setViewsDir(
-                                dataDir('fixtures/modules/backend/views/')
+                                supportDir('Modules/Backend/views/')
                             );
 
                             return $view;
@@ -174,7 +174,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
                     [
                         'controller' => 'index',
                         'module'     => 'frontend',
-                        'namespace'  => 'Phalcon\Tests\Modules\Frontend\Controllers',
+                        'namespace'  => 'Phalcon\Tests\Support\Modules\Frontend\Controllers',
                     ]
                 );
 
@@ -188,7 +188,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
             [
                 'frontend' => [
                     'path'      => dataDir('not-a-real-file.php'),
-                    'className' => \Phalcon\Tests\Modules\Frontend\Module::class,
+                    'className' => \Phalcon\Tests\Support\Modules\Frontend\Module::class,
                 ],
             ]
         );

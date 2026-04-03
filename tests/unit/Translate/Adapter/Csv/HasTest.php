@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Translate\Adapter\Csv;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Translate\Adapter\Support\TranslateCsvTrait;
+use Phalcon\Tests\Unit\Translate\Fake\TranslateCsvTrait;
 use Phalcon\Translate\Adapter\Csv;
 use Phalcon\Translate\InterpolatorFactory;
 

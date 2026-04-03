@@ -20,7 +20,7 @@ use Phalcon\Forms\Form;
 use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class FormElementsTest extends AbstractDatabaseTestCase
 {

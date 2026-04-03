@@ -36,9 +36,9 @@ final class RefactorModelsRelationsMagicTest extends AbstractDatabaseTestCase
 // use IntegrationTester;
 // use Phalcon\Mvc\Model;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\AlbumORama\Albums;
-// use Phalcon\Tests\Models\AlbumORama\Artists;
-// use Phalcon\Tests\Models\AlbumORama\Songs;
+// use Phalcon\Tests\Support\Models\AlbumORama\Albums;
+// use Phalcon\Tests\Support\Models\AlbumORama\Artists;
+// use Phalcon\Tests\Support\Models\AlbumORama\Songs;
 //
 // class ModelsRelationsMagicCest
 // {

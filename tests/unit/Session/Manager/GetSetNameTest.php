@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Session\Manager;
 use Phalcon\Session\Exception;
 use Phalcon\Session\Manager;
 use Phalcon\Tests\AbstractServicesTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetSetNameTest extends AbstractServicesTestCase
 {

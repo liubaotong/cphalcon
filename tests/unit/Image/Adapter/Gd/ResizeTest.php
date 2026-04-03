@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Unit\Image\Adapter\Gd;
 use Phalcon\Image\Adapter\Gd;
 use Phalcon\Image\Enum;
 use Phalcon\Image\Exception;
-use Phalcon\Tests\Fixtures\Traits\GdTrait;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Image\Fake\GdTrait;
 
 use function supportDir;
 

@@ -18,9 +18,9 @@ use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\Validator\Uniqueness;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\ObjectsMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Objects;
-use Phalcon\Tests\Models\ObjectsWithColumnMap;
+use Phalcon\Tests\Support\Models\Objects;
+use Phalcon\Tests\Support\Models\ObjectsWithColumnMap;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class UniquenessTest extends AbstractDatabaseTestCase
 {

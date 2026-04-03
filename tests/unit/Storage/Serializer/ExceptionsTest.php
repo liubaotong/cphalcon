@@ -20,11 +20,11 @@ use Phalcon\Storage\Serializer\Json;
 use Phalcon\Storage\Serializer\Msgpack;
 use Phalcon\Storage\Serializer\Php;
 use Phalcon\Support\Collection;
-use Phalcon\Tests\Unit\Storage\Serializer\Fake\FakeBase64Decode;
-use Phalcon\Tests\Unit\Storage\Serializer\Fake\FakeIgbinarySerialize;
-use Phalcon\Tests\Unit\Storage\Serializer\Fake\FakeIgbinaryUnserialize;
-use Phalcon\Tests\Unit\Storage\Serializer\Fake\FakeIgbinaryUnserializeWarning;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\Fake\FakeBase64Decode;
+use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinarySerialize;
+use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinaryUnserialize;
+use Phalcon\Tests\Unit\Storage\Fake\FakeIgbinaryUnserializeWarning;
 use stdClass;
 
 use function json_encode;

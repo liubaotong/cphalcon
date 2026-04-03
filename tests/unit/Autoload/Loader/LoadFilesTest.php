@@ -15,9 +15,8 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
+use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
 
-use function dataDir;
 use function function_exists;
 
 final class LoadFilesTest extends AbstractUnitTestCase
@@ -44,7 +43,7 @@ final class LoadFilesTest extends AbstractUnitTestCase
 
         $loader
             ->addFile(
-                dataDir('fixtures/Loader/Example/Functions/FunctionsNoClassTwo.php')
+                supportDir('assets/Loader/Example/Functions/FunctionsNoClassTwo.php')
             )
             ->addFile(
                 '/path/to/unknown/file'

@@ -16,8 +16,8 @@ use Phalcon\Mvc\Model;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models;
+use Phalcon\Tests\Support\Models;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class UnderscoreSetTest extends AbstractDatabaseTestCase
 {

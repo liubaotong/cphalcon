@@ -15,9 +15,9 @@ namespace Phalcon\Tests\Unit\Events\Manager;
 
 use Phalcon\Events\Manager;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Listener\OneListener;
-use Phalcon\Tests\Fixtures\Listener\ThreeListener;
-use Phalcon\Tests\Fixtures\Listener\TwoListener;
+use Phalcon\Tests\Support\Listener\OneListener;
+use Phalcon\Tests\Support\Listener\ThreeListener;
+use Phalcon\Tests\Support\Listener\TwoListener;
 use Phalcon\Tests\Unit\Events\Fake\ComponentOne;
 
 final class GetResponsesTest extends AbstractUnitTestCase

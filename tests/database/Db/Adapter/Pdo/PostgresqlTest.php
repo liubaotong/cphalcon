@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 use Phalcon\Db\Dialect\Postgresql as DialectPostgresql;
 use Phalcon\Db\Reference;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 use function env;
 
@@ -200,7 +200,7 @@ final class PostgresqlTest extends AbstractDatabaseTestCase
     {
         $sql = rtrim(
             (string) file_get_contents(
-                dataDir('fixtures/Db/postgresql/example9.sql')
+                supportDir('assets/Db/postgresql/example9.sql')
             )
         );
 

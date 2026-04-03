@@ -22,7 +22,7 @@ if (! file_exists($autoloader)) {
 }
 
 require_once $autoloader;
-require_once __DIR__ . '/tests/_config/functions.php';
+require_once __DIR__ . '/tests/support/_config/functions.php';
 
 if (file_exists('.env')) {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);

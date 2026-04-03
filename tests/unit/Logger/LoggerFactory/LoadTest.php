@@ -18,9 +18,9 @@ use Phalcon\Logger\AdapterFactory;
 use Phalcon\Logger\Exception as LoggerException;
 use Phalcon\Logger\Logger;
 use Phalcon\Logger\LoggerFactory;
-use Phalcon\Tests\Fixtures\Traits\FactoryTrait;
-use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Logger\LoggerInterface;
+use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Traits\FactoryTrait;
 
 final class LoadTest extends AbstractUnitTestCase
 {
