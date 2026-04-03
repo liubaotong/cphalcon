@@ -30,7 +30,7 @@ final class GetClassAnnotationsTest extends AbstractUnitTestCase
     {
         parent::setUp();
 
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
     }
 
     /**

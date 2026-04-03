@@ -22,8 +22,8 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\TagFactory;
 use Phalcon\Messages\Message;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Forms\ContactFormPublicProperties;
-use Phalcon\Tests\Fixtures\Forms\ContactFormSettersGetters;
+use Phalcon\Tests\Support\Forms\ContactFormPublicProperties;
+use Phalcon\Tests\Support\Forms\ContactFormSettersGetters;
 
 final class FormsTest extends AbstractUnitTestCase
 {

@@ -47,15 +47,13 @@ final class ParseTest extends AbstractUnitTestCase
      */
     public function testAnnotationsReaderParseInvalidAnnotation(): void
     {
-        $filename    = 'fixtures' . DIRECTORY_SEPARATOR . 'Annotations'
-            . DIRECTORY_SEPARATOR . 'TestInvalid.php';
-        $includeFile = str_replace('/', DIRECTORY_SEPARATOR, dataDir($filename));
+        $includeFile = supportDir('assets/Annotations/TestInvalid.php');
 
         $this->assertFileExists($includeFile);
 
         require_once $includeFile;
 
-        $file = str_replace('/', DIRECTORY_SEPARATOR, dataDir($filename));
+        $file = $includeFile;
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Syntax error, unexpected EOF in ' . $file);
@@ -70,7 +68,7 @@ final class ParseTest extends AbstractUnitTestCase
      */
     public function testAnnotationsReaderParse(): void
     {
-        $includeFile = dataDir('fixtures/Annotations/TestClass.php');
+        $includeFile = supportDir('assets/Annotations/TestClass.php');
 
         $this->assertFileExists($includeFile);
 

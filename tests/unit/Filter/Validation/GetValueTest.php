@@ -16,14 +16,14 @@ namespace Phalcon\Tests\Unit\Filter\Validation;
 use Phalcon\Di\Di;
 use Phalcon\Di\Exception;
 use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Exception as ValidationException;
 use Phalcon\Filter\Validation\Validator\Alpha;
 use Phalcon\Filter\Validation\Validator\Email;
-use Phalcon\Filter\Validation\Exception as ValidationException;
+use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeValueAttribute;
 use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeValueMethod;
 use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeValueProperty;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\AbstractUnitTestCase;
 use stdClass;
 
 final class GetValueTest extends AbstractUnitTestCase

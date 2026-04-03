@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Unit\Support\Version;
 
 use Phalcon\Support\Version;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\VersionTrait;
+use Phalcon\Tests\Unit\Support\Fake\VersionTrait;
 
 final class GetPartTest extends AbstractUnitTestCase
 {

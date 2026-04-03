@@ -28,7 +28,7 @@ final class GetMethodTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterMemoryGetMethod(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Memory();
 

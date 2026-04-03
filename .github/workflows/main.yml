@@ -455,8 +455,8 @@ jobs:
             ./.ci/linux-setup-locales.sh
           fi
 
-          cp tests/_config/.env.default .env
-          php tests/_config/generate-db-schemas.php
+          cp tests/support/_config/.env.default .env
+          php tests/support/_config/generate-db-schemas.php
 
       - name: Run Unit Tests
         if: always()
@@ -580,8 +580,8 @@ jobs:
 
       - name: Setup Tests
         run: |
-          cp tests/_config/.env.default .env
-          php tests/_config/generate-db-schemas.php
+          cp tests/support/_config/.env.default .env
+          php tests/support/_config/generate-db-schemas.php
 
       - name: Run Database Tests (MySQL)
         env:

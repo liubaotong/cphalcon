@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Unit\Autoload\Loader;
 
 use Phalcon\Autoload\Loader;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\LoaderTrait;
+use Phalcon\Tests\Unit\Autoload\Fake\LoaderTrait;
 
 use function hash;
 

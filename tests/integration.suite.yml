@@ -2,7 +2,7 @@ actor: IntegrationTester
 modules:
   enabled:
     - Phalcon5:
-        bootstrap: 'tests/_config/bootstrap.php'
+        bootstrap: 'tests/support/_config/bootstrap.php'
     - Memcache:
         host: '%DATA_MEMCACHED_HOST%'
         port: %DATA_MEMCACHED_PORT%

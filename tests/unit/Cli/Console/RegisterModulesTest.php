@@ -16,8 +16,8 @@ namespace Phalcon\Tests\Unit\Cli\Console;
 use Phalcon\Cli\Console as CliConsole;
 use Phalcon\Cli\Console\Exception;
 use Phalcon\Di\FactoryDefault\Cli as DiFactoryDefault;
-use Phalcon\Tests\Modules\Backend\Module;
-use Phalcon\Tests\Modules\Frontend\Module as FrontendModule;
+use Phalcon\Tests\Support\Modules\Backend\Module;
+use Phalcon\Tests\Support\Modules\Frontend\Module as FrontendModule;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class RegisterModulesTest extends AbstractUnitTestCase
@@ -74,7 +74,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
             [
                 'frontend' => [
                     'className' => FrontendModule::class,
-                    'path'      => dataDir('fixtures/modules/frontend/Module.php'),
+                    'path'      => supportDir('Modules/Frontend/Module.php'),
                 ],
             ]
         );
@@ -93,7 +93,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
             [
                 'backend' => [
                     'className' => FrontendModule::class,
-                    'path'      => dataDir('fixtures/modules/backend/Module.php'),
+                    'path'      => supportDir('Modules/Backend/Module.php'),
                 ],
             ]
         );
@@ -110,7 +110,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
             [
                 'frontend' => [
                     'className' => FrontendModule::class,
-                    'path'      => dataDir('fixtures/modules/frontend/Module.php'),
+                    'path'      => supportDir('Modules/Frontend/Module.php'),
                 ],
             ],
             true

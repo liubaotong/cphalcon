@@ -36,7 +36,7 @@ final class LoadFromYamlTest extends AbstractUnitTestCase
         $container = new Di();
 
         // load yaml
-        $container->loadFromYaml(dataDir('fixtures/Di/services.yml'));
+        $container->loadFromYaml(supportDir('assets/Di/services.yml'));
 
         // there are 3
         $this->assertCount(3, $container->getServices());

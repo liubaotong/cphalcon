@@ -53,8 +53,8 @@ final class RefactorModelsMetadataTest extends AbstractDatabaseTestCase
 //
 // use IntegrationTester;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\Personas;
-// use Phalcon\Tests\Models\Robots;
+// use Phalcon\Tests\Support\Models\Personas;
+// use Phalcon\Tests\Support\Models\Robots;
 //
 // class ModelsMetadataCest
 // {

@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Mvc\Model\Transaction;
 
 use Phalcon\Db\Adapter\AdapterInterface;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class GetConnectionTest extends AbstractDatabaseTestCase
 {

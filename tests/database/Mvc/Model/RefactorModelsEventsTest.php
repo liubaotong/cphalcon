@@ -63,7 +63,7 @@ final class RefactorModelsEventsTest extends AbstractDatabaseTestCase
 // use IntegrationTester;
 // use Phalcon\Mvc\Model\Manager as ModelManager;
 // use Phalcon\Tests\Fixtures\Traits\DiTrait;
-// use Phalcon\Tests\Models\GossipRobots;
+// use Phalcon\Tests\Support\Models\GossipRobots;
 //
 // class ModelsEventsCest
 // {

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Session\Adapter;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 use Phalcon\Tests\Support\Traits\SessionTrait;
 
 final class OpenCloseTest extends AbstractUnitTestCase

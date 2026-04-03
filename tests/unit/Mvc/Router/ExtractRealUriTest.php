@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Mvc\Router;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Mvc\Fake\FakeRouter;
-use Phalcon\Tests\Fixtures\Traits\RouterTrait;
+use Phalcon\Tests\Unit\Mvc\Fake\RouterTrait;
 
 final class ExtractRealUriTest extends AbstractUnitTestCase
 {

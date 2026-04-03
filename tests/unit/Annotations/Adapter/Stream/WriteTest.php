@@ -28,7 +28,7 @@ final class WriteTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterStreamWrite(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Stream(
             [

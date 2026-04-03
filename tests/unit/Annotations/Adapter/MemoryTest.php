@@ -30,11 +30,11 @@ final class MemoryTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterMemory(): void
     {
-        $this->assertFileExists(dataDir('fixtures/Annotations/TestClass.php'));
-        $this->assertFileExists(dataDir('fixtures/Annotations/TestClassNs.php'));
+        $this->assertFileExists(supportDir('assets/Annotations/TestClass.php'));
+        $this->assertFileExists(supportDir('assets/Annotations/TestClassNs.php'));
 
-        require_once dataDir('fixtures/Annotations/TestClass.php');
-        require_once dataDir('fixtures/Annotations/TestClassNs.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClassNs.php');
 
         $adapter = new Memory();
 

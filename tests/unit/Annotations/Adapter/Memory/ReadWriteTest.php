@@ -28,7 +28,7 @@ final class ReadWriteTest extends AbstractUnitTestCase
      */
     public function testAnnotationsAdapterMemoryReadWrite(): void
     {
-        require_once dataDir('fixtures/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
 
         $adapter = new Memory();
 

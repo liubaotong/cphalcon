@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Database\Db\Index;
 
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DialectTrait;
+use Phalcon\Tests\Database\Db\Fake\DialectTrait;
 
 final class GetColumnsTest extends AbstractDatabaseTestCase
 {

@@ -37,7 +37,7 @@ final class RefactorControllersTest extends AbstractDatabaseTestCase
 // use Phalcon\Di\Di;
 // use Phalcon\Mvc\Model\Manager;
 // use Phalcon\Mvc\Model\MetaData\Memory;
-// use Phalcon\Tests\Controllers\ViewRequestController;
+// use Phalcon\Tests\Support\ControllersViewRequestController;
 //
 // /**
 //  * \Phalcon\Tests\Integration\Mvc\ControllerCest

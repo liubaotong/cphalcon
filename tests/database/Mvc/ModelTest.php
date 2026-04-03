@@ -15,8 +15,7 @@ namespace Phalcon\Tests\Database\Mvc;
 
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\AlbumORama\Albums;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class ModelTest extends AbstractDatabaseTestCase
 {
@@ -337,7 +336,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //        );
 //
 //        $this->specify(
-//            "Model resultsets aren't JSON serialized or JSON unserialized properly",
+//            "Model Resultsets aren't JSON serialized or JSON unserialized properly",
 //            function () {
 //                // Result-set serialization
 //                $robots = Robots::find();
@@ -351,7 +350,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //        );
 //
 //        $this->specify(
-//            "Single row resultsets aren't JSON serialized or JSON unserialized properly",
+//            "Single row Resultsets aren't JSON serialized or JSON unserialized properly",
 //            function () {
 //                $modelsManager = $this->setUpModelsManager();
 //                $robot = Robots::findFirst();

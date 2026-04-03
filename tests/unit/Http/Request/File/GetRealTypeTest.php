@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Http\Request\File;
 
 use Phalcon\Http\Request\File;
-use Phalcon\Tests\Fixtures\Page\Http;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Support\Page\Http;
 
-use function supportDir;
 use function function_exists;
+use function supportDir;
 
 final class GetRealTypeTest extends AbstractUnitTestCase
 {

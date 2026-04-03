@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Database\Db\Adapter\Pdo;
 use PDO;
 use Phalcon\Db\Adapter\PdoFactory;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 use function getOptionsMysql;
 

@@ -15,7 +15,9 @@ namespace Phalcon\Tests\Unit\Support\Debug\Dump;
 
 use Phalcon\Support\Debug\Dump;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Support\Dump\ClassProperties;
+use Phalcon\Tests\Support\Support\Dump\ClassProperties;
+
+use function supportDir;
 
 use const PHP_OS_FAMILY;
 
@@ -43,7 +45,7 @@ final class ConstructTest extends AbstractUnitTestCase
         $actual = $this->callProtectedMethod($dump, 'output', $patient);
 
         $expected = file_get_contents(
-            __DIR__ . '/../../../../_data/fixtures/Support/Dump/class_properties.txt',
+            supportDir('assets/Support/Dump/class_properties.txt'),
         );
 
         // Test without HTML

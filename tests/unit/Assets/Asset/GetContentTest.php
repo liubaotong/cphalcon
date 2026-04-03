@@ -16,13 +16,13 @@ namespace Phalcon\Tests\Unit\Assets\Asset;
 use Phalcon\Assets\Asset;
 use Phalcon\Assets\Exception;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Fixtures\Traits\AssetsTrait;
+use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileExists;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileGetContents;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-use function supportDir;
 use function file_get_contents;
+use function supportDir;
 
 use const PHP_EOL;
 

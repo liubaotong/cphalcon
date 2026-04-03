@@ -33,7 +33,7 @@ final class VariableTest extends AbstractUnitTestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir('fixtures/Support/Dump/variable_name_output.txt'),
+                supportDir('assets/Support/Dump/variable_name_output.txt'),
             ),
         );
 
@@ -56,7 +56,7 @@ final class VariableTest extends AbstractUnitTestCase
 
         $expected = trim(
             file_get_contents(
-                dataDir('fixtures/Support/Dump/variable_output.txt'),
+                supportDir('assets/Support/Dump/variable_output.txt'),
             ),
         );
         $actual = $dump->variable($test);

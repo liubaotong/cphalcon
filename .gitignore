@@ -76,7 +76,7 @@ zephir-*.phar
 .env
 zephir
 tests/_output/*
-tests/_data/phalcon_test*
+tests/support/assets/phalcon_test*
 .claude/
 
 # Docker

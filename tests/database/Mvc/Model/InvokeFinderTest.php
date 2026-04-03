@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Database\Mvc\Model;
 
-use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Migrations\ObjectsMigration;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Objects;
+use Phalcon\Tests\Support\Models\Objects;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class InvokeFinderTest extends AbstractDatabaseTestCase
 {

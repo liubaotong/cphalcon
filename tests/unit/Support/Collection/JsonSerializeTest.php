@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Support\Collection;
 
-use Phalcon\Tests\Unit\Support\Collection\Fake\FakeJson;
+use Phalcon\Tests\Unit\Support\Fake\FakeJson;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 final class JsonSerializeTest extends AbstractCollectionTestCase

@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Mvc\Model\Behavior\Timestampable;
 
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Models\Users;
+use Phalcon\Tests\Support\Models\Users;
 
 final class MissingMethodTest extends AbstractDatabaseTestCase
 {

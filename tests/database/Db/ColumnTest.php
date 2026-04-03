@@ -15,7 +15,7 @@ namespace Phalcon\Tests\Database\Db;
 
 use Phalcon\Db\Column;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DialectTrait;
+use Phalcon\Tests\Database\Db\Fake\DialectTrait;
 
 final class ColumnTest extends AbstractDatabaseTestCase
 {

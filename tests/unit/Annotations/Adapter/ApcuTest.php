@@ -33,8 +33,8 @@ final class ApcuTest extends AbstractUnitTestCase
 
         $this->checkExtensionIsLoaded('apcu');
 
-        require_once dataDir('fixtures/Annotations/TestClass.php');
-        require_once dataDir('fixtures/Annotations/TestClassNs.php');
+        require_once supportDir('assets/Annotations/TestClass.php');
+        require_once supportDir('assets/Annotations/TestClassNs.php');
     }
 
     /**

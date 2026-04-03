@@ -23,9 +23,9 @@ use Phalcon\Storage\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Support\Exception;
 use Phalcon\Support\Exception as HelperException;
-use Phalcon\Tests\Unit\Storage\Adapter\Fake\FakeApcuApcuDelete;
-use Phalcon\Tests\Unit\Storage\Adapter\Fake\FakeStreamUnlink;
 use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Storage\Fake\FakeApcuApcuDelete;
+use Phalcon\Tests\Unit\Storage\Fake\FakeStreamUnlink;
 use stdClass;
 
 use function getOptionsLibmemcached;

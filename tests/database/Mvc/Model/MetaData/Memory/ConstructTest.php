@@ -15,12 +15,11 @@ namespace Phalcon\Tests\Database\Mvc\Model\MetaData\Memory;
 
 use PDO;
 use Phalcon\Mvc\Model\MetaData\Memory;
-use Phalcon\Mvc\Model\MetaDataInterface;
 use Phalcon\Storage\Exception;
 use Phalcon\Tests\AbstractDatabaseTestCase;
-use Phalcon\Tests\Fixtures\Traits\DiTrait;
-use Phalcon\Tests\Models\Invoices;
 use Phalcon\Tests\Support\Migrations\InvoicesMigration;
+use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Traits\DiTrait;
 
 final class ConstructTest extends AbstractDatabaseTestCase
 {
