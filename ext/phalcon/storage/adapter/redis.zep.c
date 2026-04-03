@@ -352,11 +352,8 @@ PHP_METHOD(Phalcon_Storage_Adapter_Redis, getAdapter)
 	if (Z_TYPE_P(&_0) == IS_NULL) {
 		ZEPHIR_INIT_VAR(&connection);
 		object_init_ex(&connection, zephir_get_internal_ce(SL("redis")));
-		if (zephir_has_constructor(&connection)) {
-			ZEPHIR_CALL_METHOD(NULL, &connection, "__construct", NULL, 0);
-			zephir_check_call_status();
-		}
-
+		ZEPHIR_CALL_METHOD(NULL, &connection, "__construct", NULL, 0);
+		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(&_1$$3, this_ptr, "checkconnect", NULL, 116, &connection);
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(&_2$$3, &_1$$3, "checkauth", NULL, 117, &connection);

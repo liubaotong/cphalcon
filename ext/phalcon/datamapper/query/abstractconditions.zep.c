@@ -717,8 +717,7 @@ PHP_METHOD(Phalcon_DataMapper_Query_AbstractConditions, buildLimit)
  */
 PHP_METHOD(Phalcon_DataMapper_Query_AbstractConditions, buildLimitCommon)
 {
-	zval _0, _1, _5, _6, _10, _2$$3, _3$$3, _4$$3, _7$$4, _8$$4, _9$$4, _11$$5, _12$$5;
-	zval limit;
+	zval limit, _0, _1, _5, _6, _10, _2$$3, _3$$3, _4$$3, _7$$4, _8$$4, _9$$4, _11$$5, _12$$5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval *this_ptr = getThis();
 
@@ -740,6 +739,7 @@ PHP_METHOD(Phalcon_DataMapper_Query_AbstractConditions, buildLimitCommon)
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
 	ZEPHIR_INIT_VAR(&limit);
+	ZVAL_STRING(&limit, "");
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("store"), PH_NOISY_CC | PH_READONLY);
 	zephir_array_fetch_string(&_1, &_0, SL("LIMIT"), PH_NOISY | PH_READONLY, "phalcon/DataMapper/Query/AbstractConditions.zep", 275);
 	if (!ZEPHIR_IS_LONG_IDENTICAL(&_1, 0)) {
@@ -765,9 +765,9 @@ PHP_METHOD(Phalcon_DataMapper_Query_AbstractConditions, buildLimitCommon)
 		zephir_fast_trim(&_11$$5, &limit, NULL , ZEPHIR_TRIM_LEFT);
 		ZEPHIR_INIT_VAR(&_12$$5);
 		ZEPHIR_CONCAT_SV(&_12$$5, " ", &_11$$5);
-		zephir_get_strval(&limit, &_12$$5);
+		ZEPHIR_CPY_WRT(&limit, &_12$$5);
 	}
-	RETURN_CTOR(&limit);
+	RETURN_CCTOR(&limit);
 }
 
 /**
