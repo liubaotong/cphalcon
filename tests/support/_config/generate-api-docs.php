@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$baseDir   = dirname(dirname(__DIR__));
+$baseDir   = dirname(__FILE__, 4);
 $sourceDir = implode(DIRECTORY_SEPARATOR, [$baseDir, 'phalcon', '']);
 $outputDir = implode(DIRECTORY_SEPARATOR, [$baseDir, 'nikos', 'api', '']);
 

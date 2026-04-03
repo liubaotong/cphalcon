@@ -147,7 +147,12 @@ trait DiTrait
 
             if ($this->container->has('db')) {
                 try {
-                    $this->container->get('db')->close();
+                    $db  = $this->container->get('db');
+                    $pdo = $db->getInternalHandler();
+                    if ($pdo instanceof PDO && $pdo->inTransaction()) {
+                        $pdo->rollBack();
+                    }
+                    $db->close();
                 } catch (\Throwable $e) {
                     // ignore close errors during teardown
                 }

@@ -18,7 +18,7 @@ use Phalcon\Tests\Support\Migrations\FooterMigration;
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-$root = dirname(dirname(__DIR__));
+$root = dirname(__FILE__, 4);
 
 require_once $root . '/vendor/autoload.php';
 
