@@ -1,5 +1,5 @@
 # Changelog
-## 5.11.0 (2026-XX-XX)
+## 5.12.0 (2026-04-03)
 
 ### Changed
 
@@ -10,6 +10,7 @@
 - Changed `Phalcon\Logger\Logger` to use lowercase when reporting log levels (previously uppercase) [#16852](https://github.com/phalcon/cphalcon/issues/16852)
 - Changed `Phalcon\Logger\Adapter\Stream` to use a more efficient way to write messages in the logger instead of opening and closing the stream per message [#16852](https://github.com/phalcon/cphalcon/issues/16852)
 - Changed `Phalcon\Logger\Adapter\Syslog` to use the `Enum` instead of `Logger` constants [#16852](https://github.com/phalcon/cphalcon/issues/16852)
+- Changed the whole testing suite to run on phpunit only [#16860](https://github.com/phalcon/cphalcon/issues/16860) [#16861](https://github.com/phalcon/cphalcon/issues/16861) [#16862](https://github.com/phalcon/cphalcon/issues/16862)
 
 ### Added
 
@@ -22,6 +23,7 @@
 - Fixed `Phalcon\Forms\Form::isValid()` to apply field filters even when no validators are specified [#16936](https://github.com/phalcon/cphalcon/issues/16936)
 - Fixed `Phalcon\Http\Request` method `getClientAddress()` when using `trustForwardedHeader` [#16836](https://github.com/phalcon/cphalcon/issues/16836)
 - Fixed `Phalcon\Acl\Adapter\Memory::isAllowed()` and `Phalcon\Mvc\Model\Binder` to handle PHP 8.1+ union and intersection types by checking for `ReflectionNamedType` before calling `getName()` [#16261](https://github.com/phalcon/cphalcon/issues/16261)
+- Fixed a deadlock issue when running the db suite [#16862](https://github.com/phalcon/cphalcon/issues/16862)
 
 ### Removed
 
