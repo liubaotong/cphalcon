@@ -19,6 +19,6 @@ $compiler->parse($template);
 --EXPECTF--
 Fatal error: Uncaught Phalcon\Mvc\View\Exception: Syntax error, unexpected token %} in eval code on line 1 in %s010.php:12
 Stack trace:
-#0 %s010.php(12): Phalcon\Mvc\View\Engine\Volt\Compiler->parse('{% switch %}\n  ...')
+#0 %s010.php(12): Phalcon\Mvc\View\Engine\Volt\Compiler->parse('{% switch %}\r\n  ...')
 #1 {main}
   thrown in %s010.php on line 12
