@@ -39,7 +39,7 @@ class ValidatorFactory extends AbstractFactory
      */
     protected function getExceptionClass() -> string
     {
-        return "Phalcon\\Validation\\Exception";
+        return "Phalcon\\Filter\\Validation\\Exception";
     }
 
     /**

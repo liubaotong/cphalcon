@@ -17,7 +17,7 @@ COPY --from=ghcr.io/mlocati/php-extension-installer /usr/bin/install-php-extensi
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 RUN set -eux \
-# Add user and group
+# Add user and group \
     && groupadd -g "${GID}" "${GROUP}" \
     && useradd -l -u "${UID}" -g "${GID}" -d /app "${USER}" \
     && usermod -s /bin/bash "${USER}" \
@@ -26,7 +26,7 @@ RUN set -eux \
     && chmod 0770 /app \
     && apt-get update \
     && apt-get install -yq --no-install-recommends libfcgi-bin=2.* \
-# Install base extensions
+# Install base extensions \
     && install-php-extensions \
       apcu \
       gettext \
@@ -45,12 +45,12 @@ RUN set -eux \
       zip \
 # Copy ini file \
     && mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
-# Write ini files
+# Write ini files \
     && sed -i -e "s/;error_log = syslog/error_log = \/proc\/self\/fd\/2/" /usr/local/etc/php/php.ini \
-# Write fpm file
+# Write fpm file \
     && sed -i -e "/error_log = .*/c\error_log = \/proc\/self\/fd\/2" /usr/local/etc/php-fpm.conf \
     && sed -i -e "/;pid = .*/c\pid = /run/php/php-fpm.pid" /usr/local/etc/php-fpm.conf \
-# Write fpm pool
+# Write fpm pool \
     && sed -i -e "s/^;clear_env = no$/clear_env = no/" /usr/local/etc/php-fpm.d/www.conf \
     && sed -i -e "s/;owner = www-data/owner = ${USER}/g" /usr/local/etc/php-fpm.d/www.conf \
     && sed -i -e "s/;user = www-data/user = ${USER}/g" /usr/local/etc/php-fpm.d/www.conf \
@@ -65,7 +65,7 @@ RUN set -eux \
     && mkdir -p /run/php \
     && chown "${USER}":"${GROUP}" /run/php \
     && chmod 0770 /run/php \
-# Cleanup
+# Cleanup \
    && apt-get autoremove --purge -y \
    && apt-get autoclean -y \
    && apt-get clean -y \
@@ -91,9 +91,9 @@ SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 RUN set -eux \
     && apt-get update \
     && apt-get install -yq --no-install-recommends zip=3.* unzip=6.* \
-    && echo 'memory_limit = -1' > "$(php-config --ini-dir)/90-memory.ini" \
+    && printf 'memory_limit = -1\nregister_argc_argv = On\n' > "$(php-config --ini-dir)/90-memory.ini" \
     && install-php-extensions zephir_parser \
-# Cleanup
+# Cleanup \
    && apt-get autoclean -y \
    && apt-get clean -y \
    && rm -rf /tmp/* /var/tmp/*
@@ -107,7 +107,7 @@ COPY ./ /srv
 
 RUN set -eux \
     && rm -rf /srv/vendor \
-# This is a cleanup for local tests and if a previous build has failed.
+# This is a cleanup for local tests and if a previous build has failed. \
     && find /srv -type f -iname '*.dep' -exec rm {} \;\
     && composer global require phalcon/zephir:dev-development \
     && /root/.composer/vendor/bin/zephir fullclean \
@@ -118,7 +118,7 @@ FROM base AS prod
 
 # This part builds the last step required for production image.
 
-ARG PHALCON_VERSION="v5.10.0"
+ARG PHALCON_VERSION="v5.11.0"
 
 ENV PATH=/app/bin:/app:${PATH} \
     PHP_VERSION=${PHP_VERSION} \
@@ -141,7 +141,7 @@ RUN set -eux \
 # Install phalcon \
     && mv /tmp/phalcon.so "$(php-config --extension-dir)/phalcon.so" \
     && echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/70-phalcon.ini \
-# Cleanup
+# Cleanup \
    && rm -rf /tmp/* /var/tmp/* /srv /root/.composer /usr/bin/composer \
    && apt-get autoremove --purge -y curl \
    && apt-get autoclean -y \

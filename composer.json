@@ -1,5 +1,6 @@
 {
   "name": "phalcon/cphalcon",
+  "type": "php-ext",
   "description": "Phalcon is an open source web framework delivered as a C extension for the PHP language providing high performance and lower resource consumption.",
   "keywords": [
     "extension",
@@ -8,8 +9,11 @@
     "high load",
     "mvc"
   ],
-  "version": "5.10.0",
   "license": "BSD-3-Clause",
+  "php-ext": {
+    "extension-name": "phalcon",
+    "build-path": "build/phalcon"
+  },
   "authors": [
     {
       "name": "Phalcon Team",
@@ -40,18 +44,12 @@
     "ext-redis": "*",
     "ext-sqlite3": "*",
     "ext-xml": "*",
-    "codeception/codeception": "^5.2",
-    "codeception/module-apc": "^3.0",
-    "codeception/module-cli": "^2.0",
-    "codeception/module-filesystem": "^3.0",
-    "codeception/module-memcache": "^3.0",
-    "codeception/module-phalcon5": "^2.0",
-    "codeception/module-redis": "^3.0",
     "friendsofphp/php-cs-fixer": "~3.0",
     "mustache/mustache": "^2.14",
     "phalcon/ide-stubs": "^5.4",
     "phalcon/zephir": "dev-development",
     "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^10.5",
     "predis/predis": "^2.3",
     "squizlabs/php_codesniffer": "^3.4",
     "twig/twig": "^3.20",
@@ -69,22 +67,20 @@
   "autoload-dev": {
     "psr-4": {
       "Zephir\\Optimizers\\FunctionCall\\": "optimizers/",
-      "Phalcon\\Tests\\Cli\\": "tests/cli/",
+      "Phalcon\\Tests\\": "tests/",
+      "Phalcon\\Tests\\Support\\": "tests/support/",
       "Phalcon\\Tests\\Unit\\": "tests/unit/",
       "Phalcon\\Tests\\Integration\\": "tests/integration/",
       "Phalcon\\Tests\\Database\\": "tests/database/",
-      "Phalcon\\Tests\\Controllers\\": "tests/_data/fixtures/controllers/",
       "Phalcon\\Tests\\Fixtures\\": "tests/_data/fixtures/",
-      "Phalcon\\Tests\\Modules\\Frontend\\": "tests/_data/fixtures/modules/frontend/",
-      "Phalcon\\Tests\\Modules\\Backend\\": "tests/_data/fixtures//modules/backend/",
-      "Phalcon\\Tests\\Modules\\Frontend\\Controllers\\": "tests/_data/fixtures/modules/frontend/controllers/",
-      "Phalcon\\Tests\\Modules\\Backend\\Controllers\\": "tests/_data/fixtures//modules/backend/controllers/",
-      "Phalcon\\Tests\\Modules\\Backend\\Tasks\\": "tests/_data/fixtures//modules/backend/tasks/",
-      "Phalcon\\Tests\\Models\\": "tests/_data/fixtures/models/",
+      "Phalcon\\Tests\\Modules\\": "tests/support/Modules/",
       "Phalcon\\Tests\\Module\\": "tests/_support/Module/",
       "Phalcon\\Tests\\Listener\\": "tests/_data/listener/",
       "Phalcon\\Tests\\Db\\": "tests/_data/db/"
-    }
+    },
+    "exclude-from-classmap": [
+      "tests/support/assets/"
+    ]
   },
   "support": {
     "email": "support@phalcon.io",
@@ -95,19 +91,24 @@
     "rss": "https://blog.phalcon.io/rss"
   },
   "scripts": {
+    "analyze": "php -d extension=ext/modules/phalcon.so ./vendor/bin/psalm --no-cache",
     "cs": "php -d extension=ext/modules/phalcon.so ./vendor/bin/phpcs --standard=phpcs.xml",
-    "cs-fix": "php -d extension=ext/modules/phalcon.so  ./vendor/bin/phpcbf --standard=phpcs.xml",
-    "test-unit": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter unit",
-    "test-cli": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter cli",
-    "test-integration": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter integration",
-    "test-db-common": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database -g common",
-    "test-db-mysql": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env mysql -g mysql",
-    "test-db-pgsql": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env pgsql -g pgsql",
-    "test-db-sqlite": "php -d extension=ext/modules/phalcon.so ./vendor/bin/codecept run --ext DotReporter database --env sqlite -g sqlite",
+    "cs-fix": "php -d extension=ext/modules/phalcon.so ./vendor/bin/phpcbf --standard=phpcs.xml",
+    "test-unit": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.xml.dist",
+    "test-unit-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.xml.dist --fail-on-all-issues --display-all-issues",
+    "test-unit-coverage": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit  -c phpunit.xml.dist --coverage-clover tests/_output/coverage.xml",
+    "test-unit-coverage-html": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit  -c phpunit.xml.dist --coverage-html tests/_output/coverage/",
+    "test-db-mysql": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.mysql.xml",
+    "test-db-mysql-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.mysql.xml --fail-on-all-issues --display-all-issues",
+    "test-db-mysql-coverage": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.mysql.xml --coverage-clover tests/_output/coverage.xml",
+    "test-db-pgsql": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.pgsql.xml",
+    "test-db-pgsql-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.pgsql.xml --fail-on-all-issues --display-all-issues",
+    "test-db-pgsql-coverage": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.pgsql.xml --coverage-clover tests/_output/coverage.xml",
+    "test-db-sqlite": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.sqlite.xml",
+    "test-db-sqlite-debug": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.sqlite.xml --fail-on-all-issues --display-all-issues",
+    "test-db-sqlite-coverage": "php -d extension=ext/modules/phalcon.so vendor/bin/phpunit -c phpunit.sqlite.xml --coverage-clover tests/_output/coverage.xml",
     "test-db": [
-      "@test-db-common",
-      "@test-db-mysql",
-      "@test-db-sqlite"
+      "@test-db-mysql"
     ],
     "test-all": [
       "@test-unit",
@@ -115,7 +116,6 @@
       "@test-integration",
       "@test-db"
     ],
-    "analyze": "php -d extension=ext/modules/phalcon.so ./vendor/bin/psalm --no-cache",
     "clean-build-stubs": [
       "./vendor/bin/zephir fullclean",
       "Composer\\Config::disableProcessTimeout",

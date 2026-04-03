@@ -43,6 +43,12 @@ class Php extends AbstractSerializer
             return;
         }
 
+        if unlikely typeof data != "string" {
+            throw new InvalidArgumentException(
+                "Data for the unserializer must of type string"
+            );
+        }
+	
         let version = phpversion();
 
         globals_set("warning.enable", false);

@@ -53,7 +53,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_SliceLeft, __invoke)
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_ARRAY(collection)
+		ZEPHIR_Z_PARAM_ARRAY(collection, collection_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(elements)
 	ZEND_PARSE_PARAMETERS_END();
@@ -67,7 +67,7 @@ PHP_METHOD(Phalcon_Support_Helper_Arr_SliceLeft, __invoke)
 		}
 	ZVAL_LONG(&_0, 0);
 	ZVAL_LONG(&_1, elements);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_slice", NULL, 506, &collection, &_0, &_1);
+	ZEPHIR_RETURN_CALL_FUNCTION("array_slice", NULL, 508, &collection, &_0, &_1);
 	zephir_check_call_status();
 	RETURN_MM();
 }

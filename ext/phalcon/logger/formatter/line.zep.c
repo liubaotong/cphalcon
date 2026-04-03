@@ -12,9 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/object.h"
 #include "kernel/memory.h"
-#include "kernel/operators.h"
+#include "kernel/object.h"
 #include "kernel/array.h"
 #include "kernel/concat.h"
 #include "kernel/fcall.h"
@@ -55,14 +54,14 @@ ZEPHIR_INIT_CLASS(Phalcon_Logger_Formatter_Line)
 PHP_METHOD(Phalcon_Logger_Formatter_Line, __construct)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *format_param = NULL, *dateFormat_param = NULL, *interpolatorLeft_param = NULL, *interpolatorRight_param = NULL;
-	zval format, dateFormat, interpolatorLeft, interpolatorRight;
+	zval format_zv, dateFormat_zv, interpolatorLeft_zv, interpolatorRight_zv;
+	zend_string *format = NULL, *dateFormat = NULL, *interpolatorLeft = NULL, *interpolatorRight = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&format);
-	ZVAL_UNDEF(&dateFormat);
-	ZVAL_UNDEF(&interpolatorLeft);
-	ZVAL_UNDEF(&interpolatorRight);
+	ZVAL_UNDEF(&format_zv);
+	ZVAL_UNDEF(&dateFormat_zv);
+	ZVAL_UNDEF(&interpolatorLeft_zv);
+	ZVAL_UNDEF(&interpolatorRight_zv);
 	ZEND_PARSE_PARAMETERS_START(0, 4)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_STR(format)
@@ -72,35 +71,34 @@ PHP_METHOD(Phalcon_Logger_Formatter_Line, __construct)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 0, 4, &format_param, &dateFormat_param, &interpolatorLeft_param, &interpolatorRight_param);
-	if (!format_param) {
-		ZEPHIR_INIT_VAR(&format);
-		ZVAL_STRING(&format, "[%date%][%level%] %message%");
+	if (!format) {
+		format = zend_string_init(ZEND_STRL("[%date%][%level%] %message%"), 0);
+		ZVAL_STR(&format_zv, format);
 	} else {
-		zephir_get_strval(&format, format_param);
+		ZVAL_STR_COPY(&format_zv, format);
 	}
-	if (!dateFormat_param) {
-		ZEPHIR_INIT_VAR(&dateFormat);
-		ZVAL_STRING(&dateFormat, "c");
+	if (!dateFormat) {
+		dateFormat = zend_string_init(ZEND_STRL("c"), 0);
+		ZVAL_STR(&dateFormat_zv, dateFormat);
 	} else {
-		zephir_get_strval(&dateFormat, dateFormat_param);
+		ZVAL_STR_COPY(&dateFormat_zv, dateFormat);
 	}
-	if (!interpolatorLeft_param) {
-		ZEPHIR_INIT_VAR(&interpolatorLeft);
-		ZVAL_STRING(&interpolatorLeft, "%");
+	if (!interpolatorLeft) {
+		interpolatorLeft = zend_string_init(ZEND_STRL("%"), 0);
+		ZVAL_STR(&interpolatorLeft_zv, interpolatorLeft);
 	} else {
-		zephir_get_strval(&interpolatorLeft, interpolatorLeft_param);
+		ZVAL_STR_COPY(&interpolatorLeft_zv, interpolatorLeft);
 	}
-	if (!interpolatorRight_param) {
-		ZEPHIR_INIT_VAR(&interpolatorRight);
-		ZVAL_STRING(&interpolatorRight, "%");
+	if (!interpolatorRight) {
+		interpolatorRight = zend_string_init(ZEND_STRL("%"), 0);
+		ZVAL_STR(&interpolatorRight_zv, interpolatorRight);
 	} else {
-		zephir_get_strval(&interpolatorRight, interpolatorRight_param);
+		ZVAL_STR_COPY(&interpolatorRight_zv, interpolatorRight);
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("format"), &format);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("dateFormat"), &dateFormat);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("interpolatorLeft"), &interpolatorLeft);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("interpolatorRight"), &interpolatorRight);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("format"), &format_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("dateFormat"), &dateFormat_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("interpolatorLeft"), &interpolatorLeft_zv);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("interpolatorRight"), &interpolatorRight_zv);
 	ZEPHIR_MM_RESTORE();
 }
 
@@ -191,20 +189,16 @@ PHP_METHOD(Phalcon_Logger_Formatter_Line, getFormat)
  */
 PHP_METHOD(Phalcon_Logger_Formatter_Line, setFormat)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *format_param = NULL;
-	zval format;
+	zval format_zv;
+	zend_string *format = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&format);
+	ZVAL_UNDEF(&format_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(format)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &format_param);
-	zephir_get_strval(&format, format_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("format"), &format);
-	RETURN_THIS();
+	ZVAL_STR(&format_zv, format);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("format"), &format_zv);
+	RETURN_THISW();
 }
 

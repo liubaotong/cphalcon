@@ -92,6 +92,9 @@ class Generator_File_PhalconC
     {
         foreach (array_keys($alreadyIncludedHeaders) as $file) {
             $path = Util::normalize($this->sourceDir . '/' . $file);
+            if ($path === null) {
+                continue;
+            }
 
             $this->skipFiles[$path] = true;
         }
@@ -100,6 +103,10 @@ class Generator_File_PhalconC
         $files = include($this->configDir . '/phalcon_c_skip_files.php');
         foreach ($files as $file) {
             $path = Util::normalize($this->sourceDir . '/' . $file);
+            if ($path === null) {
+                continue;
+            }
+
             $this->skipFiles[$path] = true;
         }
 

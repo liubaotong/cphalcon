@@ -1,4 +1,3 @@
-
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -219,9 +218,9 @@ class Column implements ColumnInterface
     /**
      * Column Position
      *
-     * @var string|null
+     * @var string
      */
-    protected after = null;
+    protected after = "";
 
     /**
      * Column is autoIncrement?
@@ -321,7 +320,7 @@ class Column implements ColumnInterface
      *
      * @var array|string
      */
-    protected typeValues;
+    protected typeValues = [];
 
     /**
      * Integer column unsigned?
@@ -476,7 +475,7 @@ class Column implements ColumnInterface
     /**
      * Check whether field absolute to position in table
      */
-    public function getAfterPosition() -> string | null
+    public function getAfterPosition() -> string
     {
         return this->after;
     }

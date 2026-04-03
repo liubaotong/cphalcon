@@ -63,20 +63,6 @@ class Debug
     protected uri = "https://assets.phalcon.io/debug/5.0.x/";
 
     /**
-     * @var Version
-     */
-    private version;
-
-    /**
-     * Constructor setting a reusable version object
-     */
-    public function __construct()
-    {
-        let this->version = new Version();
-    }
-
-
-    /**
      * Clears are variables added previously
      */
     public function clearVars() -> <Debug>
@@ -107,18 +93,16 @@ class Debug
      */
     public function getCssSources() -> string
     {
-        var uri, sources;
+        var template;
 
-        let uri = this->uri;
+        let template = "
+    <link href='" . this->uri . "%s'
+          rel='stylesheet'
+          type='text/css' />";
 
-        let sources  = "<link rel=\"stylesheet\" type=\"text/css\" href=\""
-                     . uri . "assets/jquery-ui/themes/ui-lightness/jquery-ui.min.css\" />"
-                     . "<link rel=\"stylesheet\" type=\"text/css\" href=\""
-                     . uri . "assets/jquery-ui/themes/ui-lightness/theme.css\" />"
-                     . "<link rel=\"stylesheet\" type=\"text/css\" href=\""
-                     . uri . "themes/default/style.css\" />";
-
-        return sources;
+        return sprintf(template, "assets/jquery-ui/themes/ui-lightness/jquery-ui.min.css")
+            . sprintf(template, "assets/jquery-ui/themes/ui-lightness/theme.css")
+            . sprintf(template, "themes/default/style.css");
     }
 
     /**
@@ -126,22 +110,17 @@ class Debug
      */
     public function getJsSources() -> string
     {
-        var uri, sources;
+        var template;
 
-        let uri = this->uri;
+        let template = "
+    <script type='application/javascript'
+            src='" . this->uri . "%s'></script>";
 
-        let sources  = "<script type=\"application/javascript\" src=\""
-                     . uri . "assets/jquery/dist/jquery.min.js\"></script>"
-                     . "<script type=\"application/javascript\" src=\""
-                     . uri . "assets/jquery-ui/jquery-ui.min.js\"></script>"
-                     . "<script type=\"application/javascript\" src=\""
-                     . uri . "assets/jquery.scrollTo/jquery.scrollTo.min.js\"></script>"
-                     . "<script type=\"application/javascript\" src=\""
-                     . uri . "prettify/prettify.js\"></script>"
-                     . "<script type=\"application/javascript\" src=\""
-                     . uri . "pretty.js\"></script>";
-
-        return sources;
+        return sprintf(template, "assets/jquery/dist/jquery.min.js")
+            . sprintf(template, "assets/jquery-ui/jquery-ui.min.js")
+            . sprintf(template, "assets/jquery.scrollTo/jquery.scrollTo.min.js")
+            . sprintf(template, "prettify/prettify.js")
+            . sprintf(template, "pretty.js");
     }
 
     /**
@@ -149,14 +128,18 @@ class Debug
      */
     public function getVersion() -> string
     {
-        var link;
+        var version, link;
 
-        let link = "https://docs.phalcon.io/"
-            . this->version->getPart(Version::VERSION_MAJOR) . ".0/en/";
+        let version = new Version();
+        let link    = "https://docs.phalcon.io/"
+            . version->getPart(Version::VERSION_MAJOR)
+            . "."
+            . version->getPart(Version::VERSION_MEDIUM)
+            . "/";
 
-        return "<div class=\"version\">Phalcon Framework "
-            . "<a href=\"" . link . "\" target=\"_new\">"
-            . this->version->get() . "</a></div>";
+        return "<div class='version'>
+    Phalcon Framework <a href='" . link . "' target='_new'>" . version->get() . "</a>
+</div>";
     }
 
     /**
@@ -235,28 +218,28 @@ class Debug
         /**
          * Avoid that multiple exceptions being showed
          */
-        if self::isActive {
-            echo exception->getMessage();
+        if true !== self::isActive {
+            /**
+             * Globally block the debug component to avoid other exceptions to be shown
+             */
+            let self::isActive = true;
 
-            return;
+            /**
+             * Print the HTML, @TODO, add an option to store the HTML
+             */
+            echo this->renderHtml(exception);
+
+            /**
+             * Unlock the exception renderer
+             */
+            let self::isActive = false;
+
+            return true;
         }
 
-        /**
-         * Globally block the debug component to avoid other exceptions to be shown
-         */
-        let self::isActive = true;
+        echo exception->getMessage();
 
-        /**
-         * Print the HTML, @TODO, add an option to store the HTML
-         */
-        echo this->renderHtml(exception);
-
-        /**
-         * Unlock the exception renderer
-         */
-        let self::isActive = false;
-
-        return true;
+        return false;
     }
 
     /**
@@ -279,27 +262,22 @@ class Debug
      */
     public function renderHtml(<\Throwable> exception) -> string
     {
-        var blacklist, className, dataVar, dataVars, escapedMessage, html,
-            keyFile, keyRequest, keyServer, keyVar, n, showBackTrace, traceItem,
-            value;
+        var className, escapedMessage, html;
 
-         let className = get_class(exception);
-
-        /**
-         * Escape the exceptions message avoiding possible XSS injections?
-         */
-        let escapedMessage = this->escapeString(
-            exception->getMessage()
-        );
+        let className      = get_class(exception);
+        let escapedMessage = this->escapeString(exception->getMessage());
 
         /**
          * CSS static sources to style the error presentation
-         * Use the exception info as document title
+         * Use the exception info as document's title
          */
-        let html = "<html><head>"
-                 . "<title>" . className . ": " . escapedMessage . "</title>"
-                 . this->getCssSources()
-                 . "</head><body>";
+        let html = "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>" . className . ":" . escapedMessage . "</title>" . this->getCssSources() . "
+</head>
+<body>
+";
 
         /**
          * Get the version link
@@ -309,141 +287,83 @@ class Debug
         /**
          * Main exception info
          */
-        let html .= "<div align=\"center\">"
-                  . "<div class=\"error-main\">"
-                  . "<h1>" . className . ": " . escapedMessage . "</h1>"
-                  . "<span class=\"error-file\">"
-                    . exception->getFile() . " (" . exception->getLine() . ")</span>"
-                  . "</div>";
-
-         let showBackTrace = this->showBackTrace;
+        let html .= "
+<div align='center'>
+    <div class='error-main'>
+        <h1>" . className . ": " . escapedMessage . "</h1>
+        <span class='error-file'>" . exception->getFile() . " (" . exception->getLine() . ")</span>
+    </div>";
 
         /**
          * Check if the developer wants to show the backtrace or not
          */
-        if showBackTrace {
-            let dataVars = this->data;
-
+        if true === this->showBackTrace {
             /**
              * Create the tabs in the page
              */
-            let html .= "<div class=\"error-info\"><div id=\"tabs\"><ul>"
-                      . "<li><a href=\"#error-tabs-1\">Backtrace</a></li>"
-                      . "<li><a href=\"#error-tabs-2\">Request</a></li>"
-                      . "<li><a href=\"#error-tabs-3\">Server</a></li>"
-                      . "<li><a href=\"#error-tabs-4\">Included Files</a></li>"
-                      . "<li><a href=\"#error-tabs-5\">Memory</a></li>";
+            /**
+             * Create the tabs in the page
+             */
+            let html .= "
 
-             if !empty dataVars {
-                let html .= "<li><a href=\"#error-tabs-6\">Variables</a></li>";
+    <div class='error-info'>
+        <div id='tabs'>
+            <ul>
+                <li><a href='#backtrace'>Backtrace</a></li>
+                <li><a href='#request'>Request</a></li>
+                <li><a href='#server'>Server</a></li>
+                <li><a href='#files'>Included Files</a></li>
+                <li><a href='#memory'>Memory</a></li>";
+
+            if (!empty(this->data)) {
+                let html .= "
+                <li><a href='#variables'>Variables</a></li>";
             }
 
-             let html .= "</ul>";
+            let html .= "
+            </ul>";
 
             /**
              * Print backtrace
              */
-            let html .= "<div id=\"error-tabs-1\"><table cellspacing=\"0\" align=\"center\" width=\"100%\">";
-
-             for n, traceItem in exception->getTrace()  {
-                /**
-                 * Every line in the trace is rendered using "showTraceItem"
-                 */
-                let html .= this->showTraceItem(n, traceItem);
-            }
-
-             let html .= "</table></div>";
+            let html .= this->printBacktrace(exception);
 
             /**
              * Print _REQUEST superglobal
              */
-            let html .= "<div id=\"error-tabs-2\">"
-                      . "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">"
-                      . "<tr><th>Key</th><th>Value</th></tr>";
-            let blacklist = this->getArrVal(this->blacklist, "request", []);
-
-             for keyRequest, value in _REQUEST {
-                if true !== isset(blacklist[strtolower(keyRequest)]) {
-                    if typeof value != "array" {
-                        let html .= "<tr><td class=\"key\">"
-                            . keyRequest . "</td><td>"
-                            . value . "</td></tr>";
-                    } else {
-                        let html .= "<tr><td class=\"key\">"
-                            . keyRequest . "</td><td>"
-                            . print_r(value, true) . "</td></tr>";
-                    }
-                }
-            }
-
-             let html .= "</table></div>";
+            let html .= this->printSuperglobal(_REQUEST, "request");
 
             /**
              * Print _SERVER superglobal
              */
-            let html .= "<div id=\"error-tabs-3\">"
-                      . "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">"
-                      . "<tr><th>Key</th><th>Value</th></tr>";
-            let blacklist = this->getArrVal(this->blacklist, "server", []);
-
-             for keyServer, value in _SERVER {
-                if true !== isset(blacklist[strtolower(keyServer)]) {
-                    let html .= "<tr><td class=\"key\">"
-                        . keyServer . "</td><td>"
-                        . this->getVarDump(value) . "</td></tr>";
-                }
-            }
-
-             let html .= "</table></div>";
+            let html .= this->printSuperglobal(_SERVER, "server");
 
             /**
              * Show included files
              */
-            let html .= "<div id=\"error-tabs-4\">"
-                      . "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">"
-                      . "<tr><th>#</th><th>Path</th></tr>";
-
-             for keyFile, value in get_included_files() {
-                let html .= "<tr><td>" . keyFile . "</th><td>" . value . "</td></tr>";
-            }
-
-             let html .= "</table></div>";
+            let html .= this->printIncludedFiles();
 
             /**
              * Memory usage
              */
-            let html .= "<div id=\"error-tabs-5\">"
-                      . "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">"
-                      . "<tr><th colspan=\"2\">Memory</th></tr><tr><td>Usage</td><td>"
-                      . memory_get_usage(true) . "</td></tr>"
-                      . "</table></div>";
+            let html .= this->printMemoryUsage();
 
             /**
              * Print extra variables passed to the component
              */
-            if !empty dataVars {
-                let html .= "<div id=\"error-tabs-6\">"
-                          . "<table cellspacing=\"0\" align=\"center\" class=\"superglobal-detail\">"
-                          . "<tr><th>Key</th><th>Value</th></tr>";
+            let html .= this->printExtraVariables();
 
-                 for keyVar, dataVar in dataVars {
-                    let html .= "<tr><td class=\"key\">"
-                        . keyVar . "</td><td>"
-                        . this->getVarDump(dataVar[0]) . "</td></tr>";
-                }
-
-                 let html .= "</table></div>";
-            }
-
-             let html .= "</div>";
+            let html .= "
+            </div>";
         }
 
         /**
          * Get JavaScript sources
          */
-        let html .= this->getJsSources() . "</div></body></html>";
-
-        return html;
+        return html . this->getJsSources() . "
+        </div>
+    </body>
+</html>";
     }
 
     /**
@@ -460,7 +380,7 @@ class Debug
             result   = [];
 
         for value in area {
-            let value           = strtolower(value),
+            let value           = mb_strtolower(value),
                 subArray[value] = 1;
         }
 
@@ -469,7 +389,7 @@ class Debug
             subArray          = [];
 
         for value in area {
-            let value           = strtolower(value),
+            let value           = mb_strtolower(value),
                 subArray[value] = 1;
         }
 
@@ -666,35 +586,39 @@ class Debug
     /**
      * Shows a backtrace item
      *
-     * @param int   $n
+     * @param int   $number
      * @param array $trace
      *
      * @return string
      * @throws ReflectionException
      */
-    final protected function showTraceItem(int n, array! trace) -> string
+    final protected function showTraceItem(int number, array! trace) -> string
     {
         var className, prepareInternalClass, preparedFunctionName, html,
             classReflection, prepareUriClass, functionName, functionReflection,
-            traceArgs, arguments, argument, filez, line, showFiles, lines,
-            numberLines, showFileFragment, firstLine, lastLine, i, linePosition,
+            traceArgs, arguments, argument, file, line, lines,
+            numberLines, firstLine, lastLine, i, linePosition,
             currentLine, classNameWithLink, functionNameWithLink, parts;
 
         /**
          * Every trace in the backtrace have a unique number
          */
-        let html = "<tr><td align=\"right\" valign=\"top\" class=\"error-number\">#"
-                . n
-                . "</td><td>";
+        let html = "
+                    <tr>
+                        <td style='text-align: right; vertical-align: top'
+                            class='error-number'>
+                            #
+                        </td>
+                        <td>";
 
         if fetch className, trace["class"] {
             /**
-             * We assume that classes starting by Phalcon are framework
+             * We assume that classes starting by Phalcon are framework's
              * classes
              */
-            if preg_match("/^Phalcon/", className) {
+            if str_starts_with(className, "Phalcon") {
                 /**
-                 * Prepare the class name according to the Phalcon conventions
+                 * Prepare the class name according to the Phalcon's conventions
                  */
                 let parts = explode("\\", className);
                 let prepareUriClass = parts[0] . "_" . parts[1];
@@ -702,36 +626,37 @@ class Debug
                 /**
                  * Generate a link to the official docs
                  */
-                let classNameWithLink = "<a target=\"_new\" href=\"https://docs.phalcon.io/"
-                        . this->version->getPart(Version::VERSION_MAJOR)
-                        . ".0/en/api/"
-                        . prepareUriClass
-                        . "\">" . className . "</a>";
+                let classNameWithLink = "<a target='_new' "
+                    . "href='https://docs.phalcon.io/5.0/en/api/" . prepareUriClass . "'>"
+                    . className . "</a>";
             } else {
                 let classReflection = new ReflectionClass(className);
 
                 /**
-                 * Check if classes are PHP classes
+                 * Check if classes are PHP's classes
                  */
-                if classReflection->isInternal() {
+                if true === classReflection->isInternal() {
                     let prepareInternalClass = str_replace(
                         "_",
                         "-",
-                        strtolower(className)
+                        mb_strtolower(className)
                     );
 
                     /**
                      * Generate a link to the official docs
                      */
-                    let classNameWithLink = "<a target=\"_new\" href=\"https://secure.php.net/manual/en/class."
-                            . prepareInternalClass
-                            . ".php\">" . className . "</a>";
+                    let classNameWithLink = "<a target='_new' "
+                        . "href='https://secure.php.net/manual/en/class." . prepareInternalClass . ".php'>"
+                        . className . "</a>";
                 } else {
                     let classNameWithLink = className;
                 }
             }
 
-            let html .= "<span class=\"error-class\">" . classNameWithLink . "</span>";
+            let html .= "
+                        <span class='error-class'>
+                            " . classNameWithLink . "
+                        </span>";
 
             /**
              * Object access operator: static/instance
@@ -750,16 +675,15 @@ class Debug
             /**
              * Check if the function exists
              */
-            if function_exists(functionName) {
+            if true === function_exists(functionName) {
                 let functionReflection = new ReflectionFunction(functionName);
 
                 /**
                  * Internal functions links to the PHP documentation
                  */
-                if functionReflection->isInternal() {
+                if true === functionReflection->isInternal() {
                     /**
-                     * Prepare the function name according to the
-                     * conventions in the docs
+                     * Prepare function's name according to the conventions in the docs
                      */
                     let preparedFunctionName = str_replace(
                         "_",
@@ -767,9 +691,9 @@ class Debug
                         functionName
                     );
 
-                    let functionNameWithLink = "<a target=\"_new\" href=\"https://secure.php.net/manual/en/function."
-                        . preparedFunctionName
-                        . ".php\">" . functionName . "</a>";
+                    let functionNameWithLink = "<a target='_new' "
+                        . "href='https://secure.php.net/manual/en/function." . preparedFunctionName . ".php'>"
+                        . functionName . "</a>";
                 } else {
                     let functionNameWithLink = functionName;
                 }
@@ -778,7 +702,10 @@ class Debug
             }
         }
 
-        let html .= "<span class=\"error-function\">" . functionNameWithLink . "</span>";
+        let html .= "
+                        <span class='error-function'>
+                            " . functionNameWithLink . "
+                        </span>";
 
         /**
          * Check for arguments in the function
@@ -789,51 +716,55 @@ class Debug
             for argument in traceArgs {
                 /**
                  * Every argument is generated using getVarDump
-                 * Append the HTML generated to the argument list
+                 * Append the HTML generated to the argument's list
                  */
-                let arguments[] = "<span class=\"error-parameter\">" . this->getVarDump(argument) . "</span>";
+                let arguments[] = "
+                        <span class='error-parameter'>
+                            " . this->getVarDump(argument) . "
+                        </span>";
             }
 
             /**
              * Join all the arguments
              */
-            let html .= "(" . join(", ", arguments)  . ")";
+            let html .= "(" . join(", ", arguments) . ")";
         }
 
         /**
-         * When "file" is present, it usually means the function is provided by
+         * When 'file' is present, it usually means the function is provided by
          * the user
          */
-        if fetch filez, trace["file"] {
+        if (isset(trace["file"])) {
+            let file = trace["file"];
             let line = (string) trace["line"];
 
             /**
              * Realpath to the file and its line using a special header
              */
-            let html .= "<br/><div class=\"error-file\">" . filez . " (" . line . ")</div>";
-
-            let showFiles = this->showFiles;
+            let html .= "
+                        <br/>
+                        <div class='error-file'>
+                            " . file . " (" . line . ")
+                        </div>";
 
             /**
              * The developer can change if the files must be opened or not
              */
-            if showFiles {
+            if true === this->showFiles {
                 /**
-                 * Open the file to an array using "file", this respects the
+                 * Open the file to an array using 'file', this respects the
                  * openbase-dir directive
                  */
-                let lines = file(filez);
-
+                let lines       = file(file);
                 let numberLines = count(lines);
-                let showFileFragment = this->showFileFragment;
 
                 /**
                  * File fragments just show a piece of the file where the
                  * exception is located
                  */
-                if showFileFragment {
+                if true === this->showFileFragment {
                     /**
-                     * Take seven lines back to the current exception line, @TODO add an option for this
+                     * Take seven lines back to the current exception's line, @TODO add an option for this
                      */
                     int beforeLine = line - 7;
 
@@ -847,7 +778,7 @@ class Debug
                     }
 
                     /**
-                     * Take five lines after the current exception line, @TODO add an option for this
+                     * Take five lines after the current exception's line, @TODO add an option for this
                      */
                     int afterLine = line + 5;
 
@@ -860,11 +791,13 @@ class Debug
                         let lastLine = afterLine;
                     }
 
-                    let html .= "<pre class=\"prettyprint highlight:" . firstLine . ":" . line . " linenums:" . firstLine . "\">";
+                    let html .= "
+                        <pre class='prettyprint highlight:" . firstLine . ":" . line . " linenums:" . firstLine . "'>";
                 } else {
                     let firstLine = 1;
-                    let lastLine = numberLines;
-                    let html .= "<pre class=\"prettyprint highlight:" . firstLine . ":" . line . " linenums error-scroll\">";
+                    let lastLine  = numberLines;
+                    let html      .= "
+                        <pre class='prettyprint highlight:" . firstLine . ":" . line . " linenums error-scroll'>";
                 }
 
                 let i = firstLine;
@@ -883,15 +816,13 @@ class Debug
                     /**
                      * File fragments are cleaned, removing tabs and comments
                      */
-                    if showFileFragment {
-                        if i == firstLine {
-                            if preg_match("#\\*\\/#", rtrim(currentLine)) {
-                                let currentLine = str_replace(
-                                    "* /",
-                                    " ",
-                                    currentLine
-                                );
-                            }
+                    if this->showFileFragment && i == firstLine {
+                        if preg_match("#\\*\\/#", rtrim(currentLine)) {
+                            let currentLine = str_replace(
+                                "* /",
+                                " ",
+                                currentLine
+                            );
                         }
                     }
 
@@ -903,7 +834,7 @@ class Debug
                         let html .= "&nbsp;\n";
                     } else {
                         /**
-                         * Do not escape quotes
+                         * Don't escape quotes
                          * We assume the file is utf-8 encoded, @TODO add an option for this
                          */
                         let html .= htmlentities(
@@ -916,13 +847,184 @@ class Debug
                     let i++;
                 }
 
-                let html .= "</pre>";
+                let html .= "
+                            </pre>";
             }
         }
 
-        let html .= "</td></tr>";
+        return html . "
+                    </td>
+                </tr>";
+    }
+
+    /**
+     * @return string
+     */
+    private function closeTable() -> string
+    {
+        return "
+                </tbody>
+            </table>
+        </div>";
+    }
+
+    /**
+     * @param Throwable $exception
+     *
+     * @return string
+     * @throws ReflectionException
+     */
+    private function printBacktrace(<\Throwable> exception) -> string
+    {
+        var html, trace, number, item;
+
+        let html = "
+
+        <div id='backtrace'>
+            <table style='border-collapse: collapse; border-spacing: 0; text-align=center; width:100%'>
+                <tbody>";
+
+        let trace = exception->getTrace();
+
+        for number, item in trace {
+            /**
+             * Every line in the trace is rendered using 'showTraceItem'
+             */
+            let html .= this->showTraceItem(number, item);
+        }
+
+        return html . this->closeTable();
+    }
+
+    /**
+     * @return string
+     */
+    private function printExtraVariables() -> string
+    {
+        var html, key, value;
+
+        let html = "";
+
+        if !empty this->data {
+            let html .= this->printTableHeader("variables", "Key", "Value");
+
+            for key, value in this->data {
+                let html .= "<tr><td class=\"key\">"
+                    . key . "</td><td>"
+                    . this->getVarDump(value[0])
+                    . "</td></tr>";
+            }
+
+            let html .= this->closeTable();
+        }
 
         return html;
+    }
+
+    /**
+     * @return string
+     */
+    private function printIncludedFiles() -> string
+    {
+        var html, key, value;
+
+        let html = this->printTableHeader("files", "#", "Path");
+
+        for key, value in get_included_files() {
+            let html .= "
+                        <tr>
+                            <td>" . key . "</td>
+                            <td>" . value . "</td>
+                        </tr>";
+        }
+
+        return html . this->closeTable();
+    }
+
+    /**
+     * @return string
+     */
+    private function printMemoryUsage() -> string
+    {
+        return this->printTableHeader("memory", "Memory", "")
+            . "
+                    <tr>
+                        <td>
+                            Usage
+                        </td>
+                        <td>"
+            . memory_get_usage(true)
+            . "</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>";
+    }
+
+    /**
+     * @param array  $source
+     * @param string $div
+     *
+     * @return string
+     */
+    private function printSuperglobal(array source, string div) -> string
+    {
+        var html, filter, key, value;
+
+        let html   = this->printTableHeader(div, "Key", "Value");
+        let filter = this->getArrVal(this->blacklist, "server", []);
+
+        for key, value in source {
+            if !isset filter[mb_strtolower(key)] {
+                let html .= "
+                    <tr>
+                        <td class='key'>" . key . "</td>
+                        <td>" . this->getVarDump(value) . "</td>
+                    </tr>";
+            }
+        }
+
+        return html . "
+                    </tbody>
+                </table>
+            </div>";
+    }
+
+    /**
+     * @param string $divId
+     * @param string $headerOne
+     * @param string $headerTwo
+     * @param string $colspan
+     *
+     * @return string
+     */
+    private function printTableHeader(
+        string divId,
+        string headerOne,
+        string headerTwo,
+        string colspan = ""
+    ) -> string {
+        var span;
+
+        if empty colspan {
+            let span = "";
+        } else {
+            let span = " colspan=\"" . colspan . "\"";
+        }
+
+        return "
+        <div id='" . divId . "'>
+            <table style='border-collapse: collapse; border-spacing: 0; text-align: center'
+                   class='superglobal-detail'>
+                <thead>
+                <tr>
+                    <th" . span . ">" . headerOne . "</th>
+                </tr>
+                <tr>
+                    <th>" . headerTwo . "</th>
+                </tr>
+                </thead>
+                <tbody>";
     }
 
     /**

@@ -46,10 +46,10 @@ PHP_METHOD(Phalcon_Assets_Inline_Js, __construct)
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval attributes;
 	zend_bool filter;
-	zval *content_param = NULL, *filter_param = NULL, *attributes_param = NULL, _0$$3, _1, _2;
-	zval content;
+	zval content_zv, *filter_param = NULL, *attributes_param = NULL, _0$$3, _1, _2;
+	zend_string *content = NULL;
 
-	ZVAL_UNDEF(&content);
+	ZVAL_UNDEF(&content_zv);
 	ZVAL_UNDEF(&_0$$3);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -58,12 +58,17 @@ PHP_METHOD(Phalcon_Assets_Inline_Js, __construct)
 		Z_PARAM_STR(content)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(filter)
-		Z_PARAM_ARRAY(attributes)
+		ZEPHIR_Z_PARAM_ARRAY(attributes, attributes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 2, &content_param, &filter_param, &attributes_param);
-	zephir_get_strval(&content, content_param);
+	if (ZEND_NUM_ARGS() > 1) {
+		filter_param = ZEND_CALL_ARG(execute_data, 2);
+	}
+	if (ZEND_NUM_ARGS() > 2) {
+		attributes_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	ZVAL_STR_COPY(&content_zv, content);
 	if (!filter_param) {
 		filter = 1;
 	} else {
@@ -87,7 +92,7 @@ PHP_METHOD(Phalcon_Assets_Inline_Js, __construct)
 	} else {
 		ZVAL_BOOL(&_2, 0);
 	}
-	ZEPHIR_CALL_PARENT(NULL, phalcon_assets_inline_js_ce, getThis(), "__construct", NULL, 0, &_1, &content, &_2, &attributes);
+	ZEPHIR_CALL_PARENT(NULL, phalcon_assets_inline_js_ce, getThis(), "__construct", NULL, 0, &_1, &content_zv, &_2, &attributes);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 }

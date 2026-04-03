@@ -16,9 +16,6 @@
 #include "kernel/array.h"
 #include "kernel/memory.h"
 #include "kernel/string.h"
-#include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
-#include "kernel/operators.h"
 
 
 /**
@@ -55,11 +52,11 @@ PHP_METHOD(Phalcon_Annotations_Adapter_Memory, __construct)
 PHP_METHOD(Phalcon_Annotations_Adapter_Memory, read)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *key_param = NULL, data, _0, _1;
-	zval key;
+	zval key_zv, data, _0, _1;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&data);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
@@ -68,20 +65,11 @@ PHP_METHOD(Phalcon_Annotations_Adapter_Memory, read)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &key_param);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	ZVAL_STR_COPY(&key_zv, key);
 	zephir_memory_observe(&data);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("data"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_1);
-	zephir_fast_strtolower(&_1, &key);
+	zephir_fast_strtolower(&_1, &key_zv);
 	if (!(zephir_array_isset_fetch(&data, &_0, &_1, 0))) {
 		RETURN_MM_BOOL(0);
 	}
@@ -94,11 +82,11 @@ PHP_METHOD(Phalcon_Annotations_Adapter_Memory, read)
 PHP_METHOD(Phalcon_Annotations_Adapter_Memory, write)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *key_param = NULL, *data, data_sub, lowercasedKey;
-	zval key;
+	zval key_zv, *data, data_sub, lowercasedKey;
+	zend_string *key = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&key);
+	ZVAL_UNDEF(&key_zv);
 	ZVAL_UNDEF(&data_sub);
 	ZVAL_UNDEF(&lowercasedKey);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
@@ -107,18 +95,10 @@ PHP_METHOD(Phalcon_Annotations_Adapter_Memory, write)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &key_param, &data);
-	if (UNEXPECTED(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(&key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(&key);
-	}
+	data = ZEND_CALL_ARG(execute_data, 2);
+	ZVAL_STR_COPY(&key_zv, key);
 	ZEPHIR_INIT_VAR(&lowercasedKey);
-	zephir_fast_strtolower(&lowercasedKey, &key);
+	zephir_fast_strtolower(&lowercasedKey, &key_zv);
 	zephir_update_property_array(this_ptr, SL("data"), &lowercasedKey, data);
 	ZEPHIR_MM_RESTORE();
 }

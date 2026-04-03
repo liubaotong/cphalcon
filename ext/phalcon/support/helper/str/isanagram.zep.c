@@ -47,11 +47,11 @@ PHP_METHOD(Phalcon_Support_Helper_Str_IsAnagram, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *first_param = NULL, *second_param = NULL, _0, _1, _2;
-	zval first, second;
+	zval first_zv, second_zv, _0, _1, _2;
+	zend_string *first = NULL, *second = NULL;
 
-	ZVAL_UNDEF(&first);
-	ZVAL_UNDEF(&second);
+	ZVAL_UNDEF(&first_zv);
+	ZVAL_UNDEF(&second_zv);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
@@ -61,14 +61,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_IsAnagram, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &first_param, &second_param);
-	zephir_get_strval(&first, first_param);
-	zephir_get_strval(&second, second_param);
+	ZVAL_STR_COPY(&first_zv, first);
+	ZVAL_STR_COPY(&second_zv, second);
 	ZVAL_LONG(&_0, 1);
-	ZEPHIR_CALL_FUNCTION(&_1, "count_chars", NULL, 0, &first, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "count_chars", NULL, 0, &first_zv, &_0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_0, 1);
-	ZEPHIR_CALL_FUNCTION(&_2, "count_chars", NULL, 0, &second, &_0);
+	ZEPHIR_CALL_FUNCTION(&_2, "count_chars", NULL, 0, &second_zv, &_0);
 	zephir_check_call_status();
 	RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(&_1, &_2));
 }

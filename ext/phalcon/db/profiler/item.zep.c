@@ -176,7 +176,7 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setFinalTime)
 
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ZVAL(finalTime)
+		Z_PARAM_ZVAL(finalTime_param)
 	ZEND_PARSE_PARAMETERS_END();
 	zephir_fetch_params_without_memory_grow(1, 0, &finalTime_param);
 	finalTime = zephir_get_doubleval(finalTime_param);
@@ -197,7 +197,7 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setInitialTime)
 
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ZVAL(initialTime)
+		Z_PARAM_ZVAL(initialTime_param)
 	ZEND_PARSE_PARAMETERS_END();
 	zephir_fetch_params_without_memory_grow(1, 0, &initialTime_param);
 	initialTime = zephir_get_doubleval(initialTime_param);
@@ -219,7 +219,7 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlBindTypes)
 
 	ZVAL_UNDEF(&sqlBindTypes);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(sqlBindTypes)
+		ZEPHIR_Z_PARAM_ARRAY(sqlBindTypes, sqlBindTypes_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -234,21 +234,17 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlBindTypes)
  */
 PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlStatement)
 {
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *sqlStatement_param = NULL;
-	zval sqlStatement;
+	zval sqlStatement_zv;
+	zend_string *sqlStatement = NULL;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&sqlStatement);
+	ZVAL_UNDEF(&sqlStatement_zv);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_STR(sqlStatement)
 	ZEND_PARSE_PARAMETERS_END();
-	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
-	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 0, &sqlStatement_param);
-	zephir_get_strval(&sqlStatement, sqlStatement_param);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("sqlStatement"), &sqlStatement);
-	RETURN_THIS();
+	ZVAL_STR(&sqlStatement_zv, sqlStatement);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("sqlStatement"), &sqlStatement_zv);
+	RETURN_THISW();
 }
 
 /**
@@ -263,7 +259,7 @@ PHP_METHOD(Phalcon_Db_Profiler_Item, setSqlVariables)
 
 	ZVAL_UNDEF(&sqlVariables);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(sqlVariables)
+		ZEPHIR_Z_PARAM_ARRAY(sqlVariables, sqlVariables_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

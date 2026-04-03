@@ -63,7 +63,7 @@ class Cookie extends AbstractInjectionAware implements CookieInterface
     /**
      * @var bool
      */
-    protected read = false;
+    protected isRead = false;
 
     /**
      * @var bool
@@ -251,7 +251,7 @@ class Cookie extends AbstractInjectionAware implements CookieInterface
         let container = null,
             name = this->name;
 
-        if this->read === false {
+        if this->isRead === false {
             if !fetch value, _COOKIE[name] {
                 return defaultValue;
             }
@@ -614,7 +614,7 @@ class Cookie extends AbstractInjectionAware implements CookieInterface
     public function setValue(value) -> <CookieInterface>
     {
         let this->value = value,
-            this->read = true;
+            this->isRead = true;
 
         return this;
     }

@@ -46,11 +46,11 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Includes, __invoke)
 {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *haystack_param = NULL, *needle_param = NULL, _0;
-	zval haystack, needle;
+	zval haystack_zv, needle_zv, _0;
+	zend_string *haystack = NULL, *needle = NULL;
 
-	ZVAL_UNDEF(&haystack);
-	ZVAL_UNDEF(&needle);
+	ZVAL_UNDEF(&haystack_zv);
+	ZVAL_UNDEF(&needle_zv);
 	ZVAL_UNDEF(&_0);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_STR(haystack)
@@ -58,10 +58,9 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Includes, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 2, 0, &haystack_param, &needle_param);
-	zephir_get_strval(&haystack, haystack_param);
-	zephir_get_strval(&needle, needle_param);
-	ZEPHIR_CALL_FUNCTION(&_0, "mb_strpos", NULL, 86, &haystack, &needle);
+	ZVAL_STR_COPY(&haystack_zv, haystack);
+	ZVAL_STR_COPY(&needle_zv, needle);
+	ZEPHIR_CALL_FUNCTION(&_0, "mb_strpos", NULL, 88, &haystack_zv, &needle_zv);
 	zephir_check_call_status();
 	RETURN_MM_BOOL(!ZEPHIR_IS_FALSE_IDENTICAL(&_0));
 }

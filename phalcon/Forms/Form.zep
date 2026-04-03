@@ -551,6 +551,13 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
             }
         }
 
+        /**
+         * Check if the name is in the _POST superglobal
+         */
+        if fetch value, _POST[name] {
+            return value;
+        }
+
         let forbidden = [
             "attributes":    true,
             "validation":    true,

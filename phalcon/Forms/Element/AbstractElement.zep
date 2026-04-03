@@ -440,6 +440,10 @@ abstract class AbstractElement implements ElementInterface
             throw new Exception("The filter needs to be an array or string");
         }
 
+        if typeof filters == "string" {
+            let filters = [filters];
+        }
+
         let this->filters = filters;
 
         return this;

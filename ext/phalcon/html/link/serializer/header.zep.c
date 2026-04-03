@@ -93,7 +93,7 @@ PHP_METHOD(Phalcon_Html_Link_Serializer_Header, serialize)
 	ZVAL_UNDEF(&_37$$28);
 	ZVAL_UNDEF(&_38$$29);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(links)
+		ZEPHIR_Z_PARAM_ARRAY(links, links_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

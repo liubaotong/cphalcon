@@ -12,8 +12,8 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
 #include "kernel/fcall.h"
 #include "kernel/string.h"
 #include "kernel/array.h"
@@ -56,12 +56,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, __invoke)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool lowercase;
-	zval *text_param = NULL, *separator_param = NULL, *lowercase_param = NULL, *replace = NULL, replace_sub, __$null, friendly, matrix, _1, _2, _3, _4, _5, _7, _0$$3, _6$$5;
-	zval text, separator;
+	zend_string *separator = NULL;
+	zval *text_param = NULL, separator_zv, *lowercase_param = NULL, *replace = NULL, replace_sub, __$null, friendly, matrix, _1, _2, _3, _4, _5, _7, _0$$3, _6$$5;
+	zval text;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&text);
-	ZVAL_UNDEF(&separator);
+	ZVAL_UNDEF(&separator_zv);
 	ZVAL_UNDEF(&replace_sub);
 	ZVAL_NULL(&__$null);
 	ZVAL_UNDEF(&friendly);
@@ -76,7 +77,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, __invoke)
 	ZVAL_UNDEF(&_6$$5);
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 4)
-		Z_PARAM_STR(text)
+		Z_PARAM_ZVAL(text_param)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_STR(separator)
 		Z_PARAM_BOOL(lowercase)
@@ -84,7 +85,13 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, __invoke)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
-	zephir_fetch_params(1, 1, 3, &text_param, &separator_param, &lowercase_param, &replace);
+	text_param = ZEND_CALL_ARG(execute_data, 1);
+	if (ZEND_NUM_ARGS() > 2) {
+		lowercase_param = ZEND_CALL_ARG(execute_data, 3);
+	}
+	if (ZEND_NUM_ARGS() > 3) {
+		replace = ZEND_CALL_ARG(execute_data, 4);
+	}
 	if (UNEXPECTED(Z_TYPE_P(text_param) != IS_STRING && Z_TYPE_P(text_param) != IS_NULL)) {
 		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'text' must be of the type string"));
 		RETURN_MM_NULL();
@@ -94,19 +101,11 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, __invoke)
 	} else {
 		ZEPHIR_INIT_VAR(&text);
 	}
-	if (!separator_param) {
-		ZEPHIR_INIT_VAR(&separator);
-		ZVAL_STRING(&separator, "-");
+	if (!separator) {
+		separator = zend_string_init(ZEND_STRL("-"), 0);
+		ZVAL_STR(&separator_zv, separator);
 	} else {
-	if (UNEXPECTED(Z_TYPE_P(separator_param) != IS_STRING && Z_TYPE_P(separator_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'separator' must be of the type string"));
-		RETURN_MM_NULL();
-	}
-	if (EXPECTED(Z_TYPE_P(separator_param) == IS_STRING)) {
-		zephir_get_strval(&separator, separator_param);
-	} else {
-		ZEPHIR_INIT_VAR(&separator);
-	}
+	ZVAL_STR_COPY(&separator_zv, separator);
 	}
 	if (!lowercase_param) {
 		lowercase = 1;
@@ -148,10 +147,10 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, __invoke)
 	}
 	ZEPHIR_INIT_NVAR(&_4);
 	ZVAL_STRING(&_4, "/[\\/_|+ -]+/");
-	ZEPHIR_CALL_FUNCTION(&_7, "preg_replace", NULL, 41, &_4, &separator, &friendly);
+	ZEPHIR_CALL_FUNCTION(&_7, "preg_replace", NULL, 41, &_4, &separator_zv, &friendly);
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(&friendly, &_7);
-	zephir_fast_trim(return_value, &friendly, &separator, ZEPHIR_TRIM_BOTH);
+	zephir_fast_trim(return_value, &friendly, &separator_zv, ZEPHIR_TRIM_BOTH);
 	RETURN_MM();
 }
 
@@ -214,7 +213,7 @@ PHP_METHOD(Phalcon_Support_Helper_Str_Friendly, getMatrix)
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$4);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_ARRAY(replace)
+		ZEPHIR_Z_PARAM_ARRAY(replace, replace_param)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);

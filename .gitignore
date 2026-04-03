@@ -6,6 +6,7 @@
 # https://help.github.com/articles/ignoring-files/#create-a-global-gitignore
 
 # After ./install files
+build/gccarch
 build/phalcon/build
 build/phalcon/include
 build/phalcon/config.h
@@ -63,26 +64,20 @@ autom4te.cache/
 .idea/
 *.iml
 
-.zephir/
-.temp/
-
-# JetBrains IDE
-*.iml
-.idea/
 
 # Zephir compiler
+.zephir/
+.temp/
 zephir.phar
 zephir-*.phar
 
-boxfile.yml
-php_test_results_*.txt
-build/gccarch
-tests/_data/phalcon_test*
-tests/_output/*
 
 .php_cs.cache
 .env
 zephir
+tests/_output/*
+tests/support/assets/phalcon_test*
+.claude/
 
 # Docker
 docker-compose.override.yml
