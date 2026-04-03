@@ -2675,7 +2675,6 @@ int phql_internal_parse_phql(zval **result, char *phql, unsigned int phql_length
 		if (phalcon_globals_ptr->orm.parser_cache != NULL) {
 			if ((temp_ast = zend_hash_index_find(phalcon_globals_ptr->orm.parser_cache, phql_key)) != NULL) {
 				ZVAL_ZVAL(*result, temp_ast, 1, 0);
-				Z_TRY_ADDREF_P(*result);
 				return SUCCESS;
 			}
 		}
