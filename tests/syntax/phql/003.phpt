@@ -54,7 +54,7 @@ array(3) {
         ["type"]=>
         int(355)
         ["name"]=>
-        string(28) "Phalcon\Tests\Models\Invoices"
+        string(29) "Phalcon\Tests\Models\Invoices"
       }
     }
   }
