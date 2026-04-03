@@ -6,7 +6,7 @@ on:
 
 env:
   # All versions should be declared here
-  PHALCON_VERSION: 5.10.0
+  PHALCON_VERSION: 5.11.0
 
 jobs:
   windows:
@@ -23,6 +23,7 @@ jobs:
           - '8.2'
           - '8.3'
           - '8.4'
+          - '8.5'
         arch:
           - x64
           - x86
@@ -32,7 +33,7 @@ jobs:
         experimental: [false]
     steps:
       - name: Checkout Phalcon
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Extract Phalcon Version
         shell: powershell
@@ -46,7 +47,7 @@ jobs:
 
       - name: Setup PHP
         id: setup-php
-        uses: php/setup-php-sdk@v0.11
+        uses: php/setup-php-sdk@v0.12
         with:
           version: ${{matrix.php}}
           arch: ${{matrix.arch}}

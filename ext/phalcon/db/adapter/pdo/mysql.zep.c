@@ -490,7 +490,7 @@ PHP_METHOD(Phalcon_Db_Adapter_Pdo_Mysql, describeColumns)
 				}
 				if (_5$$3 == zephir_start_with_str(&columnType, SL("varbinary"))) {
 					ZEPHIR_INIT_NVAR(&_39$$29);
-					ZVAL_LONG(&_39$$29, 27);
+					ZVAL_LONG(&_39$$29, 28);
 					zephir_array_update_string(&definition, SL("type"), &_39$$29, PH_COPY | PH_SEPARATE);
 					break;
 				}
@@ -791,7 +791,7 @@ PHP_METHOD(Phalcon_Db_Adapter_Pdo_Mysql, describeColumns)
 					}
 					if (_66$$49 == zephir_start_with_str(&columnType, SL("varbinary"))) {
 						ZEPHIR_INIT_NVAR(&_100$$75);
-						ZVAL_LONG(&_100$$75, 27);
+						ZVAL_LONG(&_100$$75, 28);
 						zephir_array_update_string(&definition, SL("type"), &_100$$75, PH_COPY | PH_SEPARATE);
 						break;
 					}
