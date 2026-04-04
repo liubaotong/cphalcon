@@ -208,7 +208,16 @@ class Security extends AbstractInjectionAware
     ) -> string {
         var hmac;
 
-        let hmac = hash_hmac(algo, data, key, raw);
+        try {
+            let hmac = hash_hmac(algo, data, key, raw);
+        } catch \ValueError {
+            throw new Exception(
+                sprintf(
+                    "Unknown hashing algorithm: %s",
+                    algo
+                )
+            );
+        }
 
         if unlikely !hmac {
             throw new Exception(
