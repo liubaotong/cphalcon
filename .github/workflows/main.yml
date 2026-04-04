@@ -750,15 +750,9 @@ jobs:
           path: phalcon-ide-stubs
 
       - name: Copy stubs into phalcon-ide-stubs
-        # Copies all generated stubs over the existing ones; no files are deleted.
+        # Copies the contents of ide/<version>/Phalcon/ into the stubs repo src/ folder.
+        # No files are deleted; other repo files are unaffected.
         run: cp -r ./ide-stubs/. phalcon-ide-stubs/src/
-
-      - name: Bump version in composer.json
-        working-directory: phalcon-ide-stubs
-        run: |
-          jq --arg ver "${{ env.PHALCON_VERSION }}" '.version = $ver' composer.json \
-            > composer.tmp.json
-          mv composer.tmp.json composer.json
 
       - name: Commit and push stubs branch
         working-directory: phalcon-ide-stubs
@@ -766,7 +760,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b stubs/v${{ env.PHALCON_VERSION }}
-          git add Phalcon/ composer.json
+          git add src/
           git commit -m "stubs: update to v${{ env.PHALCON_VERSION }}"
           git push origin stubs/v${{ env.PHALCON_VERSION }}
 
@@ -793,5 +787,5 @@ jobs:
           body: "v${{ env.PHALCON_VERSION }} Stubs"
           draft: true
           allowUpdates: true
-          commit: stubs/v${{ env.PHALCON_VERSION }}
+          commit: master
 
