@@ -80,6 +80,7 @@ class Redis extends AbstractAdapter
     {
         var keys, key;
         array strippedKeys;
+        int prefixLength;
 
         let keys = this->getKeys();
 
@@ -87,10 +88,11 @@ class Redis extends AbstractAdapter
             return true;
         }
 
-        let strippedKeys = [];
+        let strippedKeys = [],
+            prefixLength = (int) strlen(this->prefix);
 
         for key in keys {
-            let strippedKeys[] = str_replace(this->prefix, "", key);
+            let strippedKeys[] = substr(key, prefixLength);
         }
 
         return false !== this->getAdapter()->del(strippedKeys);
