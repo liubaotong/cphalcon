@@ -554,6 +554,182 @@ ZEPHIR_INIT_FUNCS(phalcon_storage_serializer_serializerinterface_method_entry) {
 	PHP_FE_END
 };
 
+zend_class_entry *phalcon_storage_adapter_abstractadapter_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Storage_Adapter_AbstractAdapter);
+
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, __construct);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, clear);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, decrement);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, delete);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, get);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getAdapter);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getDefaultSerializer);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getKeys);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getLifetime);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getPrefix);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getSerializer);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, has);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, increment);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, set);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, setDefaultSerializer);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, doGet);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getFilteredKeys);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getPrefixedKey);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getSerializedData);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getTtl);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getUnserializedData);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, initSerializer);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getArrVal);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, setEventsManager);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getEventsManager);
+static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, fire);
+zend_object *zephir_init_properties_Phalcon_Storage_Adapter_AbstractAdapter(zend_class_entry *class_type);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter___construct, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, factory, Phalcon\\Storage\\SerializerFactory, 0)
+ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_ARRAY, 0, "[]")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_clear, 0, 0, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_decrement, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_delete, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_get, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_INFO(0, defaultValue)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getadapter, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getdefaultserializer, 0, 0, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getkeys, 0, 0, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, prefix, IS_STRING, 0, "''")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getlifetime, 0, 0, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getprefix, 0, 0, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getserializer, 0, 0, Phalcon\\Storage\\Serializer\\SerializerInterface, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_has, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_increment, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_set, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_INFO(0, value)
+	ZEND_ARG_INFO(0, ttl)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_setdefaultserializer, 0, 1, IS_VOID, 0)
+
+	ZEND_ARG_TYPE_INFO(0, serializer, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_doget, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getfilteredkeys, 0, 2, IS_ARRAY, 0)
+	ZEND_ARG_INFO(0, keys)
+	ZEND_ARG_TYPE_INFO(0, prefix, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getprefixedkey, 0, 1, IS_STRING, 0)
+	ZEND_ARG_INFO(0, key)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getserializeddata, 0, 0, 1)
+	ZEND_ARG_INFO(0, content)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getttl, 0, 1, IS_LONG, 0)
+	ZEND_ARG_INFO(0, ttl)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getunserializeddata, 0, 0, 1)
+	ZEND_ARG_INFO(0, content)
+	ZEND_ARG_INFO(0, defaultValue)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_initserializer, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getarrval, 0, 0, 2)
+	ZEND_ARG_ARRAY_INFO(0, collection, 0)
+	ZEND_ARG_INFO(0, index)
+	ZEND_ARG_INFO(0, defaultValue)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, cast, IS_STRING, 1, "null")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_seteventsmanager, 0, 1, IS_VOID, 0)
+
+	ZEND_ARG_OBJ_INFO(0, eventsManager, Phalcon\\Events\\ManagerInterface, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_geteventsmanager, 0, 0, Phalcon\\Events\\ManagerInterface, 1)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_fire, 0, 2, IS_VOID, 0)
+
+	ZEND_ARG_TYPE_INFO(0, eventName, IS_STRING, 0)
+	ZEND_ARG_INFO(0, keys)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_zephir_init_properties_phalcon_storage_adapter_abstractadapter, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_abstractadapter_method_entry) {
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, __construct, arginfo_phalcon_storage_adapter_abstractadapter___construct, ZEND_ACC_PROTECTED|ZEND_ACC_CTOR)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, clear, arginfo_phalcon_storage_adapter_abstractadapter_clear, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, decrement, arginfo_phalcon_storage_adapter_abstractadapter_decrement, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, delete, arginfo_phalcon_storage_adapter_abstractadapter_delete, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, get, arginfo_phalcon_storage_adapter_abstractadapter_get, ZEND_ACC_PUBLIC)
+PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getAdapter, arginfo_phalcon_storage_adapter_abstractadapter_getadapter, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getDefaultSerializer, arginfo_phalcon_storage_adapter_abstractadapter_getdefaultserializer, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getKeys, arginfo_phalcon_storage_adapter_abstractadapter_getkeys, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getLifetime, arginfo_phalcon_storage_adapter_abstractadapter_getlifetime, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getPrefix, arginfo_phalcon_storage_adapter_abstractadapter_getprefix, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getSerializer, arginfo_phalcon_storage_adapter_abstractadapter_getserializer, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, has, arginfo_phalcon_storage_adapter_abstractadapter_has, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, increment, arginfo_phalcon_storage_adapter_abstractadapter_increment, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, set, arginfo_phalcon_storage_adapter_abstractadapter_set, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, setDefaultSerializer, arginfo_phalcon_storage_adapter_abstractadapter_setdefaultserializer, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, doGet, arginfo_phalcon_storage_adapter_abstractadapter_doget, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getFilteredKeys, arginfo_phalcon_storage_adapter_abstractadapter_getfilteredkeys, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getPrefixedKey, arginfo_phalcon_storage_adapter_abstractadapter_getprefixedkey, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getSerializedData, arginfo_phalcon_storage_adapter_abstractadapter_getserializeddata, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getTtl, arginfo_phalcon_storage_adapter_abstractadapter_getttl, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getUnserializedData, arginfo_phalcon_storage_adapter_abstractadapter_getunserializeddata, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, initSerializer, arginfo_phalcon_storage_adapter_abstractadapter_initserializer, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getArrVal, arginfo_phalcon_storage_adapter_abstractadapter_getarrval, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, setEventsManager, arginfo_phalcon_storage_adapter_abstractadapter_seteventsmanager, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getEventsManager, arginfo_phalcon_storage_adapter_abstractadapter_geteventsmanager, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, fire, arginfo_phalcon_storage_adapter_abstractadapter_fire, ZEND_ACC_PROTECTED)
+	PHP_FE_END
+};
+
 zend_class_entry *phalcon_storage_serializer_abstractserializer_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Storage_Serializer_AbstractSerializer);
@@ -1001,182 +1177,6 @@ PHP_ME(Phalcon_Forms_Element_AbstractElement, getValue, arginfo_phalcon_forms_el
 	PHP_FE_END
 };
 
-zend_class_entry *phalcon_storage_adapter_abstractadapter_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Storage_Adapter_AbstractAdapter);
-
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, __construct);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, clear);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, decrement);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, delete);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, get);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getAdapter);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getDefaultSerializer);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getKeys);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getLifetime);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getPrefix);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getSerializer);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, has);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, increment);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, set);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, setDefaultSerializer);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, doGet);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getFilteredKeys);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getPrefixedKey);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getSerializedData);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getTtl);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getUnserializedData);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, initSerializer);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getArrVal);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, setEventsManager);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, getEventsManager);
-static PHP_METHOD(Phalcon_Storage_Adapter_AbstractAdapter, fire);
-zend_object *zephir_init_properties_Phalcon_Storage_Adapter_AbstractAdapter(zend_class_entry *class_type);
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter___construct, 0, 0, 1)
-	ZEND_ARG_OBJ_INFO(0, factory, Phalcon\\Storage\\SerializerFactory, 0)
-ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_ARRAY, 0, "[]")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_clear, 0, 0, _IS_BOOL, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_decrement, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_delete, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_get, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_INFO(0, defaultValue)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getadapter, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getdefaultserializer, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getkeys, 0, 0, IS_ARRAY, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, prefix, IS_STRING, 0, "''")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getlifetime, 0, 0, IS_LONG, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getprefix, 0, 0, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getserializer, 0, 0, Phalcon\\Storage\\Serializer\\SerializerInterface, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_has, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_increment, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_set, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_INFO(0, value)
-	ZEND_ARG_INFO(0, ttl)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_setdefaultserializer, 0, 1, IS_VOID, 0)
-
-	ZEND_ARG_TYPE_INFO(0, serializer, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_doget, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getfilteredkeys, 0, 2, IS_ARRAY, 0)
-	ZEND_ARG_INFO(0, keys)
-	ZEND_ARG_TYPE_INFO(0, prefix, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getprefixedkey, 0, 1, IS_STRING, 0)
-	ZEND_ARG_INFO(0, key)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getserializeddata, 0, 0, 1)
-	ZEND_ARG_INFO(0, content)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getttl, 0, 1, IS_LONG, 0)
-	ZEND_ARG_INFO(0, ttl)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getunserializeddata, 0, 0, 1)
-	ZEND_ARG_INFO(0, content)
-	ZEND_ARG_INFO(0, defaultValue)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_initserializer, 0, 0, IS_VOID, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_getarrval, 0, 0, 2)
-	ZEND_ARG_ARRAY_INFO(0, collection, 0)
-	ZEND_ARG_INFO(0, index)
-	ZEND_ARG_INFO(0, defaultValue)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, cast, IS_STRING, 1, "null")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_seteventsmanager, 0, 1, IS_VOID, 0)
-
-	ZEND_ARG_OBJ_INFO(0, eventsManager, Phalcon\\Events\\ManagerInterface, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_geteventsmanager, 0, 0, Phalcon\\Events\\ManagerInterface, 1)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_fire, 0, 2, IS_VOID, 0)
-
-	ZEND_ARG_TYPE_INFO(0, eventName, IS_STRING, 0)
-	ZEND_ARG_INFO(0, keys)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_abstractadapter_zephir_init_properties_phalcon_storage_adapter_abstractadapter, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_abstractadapter_method_entry) {
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, __construct, arginfo_phalcon_storage_adapter_abstractadapter___construct, ZEND_ACC_PROTECTED|ZEND_ACC_CTOR)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, clear, arginfo_phalcon_storage_adapter_abstractadapter_clear, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, decrement, arginfo_phalcon_storage_adapter_abstractadapter_decrement, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, delete, arginfo_phalcon_storage_adapter_abstractadapter_delete, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, get, arginfo_phalcon_storage_adapter_abstractadapter_get, ZEND_ACC_PUBLIC)
-PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getAdapter, arginfo_phalcon_storage_adapter_abstractadapter_getadapter, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getDefaultSerializer, arginfo_phalcon_storage_adapter_abstractadapter_getdefaultserializer, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getKeys, arginfo_phalcon_storage_adapter_abstractadapter_getkeys, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getLifetime, arginfo_phalcon_storage_adapter_abstractadapter_getlifetime, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getPrefix, arginfo_phalcon_storage_adapter_abstractadapter_getprefix, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getSerializer, arginfo_phalcon_storage_adapter_abstractadapter_getserializer, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, has, arginfo_phalcon_storage_adapter_abstractadapter_has, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, increment, arginfo_phalcon_storage_adapter_abstractadapter_increment, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, set, arginfo_phalcon_storage_adapter_abstractadapter_set, ZEND_ACC_ABSTRACT|ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, setDefaultSerializer, arginfo_phalcon_storage_adapter_abstractadapter_setdefaultserializer, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, doGet, arginfo_phalcon_storage_adapter_abstractadapter_doget, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getFilteredKeys, arginfo_phalcon_storage_adapter_abstractadapter_getfilteredkeys, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getPrefixedKey, arginfo_phalcon_storage_adapter_abstractadapter_getprefixedkey, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getSerializedData, arginfo_phalcon_storage_adapter_abstractadapter_getserializeddata, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getTtl, arginfo_phalcon_storage_adapter_abstractadapter_getttl, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getUnserializedData, arginfo_phalcon_storage_adapter_abstractadapter_getunserializeddata, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, initSerializer, arginfo_phalcon_storage_adapter_abstractadapter_initserializer, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getArrVal, arginfo_phalcon_storage_adapter_abstractadapter_getarrval, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, setEventsManager, arginfo_phalcon_storage_adapter_abstractadapter_seteventsmanager, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, getEventsManager, arginfo_phalcon_storage_adapter_abstractadapter_geteventsmanager, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_AbstractAdapter, fire, arginfo_phalcon_storage_adapter_abstractadapter_fire, ZEND_ACC_PROTECTED)
-	PHP_FE_END
-};
-
 zend_class_entry *phalcon_support_helper_str_abstractstr_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Support_Helper_Str_AbstractStr);
@@ -1460,6 +1460,11 @@ ZEPHIR_INIT_FUNCS(phalcon_storage_serializer_none_method_entry) {
 	PHP_FE_END
 };
 
+zend_class_entry *phalcon_cache_adapter_adapterinterface_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Cache_Adapter_AdapterInterface);
+
+
 zend_class_entry *phalcon_dispatcher_dispatcherinterface_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Dispatcher_DispatcherInterface);
@@ -1727,11 +1732,6 @@ ZEPHIR_INIT_FUNCS(phalcon_assets_assetinterface_method_entry) {
 	PHP_ABSTRACT_ME(Phalcon_Assets_AssetInterface, setType, arginfo_phalcon_assets_assetinterface_settype)
 	PHP_FE_END
 };
-
-zend_class_entry *phalcon_cache_adapter_adapterinterface_ce;
-
-ZEPHIR_INIT_CLASS(Phalcon_Cache_Adapter_AdapterInterface);
-
 
 zend_class_entry *phalcon_config_configinterface_ce;
 
@@ -5067,6 +5067,104 @@ ZEPHIR_INIT_FUNCS(phalcon_paginator_adapter_abstractadapter_method_entry) {
 	PHP_ME(Phalcon_Paginator_Adapter_AbstractAdapter, setLimit, arginfo_phalcon_paginator_adapter_abstractadapter_setlimit, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Paginator_Adapter_AbstractAdapter, setRepository, arginfo_phalcon_paginator_adapter_abstractadapter_setrepository, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Paginator_Adapter_AbstractAdapter, getRepository, arginfo_phalcon_paginator_adapter_abstractadapter_getrepository, ZEND_ACC_PROTECTED)
+	PHP_FE_END
+};
+
+zend_class_entry *phalcon_storage_adapter_redis_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Storage_Adapter_Redis);
+
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, __construct);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, clear);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, decrement);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, delete);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, getAdapter);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, getKeys);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, has);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, increment);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, set);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, setForever);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkAuth);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkConnect);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkIndex);
+static PHP_METHOD(Phalcon_Storage_Adapter_Redis, setSerializer);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis___construct, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, factory, Phalcon\\Storage\\SerializerFactory, 0)
+ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_ARRAY, 0, "[]")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_clear, 0, 0, _IS_BOOL, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_decrement, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_delete, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_getadapter, 0, 0, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_getkeys, 0, 0, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, prefix, IS_STRING, 0, "''")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_has, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_increment, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_set, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_INFO(0, value)
+	ZEND_ARG_INFO(0, ttl)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_setforever, 0, 2, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_INFO(0, value)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkauth, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
+	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkconnect, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
+	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkindex, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
+	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_setserializer, 0, 1, IS_VOID, 0)
+
+	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_redis_method_entry) {
+	PHP_ME(Phalcon_Storage_Adapter_Redis, __construct, arginfo_phalcon_storage_adapter_redis___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, clear, arginfo_phalcon_storage_adapter_redis_clear, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, decrement, arginfo_phalcon_storage_adapter_redis_decrement, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, delete, arginfo_phalcon_storage_adapter_redis_delete, ZEND_ACC_PUBLIC)
+PHP_ME(Phalcon_Storage_Adapter_Redis, getAdapter, arginfo_phalcon_storage_adapter_redis_getadapter, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, getKeys, arginfo_phalcon_storage_adapter_redis_getkeys, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, has, arginfo_phalcon_storage_adapter_redis_has, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, increment, arginfo_phalcon_storage_adapter_redis_increment, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, set, arginfo_phalcon_storage_adapter_redis_set, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, setForever, arginfo_phalcon_storage_adapter_redis_setforever, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, checkAuth, arginfo_phalcon_storage_adapter_redis_checkauth, ZEND_ACC_PRIVATE)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, checkConnect, arginfo_phalcon_storage_adapter_redis_checkconnect, ZEND_ACC_PRIVATE)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, checkIndex, arginfo_phalcon_storage_adapter_redis_checkindex, ZEND_ACC_PRIVATE)
+	PHP_ME(Phalcon_Storage_Adapter_Redis, setSerializer, arginfo_phalcon_storage_adapter_redis_setserializer, ZEND_ACC_PRIVATE)
 	PHP_FE_END
 };
 
@@ -12216,101 +12314,36 @@ ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_memory_method_entry) {
 	PHP_FE_END
 };
 
-zend_class_entry *phalcon_storage_adapter_redis_ce;
+zend_class_entry *phalcon_storage_adapter_rediscluster_ce;
 
-ZEPHIR_INIT_CLASS(Phalcon_Storage_Adapter_Redis);
+ZEPHIR_INIT_CLASS(Phalcon_Storage_Adapter_RedisCluster);
 
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, __construct);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, clear);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, decrement);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, delete);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, getAdapter);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, getKeys);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, has);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, increment);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, set);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, setForever);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkAuth);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkConnect);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, checkIndex);
-static PHP_METHOD(Phalcon_Storage_Adapter_Redis, setSerializer);
+static PHP_METHOD(Phalcon_Storage_Adapter_RedisCluster, __construct);
+static PHP_METHOD(Phalcon_Storage_Adapter_RedisCluster, clear);
+static PHP_METHOD(Phalcon_Storage_Adapter_RedisCluster, getAdapter);
+static PHP_METHOD(Phalcon_Storage_Adapter_RedisCluster, setSerializer);
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis___construct, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_rediscluster___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, factory, Phalcon\\Storage\\SerializerFactory, 0)
 ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, options, IS_ARRAY, 0, "[]")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_clear, 0, 0, _IS_BOOL, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_rediscluster_clear, 0, 0, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_decrement, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_rediscluster_getadapter, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_delete, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_rediscluster_setserializer, 0, 1, IS_VOID, 0)
+
+	ZEND_ARG_OBJ_INFO(0, connection, RedisCluster, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_getadapter, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_getkeys, 0, 0, IS_ARRAY, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, prefix, IS_STRING, 0, "''")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_has, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_storage_adapter_redis_increment, 0, 0, 1)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value, IS_LONG, 0, "1")
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_set, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_INFO(0, value)
-	ZEND_ARG_INFO(0, ttl)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_setforever, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
-	ZEND_ARG_INFO(0, value)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkauth, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
-	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkconnect, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
-	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_storage_adapter_redis_checkindex, 0, 1, Phalcon\\Storage\\Adapter\\Redis, 0)
-	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_storage_adapter_redis_setserializer, 0, 1, IS_VOID, 0)
-
-	ZEND_ARG_OBJ_INFO(0, connection, Redis, 0)
-ZEND_END_ARG_INFO()
-
-ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_redis_method_entry) {
-	PHP_ME(Phalcon_Storage_Adapter_Redis, __construct, arginfo_phalcon_storage_adapter_redis___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, clear, arginfo_phalcon_storage_adapter_redis_clear, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, decrement, arginfo_phalcon_storage_adapter_redis_decrement, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, delete, arginfo_phalcon_storage_adapter_redis_delete, ZEND_ACC_PUBLIC)
-PHP_ME(Phalcon_Storage_Adapter_Redis, getAdapter, arginfo_phalcon_storage_adapter_redis_getadapter, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, getKeys, arginfo_phalcon_storage_adapter_redis_getkeys, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, has, arginfo_phalcon_storage_adapter_redis_has, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, increment, arginfo_phalcon_storage_adapter_redis_increment, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, set, arginfo_phalcon_storage_adapter_redis_set, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, setForever, arginfo_phalcon_storage_adapter_redis_setforever, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, checkAuth, arginfo_phalcon_storage_adapter_redis_checkauth, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, checkConnect, arginfo_phalcon_storage_adapter_redis_checkconnect, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, checkIndex, arginfo_phalcon_storage_adapter_redis_checkindex, ZEND_ACC_PRIVATE)
-	PHP_ME(Phalcon_Storage_Adapter_Redis, setSerializer, arginfo_phalcon_storage_adapter_redis_setserializer, ZEND_ACC_PRIVATE)
+ZEPHIR_INIT_FUNCS(phalcon_storage_adapter_rediscluster_method_entry) {
+	PHP_ME(Phalcon_Storage_Adapter_RedisCluster, __construct, arginfo_phalcon_storage_adapter_rediscluster___construct, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
+	PHP_ME(Phalcon_Storage_Adapter_RedisCluster, clear, arginfo_phalcon_storage_adapter_rediscluster_clear, ZEND_ACC_PUBLIC)
+PHP_ME(Phalcon_Storage_Adapter_RedisCluster, getAdapter, arginfo_phalcon_storage_adapter_rediscluster_getadapter, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Storage_Adapter_RedisCluster, setSerializer, arginfo_phalcon_storage_adapter_rediscluster_setserializer, ZEND_ACC_PRIVATE)
 	PHP_FE_END
 };
 
@@ -14049,6 +14082,11 @@ ZEPHIR_INIT_CLASS(Phalcon_Cache_Adapter_Memory);
 zend_class_entry *phalcon_cache_adapter_redis_ce;
 
 ZEPHIR_INIT_CLASS(Phalcon_Cache_Adapter_Redis);
+
+
+zend_class_entry *phalcon_cache_adapter_rediscluster_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Cache_Adapter_RedisCluster);
 
 
 zend_class_entry *phalcon_cache_adapter_stream_ce;
@@ -30816,6 +30854,34 @@ ZEPHIR_INIT_FUNCS(phalcon_support_registry_method_entry) {
 	PHP_ME(Phalcon_Support_Registry, toArray, arginfo_phalcon_support_registry_toarray, ZEND_ACC_FINAL|ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Support_Registry, toJson, arginfo_phalcon_support_registry_tojson, ZEND_ACC_FINAL|ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Support_Registry, unserialize, arginfo_phalcon_support_registry_unserialize, ZEND_ACC_FINAL|ZEND_ACC_PUBLIC)
+	PHP_FE_END
+};
+
+zend_class_entry *phalcon_support_settings_ce;
+
+ZEPHIR_INIT_CLASS(Phalcon_Support_Settings);
+
+static PHP_METHOD(Phalcon_Support_Settings, get);
+static PHP_METHOD(Phalcon_Support_Settings, set);
+static PHP_METHOD(Phalcon_Support_Settings, reset);
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_settings_get, 0, 1, IS_MIXED, 0)
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_settings_set, 0, 2, IS_VOID, 0)
+
+	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
+	ZEND_ARG_INFO(0, value)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_support_settings_reset, 0, 0, IS_VOID, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phalcon_support_settings_method_entry) {
+	PHP_ME(Phalcon_Support_Settings, get, arginfo_phalcon_support_settings_get, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Support_Settings, set, arginfo_phalcon_support_settings_set, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Phalcon_Support_Settings, reset, arginfo_phalcon_support_settings_reset, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_FE_END
 };
 

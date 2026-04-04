@@ -313,7 +313,7 @@ PHP_METHOD(Phalcon_Support_Collection, get)
 	}
 	if (UNEXPECTED(zephir_is_true(&cast_zv))) {
 		ZEPHIR_MAKE_REF(&value);
-		ZEPHIR_CALL_FUNCTION(NULL, "settype", NULL, 11, &value, &cast_zv);
+		ZEPHIR_CALL_FUNCTION(NULL, "settype", NULL, 8, &value, &cast_zv);
 		ZEPHIR_UNREF(&value);
 		zephir_check_call_status();
 	}
@@ -985,7 +985,7 @@ PHP_METHOD(Phalcon_Support_Collection, processKey)
 	ZVAL_STR_COPY(&element_zv, element);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("insensitive"), PH_NOISY_CC | PH_READONLY);
 	if (UNEXPECTED(zephir_is_true(&_0))) {
-		ZEPHIR_RETURN_CALL_FUNCTION("mb_strtolower", NULL, 10, &element_zv);
+		ZEPHIR_RETURN_CALL_FUNCTION("mb_strtolower", NULL, 7, &element_zv);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

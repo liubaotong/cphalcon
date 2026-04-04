@@ -5,6 +5,17 @@
 
 ### Added
 
+### Fixed
+
+### Removed
+
+# Changelog
+## 5.11.1 (2026-04-04)
+
+### Changed
+
+### Added
+
 - Added `Phalcon\Storage\Adapter\RedisCluster` adapter to support Redis Cluster connections [#16867](https://github.com/phalcon/cphalcon/issues/16867)
 - Added `Phalcon\Support\Settings` to be used for ini settings throughout the framework [#16873](https://github.com/phalcon/cphalcon/issues/16873)
 
