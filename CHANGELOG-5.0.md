@@ -9,6 +9,8 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Encryption\Security::computeHmac()` to catch `\ValueError` thrown by PHP 8.1+ when an unknown hashing algorithm is passed [#16893](https://github.com/phalcon/cphalcon/issues/16893)
+
 ### Removed
 
 ## 5.11.0 (2026-04-03)
