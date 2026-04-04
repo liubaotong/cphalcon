@@ -104,20 +104,13 @@ jobs:
       - name: Validate extension loads
         run: php -d extension=build/phalcon/modules/phalcon.so -r 'echo "phalcon " . (new Phalcon\Support\Version())->get() . PHP_EOL;'
 
-  # Generate IDE stubs and validate with Psalm
+  # Generate IDE stubs, validate with Psalm, fix code style and store as artifact
   stubs:
-    name: Stubs / PHP ${{ matrix.php }}
+    permissions:
+      contents: read
+    name: Stubs
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        php:
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
-          - '8.5'
 
     steps:
       - uses: actions/checkout@v6
@@ -125,7 +118,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.5'
           tools: pecl
           extensions: zephir_parser-${{ env.ZEPHIR_PARSER_VERSION }}
 
@@ -136,10 +129,22 @@ jobs:
 
       - run: composer install --prefer-dist --ignore-platform-reqs
 
-      - name: Validate stubs
+      - name: Generate and validate stubs
         run: |
           vendor/bin/zephir stubs
           vendor/bin/psalm ide/
+
+      - name: Fix code style on generated stubs
+        # phpcbf exits 1 when it fixes files; passing the path on the CLI overrides
+        # the <file> entries in phpcs.xml so the PSR12 ruleset is applied to the stubs.
+        run: vendor/bin/phpcbf --standard=phpcs.xml ide/${{ env.PHALCON_VERSION }}/ || true
+
+      - name: Upload IDE stubs artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: phalcon-ide-stubs
+          path: ide/${{ env.PHALCON_VERSION }}/Phalcon/
+          retention-days: 5
 
   # Build Phalcon PECL package (artifact consumed by build-and-test and database_test)
   generate_pecl:
@@ -717,3 +722,76 @@ jobs:
           allowUpdates: true
           artifacts: "./build-artifacts/release/*.zip,./build-artifacts/release/*.tgz"
           artifactContentType: application/octet-stream
+
+  publish_stubs:
+    permissions:
+      contents: read
+
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
+    name: Publish IDE Stubs
+    runs-on: ubuntu-latest
+    needs: [release, stubs]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download IDE stubs artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: phalcon-ide-stubs
+          path: ./ide-stubs
+
+      - name: Checkout phalcon-ide-stubs
+        uses: actions/checkout@v6
+        with:
+          repository: phalcon/phalcon-ide-stubs
+          token: ${{ secrets.STUBS_REPO_TOKEN }}
+          path: phalcon-ide-stubs
+
+      - name: Copy stubs into phalcon-ide-stubs
+        # Copies all generated stubs over the existing ones; no files are deleted.
+        run: cp -r ./ide-stubs/. phalcon-ide-stubs/src/
+
+      - name: Bump version in composer.json
+        working-directory: phalcon-ide-stubs
+        run: |
+          jq --arg ver "${{ env.PHALCON_VERSION }}" '.version = $ver' composer.json \
+            > composer.tmp.json
+          mv composer.tmp.json composer.json
+
+      - name: Commit and push stubs branch
+        working-directory: phalcon-ide-stubs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b stubs/v${{ env.PHALCON_VERSION }}
+          git add Phalcon/ composer.json
+          git commit -m "stubs: update to v${{ env.PHALCON_VERSION }}"
+          git push origin stubs/v${{ env.PHALCON_VERSION }}
+
+      - name: Create Pull Request in phalcon-ide-stubs
+        working-directory: phalcon-ide-stubs
+        env:
+          GH_TOKEN: ${{ secrets.STUBS_REPO_TOKEN }}
+        run: |
+          gh pr create \
+            --repo phalcon/phalcon-ide-stubs \
+            --head stubs/v${{ env.PHALCON_VERSION }} \
+            --base master \
+            --title "stubs: update to v${{ env.PHALCON_VERSION }}" \
+            --body "v${{ env.PHALCON_VERSION }} Stubs"
+
+      - name: Create draft release in phalcon-ide-stubs
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.STUBS_REPO_TOKEN }}
+          owner: phalcon
+          repo: phalcon-ide-stubs
+          tag: v${{ env.PHALCON_VERSION }}
+          name: v${{ env.PHALCON_VERSION }} Stubs
+          body: "v${{ env.PHALCON_VERSION }} Stubs"
+          draft: true
+          allowUpdates: true
+          commit: stubs/v${{ env.PHALCON_VERSION }}
+
