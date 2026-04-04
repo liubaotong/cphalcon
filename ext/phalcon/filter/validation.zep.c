@@ -229,10 +229,10 @@ PHP_METHOD(Phalcon_Filter_Validation, appendMessage)
 	if (Z_TYPE_P(&messages) != IS_OBJECT) {
 		ZEPHIR_INIT_NVAR(&messages);
 		object_init_ex(&messages, phalcon_messages_messages_ce);
-		ZEPHIR_CALL_METHOD(NULL, &messages, "__construct", NULL, 8);
+		ZEPHIR_CALL_METHOD(NULL, &messages, "__construct", NULL, 10);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(NULL, &messages, "appendmessage", NULL, 292, message);
+	ZEPHIR_CALL_METHOD(NULL, &messages, "appendmessage", NULL, 293, message);
 	zephir_check_call_status();
 	zephir_update_property_zval(this_ptr, ZEND_STRL("messages"), &messages);
 	RETURN_THIS();
@@ -379,7 +379,7 @@ PHP_METHOD(Phalcon_Filter_Validation, bind)
 			zephir_read_property(&_14$$8, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
 			zephir_read_property(&_15$$8, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
 			zephir_read_property(&_16$$8, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
-			ZEPHIR_CALL_FUNCTION(&_17$$8, "property_exists", &_18, 293, &_16$$8, &field);
+			ZEPHIR_CALL_FUNCTION(&_17$$8, "property_exists", &_18, 294, &_16$$8, &field);
 			zephir_check_call_status();
 			if ((zephir_method_exists(&_14$$8, &method)  == SUCCESS)) {
 				ZEPHIR_CALL_METHOD_ZVAL(NULL, entity, &method, NULL, 0, &value);
@@ -424,7 +424,7 @@ PHP_METHOD(Phalcon_Filter_Validation, bind)
 				zephir_read_property(&_23$$14, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
 				zephir_read_property(&_24$$14, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
 				zephir_read_property(&_25$$14, this_ptr, ZEND_STRL("entity"), PH_NOISY_CC | PH_READONLY);
-				ZEPHIR_CALL_FUNCTION(&_26$$14, "property_exists", &_18, 293, &_25$$14, &field);
+				ZEPHIR_CALL_FUNCTION(&_26$$14, "property_exists", &_18, 294, &_25$$14, &field);
 				zephir_check_call_status();
 				if ((zephir_method_exists(&_23$$14, &method)  == SUCCESS)) {
 					ZEPHIR_CALL_METHOD_ZVAL(NULL, entity, &method, NULL, 0, &value);
@@ -753,7 +753,7 @@ PHP_METHOD(Phalcon_Filter_Validation, getValue)
 				zephir_camelize(&_5$$13, &field_zv, NULL );
 				ZEPHIR_INIT_VAR(&method);
 				ZEPHIR_CONCAT_SV(&method, "set", &_5$$13);
-				ZEPHIR_CALL_FUNCTION(&_6$$13, "property_exists", NULL, 293, &entity, &field_zv);
+				ZEPHIR_CALL_FUNCTION(&_6$$13, "property_exists", NULL, 294, &entity, &field_zv);
 				zephir_check_call_status();
 				if ((zephir_method_exists(&entity, &method)  == SUCCESS)) {
 					ZEPHIR_CALL_METHOD_ZVAL(NULL, &entity, &method, NULL, 0, &value);
@@ -1106,7 +1106,7 @@ PHP_METHOD(Phalcon_Filter_Validation, validate)
 	zephir_update_property_zval(this_ptr, ZEND_STRL("values"), &_1);
 	ZEPHIR_INIT_VAR(&_2);
 	object_init_ex(&_2, phalcon_messages_messages_ce);
-	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 8);
+	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 10);
 	zephir_check_call_status();
 	zephir_update_property_zval(this_ptr, ZEND_STRL("messages"), &_2);
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("data"), PH_NOISY_CC | PH_READONLY);
@@ -1460,7 +1460,7 @@ PHP_METHOD(Phalcon_Filter_Validation, preChecking)
 			{
 				ZEPHIR_INIT_NVAR(&singleField);
 				ZVAL_COPY(&singleField, _0$$3);
-				ZEPHIR_CALL_METHOD(&_2$$4, this_ptr, "prechecking", &_3, 294, &singleField, validator);
+				ZEPHIR_CALL_METHOD(&_2$$4, this_ptr, "prechecking", &_3, 295, &singleField, validator);
 				zephir_check_call_status();
 				zephir_array_append(&results, &_2$$4, PH_SEPARATE, "phalcon/Filter/Validation.zep", 702);
 				if (zephir_fast_in_array(&__$false, &results)) {
@@ -1479,7 +1479,7 @@ PHP_METHOD(Phalcon_Filter_Validation, preChecking)
 				}
 				ZEPHIR_CALL_METHOD(&singleField, field, "current", NULL, 0);
 				zephir_check_call_status();
-					ZEPHIR_CALL_METHOD(&_4$$6, this_ptr, "prechecking", &_3, 294, &singleField, validator);
+					ZEPHIR_CALL_METHOD(&_4$$6, this_ptr, "prechecking", &_3, 295, &singleField, validator);
 					zephir_check_call_status();
 					zephir_array_append(&results, &_4$$6, PH_SEPARATE, "phalcon/Filter/Validation.zep", 702);
 					if (zephir_fast_in_array(&__$false, &results)) {

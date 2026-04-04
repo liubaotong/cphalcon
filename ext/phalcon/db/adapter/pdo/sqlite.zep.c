@@ -81,7 +81,7 @@ PHP_METHOD(Phalcon_Db_Adapter_Pdo_Sqlite, __construct)
 	if (zephir_array_isset_string(&descriptor, SL("charset"))) {
 		ZEPHIR_INIT_VAR(&_0$$3);
 		ZVAL_STRING(&_0$$3, "SQLite does not allow the charset to be changed in the DSN.");
-		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 7, &_0$$3);
+		ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 9, &_0$$3);
 		zephir_check_call_status();
 	}
 	ZEPHIR_CALL_PARENT(NULL, phalcon_db_adapter_pdo_sqlite_ce, getThis(), "__construct", NULL, 0, &descriptor);
@@ -416,7 +416,7 @@ PHP_METHOD(Phalcon_Db_Adapter_Pdo_Sqlite, describeColumns)
 			zephir_array_fetch_long(&columnName, &field, 1, PH_NOISY | PH_READONLY, "phalcon/Db/Adapter/Pdo/Sqlite.zep", 306);
 			ZEPHIR_INIT_NVAR(&_33$$3);
 			object_init_ex(&_33$$3, phalcon_db_column_ce);
-			ZEPHIR_CALL_METHOD(NULL, &_33$$3, "__construct", &_41, 215, &columnName, &definition);
+			ZEPHIR_CALL_METHOD(NULL, &_33$$3, "__construct", &_41, 216, &columnName, &definition);
 			zephir_check_call_status();
 			zephir_array_append(&columns, &_33$$3, PH_SEPARATE, "phalcon/Db/Adapter/Pdo/Sqlite.zep", 307);
 			ZEPHIR_CPY_WRT(&oldColumn, &columnName);
@@ -581,7 +581,7 @@ PHP_METHOD(Phalcon_Db_Adapter_Pdo_Sqlite, describeColumns)
 				zephir_array_fetch_long(&columnName, &field, 1, PH_NOISY, "phalcon/Db/Adapter/Pdo/Sqlite.zep", 306);
 				ZEPHIR_INIT_NVAR(&_71$$28);
 				object_init_ex(&_71$$28, phalcon_db_column_ce);
-				ZEPHIR_CALL_METHOD(NULL, &_71$$28, "__construct", &_41, 215, &columnName, &definition);
+				ZEPHIR_CALL_METHOD(NULL, &_71$$28, "__construct", &_41, 216, &columnName, &definition);
 				zephir_check_call_status();
 				zephir_array_append(&columns, &_71$$28, PH_SEPARATE, "phalcon/Db/Adapter/Pdo/Sqlite.zep", 307);
 				ZEPHIR_CPY_WRT(&oldColumn, &columnName);
