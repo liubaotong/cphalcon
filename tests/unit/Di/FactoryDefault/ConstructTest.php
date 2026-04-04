@@ -34,6 +34,7 @@ use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Url;
 use Phalcon\Support\HelperFactory;
+use Phalcon\Support\Settings;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class ConstructTest extends AbstractUnitTestCase
@@ -89,6 +90,10 @@ final class ConstructTest extends AbstractUnitTestCase
                 HelperFactory::class,
             ],
             [
+                'settings',
+                Settings::class,
+            ],
+            [
                 'modelsManager',
                 ModelsManager::class,
             ],
@@ -139,7 +144,7 @@ final class ConstructTest extends AbstractUnitTestCase
     {
         $container = new FactoryDefault();
 
-        $expected = 20;
+        $expected = 21;
         $actual   = count($container->getServices());
         $this->assertSame($expected, $actual);
     }

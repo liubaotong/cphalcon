@@ -16,6 +16,7 @@ use Phalcon\Mvc\ModelInterface;
 use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\AbstractCombinedFieldsValidator;
 use Phalcon\Filter\Validation\Exception;
+use Phalcon\Support\Settings;
 //use Phalcon\Mvc\CollectionInterface;
 //use Phalcon\Mvc\Collection;
 
@@ -137,7 +138,7 @@ class Uniqueness extends AbstractCombinedFieldsValidator
     protected function getColumnNameReal(var record, string! field) -> string
     {
         // Caching columnMap
-        if globals_get("orm.column_renaming") && !this->columnMap {
+        if Settings::get("orm.column_renaming") && !this->columnMap {
             let this->columnMap = record->getDI()
                 ->getShared("modelsMetadata")
                 ->getColumnMap(record);

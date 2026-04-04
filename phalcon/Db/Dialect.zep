@@ -10,6 +10,8 @@
 
 namespace Phalcon\Db;
 
+use Phalcon\Support\Settings;
+
 /**
  * This is the base class to each database dialect. This implements
  * common methods to transform intermediate code into its RDBMS related syntax
@@ -41,7 +43,7 @@ abstract class Dialect implements DialectInterface
     {
         var parts, key, part, newParts;
 
-        if !globals_get("db.escape_identifiers") {
+        if !Settings::get("db.escape_identifiers") {
             return str;
         }
 
@@ -77,7 +79,7 @@ abstract class Dialect implements DialectInterface
      */
     final public function escapeSchema(string! str, string escapeChar = null) -> string
     {
-        if !globals_get("db.escape_identifiers") {
+        if !Settings::get("db.escape_identifiers") {
             return str;
         }
 
