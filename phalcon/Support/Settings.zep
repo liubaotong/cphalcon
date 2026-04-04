@@ -40,7 +40,7 @@ class Settings
      *
      * @var array
      */
-    protected static overrides = [];
+    protected static overrides;
 
     /**
      * Returns the value of a known setting.
@@ -58,6 +58,10 @@ class Settings
         var localOverrides;
 
         let localOverrides = self::overrides;
+
+        if empty localOverrides {
+            let localOverrides = [];
+        }
 
         // PHP-level override takes priority
         if isset localOverrides[key] {
@@ -146,6 +150,10 @@ class Settings
         var localOverrides;
 
         let localOverrides = self::overrides;
+
+        if empty localOverrides {
+            let localOverrides = [];
+        }
 
         switch key {
             case "db.escape_identifiers":
