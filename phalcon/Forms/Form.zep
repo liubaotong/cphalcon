@@ -13,6 +13,7 @@ namespace Phalcon\Forms;
 use Countable;
 use Iterator;
 use Phalcon\Di\Injectable;
+use Phalcon\Support\Settings;
 use Phalcon\Di\DiInterface;
 use Phalcon\Filter\FilterInterface;
 use Phalcon\Forms\Element\ElementInterface;
@@ -254,7 +255,7 @@ class Form extends Injectable implements Countable, Iterator, AttributesInterfac
                 /**
                  * Use the public property if it doesn't have a setter
                  */
-                if (!globals_get("form.strict_entity_property_check")) {
+                if (!Settings::get("form.strict_entity_property_check")) {
                     let entity->{key} = filteredValue;
 
                     continue;

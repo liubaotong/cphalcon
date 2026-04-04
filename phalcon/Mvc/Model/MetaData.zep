@@ -16,6 +16,7 @@ use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Mvc\Model\MetaData\Strategy\Introspection;
 use Phalcon\Mvc\Model\MetaData\Strategy\StrategyInterface;
 use Phalcon\Mvc\ModelInterface;
+use Phalcon\Support\Settings;
 
 /**
  * Phalcon\Mvc\Model\MetaData
@@ -527,7 +528,7 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
     {
         var keyName;
 
-        if !globals_get("orm.column_renaming") {
+        if !Settings::get("orm.column_renaming") {
             return null;
         }
         let keyName = this->getColumnMapUniqueKey(model);
@@ -553,7 +554,7 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
     {
         var keyName;
 
-        if !globals_get("orm.column_renaming") {
+        if !Settings::get("orm.column_renaming") {
             return null;
         }
         let keyName = this->getColumnMapUniqueKey(model);
@@ -706,7 +707,7 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
         var result, option;
 
         try {
-            let option = globals_get("orm.exception_on_failed_metadata_save"),
+            let option = Settings::get("orm.exception_on_failed_metadata_save"),
                 result = this->adapter->set(key, data);
 
             if false === result {
@@ -827,7 +828,7 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
         /**
          * Check for a column map, store in columnMap in order and reversed order
          */
-        if !globals_get("orm.column_renaming") {
+        if !Settings::get("orm.column_renaming") {
             return false;
         }
 

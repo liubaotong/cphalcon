@@ -16,6 +16,7 @@ use Phalcon\Db\Exception;
 use Phalcon\Db\Result\PdoResult;
 use Phalcon\Db\ResultInterface;
 use Phalcon\Events\ManagerInterface;
+use Phalcon\Support\Settings;
 
 /**
  * Phalcon\Db\Adapter\Pdo is the Phalcon\Db that internally uses PDO to connect
@@ -496,7 +497,7 @@ abstract class AbstractPdo extends AbstractAdapter
                     let castValue = (string) value,
                         type = Column::BIND_SKIP;
                 } else {
-                    if globals_get("db.force_casting") {
+                    if Settings::get("db.force_casting") {
                         if typeof value != "array" {
                             switch type {
 
