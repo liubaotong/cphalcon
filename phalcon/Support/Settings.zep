@@ -55,9 +55,13 @@ class Settings
      */
     public static function get(string key) -> mixed
     {
+        var localOverrides;
+
+        let localOverrides = self::overrides;
+
         // PHP-level override takes priority
-        if isset self::overrides[key] {
-            return self::overrides[key];
+        if isset localOverrides[key] {
+            return localOverrides[key];
         }
 
         // Fall back to the C-level global for each known key
@@ -139,6 +143,10 @@ class Settings
      */
     public static function set(string key, var value) -> void
     {
+        var localOverrides;
+
+        let localOverrides = self::overrides;
+
         switch key {
             case "db.escape_identifiers":
             case "db.force_casting":
@@ -160,7 +168,8 @@ class Settings
             case "orm.update_snapshot_on_save":
             case "orm.virtual_foreign_keys":
             case "orm.dynamic_update":
-                let self::overrides[key] = value;
+                let localOverrides[key] = value;
+                let self::overrides = localOverrides;
                 break;
 
             default:
