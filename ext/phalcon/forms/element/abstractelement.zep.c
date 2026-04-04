@@ -132,7 +132,7 @@ PHP_METHOD(Phalcon_Forms_Element_AbstractElement, __construct)
 	zephir_update_property_zval(this_ptr, ZEND_STRL("attributes"), &attributes);
 	ZEPHIR_INIT_VAR(&_1);
 	object_init_ex(&_1, phalcon_messages_messages_ce);
-	ZEPHIR_CALL_METHOD(NULL, &_1, "__construct", NULL, 8);
+	ZEPHIR_CALL_METHOD(NULL, &_1, "__construct", NULL, 10);
 	zephir_check_call_status();
 	zephir_update_property_zval(this_ptr, ZEND_STRL("messages"), &_1);
 	ZEPHIR_MM_RESTORE();
@@ -986,7 +986,7 @@ PHP_METHOD(Phalcon_Forms_Element_AbstractElement, getLocalTagFactory)
 			}
 			ZEPHIR_INIT_NVAR(&tagFactory);
 			object_init_ex(&tagFactory, phalcon_html_tagfactory_ce);
-			ZEPHIR_CALL_METHOD(NULL, &tagFactory, "__construct", NULL, 9, &escaper);
+			ZEPHIR_CALL_METHOD(NULL, &tagFactory, "__construct", NULL, 11, &escaper);
 			zephir_check_call_status();
 		}
 		zephir_update_property_zval(this_ptr, ZEND_STRL("tagFactory"), &tagFactory);

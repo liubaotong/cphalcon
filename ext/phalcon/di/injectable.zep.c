@@ -53,6 +53,7 @@
  * @property \Phalcon\Mvc\Model\Manager|\Phalcon\Mvc\Model\ManagerInterface $modelsManager
  * @property \Phalcon\Mvc\Model\MetaData\Memory|\Phalcon\Mvc\Model\MetadataInterface $modelsMetadata
  * @property \Phalcon\Mvc\Model\Transaction\Manager|\Phalcon\Mvc\Model\Transaction\ManagerInterface $transactionManager
+ * @property \Phalcon\Support\Settings $settings
  * @property \Phalcon\Assets\Manager $assets
  * @property \Phalcon\Di\Di|\Phalcon\Di\DiInterface $di
  * @property \Phalcon\Session\Bag|\Phalcon\Session\BagInterface $persistent
@@ -133,7 +134,7 @@ PHP_METHOD(Phalcon_Di_Injectable, __get)
 	}
 	ZEPHIR_INIT_VAR(&_5);
 	ZEPHIR_CONCAT_SV(&_5, "Access to undefined property ", &propertyName_zv);
-	ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 7, &_5);
+	ZEPHIR_CALL_FUNCTION(NULL, "trigger_error", NULL, 9, &_5);
 	zephir_check_call_status();
 	RETURN_MM_NULL();
 }
@@ -185,7 +186,7 @@ PHP_METHOD(Phalcon_Di_Injectable, getDI)
 		ZEPHIR_CALL_CE_STATIC(&container, phalcon_di_di_ce, "getdefault", NULL, 0);
 		zephir_check_call_status();
 		if (UNEXPECTED(Z_TYPE_P(&container) != IS_OBJECT)) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_di_exception_ce, "A dependency injection container is required to access internal services", "phalcon/Di/Injectable.zep", 126);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalcon_di_exception_ce, "A dependency injection container is required to access internal services", "phalcon/Di/Injectable.zep", 127);
 			return;
 		}
 		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setdi", NULL, 0, &container);

@@ -92,6 +92,7 @@ class AdapterFactory extends AbstractFactory
             "libmemcached" : "Phalcon\\Storage\\Adapter\\Libmemcached",
             "memory"       : "Phalcon\\Storage\\Adapter\\Memory",
             "redis"        : "Phalcon\\Storage\\Adapter\\Redis",
+            "rediscluster" : "Phalcon\\Storage\\Adapter\\RedisCluster",
             "stream"       : "Phalcon\\Storage\\Adapter\\Stream",
             "weak"         : "Phalcon\\Storage\\Adapter\\Weak"
         ];

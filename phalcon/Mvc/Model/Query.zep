@@ -24,6 +24,7 @@ use Phalcon\Mvc\Model\Resultset\Simple;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Db\DialectInterface;
 use Phalcon\Mvc\Model\Query\Lang;
+use Phalcon\Support\Settings;
 
 /**
  * Phalcon\Mvc\Model\Query
@@ -228,7 +229,7 @@ class Query implements QueryInterface, InjectionAwareInterface
         if fetch enableImplicitJoins, options["enable_implicit_joins"] {
             let this->enableImplicitJoins = (enableImplicitJoins == true);
         } else {
-            let this->enableImplicitJoins = globals_get(
+            let this->enableImplicitJoins = Settings::get(
                 "orm.enable_implicit_joins"
             );
         }
@@ -892,7 +893,7 @@ class Query implements QueryInterface, InjectionAwareInterface
             let automaticFields = true,
                 fields = attributes;
 
-            if globals_get("orm.column_renaming") {
+            if Settings::get("orm.column_renaming") {
                 let columnMap = metaData->getColumnMap(model);
             } else {
                 let columnMap = null;
@@ -1116,7 +1117,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                      * If the resultset is complex we open every model into
                      * their columns
                      */
-                    if globals_get("orm.column_renaming") {
+                    if Settings::get("orm.column_renaming") {
                         let columnMap = metaData->getColumnMap(instance);
                     } else {
                         let columnMap = null;
@@ -1285,7 +1286,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                 /**
                  * Get the column map
                  */
-                if !globals_get("orm.cast_on_hydrate") {
+                if !Settings::get("orm.cast_on_hydrate") {
                     let simpleColumnMap = metaData->getColumnMap(resultObject);
                 } else {
                     let columnMap      = metaData->getColumnMap(resultObject),
@@ -2990,7 +2991,7 @@ class Query implements QueryInterface, InjectionAwareInterface
             /**
              * Change the selected column by its real name on its mapped table
              */
-            if globals_get("orm.column_renaming") {
+            if Settings::get("orm.column_renaming") {
                 /**
                  * Retrieve the corresponding model by its alias
                  */
@@ -3080,7 +3081,7 @@ class Query implements QueryInterface, InjectionAwareInterface
             /**
              * Rename the column
              */
-            if globals_get("orm.column_renaming") {
+            if Settings::get("orm.column_renaming") {
                 let columnMap = metaData->getReverseColumnMap(hasModel);
             } else {
                 let columnMap = null;

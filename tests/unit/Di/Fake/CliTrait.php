@@ -25,6 +25,7 @@ use Phalcon\Mvc\Model\Manager;
 use Phalcon\Mvc\Model\MetaData\Memory as MetadataMemory;
 use Phalcon\Mvc\Model\Transaction\Manager as TransactionManager;
 use Phalcon\Support\HelperFactory;
+use Phalcon\Support\Settings;
 
 trait CliTrait
 {
@@ -108,6 +109,10 @@ trait CliTrait
             [
                 'service' => 'helper',
                 'class'   => HelperFactory::class,
+            ],
+            [
+                'service' => 'settings',
+                'class'   => Settings::class,
             ],
             [
                 'service' => 'modelsManager',

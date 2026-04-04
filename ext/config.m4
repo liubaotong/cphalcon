@@ -21,20 +21,20 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/di/abstractinjectionaware.zep.c
 	phalcon/factory/abstractfactory.zep.c
 	phalcon/storage/serializer/serializerinterface.zep.c
+	phalcon/storage/adapter/abstractadapter.zep.c
 	phalcon/storage/serializer/abstractserializer.zep.c
 	phalcon/di/injectable.zep.c
 	phalcon/forms/element/elementinterface.zep.c
 	phalcon/forms/element/abstractelement.zep.c
-	phalcon/storage/adapter/abstractadapter.zep.c
 	phalcon/support/helper/str/abstractstr.zep.c
 	phalcon/support/collection.zep.c
 	phalcon/support/helper/arr/abstractarr.zep.c
 	phalcon/storage/serializer/none.zep.c
+	phalcon/cache/adapter/adapterinterface.zep.c
 	phalcon/dispatcher/dispatcherinterface.zep.c
 	phalcon/encryption/crypt/padding/padinterface.zep.c
 	phalcon/filter/validation/validator/file/abstractfile.zep.c
 	phalcon/assets/assetinterface.zep.c
-	phalcon/cache/adapter/adapterinterface.zep.c
 	phalcon/config/configinterface.zep.c
 	phalcon/mvc/model/metadatainterface.zep.c
 	phalcon/config/config.zep.c
@@ -72,6 +72,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/mvc/view/engine/engineinterface.zep.c
 	phalcon/mvc/viewbaseinterface.zep.c
 	phalcon/paginator/adapter/abstractadapter.zep.c
+	phalcon/storage/adapter/redis.zep.c
 	phalcon/support/helper/str/pascalcase.zep.c
 	phalcon/translate/adapter/abstractadapter.zep.c
 	phalcon/acl/adapter/adapterinterface.zep.c
@@ -179,7 +180,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/storage/adapter/apcu.zep.c
 	phalcon/storage/adapter/libmemcached.zep.c
 	phalcon/storage/adapter/memory.zep.c
-	phalcon/storage/adapter/redis.zep.c
+	phalcon/storage/adapter/rediscluster.zep.c
 	phalcon/storage/adapter/stream.zep.c
 	phalcon/storage/adapter/weak.zep.c
 	phalcon/storage/serializer/igbinary.zep.c
@@ -216,6 +217,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/cache/adapter/libmemcached.zep.c
 	phalcon/cache/adapter/memory.zep.c
 	phalcon/cache/adapter/redis.zep.c
+	phalcon/cache/adapter/rediscluster.zep.c
 	phalcon/cache/adapter/stream.zep.c
 	phalcon/cache/adapter/weak.zep.c
 	phalcon/cache/adapterfactory.zep.c
@@ -601,6 +603,7 @@ if test "$PHP_PHALCON" = "yes"; then
 	phalcon/support/helper/str/upper.zep.c
 	phalcon/support/helperfactory.zep.c
 	phalcon/support/registry.zep.c
+	phalcon/support/settings.zep.c
 	phalcon/support/version.zep.c
 	phalcon/tag.zep.c
 	phalcon/tag/exception.zep.c

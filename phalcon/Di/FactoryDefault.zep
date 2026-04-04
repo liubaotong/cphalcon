@@ -54,6 +54,7 @@ class FactoryDefault extends \Phalcon\Di\Di
             "flashSession"       : new Service("Phalcon\\Flash\\Session", true),
             "filter"             : new Service(filter->newInstance(), true),
             "helper"             : new Service("Phalcon\\Support\\HelperFactory", true),
+            "settings"           : new Service("Phalcon\\Support\\Settings", true),
             "modelsManager"      : new Service("Phalcon\\Mvc\\Model\\Manager", true),
             "modelsMetadata"     : new Service("Phalcon\\Mvc\\Model\\MetaData\\Memory", true),
             "request"            : new Service("Phalcon\\Http\\Request", true),
