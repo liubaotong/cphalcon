@@ -317,7 +317,7 @@ PHP_METHOD(Phalcon_Encryption_Security, computeHmac)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool raw;
-	zval data_zv, key_zv, algo_zv, *raw_param = NULL, hmac, _0, _1, _2, _3$$2, _4$$2, _5$$2, _1$$3, _2$$3, _3$$3;
+	zval data_zv, key_zv, algo_zv, *raw_param = NULL, hmac, _0, _1$$3, _2$$3, _3$$3;
 	zend_string *data = NULL, *key = NULL, *algo = NULL;
 
 	ZVAL_UNDEF(&data_zv);
@@ -325,11 +325,6 @@ PHP_METHOD(Phalcon_Encryption_Security, computeHmac)
 	ZVAL_UNDEF(&algo_zv);
 	ZVAL_UNDEF(&hmac);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_2);
-	ZVAL_UNDEF(&_3$$2);
-	ZVAL_UNDEF(&_4$$2);
-	ZVAL_UNDEF(&_5$$2);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
@@ -353,34 +348,8 @@ PHP_METHOD(Phalcon_Encryption_Security, computeHmac)
 	} else {
 		}
 	ZVAL_BOOL(&_0, (raw ? 1 : 0));
-	/* try_start_1: */
-
-		ZEPHIR_CALL_FUNCTION(&hmac, "hash_hmac", NULL, 231, &algo_zv, &data_zv, &key_zv, &_0);
-		zephir_check_call_status_or_jump(try_end_1);
-
-	try_end_1:
-
-	if (EG(exception)) {
-		ZEPHIR_INIT_VAR(&_1);
-		ZVAL_OBJ(&_1, EG(exception));
-		Z_ADDREF_P(&_1);
-		ZEPHIR_INIT_VAR(&_2);
-		if (zephir_is_instance_of(&_1, SL("ValueError"))) {
-			zend_clear_exception();
-			ZEPHIR_CPY_WRT(&_2, &_1);
-			ZEPHIR_INIT_VAR(&_3$$2);
-			object_init_ex(&_3$$2, phalcon_encryption_security_exception_ce);
-			ZEPHIR_INIT_VAR(&_4$$2);
-			ZVAL_STRING(&_4$$2, "Unknown hashing algorithm: %s");
-			ZEPHIR_CALL_FUNCTION(&_5$$2, "sprintf", NULL, 81, &_4$$2, &algo_zv);
-			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, &_3$$2, "__construct", NULL, 33, &_5$$2);
-			zephir_check_call_status();
-			zephir_throw_exception_debug(&_3$$2, "phalcon/Encryption/Security.zep", 219);
-			ZEPHIR_MM_RESTORE();
-			return;
-		}
-	}
+	ZEPHIR_CALL_FUNCTION(&hmac, "hash_hmac", NULL, 231, &algo_zv, &data_zv, &key_zv, &_0);
+	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&hmac))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, phalcon_encryption_security_exception_ce);
@@ -390,7 +359,7 @@ PHP_METHOD(Phalcon_Encryption_Security, computeHmac)
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 33, &_3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_1$$3, "phalcon/Encryption/Security.zep", 228);
+		zephir_throw_exception_debug(&_1$$3, "phalcon/Encryption/Security.zep", 219);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
