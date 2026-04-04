@@ -18,6 +18,7 @@ use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Cache\Adapter\Redis;
+use Phalcon\Cache\Adapter\RedisCluster;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
 use Phalcon\Storage\SerializerFactory;
@@ -30,6 +31,7 @@ use function array_merge;
 use function file_get_contents;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
+use function getOptionsRedisCluster;
 use function outputDir;
 use function sort;
 use function uniqid;
@@ -242,6 +244,48 @@ final class GetSetTest extends AbstractUnitTestCase
                     ]
                 ),
                 uniqid(),
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                null,
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                true,
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                false,
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                123456,
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                123.456,
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                uniqid(),
+            ],
+            [
+                'redis',
+                RedisCluster::class,
+                getOptionsRedisCluster(),
+                new stdClass(),
             ],
             [
                 '',

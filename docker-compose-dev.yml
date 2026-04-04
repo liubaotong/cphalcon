@@ -77,6 +77,57 @@ services:
     container_name: cphalcon-dev-redis
     image: redis:8-alpine
 
+  redis-node-0:
+    container_name: cphalcon-dev-redis-node-0
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+
+  redis-node-1:
+    container_name: cphalcon-dev-redis-node-1
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+
+  redis-node-2:
+    container_name: cphalcon-dev-redis-node-2
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+
+  redis-node-3:
+    container_name: cphalcon-dev-redis-node-3
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+
+  redis-node-4:
+    container_name: cphalcon-dev-redis-node-4
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+
+  redis-node-5:
+    container_name: cphalcon-dev-redis-node-5
+    image: docker.io/bitnamilegacy/redis-cluster:8.2
+    depends_on:
+      - redis-node-0
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+    environment:
+      - 'REDIS_PASSWORD=bitnami'
+      - 'REDISCLI_AUTH=bitnami'
+      - 'REDIS_CLUSTER_REPLICAS=1'
+      - 'REDIS_NODES=cphalcon-dev-redis-node-0 cphalcon-dev-redis-node-1 cphalcon-dev-redis-node-2 cphalcon-dev-redis-node-3 cphalcon-dev-redis-node-4 cphalcon-dev-redis-node-5'
+      - 'REDIS_CLUSTER_CREATOR=yes'
+
   memcached:
     container_name: cphalcon-dev-memcached
     image: memcached:1.6-alpine

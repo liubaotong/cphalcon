@@ -79,8 +79,13 @@ class Stream extends AbstractAdapter
         bool result;
 
         let result    = true,
-            directory = this->getDirSeparator(this->storageDir),
-            iterator  = this->getIterator(directory);
+            directory = this->getDir();
+
+        if unlikely true !== this->phpFileExists(directory) {
+            return result;
+        }
+
+        let iterator = this->getIterator(directory);
 
         for file in iterator {
             if unlikely true === file->isFile() && true !== this->phpUnlink(file->getPathName()) {

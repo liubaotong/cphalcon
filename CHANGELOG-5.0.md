@@ -1,5 +1,17 @@
 # Changelog
-## 5.12.0 (2026-04-03)
+## 5.11.1 (2026-XX-XX)
+
+### Changed
+
+### Added
+
+- Added `Phalcon\Storage\Adapter\RedisCluster` adapter to support Redis Cluster connections [#16867](https://github.com/phalcon/cphalcon/issues/16867)
+
+### Fixed
+
+### Removed
+
+## 5.11.0 (2026-04-03)
 
 ### Changed
 
@@ -25,6 +37,7 @@
 - Fixed `Phalcon\Acl\Adapter\Memory::isAllowed()` and `Phalcon\Mvc\Model\Binder` to handle PHP 8.1+ union and intersection types by checking for `ReflectionNamedType` before calling `getName()` [#16261](https://github.com/phalcon/cphalcon/issues/16261)
 - Fixed memory leak in PHQL parser (phql_internal_parse_phql()) during repeated query execution. [#16854](https://github.com/phalcon/cphalcon/issues/16854)
 - Fixed a deadlock issue when running the db suite [#16862](https://github.com/phalcon/cphalcon/issues/16862)
+- Fixed `Phalcon\Storage\Adapter\Redis::clear()` and `Phalcon\Storage\Adapter\Stream::clear()` to only delete keys belonging to the current prefix instead of flushing the entire storage [#16806](https://github.com/phalcon/cphalcon/issues/16806)
 
 ### Removed
 
