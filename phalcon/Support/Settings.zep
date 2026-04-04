@@ -50,7 +50,7 @@ class Settings
      *   2. globals_get() — the C-level value, honouring php.ini / .htaccess
      *   3. null — for unknown keys
      *
-     * @param string key
+     * @param string $key
      * @return mixed
      */
     public static function get(string key) -> mixed
@@ -134,8 +134,8 @@ class Settings
      *
      * Unknown keys are silently ignored.
      *
-     * @param string key
-     * @param var    value bool|int
+     * @param string $key
+     * @param mixed  $value
      */
     public static function set(string key, var value) -> void
     {
