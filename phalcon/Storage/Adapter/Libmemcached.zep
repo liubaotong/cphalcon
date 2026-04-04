@@ -57,15 +57,14 @@ class Libmemcached extends AbstractAdapter
      */
     public function clear() -> bool
     {
-        var keys, key, prefixLength;
+        var keys, key;
         bool result;
 
-        let keys         = this->getKeys(),
-            result       = true,
-            prefixLength = strlen(this->prefix);
+        let keys   = this->getKeys(),
+            result = true;
 
         for key in keys {
-            if true !== this->getAdapter()->delete(substr(key, prefixLength), 0) {
+            if true !== this->getAdapter()->delete(str_replace(this->prefix, "", key), 0) {
                 let result = false;
             }
         }

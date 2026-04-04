@@ -78,7 +78,7 @@ class Redis extends AbstractAdapter
      */
     public function clear() -> bool
     {
-        var keys, key, prefixLength;
+        var keys, key;
         array strippedKeys;
 
         let keys = this->getKeys();
@@ -87,11 +87,10 @@ class Redis extends AbstractAdapter
             return true;
         }
 
-        let prefixLength = strlen(this->prefix),
-            strippedKeys = [];
+        let strippedKeys = [];
 
         for key in keys {
-            let strippedKeys[] = substr(key, prefixLength);
+            let strippedKeys[] = str_replace(this->prefix, "", key);
         }
 
         return false !== this->getAdapter()->del(strippedKeys);
