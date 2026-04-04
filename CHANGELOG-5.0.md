@@ -1,5 +1,5 @@
 # Changelog
-## 5.11.1 (2026-XX-XX)
+## 5.11.2 (2026-XX-XX)
 
 ### Changed
 

@@ -745,7 +745,7 @@ jobs:
       - name: Checkout phalcon-ide-stubs
         uses: actions/checkout@v6
         with:
-          repository: phalcon/phalcon-ide-stubs
+          repository: phalcon/ide-stubs
           token: ${{ secrets.STUBS_REPO_TOKEN }}
           path: phalcon-ide-stubs
 
@@ -770,7 +770,7 @@ jobs:
           GH_TOKEN: ${{ secrets.STUBS_REPO_TOKEN }}
         run: |
           gh pr create \
-            --repo phalcon/phalcon-ide-stubs \
+            --repo phalcon/ide-stubs \
             --head stubs/v${{ env.PHALCON_VERSION }} \
             --base master \
             --title "stubs: update to v${{ env.PHALCON_VERSION }}" \
