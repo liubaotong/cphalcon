@@ -112,7 +112,7 @@ final class UnderscoreCallStaticTest extends AbstractDatabaseTestCase
          */
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            "The method 'nonExistentStaticMethod' doen't exist on model '"
+            "The method 'nonExistentStaticMethod' doesn't exist on model '"
             . Invoices::class . "'"
         );
         Invoices::nonExistentStaticMethod(1);
