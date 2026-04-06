@@ -197,7 +197,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            "Module definition path '" . dataDir('not-a-real-file.php') . "' doesn't exist"
+            "Module definition path '" . dataDir('not-a-real-file.php') . "' does not exist"
         );
 
         $application->handle('/index');

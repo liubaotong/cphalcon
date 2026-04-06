@@ -64,7 +64,7 @@ final class ManagerTest extends AbstractUnitTestCase
     /**
      * Tests Phalcon\Session\Manager :: start()
      * Tests to ensure that the session value is alpha numeric and won't
-     * cause undefined behaviour when saving or reading sessions.
+     * cause undefined behavior when saving or reading sessions.
      *
      * @dataProvider providerSessionValues
      *

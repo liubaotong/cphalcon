@@ -581,7 +581,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //    public function testBehaviorsTimestampable()
 //    {
 //        $this->specify(
-//            "Timestampable model behavior doesn't work",
+//            "Timestampable model behavior does not work",
 //            function () {
 //                $subscriber = new Subscribers();
 //
@@ -597,7 +597,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //    public function testBehaviorsSoftDelete()
 //    {
 //        $this->specify(
-//            "Soft Delete model behavior doesn't work",
+//            "Soft Delete model behavior does not work",
 //            function () {
 //                $number = Subscribers::count();
 //
