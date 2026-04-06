@@ -1,4 +1,3 @@
-
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -99,49 +98,6 @@ class Redis extends AbstractAdapter
     }
 
     /**
-     * Decrements a stored number
-     *
-     * @param string $key
-     * @param int    $value
-     *
-     * @return bool|int
-     * @throws StorageException
-     */
-    public function decrement(string! key, int value = 1) -> int | bool
-    {
-        var result;
-
-        this->fire(this->eventType . ":beforeDecrement", key);
-
-        let result = this->getAdapter()->decrBy(key, value);
-
-        this->fire(this->eventType . ":afterDecrement", key);
-
-        return result;
-    }
-
-    /**
-     * Reads data from the adapter
-     *
-     * @param string $key
-     *
-     * @return bool
-     * @throws StorageException
-     */
-    public function delete(string! key) -> bool
-    {
-        var result;
-
-        this->fire(this->eventType . ":beforeDelete", key);
-
-        let result = (bool) this->getAdapter()->del(key);
-
-        this->fire(this->eventType . ":afterDelete", key);
-
-        return result;
-    }
-
-    /**
      * Returns the already connected adapter or connects to the Redis
      * server(s)
      *
@@ -187,6 +143,52 @@ class Redis extends AbstractAdapter
     }
 
     /**
+     * Stores data in the adapter forever. The key needs to manually deleted
+     * from the adapter.
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return bool
+     */
+    public function setForever(string! key, var value) -> bool
+    {
+        var result;
+
+        let result = this->getAdapter()
+                         ->set(key, this->getSerializedData(value));
+
+        return typeof result === "bool" ? result : false;
+    }
+
+    /**
+     * Decrements a stored number
+     *
+     * @param string $key
+     * @param int    $value
+     *
+     * @return bool|false|int
+     * @throws StorageException
+     */
+    protected function doDecrement(string! key, int value = 1) -> int | bool
+    {
+        return this->getAdapter()->decrBy(key, value);
+    }
+
+    /**
+     * Deletes data from the adapter
+     *
+     * @param string $key
+     *
+     * @return bool
+     * @throws StorageException
+     */
+    protected function doDelete(string! key) -> bool
+    {
+        return (bool) this->getAdapter()->unlink(key);
+    }
+
+    /**
      * Checks if an element exists in the cache
      *
      * @param string $key
@@ -194,17 +196,9 @@ class Redis extends AbstractAdapter
      * @return bool
      * @throws StorageException
      */
-    public function has(string! key) -> bool
+    protected function doHas(string! key) -> bool
     {
-        var result;
-
-        this->fire(this->eventType . ":beforeHas", key);
-
-        let result = (bool) this->getAdapter()->exists(key);
-
-        this->fire(this->eventType . ":afterHas", key);
-
-        return result;
+        return (bool) this->getAdapter()->exists(key);
     }
 
     /**
@@ -216,17 +210,9 @@ class Redis extends AbstractAdapter
      * @return bool|false|int
      * @throws StorageException
      */
-    public function increment(string! key, int value = 1) -> int | bool
+    protected function doIncrement(string! key, int value = 1) -> int | bool
     {
-        var result;
-
-        this->fire(this->eventType . ":beforeIncrement", key);
-
-        let result = this->getAdapter()->incrBy(key, value);
-
-        this->fire(this->eventType . ":afterIncrement", key);
-
-        return result;
+        return this->getAdapter()->incrBy(key, value);
     }
 
     /**
@@ -243,17 +229,12 @@ class Redis extends AbstractAdapter
      * @return bool
      * @throws BaseException
      */
-    public function set(string! key, var value, var ttl = null) -> bool
+    protected function doSet(string! key, var value, var ttl = null) -> bool
     {
         var result;
 
-        this->fire(this->eventType . ":beforeSet", key);
-
         if (typeof ttl === "integer" && ttl < 1) {
-            let result = this->delete(key);
-            this->fire(this->eventType . ":afterSet", key);
-
-            return result;
+            return this->delete(key);
         }
 
         let result = this->getAdapter()
@@ -264,26 +245,6 @@ class Redis extends AbstractAdapter
                          )
         ;
 
-        this->fire(this->eventType . ":afterSet", key);
-
-        return typeof result === "bool" ? result : false;
-    }
-
-    /**
-     * Stores data in the adapter forever. The key needs to manually deleted
-     * from the adapter.
-     *
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @return bool
-     */
-    public function setForever(string! key, var value) -> bool
-    {
-        var result;
-
-        let result = this->getAdapter()
-                         ->set(key, this->getSerializedData(value));
 
         return typeof result === "bool" ? result : false;
     }
@@ -366,7 +327,7 @@ class Redis extends AbstractAdapter
             if !result {
                 throw new StorageException(
                     sprintf(
-                        "Could not connect to the Redisd server [%s:%s]",
+                        "Could not connect to the Redis server [%s:%s]",
                         host,
                         port
                     )
