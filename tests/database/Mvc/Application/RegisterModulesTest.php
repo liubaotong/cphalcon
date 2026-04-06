@@ -210,7 +210,7 @@ final class RegisterModulesTest extends AbstractDatabaseTestCase
         $application->registerModules(
             [
                 'frontend' => [
-                    'path'      => dataDir('not-a-real-file.php'),
+                    'path'      => supportDir('not-a-real-file.php'),
                     'className' => \Phalcon\Tests\Support\Modules\Frontend\Module::class,
                 ],
             ]
@@ -220,7 +220,7 @@ final class RegisterModulesTest extends AbstractDatabaseTestCase
 
         $this->expectException(ApplicationException::class);
         $this->expectExceptionMessage(
-            "Module definition path '" . dataDir('not-a-real-file.php') . "' doesn't exist"
+            "Module definition path '" . supportDir('not-a-real-file.php') . "' doesn't exist"
         );
 
         $application->handle('/index');

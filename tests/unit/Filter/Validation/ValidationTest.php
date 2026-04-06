@@ -255,7 +255,7 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests that empty values behaviour.
+     * Tests that empty values behavior.
      *
      * @author Gorka Guridi <gorka.guridi@gmail.com>
      * @since  2016-12-30

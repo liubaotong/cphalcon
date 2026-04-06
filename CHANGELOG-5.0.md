@@ -1,9 +1,14 @@
 # Changelog
-## 5.11.1 (2026-XX-XX)
+## 5.11.2 (2026-XX-XX)
 
 ### Changed
 
+- Changed `Phalcon\Cache\AbstractCache::doDeleteMultiple()` to delegate to the storage adapter's `deleteMultiple()` instead of looping over individual `delete()` calls [#16859](https://github.com/phalcon/cphalcon/issues/16859)
+
 ### Added
+
+- Added `deleteMultiple()` to `Phalcon\Storage\Adapter\*` to delete multiple keys in a single operation using native batch capabilities per adapter [#16859](https://github.com/phalcon/cphalcon/issues/16859)
+- Added key validation per entry in `Phalcon\Cache\AbstractCache::doDeleteMultiple()` throwing `InvalidArgumentException` for keys containing invalid characters [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 
 ### Fixed
 
@@ -325,7 +330,7 @@
 
 ### Changed
 
-- Refactored `Phalcon\Mvc\Model::doLowUpdate` and `Phalcon\Mvc\Model::postSaveRelatedRecords` for better code logic and a clearer separation of behaviour, although it lead to partially repeated code. [#16391](https://github.com/phalcon/cphalcon/issues/16391)
+- Refactored `Phalcon\Mvc\Model::doLowUpdate` and `Phalcon\Mvc\Model::postSaveRelatedRecords` for better code logic and a clearer separation of behavior, although it lead to partially repeated code. [#16391](https://github.com/phalcon/cphalcon/issues/16391)
 - Cleaned `Phalcon\Mvc\Model\Metadata::initialize` [#16393](https://github.com/phalcon/cphalcon/issues/16393)
 
 ### Added

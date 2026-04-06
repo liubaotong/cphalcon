@@ -36,7 +36,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
         $console->registerModules(
             [
                 'frontend' => [
-                    'path'      => dataDir('not-a-real-file.php'),
+                    'path'      => supportDir('not-a-real-file.php'),
                     'className' => Module::class,
                 ],
             ]
@@ -45,7 +45,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
             "Module definition path '"
-            . dataDir('not-a-real-file.php')
+            . supportDir('not-a-real-file.php')
             . "' doesn't exist"
         );
 
