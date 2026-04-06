@@ -171,6 +171,43 @@ abstract class AbstractAdapter implements AdapterInterface, EventsAwareInterface
     }
 
     /**
+     * Deletes data from the adapter
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function deleteMultiple(array keys) -> bool
+    {
+        var result;
+
+        this->fire(this->eventType . ":beforeDeleteMultiple", keys);
+
+        let result = this->doDeleteMultiple(keys);
+
+        this->fire(this->eventType . ":afterDeleteMultiple", keys);
+
+        return result;
+    }
+
+    /**
+     * Deletes multiple keys from the adapter
+     *
+     * @param array $keys
+     * @return bool
+     */
+    protected function doDeleteMultiple(array keys) -> bool
+    {
+        var key, allOk = true;
+        for key in keys {
+            if (!this->doDelete(key)) {
+                let allOk = false;
+            }
+        }
+        return allOk;
+    }
+
+    /**
      * Reads data from the adapter
      *
      * @param string     $key

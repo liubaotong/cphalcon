@@ -189,6 +189,22 @@ class Redis extends AbstractAdapter
     }
 
     /**
+     * Deletes multiple keys from Redis using a single unlink call
+     *
+     * @param array $keys
+     * @return bool
+     */
+    protected function doDeleteMultiple(array keys) -> bool
+    {
+        var result;
+
+        let result = this->getAdapter()->unlink(keys);
+
+        // unlink returns the number of keys deleted; all must be deleted
+        return typeof result === "integer" && result === count(keys);
+    }
+
+    /**
      * Checks if an element exists in the cache
      *
      * @param string $key
