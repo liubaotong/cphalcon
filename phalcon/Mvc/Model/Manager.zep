@@ -19,6 +19,7 @@ use Phalcon\Mvc\ModelInterface;
 use Phalcon\Mvc\Model\Query\Builder;
 use Phalcon\Mvc\Model\Query\BuilderInterface;
 use Phalcon\Mvc\Model\Query\StatusInterface;
+use Phalcon\Support\Settings;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -1850,7 +1851,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
     {
         var isKeeping;
 
-        if globals_get("orm.dynamic_update") {
+        if Settings::get("orm.dynamic_update") {
             return true;
         }
 
@@ -1872,7 +1873,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
     {
         var isUsing;
 
-        if globals_get("orm.dynamic_update") {
+        if Settings::get("orm.dynamic_update") {
             return true;
         }
 

@@ -16,6 +16,7 @@ use Phalcon\Di\DiInterface;
 use Phalcon\Mvc\Model\Exception;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Mvc\Model\QueryInterface;
+use Phalcon\Support\Settings;
 
 /**
  * Phalcon\Mvc\Model\Query\Builder
@@ -752,7 +753,7 @@ class Builder implements BuilderInterface, InjectionAwareInterface
                     /**
                      * The PHQL contains the renamed columns if available
                      */
-                    if globals_get("orm.column_renaming") {
+                    if Settings::get("orm.column_renaming") {
                         let columnMap = metaData->getColumnMap(modelInstance);
                     } else {
                         let columnMap = null;
