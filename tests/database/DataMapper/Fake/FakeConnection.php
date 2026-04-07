@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Fixtures\DataMapper\Fake;
+namespace Phalcon\Tests\Support\DataMapper\Fake;
 
 use Phalcon\DataMapper\Pdo\Connection;
 use Phalcon\DataMapper\Pdo\Profiler\ProfilerInterface;
