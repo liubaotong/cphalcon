@@ -22,6 +22,7 @@
 ### Fixed
 
 - Fixed `Phalcon\Encryption\Security::computeHmac()` to catch `\ValueError` thrown by PHP 8.1+ when an unknown hashing algorithm is passed [#16893](https://github.com/phalcon/cphalcon/issues/16893)
+- Fixed `Phalcon\Translate\Adapter\Gettext::setLocale()` to call `setlocale` when it is available, removing warnings in PHP 8.5 [#16886](https://github.com/phalcon/cphalcon/issues/16886)
 
 ### Removed
 
