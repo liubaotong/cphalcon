@@ -24,9 +24,10 @@ final class ForUpdateTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql72(): void
+    public function testMvcModelQueryPhqlSelectForUpdate(): void
     {
-        $source   = "SELECT * FROM Invoices FOR UPDATE";
+        $source   = "SELECT * "
+            . "FROM Invoices FOR UPDATE";
         $expected = [
             'type'      => 309,
             'select'    => [
@@ -55,9 +56,11 @@ final class ForUpdateTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql73(): void
+    public function testMvcModelQueryPhqlSelectForUpdateWhere(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_id = 1 FOR UPDATE";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_id = 1 FOR UPDATE";
         $expected = [
             'type'      => 309,
             'select'    => [

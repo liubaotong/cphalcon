@@ -24,84 +24,12 @@ final class HavingTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql63(): void
-    {
-        $source   = "SELECT inv_cst_id, SUM(inv_total) AS total "
-                    . "FROM Invoices "
-                    . "GROUP BY inv_cst_id "
-                    . "HAVING SUM(inv_total) > 1000";
-        $expected = [
-            'type'    => 309,
-            'select'  => [
-                'columns' => [
-                    0 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type' => 355,
-                            'name' => 'inv_cst_id',
-                        ],
-                    ],
-                    1 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type'      => 350,
-                            'name'      => 'SUM',
-                            'arguments' => [
-                                0 => [
-                                    'type' => 355,
-                                    'name' => 'inv_total',
-                                ],
-                            ],
-                        ],
-                        'alias'  => 'total',
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'groupBy' => [
-                'type' => 355,
-                'name' => 'inv_cst_id',
-            ],
-            'having'  => [
-                'type'  => 62,
-                'left'  => [
-                    'type'      => 350,
-                    'name'      => 'SUM',
-                    'arguments' => [
-                        0 => [
-                            'type' => 355,
-                            'name' => 'inv_total',
-                        ],
-                    ],
-                ],
-                'right' => [
-                    'type'  => 258,
-                    'value' => '1000',
-                ],
-            ],
-            'id'      => 66,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql64(): void
+    public function testMvcModelQueryPhqlSelectHavingCountAll(): void
     {
         $source   = "SELECT inv_status_flag, COUNT(*) AS cnt "
-                    . "FROM Invoices "
-                    . "GROUP BY inv_status_flag "
-                    . "HAVING COUNT(*) > 5";
+            . "FROM Invoices "
+            . "GROUP BY inv_status_flag "
+            . "HAVING COUNT(*) > 5";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -166,12 +94,12 @@ final class HavingTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql65(): void
+    public function testMvcModelQueryPhqlSelectHavingCountField(): void
     {
         $source   = "SELECT inv_cst_id, COUNT(*) AS cnt "
-                    . "FROM Invoices "
-                    . "GROUP BY inv_cst_id "
-                    . "HAVING cnt > 10";
+            . "FROM Invoices "
+            . "GROUP BY inv_cst_id "
+            . "HAVING cnt > 10";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -220,6 +148,78 @@ final class HavingTest extends AbstractUnitTestCase
                 ],
             ],
             'id'      => 68,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectHavingSum(): void
+    {
+        $source   = "SELECT inv_cst_id, SUM(inv_total) AS total "
+                    . "FROM Invoices "
+                    . "GROUP BY inv_cst_id "
+                    . "HAVING SUM(inv_total) > 1000";
+        $expected = [
+            'type'    => 309,
+            'select'  => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'inv_cst_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'      => 350,
+                            'name'      => 'SUM',
+                            'arguments' => [
+                                0 => [
+                                    'type' => 355,
+                                    'name' => 'inv_total',
+                                ],
+                            ],
+                        ],
+                        'alias'  => 'total',
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'groupBy' => [
+                'type' => 355,
+                'name' => 'inv_cst_id',
+            ],
+            'having'  => [
+                'type'  => 62,
+                'left'  => [
+                    'type'      => 350,
+                    'name'      => 'SUM',
+                    'arguments' => [
+                        0 => [
+                            'type' => 355,
+                            'name' => 'inv_total',
+                        ],
+                    ],
+                ],
+                'right' => [
+                    'type'  => 258,
+                    'value' => '1000',
+                ],
+            ],
+            'id'      => 66,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);

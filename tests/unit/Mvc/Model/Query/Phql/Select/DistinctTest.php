@@ -24,44 +24,10 @@ final class DistinctTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql9(): void
+    public function testMvcModelQueryPhqlSelectAll(): void
     {
-        $source   = "SELECT DISTINCT inv_status_flag FROM Invoices";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'distinct' => 1,
-                'columns'  => [
-                    0 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type' => 355,
-                            'name' => 'inv_status_flag',
-                        ],
-                    ],
-                ],
-                'tables'   => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'id'     => 12,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql10(): void
-    {
-        $source   = "SELECT ALL inv_status_flag FROM Invoices";
+        $source   = "SELECT ALL inv_status_flag "
+                    . "FROM Invoices";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -94,9 +60,46 @@ final class DistinctTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql11(): void
+    public function testMvcModelQueryPhqlSelectDistinct(): void
     {
-        $source   = "SELECT DISTINCT inv_cst_id, inv_status_flag FROM Invoices";
+        $source   = "SELECT DISTINCT inv_status_flag "
+            . "FROM Invoices";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'distinct' => 1,
+                'columns'  => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'inv_status_flag',
+                        ],
+                    ],
+                ],
+                'tables'   => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'id'     => 12,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectDistinctInt(): void
+    {
+        $source   = "SELECT DISTINCT inv_cst_id, inv_status_flag "
+            . "FROM Invoices";
         $expected = [
             'type'   => 309,
             'select' => [

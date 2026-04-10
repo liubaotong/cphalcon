@@ -24,9 +24,11 @@ final class GroupByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql60(): void
+    public function testMvcModelQueryPhqlSelectGroupBy(): void
     {
-        $source   = "SELECT inv_status_flag, COUNT(*) FROM Invoices GROUP BY inv_status_flag";
+        $source   = "SELECT inv_status_flag, COUNT(*) "
+            . "FROM Invoices "
+            . "GROUP BY inv_status_flag";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -74,60 +76,11 @@ final class GroupByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql61(): void
+    public function testMvcModelQueryPhqlSelectGroupByCountField(): void
     {
-        $source   = "SELECT inv_cst_id, SUM(inv_total) FROM Invoices GROUP BY inv_cst_id";
-        $expected = [
-            'type'    => 309,
-            'select'  => [
-                'columns' => [
-                    0 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type' => 355,
-                            'name' => 'inv_cst_id',
-                        ],
-                    ],
-                    1 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type'      => 350,
-                            'name'      => 'SUM',
-                            'arguments' => [
-                                0 => [
-                                    'type' => 355,
-                                    'name' => 'inv_total',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'groupBy' => [
-                'type' => 355,
-                'name' => 'inv_cst_id',
-            ],
-            'id'      => 64,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql62(): void
-    {
-        $source   = "SELECT inv_cst_id, inv_status_flag, COUNT(*) FROM Invoices GROUP BY inv_cst_id, inv_status_flag";
+        $source   = "SELECT inv_cst_id, inv_status_flag, COUNT(*) "
+                    . "FROM Invoices "
+                    . "GROUP BY inv_cst_id, inv_status_flag";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -177,6 +130,59 @@ final class GroupByTest extends AbstractUnitTestCase
                 ],
             ],
             'id'      => 65,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectGroupBySumField(): void
+    {
+        $source   = "SELECT inv_cst_id, SUM(inv_total) "
+            . "FROM Invoices "
+            . "GROUP BY inv_cst_id";
+        $expected = [
+            'type'    => 309,
+            'select'  => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'inv_cst_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'      => 350,
+                            'name'      => 'SUM',
+                            'arguments' => [
+                                0 => [
+                                    'type' => 355,
+                                    'name' => 'inv_total',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'groupBy' => [
+                'type' => 355,
+                'name' => 'inv_cst_id',
+            ],
+            'id'      => 64,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);

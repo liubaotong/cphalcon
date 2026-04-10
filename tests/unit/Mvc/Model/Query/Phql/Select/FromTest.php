@@ -24,9 +24,11 @@ final class FromTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql121(): void
+    public function testMvcModelQueryPhqlSelectFromAliases(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i, Customers AS c WHERE i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+            . "FROM Invoices AS i, Customers AS c "
+            . "WHERE i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
