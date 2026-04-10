@@ -1,0 +1,721 @@
+<?php
+
+/**
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Phalcon\Tests\Unit\Mvc\Model\Query\Phql\Select;
+
+use Phalcon\Mvc\Model\Query\Lang;
+use Phalcon\Tests\AbstractUnitTestCase;
+
+final class JoinTest extends AbstractUnitTestCase
+{
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql111(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 360,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 114,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql112(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i INNER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 360,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 115,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql113(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i LEFT JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 361,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 116,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql114(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i LEFT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 361,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 117,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql115(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i RIGHT JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 362,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 118,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql116(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i RIGHT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 362,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 119,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql117(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i FULL JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 364,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 120,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql118(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i FULL OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'       => 364,
+                    'qualified'  => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'      => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                    'conditions' => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'id',
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 121,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql119(): void
+    {
+        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i CROSS JOIN Customers AS c";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    'type'      => 363,
+                    'qualified' => [
+                        'type' => 355,
+                        'name' => 'Customers',
+                    ],
+                    'alias'     => [
+                        'type' => 355,
+                        'name' => 'c',
+                    ],
+                ],
+            ],
+            'id'     => 122,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhql120(): void
+    {
+        $source   = "SELECT i.inv_id, c.name, p.description FROM Invoices AS i INNER JOIN Customers AS c ON i.inv_cst_id = c.id LEFT JOIN Products AS p ON i.inv_id = p.inv_id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'c',
+                            'name'   => 'name',
+                        ],
+                    ],
+                    2 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'p',
+                            'name'   => 'description',
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+                'joins'   => [
+                    0 => [
+                        'type'       => 360,
+                        'qualified'  => [
+                            'type' => 355,
+                            'name' => 'Customers',
+                        ],
+                        'alias'      => [
+                            'type' => 355,
+                            'name' => 'c',
+                        ],
+                        'conditions' => [
+                            'type'  => 61,
+                            'left'  => [
+                                'type'   => 355,
+                                'domain' => 'i',
+                                'name'   => 'inv_cst_id',
+                            ],
+                            'right' => [
+                                'type'   => 355,
+                                'domain' => 'c',
+                                'name'   => 'id',
+                            ],
+                        ],
+                    ],
+                    1 => [
+                        'type'       => 361,
+                        'qualified'  => [
+                            'type' => 355,
+                            'name' => 'Products',
+                        ],
+                        'alias'      => [
+                            'type' => 355,
+                            'name' => 'p',
+                        ],
+                        'conditions' => [
+                            'type'  => 61,
+                            'left'  => [
+                                'type'   => 355,
+                                'domain' => 'i',
+                                'name'   => 'inv_id',
+                            ],
+                            'right' => [
+                                'type'   => 355,
+                                'domain' => 'p',
+                                'name'   => 'inv_id',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'id'     => 123,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+}
