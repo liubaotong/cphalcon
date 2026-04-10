@@ -24,9 +24,15 @@ final class ComplexTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql160(): void
+    public function testMvcModelQueryPhqlSelectSumFieldWhereGroupByHavingOrderByLimit(): void
     {
-        $source   = "SELECT i.inv_id, i.inv_title, SUM(i.inv_total) AS total FROM Invoices AS i WHERE i.inv_status_flag = 1 GROUP BY i.inv_cst_id HAVING SUM(i.inv_total) > 500 ORDER BY total DESC LIMIT 10";
+        $source   = "SELECT i.inv_id, i.inv_title, SUM(i.inv_total) AS total "
+            . "FROM Invoices AS i "
+            . "WHERE i.inv_status_flag = 1 "
+            . "GROUP BY i.inv_cst_id "
+            . "HAVING SUM(i.inv_total) > 500 "
+            . "ORDER BY total DESC "
+            . "LIMIT 10";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -131,9 +137,13 @@ final class ComplexTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql161(): void
+    public function testMvcModelQueryPhqlSelectCountFieldWhereGroupByOrderBy(): void
     {
-        $source   = "SELECT COUNT(*) AS cnt, inv_status_flag FROM Invoices WHERE inv_created_at IS NOT NULL GROUP BY inv_status_flag ORDER BY cnt DESC";
+        $source   = "SELECT COUNT(*) AS cnt, inv_status_flag "
+            . "FROM Invoices "
+            . "WHERE inv_created_at IS NOT NULL "
+            . "GROUP BY inv_status_flag "
+            . "ORDER BY cnt DESC";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -196,9 +206,16 @@ final class ComplexTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql162(): void
+    public function testMvcModelQueryPhqlSelectAllWhereAndInAndBetweenOrderByLimitOffset(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_cst_id = :cstId: AND inv_status_flag IN (0, 1) AND inv_total BETWEEN :min: AND :max: ORDER BY inv_created_at DESC LIMIT :limit: OFFSET :offset:";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_cst_id = :cstId: "
+            . "AND inv_status_flag IN (0, 1) "
+            . "AND inv_total BETWEEN :min: AND :max: "
+            . "ORDER BY inv_created_at DESC "
+            . "LIMIT :limit: "
+            . "OFFSET :offset:";
         $expected = [
             'type'    => 309,
             'select'  => [

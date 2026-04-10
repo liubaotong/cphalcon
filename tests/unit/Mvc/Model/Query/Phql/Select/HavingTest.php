@@ -26,7 +26,10 @@ final class HavingTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql63(): void
     {
-        $source   = "SELECT inv_cst_id, SUM(inv_total) AS total FROM Invoices GROUP BY inv_cst_id HAVING SUM(inv_total) > 1000";
+        $source   = "SELECT inv_cst_id, SUM(inv_total) AS total "
+                    . "FROM Invoices "
+                    . "GROUP BY inv_cst_id "
+                    . "HAVING SUM(inv_total) > 1000";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -95,7 +98,10 @@ final class HavingTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql64(): void
     {
-        $source   = "SELECT inv_status_flag, COUNT(*) AS cnt FROM Invoices GROUP BY inv_status_flag HAVING COUNT(*) > 5";
+        $source   = "SELECT inv_status_flag, COUNT(*) AS cnt "
+                    . "FROM Invoices "
+                    . "GROUP BY inv_status_flag "
+                    . "HAVING COUNT(*) > 5";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -162,7 +168,10 @@ final class HavingTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql65(): void
     {
-        $source   = "SELECT inv_cst_id, COUNT(*) AS cnt FROM Invoices GROUP BY inv_cst_id HAVING cnt > 10";
+        $source   = "SELECT inv_cst_id, COUNT(*) AS cnt "
+                    . "FROM Invoices "
+                    . "GROUP BY inv_cst_id "
+                    . "HAVING cnt > 10";
         $expected = [
             'type'    => 309,
             'select'  => [

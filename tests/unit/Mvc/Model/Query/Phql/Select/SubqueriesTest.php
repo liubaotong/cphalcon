@@ -26,7 +26,10 @@ final class SubqueriesTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql106(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_cst_id IN (SELECT id FROM Customers WHERE status = 1)";
+        $source   = "SELECT * "
+                    . "FROM Invoices "
+                    . "WHERE inv_cst_id IN "
+                    . "(SELECT id FROM Customers WHERE status = 1)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -94,7 +97,10 @@ final class SubqueriesTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql107(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_cst_id NOT IN (SELECT id FROM Customers WHERE status = 0)";
+        $source   = "SELECT * "
+                    . "FROM Invoices "
+                    . "WHERE inv_cst_id NOT IN "
+                    . "(SELECT id FROM Customers WHERE status = 0)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -162,7 +168,10 @@ final class SubqueriesTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql108(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE EXISTS (SELECT id FROM Customers WHERE id = Invoices.inv_cst_id)";
+        $source   = "SELECT * "
+                    . "FROM Invoices "
+                    . "WHERE EXISTS "
+                    . "(SELECT id FROM Customers WHERE id = Invoices.inv_cst_id)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -227,7 +236,9 @@ final class SubqueriesTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql109(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_total = (SELECT MAX(inv_total) FROM Invoices)";
+        $source   = "SELECT * "
+                    . "FROM Invoices "
+                    . "WHERE inv_total = (SELECT MAX(inv_total) FROM Invoices)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -293,7 +304,11 @@ final class SubqueriesTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql110(): void
     {
-        $source   = "SELECT i.inv_id, (SELECT COUNT(*) FROM Invoices WHERE inv_cst_id = i.inv_cst_id) AS cst_count FROM Invoices i";
+        $source   = "SELECT i.inv_id, "
+                    . "(SELECT COUNT(*) "
+                    . "FROM Invoices "
+                    . "WHERE inv_cst_id = i.inv_cst_id) AS cst_count "
+                    . "FROM Invoices i";
         $expected = [
             'type'   => 309,
             'select' => [

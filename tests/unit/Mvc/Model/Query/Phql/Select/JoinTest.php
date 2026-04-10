@@ -26,7 +26,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql111(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -94,7 +96,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql112(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i INNER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "INNER JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -162,7 +166,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql113(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i LEFT JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "LEFT JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -230,7 +236,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql114(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i LEFT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "LEFT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -298,7 +306,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql115(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i RIGHT JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "RIGHT JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -366,7 +376,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql116(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i RIGHT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "RIGHT OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -434,7 +446,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql117(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i FULL JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "FULL JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -502,7 +516,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql118(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i FULL OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "FULL OUTER JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -570,7 +586,9 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql119(): void
     {
-        $source   = "SELECT i.inv_id, c.name FROM Invoices AS i CROSS JOIN Customers AS c";
+        $source   = "SELECT i.inv_id, c.name "
+                    . "FROM Invoices AS i "
+                    . "CROSS JOIN Customers AS c";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -625,7 +643,10 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhql120(): void
     {
-        $source   = "SELECT i.inv_id, c.name, p.description FROM Invoices AS i INNER JOIN Customers AS c ON i.inv_cst_id = c.id LEFT JOIN Products AS p ON i.inv_id = p.inv_id";
+        $source   = "SELECT i.inv_id, c.name, p.description "
+                    . "FROM Invoices AS i "
+                    . "INNER JOIN Customers AS c ON i.inv_cst_id = c.id "
+                    . "LEFT JOIN Products AS p ON i.inv_id = p.inv_id";
         $expected = [
             'type'   => 309,
             'select' => [
