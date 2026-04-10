@@ -67,9 +67,9 @@ final class WhereLogicalTest extends AbstractUnitTestCase
                     'value' => '0',
                 ],
             ],
-            'id'     => 26,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -122,9 +122,9 @@ final class WhereLogicalTest extends AbstractUnitTestCase
                     'value' => '1',
                 ],
             ],
-            'id'     => 27,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -191,9 +191,9 @@ final class WhereLogicalTest extends AbstractUnitTestCase
                     'value' => '0',
                 ],
             ],
-            'id'     => 28,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -235,9 +235,9 @@ final class WhereLogicalTest extends AbstractUnitTestCase
                     'value' => '0',
                 ],
             ],
-            'id'     => 29,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -307,9 +307,9 @@ final class WhereLogicalTest extends AbstractUnitTestCase
                     'value' => '0',
                 ],
             ],
-            'id'     => 30,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

@@ -52,9 +52,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'type' => 334,
                 ],
             ],
-            'id'     => 102,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -92,9 +92,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'type' => 335,
                 ],
             ],
-            'id'     => 103,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -133,9 +133,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'value' => '0xFF',
                 ],
             ],
-            'id'     => 104,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -174,9 +174,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'value' => '100.5',
                 ],
             ],
-            'id'     => 105,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -215,9 +215,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'value' => '.5',
                 ],
             ],
-            'id'     => 106,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -256,9 +256,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     'value' => '100.',
                 ],
             ],
-            'id'     => 107,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -289,9 +289,9 @@ final class LiteralsTests extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 108,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

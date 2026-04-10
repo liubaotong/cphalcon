@@ -52,9 +52,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 87,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -92,9 +92,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 88,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -132,9 +132,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 89,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -172,9 +172,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 90,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -216,9 +216,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 91,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -256,9 +256,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 92,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -300,9 +300,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 93,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -340,9 +340,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 94,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -402,9 +402,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'      => 95,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -446,9 +446,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 96,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -490,9 +490,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 97,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -524,9 +524,9 @@ final class ScalarTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 98,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

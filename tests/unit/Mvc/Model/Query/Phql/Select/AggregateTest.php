@@ -52,9 +52,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 80,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -91,9 +91,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 77,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -132,9 +132,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 85,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -172,9 +172,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 78,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -263,9 +263,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 86,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -303,9 +303,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 79,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -343,9 +343,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 81,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -383,9 +383,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 83,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -423,9 +423,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 84,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -463,9 +463,9 @@ final class AggregateTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 82,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

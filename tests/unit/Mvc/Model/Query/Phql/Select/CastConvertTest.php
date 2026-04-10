@@ -53,9 +53,9 @@ final class CastConvertTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 99,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -94,9 +94,9 @@ final class CastConvertTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 100,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -135,9 +135,9 @@ final class CastConvertTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 101,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

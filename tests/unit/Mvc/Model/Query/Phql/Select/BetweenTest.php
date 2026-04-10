@@ -62,9 +62,9 @@ final class BetweenTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 37,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -77,8 +77,8 @@ final class BetweenTest extends AbstractUnitTestCase
     public function testMvcModelQueryPhqlSelectBetweenInt(): void
     {
         $source   = "SELECT * "
-                    . "FROM Invoices "
-                    . "WHERE inv_id BETWEEN 1 AND 100";
+            . "FROM Invoices "
+            . "WHERE inv_id BETWEEN 1 AND 100";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -112,9 +112,9 @@ final class BetweenTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 39,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -126,9 +126,7 @@ final class BetweenTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectNotBetweenFloat(): void
     {
-        $source   = "SELECT * "
-            . "FROM Invoices "
-            . "WHERE inv_total NOT BETWEEN 10.00 AND 500.00";
+        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_total NOT BETWEEN 10.00 AND 500.00";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -162,9 +160,9 @@ final class BetweenTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 38,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -176,9 +174,7 @@ final class BetweenTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectNotBetweenInt(): void
     {
-        $source   = "SELECT * "
-            . "FROM Invoices "
-            . "WHERE inv_id NOT BETWEEN 1 AND 100";
+        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_id NOT BETWEEN 1 AND 100";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -212,9 +208,9 @@ final class BetweenTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 40,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

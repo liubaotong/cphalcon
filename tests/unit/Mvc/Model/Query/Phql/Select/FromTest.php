@@ -26,9 +26,7 @@ final class FromTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectFromAliases(): void
     {
-        $source   = "SELECT i.inv_id, c.name "
-            . "FROM Invoices AS i, Customers AS c "
-            . "WHERE i.inv_cst_id = c.id";
+        $source   = "SELECT i.inv_id, c.name " . "FROM Invoices AS i, Customers AS c " . "WHERE i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -80,9 +78,9 @@ final class FromTest extends AbstractUnitTestCase
                     'name'   => 'id',
                 ],
             ],
-            'id'     => 124,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

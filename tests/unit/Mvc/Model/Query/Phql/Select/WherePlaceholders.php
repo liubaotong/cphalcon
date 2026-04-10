@@ -53,9 +53,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => '?0',
                 ],
             ],
-            'id'     => 43,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -108,9 +108,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => '?2',
                 ],
             ],
-            'id'     => 44,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -149,9 +149,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => 'title',
                 ],
             ],
-            'id'     => 45,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -204,9 +204,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => 'status',
                 ],
             ],
-            'id'     => 46,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -245,9 +245,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => 'id',
                 ],
             ],
-            'id'     => 47,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -300,9 +300,9 @@ final class WherePlaceholders extends AbstractUnitTestCase
                     'value' => 'minTotal',
                 ],
             ],
-            'id'     => 48,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

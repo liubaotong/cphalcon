@@ -24,7 +24,7 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql141(): void
+    public function testMvcModelQueryPhqlSelectCollisionNames(): void
     {
         $source   = "SELECT [Order], [Group] FROM Items";
         $expected = [
@@ -53,9 +53,9 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 144,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -65,38 +65,38 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql142(): void
+    public function testMvcModelQueryPhqlSelectCollisionNamesDeleteUpdate(): void
     {
-        $source   = "SELECT * FROM Items WHERE [Select] = 1";
+        $source   = "SELECT [Delete], [Update] FROM AuditLog";
         $expected = [
             'type'   => 309,
             'select' => [
                 'columns' => [
                     0 => [
-                        'type' => 352,
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'Delete',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'Update',
+                        ],
                     ],
                 ],
                 'tables'  => [
                     'qualifiedName' => [
                         'type' => 355,
-                        'name' => 'Items',
+                        'name' => 'AuditLog',
                     ],
                 ],
             ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'Select',
-                ],
-                'right' => [
-                    'type'  => 258,
-                    'value' => '1',
-                ],
-            ],
-            'id'     => 145,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -106,204 +106,7 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql143(): void
-    {
-        $source   = "SELECT * FROM Items WHERE [From] IS NOT NULL";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Items',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type' => 366,
-                'left' => [
-                    'type' => 355,
-                    'name' => 'From',
-                ],
-            ],
-            'id'     => 146,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql144(): void
-    {
-        $source   = "SELECT * FROM Items WHERE [Where] = 'test'";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Items',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'Where',
-                ],
-                'right' => [
-                    'type'  => 260,
-                    'value' => 'test',
-                ],
-            ],
-            'id'     => 147,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql145(): void
-    {
-        $source   = "SELECT * FROM Items WHERE [In] = 1";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Items',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'In',
-                ],
-                'right' => [
-                    'type'  => 258,
-                    'value' => '1',
-                ],
-            ],
-            'id'     => 148,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql146(): void
-    {
-        $source   = "SELECT * FROM Items WHERE [Not] = 0";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Items',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'Not',
-                ],
-                'right' => [
-                    'type'  => 258,
-                    'value' => '0',
-                ],
-            ],
-            'id'     => 149,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql147(): void
-    {
-        $source   = "SELECT * FROM Items WHERE [Null] IS NULL";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Items',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type' => 365,
-                'left' => [
-                    'type' => 355,
-                    'name' => 'Null',
-                ],
-            ],
-            'id'     => 150,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql148(): void
+    public function testMvcModelQueryPhqlSelectCollisionNamesOrderBy(): void
     {
         $source   = "SELECT [Order], [Desc] FROM Items ORDER BY [Order] ASC";
         $expected = [
@@ -339,9 +142,9 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
                 ],
                 'sort'   => 327,
             ],
-            'id'      => 151,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -351,7 +154,7 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql149(): void
+    public function testMvcModelQueryPhqlSelectCollisionNamesValuesSet(): void
     {
         $source   = "SELECT [Values], [Set] FROM Config";
         $expected = [
@@ -380,9 +183,9 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 152,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -392,38 +195,235 @@ final class KeywordCollisionsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql150(): void
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhere(): void
     {
-        $source   = "SELECT [Delete], [Update] FROM AuditLog";
+        $source   = "SELECT * FROM Items WHERE [Select] = 1";
         $expected = [
             'type'   => 309,
             'select' => [
                 'columns' => [
                     0 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type' => 355,
-                            'name' => 'Delete',
-                        ],
-                    ],
-                    1 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type' => 355,
-                            'name' => 'Update',
-                        ],
+                        'type' => 352,
                     ],
                 ],
                 'tables'  => [
                     'qualifiedName' => [
                         'type' => 355,
-                        'name' => 'AuditLog',
+                        'name' => 'Items',
                     ],
                 ],
             ],
-            'id'     => 153,
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'Select',
+                ],
+                'right' => [
+                    'type'  => 258,
+                    'value' => '1',
+                ],
+            ],
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhereInt(): void
+    {
+        $source   = "SELECT * FROM Items WHERE [In] = 1";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Items',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'In',
+                ],
+                'right' => [
+                    'type'  => 258,
+                    'value' => '1',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhereIsNotNull(): void
+    {
+        $source   = "SELECT * FROM Items WHERE [From] IS NOT NULL";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Items',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type' => 366,
+                'left' => [
+                    'type' => 355,
+                    'name' => 'From',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhereIsNull(): void
+    {
+        $source   = "SELECT * FROM Items WHERE [Null] IS NULL";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Items',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type' => 365,
+                'left' => [
+                    'type' => 355,
+                    'name' => 'Null',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhereString(): void
+    {
+        $source   = "SELECT * FROM Items WHERE [Where] = 'test'";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Items',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'Where',
+                ],
+                'right' => [
+                    'type'  => 260,
+                    'value' => 'test',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectCollisionNamesWhereZero(): void
+    {
+        $source   = "SELECT * FROM Items WHERE [Not] = 0";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Items',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'Not',
+                ],
+                'right' => [
+                    'type'  => 258,
+                    'value' => '0',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

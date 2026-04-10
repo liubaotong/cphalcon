@@ -47,9 +47,9 @@ final class WithTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 128,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -88,9 +88,9 @@ final class WithTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 129,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

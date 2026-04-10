@@ -53,9 +53,9 @@ final class BracketsNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 137,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -98,9 +98,9 @@ final class BracketsNameTest extends AbstractUnitTestCase
                     'value' => '1',
                 ],
             ],
-            'id'     => 138,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

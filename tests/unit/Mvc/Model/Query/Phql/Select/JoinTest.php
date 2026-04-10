@@ -26,9 +26,7 @@ final class JoinTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectCrossJoin(): void
     {
-        $source   = "SELECT i.inv_id, c.name "
-            . "FROM Invoices AS i "
-            . "CROSS JOIN Customers AS c";
+        $source   = "SELECT i.inv_id, c.name " . "FROM Invoices AS i " . "CROSS JOIN Customers AS c";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -69,9 +67,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 122,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -139,9 +137,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 120,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -209,9 +207,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 121,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -279,9 +277,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 115,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -384,9 +382,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 123,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -454,9 +452,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 114,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -469,8 +467,8 @@ final class JoinTest extends AbstractUnitTestCase
     public function testMvcModelQueryPhqlSelectLeftJoin(): void
     {
         $source   = "SELECT i.inv_id, c.name "
-                    . "FROM Invoices AS i "
-                    . "LEFT JOIN Customers AS c ON i.inv_cst_id = c.id";
+            . "FROM Invoices AS i "
+            . "LEFT JOIN Customers AS c ON i.inv_cst_id = c.id";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -524,9 +522,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 116,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -594,9 +592,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 117,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -664,9 +662,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 118,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -734,9 +732,9 @@ final class JoinTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 119,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

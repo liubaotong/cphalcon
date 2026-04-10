@@ -53,9 +53,9 @@ final class BracketsWithEscapedNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 162,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

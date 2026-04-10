@@ -24,89 +24,7 @@ final class LikeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql28(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_title LIKE '%test%'";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 268,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_title',
-                ],
-                'right' => [
-                    'type'  => 260,
-                    'value' => '%test%',
-                ],
-            ],
-            'id'     => 31,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql29(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_title NOT LIKE '%draft%'";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 351,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_title',
-                ],
-                'right' => [
-                    'type'  => 260,
-                    'value' => '%draft%',
-                ],
-            ],
-            'id'     => 32,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql30(): void
+    public function testMvcModelQueryPhqlSelectIlike(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title ILIKE '%invoice%'";
         $expected = [
@@ -135,9 +53,9 @@ final class LikeTest extends AbstractUnitTestCase
                     'value' => '%invoice%',
                 ],
             ],
-            'id'     => 33,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -147,7 +65,48 @@ final class LikeTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql31(): void
+    public function testMvcModelQueryPhqlSelectLike(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE inv_title LIKE '%test%'";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 268,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_title',
+                ],
+                'right' => [
+                    'type'  => 260,
+                    'value' => '%test%',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectNotIlike(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title NOT ILIKE '%draft%'";
         $expected = [
@@ -176,9 +135,50 @@ final class LikeTest extends AbstractUnitTestCase
                     'value' => '%draft%',
                 ],
             ],
-            'id'     => 34,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectNotLike(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE inv_title NOT LIKE '%draft%'";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 351,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_title',
+                ],
+                'right' => [
+                    'type'  => 260,
+                    'value' => '%draft%',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

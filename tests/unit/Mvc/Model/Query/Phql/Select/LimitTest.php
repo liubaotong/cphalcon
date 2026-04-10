@@ -24,7 +24,7 @@ final class LimitTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql66(): void
+    public function testMvcModelQueryPhqlSelectLimit(): void
     {
         $source   = "SELECT * FROM Invoices LIMIT 10";
         $expected = [
@@ -48,9 +48,9 @@ final class LimitTest extends AbstractUnitTestCase
                     'value' => '10',
                 ],
             ],
-            'id'     => 69,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -60,47 +60,7 @@ final class LimitTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql67(): void
-    {
-        $source   = "SELECT * FROM Invoices LIMIT 10 OFFSET 20";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'limit'  => [
-                'number' => [
-                    'type'  => 258,
-                    'value' => '10',
-                ],
-                'offset' => [
-                    'type'  => 258,
-                    'value' => '20',
-                ],
-            ],
-            'id'     => 70,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql68(): void
+    public function testMvcModelQueryPhqlSelectLimitBoth(): void
     {
         $source   = "SELECT * FROM Invoices LIMIT 20, 10";
         $expected = [
@@ -128,9 +88,9 @@ final class LimitTest extends AbstractUnitTestCase
                     'value' => '20',
                 ],
             ],
-            'id'     => 71,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -140,9 +100,129 @@ final class LimitTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql69(): void
+    public function testMvcModelQueryPhqlSelectLimitOffset(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_status_flag = 1 ORDER BY inv_id DESC LIMIT 5";
+        $source   = "SELECT * FROM Invoices LIMIT 10 OFFSET 20";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'limit'  => [
+                'number' => [
+                    'type'  => 258,
+                    'value' => '10',
+                ],
+                'offset' => [
+                    'type'  => 258,
+                    'value' => '20',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectLimitOffsetPlaceholders(): void
+    {
+        $source   = "SELECT * FROM Invoices LIMIT :limit: OFFSET :offset:";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'limit'  => [
+                'number' => [
+                    'type'  => 274,
+                    'value' => 'limit',
+                ],
+                'offset' => [
+                    'type'  => 274,
+                    'value' => 'offset',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectLimitPlaceholderNum(): void
+    {
+        $source   = "SELECT * FROM Invoices LIMIT ?0";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'limit'  => [
+                'number' => [
+                    'type'  => 273,
+                    'value' => '?0',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectWhereOrderLimit(): void
+    {
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_status_flag = 1 "
+            . "ORDER BY inv_id DESC "
+            . "LIMIT 5";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -182,85 +262,9 @@ final class LimitTest extends AbstractUnitTestCase
                     'value' => '5',
                 ],
             ],
-            'id'      => 72,
         ];
         $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql70(): void
-    {
-        $source   = "SELECT * FROM Invoices LIMIT ?0";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'limit'  => [
-                'number' => [
-                    'type'  => 273,
-                    'value' => '?0',
-                ],
-            ],
-            'id'     => 73,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql71(): void
-    {
-        $source   = "SELECT * FROM Invoices LIMIT :limit: OFFSET :offset:";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'limit'  => [
-                'number' => [
-                    'type'  => 274,
-                    'value' => 'limit',
-                ],
-                'offset' => [
-                    'type'  => 274,
-                    'value' => 'offset',
-                ],
-            ],
-            'id'     => 74,
-        ];
-        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

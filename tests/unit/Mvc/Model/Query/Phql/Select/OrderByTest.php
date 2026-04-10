@@ -48,9 +48,9 @@ final class OrderByTest extends AbstractUnitTestCase
                     'name' => 'inv_id',
                 ],
             ],
-            'id'      => 58,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -85,9 +85,9 @@ final class OrderByTest extends AbstractUnitTestCase
                 ],
                 'sort'   => 327,
             ],
-            'id'      => 59,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -122,9 +122,9 @@ final class OrderByTest extends AbstractUnitTestCase
                 ],
                 'sort'   => 328,
             ],
-            'id'      => 60,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -168,9 +168,9 @@ final class OrderByTest extends AbstractUnitTestCase
                     'sort'   => 327,
                 ],
             ],
-            'id'      => 61,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -221,9 +221,9 @@ final class OrderByTest extends AbstractUnitTestCase
                     'sort'   => 327,
                 ],
             ],
-            'id'      => 62,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

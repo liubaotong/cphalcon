@@ -42,9 +42,9 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 125,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -78,9 +78,9 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
                     'alias'         => 'i',
                 ],
             ],
-            'id'     => 126,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -119,9 +119,9 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
                     'value' => '1',
                 ],
             ],
-            'id'     => 127,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

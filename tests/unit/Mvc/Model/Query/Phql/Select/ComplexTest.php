@@ -125,9 +125,9 @@ final class ComplexTest extends AbstractUnitTestCase
                     'value' => '10',
                 ],
             ],
-            'id'      => 163,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -194,9 +194,9 @@ final class ComplexTest extends AbstractUnitTestCase
                 'type' => 355,
                 'name' => 'inv_status_flag',
             ],
-            'id'      => 164,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -300,9 +300,9 @@ final class ComplexTest extends AbstractUnitTestCase
                     'value' => 'offset',
                 ],
             ],
-            'id'      => 165,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

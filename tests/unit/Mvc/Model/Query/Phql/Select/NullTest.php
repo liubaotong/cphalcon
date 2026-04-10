@@ -49,9 +49,9 @@ final class NullTest extends AbstractUnitTestCase
                     'name' => 'inv_title',
                 ],
             ],
-            'id'     => 35,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -86,9 +86,9 @@ final class NullTest extends AbstractUnitTestCase
                     'name' => 'inv_title',
                 ],
             ],
-            'id'     => 36,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

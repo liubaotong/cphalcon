@@ -26,8 +26,7 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsert(): void
     {
-        $source   = "INSERT INTO Invoices "
-            . "VALUES (1, 1, 1, 'Test Invoice', 100.00, '2025-01-01 00:00:00')";
+        $source   = "INSERT INTO Invoices " . "VALUES (1, 1, 1, 'Test Invoice', 100.00, '2025-01-01 00:00:00')";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -60,7 +59,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => '2025-01-01 00:00:00',
                 ],
             ],
-            'id'            => 166,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -74,9 +72,8 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqInsertFields(): void
     {
-        $source   = "INSERT INTO Invoices "
-            . "(inv_cst_id, inv_status_flag, inv_title, inv_total, inv_created_at) "
-            . "VALUES (1, 0, 'Test Invoice', 150.50, '2025-01-01 00:00:00')";
+        $source   = "INSERT INTO Invoices " . "(inv_cst_id, inv_status_flag, inv_title, inv_total, inv_created_at) " .
+                    "VALUES (1, 0, 'Test Invoice', 150.50, '2025-01-01 00:00:00')";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -127,7 +124,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => '2025-01-01 00:00:00',
                 ],
             ],
-            'id'            => 167,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -141,9 +137,7 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsertFieldsNull(): void
     {
-        $source   = "INSERT INTO Invoices "
-                    . "(inv_title, inv_total) "
-                    . "VALUES ('Null Test', NULL)";
+        $source   = "INSERT INTO Invoices " . "(inv_title, inv_total) " . "VALUES ('Null Test', NULL)";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -169,7 +163,6 @@ final class Combination extends AbstractUnitTestCase
                     'type' => 322,
                 ],
             ],
-            'id'            => 173,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -183,8 +176,7 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsertFieldsPartial(): void
     {
-        $source   = "INSERT INTO Invoices (inv_title, inv_total) "
-            . "VALUES ('Invoice A', 200.00)";
+        $source   = "INSERT INTO Invoices (inv_title, inv_total) " . "VALUES ('Invoice A', 200.00)";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -211,7 +203,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => '200.00',
                 ],
             ],
-            'id'            => 168,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -225,9 +216,8 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsertFieldsPlaceholders(): void
     {
-        $source   = "INSERT INTO Invoices "
-            . "(inv_cst_id, inv_status_flag, inv_title, inv_total) "
-            . "VALUES (:cstId:, :status:, :title:, :total:)";
+        $source   = "INSERT INTO Invoices " . "(inv_cst_id, inv_status_flag, inv_title, inv_total) " .
+                    "VALUES (:cstId:, :status:, :title:, :total:)";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -270,7 +260,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => 'total',
                 ],
             ],
-            'id'            => 169,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -284,9 +273,7 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsertFieldsPlaceholdersNum(): void
     {
-        $source   = "INSERT INTO Invoices "
-            . "(inv_cst_id, inv_title, inv_total) "
-            . "VALUES (?0, ?1, ?2)";
+        $source   = "INSERT INTO Invoices " . "(inv_cst_id, inv_title, inv_total) " . "VALUES (?0, ?1, ?2)";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -321,7 +308,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => '?2',
                 ],
             ],
-            'id'            => 170,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -335,9 +321,8 @@ final class Combination extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlInsertFieldsPlaceholdersBrackets(): void
     {
-        $source   = "INSERT INTO Invoices "
-            . "(inv_id, inv_cst_id, inv_status_flag, inv_title, inv_total) "
-            . "VALUES ({id}, {cstId}, {status}, {title}, {total})";
+        $source   = "INSERT INTO Invoices " . "(inv_id, inv_cst_id, inv_status_flag, inv_title, inv_total) " .
+                    "VALUES ({id}, {cstId}, {status}, {title}, {total})";
         $expected = [
             'type'          => 306,
             'qualifiedName' => [
@@ -388,7 +373,6 @@ final class Combination extends AbstractUnitTestCase
                     'value' => 'total',
                 ],
             ],
-            'id'            => 171,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -428,7 +412,6 @@ final class Combination extends AbstractUnitTestCase
                     'type' => 334,
                 ],
             ],
-            'id'            => 172,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);

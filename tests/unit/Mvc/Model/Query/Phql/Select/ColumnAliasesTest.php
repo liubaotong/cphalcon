@@ -47,9 +47,9 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 15,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -90,9 +90,9 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 16,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -136,9 +136,9 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
                     'alias'         => 'i',
                 ],
             ],
-            'id'     => 17,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

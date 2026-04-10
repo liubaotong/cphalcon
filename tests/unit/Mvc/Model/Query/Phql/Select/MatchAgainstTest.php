@@ -62,9 +62,9 @@ final class MatchAgainstTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 135,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -103,9 +103,9 @@ final class MatchAgainstTest extends AbstractUnitTestCase
                     'value' => 'invoice',
                 ],
             ],
-            'id'     => 136,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

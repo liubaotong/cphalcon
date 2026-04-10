@@ -63,9 +63,9 @@ final class WhereIn extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 41,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -110,9 +110,9 @@ final class WhereIn extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 42,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

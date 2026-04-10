@@ -49,9 +49,9 @@ final class UnaryMinusTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 56,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -93,9 +93,9 @@ final class UnaryMinusTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 57,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

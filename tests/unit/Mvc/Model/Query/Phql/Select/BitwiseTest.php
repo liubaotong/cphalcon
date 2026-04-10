@@ -26,9 +26,7 @@ final class BitwiseTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBitwiseAnd(): void
     {
-        $source   = "SELECT * "
-            . "FROM Invoices "
-            . "WHERE inv_status_flag & 1 = 1";
+        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_status_flag & 1 = 1";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -62,9 +60,9 @@ final class BitwiseTest extends AbstractUnitTestCase
                     'value' => '1',
                 ],
             ],
-            'id'     => 130,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -76,8 +74,7 @@ final class BitwiseTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBitwiseInField(): void
     {
-        $source   = "SELECT inv_status_flag & 3 AS masked "
-                    . "FROM Invoices";
+        $source   = "SELECT inv_status_flag & 3 AS masked " . "FROM Invoices";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -105,9 +102,9 @@ final class BitwiseTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 133,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -119,8 +116,7 @@ final class BitwiseTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBitwiseNotField(): void
     {
-        $source   = "SELECT ~inv_status_flag "
-                    . "FROM Invoices";
+        $source   = "SELECT ~inv_status_flag " . "FROM Invoices";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -143,9 +139,9 @@ final class BitwiseTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 134,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -157,9 +153,7 @@ final class BitwiseTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBitwiseOr(): void
     {
-        $source   = "SELECT * "
-            . "FROM Invoices "
-            . "WHERE inv_status_flag | 2 = 3";
+        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_status_flag | 2 = 3";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -193,9 +187,9 @@ final class BitwiseTest extends AbstractUnitTestCase
                     'value' => '3',
                 ],
             ],
-            'id'     => 131,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -207,9 +201,7 @@ final class BitwiseTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBitwiseXor(): void
     {
-        $source   = "SELECT * "
-            . "FROM Invoices "
-            . "WHERE inv_status_flag ^ 1 = 0";
+        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_status_flag ^ 1 = 0";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -243,9 +235,9 @@ final class BitwiseTest extends AbstractUnitTestCase
                     'value' => '0',
                 ],
             ],
-            'id'     => 132,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }

@@ -53,9 +53,9 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 139,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -67,8 +67,7 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBracketsFieldSpacesAlias(): void
     {
-        $source   = "SELECT c.[First Name], c.[Last Name] "
-                    . "FROM Contacts AS c";
+        $source   = "SELECT c.[First Name], c.[Last Name] " . "FROM Contacts AS c";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -98,9 +97,9 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                     'alias'         => 'c',
                 ],
             ],
-            'id'     => 141,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -112,9 +111,7 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      */
     public function testMvcModelQueryPhqlSelectBracketsFieldSpacesAliasWhereString(): void
     {
-        $source   = "SELECT c.[First Name] "
-                    . "FROM Contacts AS c "
-                    . "WHERE c.[Last Name] = 'Smith'";
+        $source   = "SELECT c.[First Name] " . "FROM Contacts AS c " . "WHERE c.[Last Name] = 'Smith'";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -148,9 +145,9 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                     'value' => 'Smith',
                 ],
             ],
-            'id'     => 142,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -200,9 +197,9 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                 ],
                 'sort'   => 327,
             ],
-            'id'      => 143,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 
@@ -230,9 +227,9 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                     ],
                 ],
             ],
-            'id'     => 140,
         ];
         $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
         $this->assertSame($expected, $actual);
     }
 }
