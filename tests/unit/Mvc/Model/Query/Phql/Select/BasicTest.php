@@ -24,7 +24,7 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql0(): void
+    public function testMvcModelQueryPhqlSelectAll(): void
     {
         $source   = "SELECT * FROM Invoices";
         $expected = [
@@ -54,7 +54,70 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql1(): void
+    public function testMvcModelQueryPhqlSelectAllAliased(): void
+    {
+        $source   = "SELECT i.* FROM Invoices i";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 353,
+                        'column' => 'i',
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                    'alias'         => 'i',
+                ],
+            ],
+            'id'     => 9,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectAllTable(): void
+    {
+        $source   = "SELECT Invoices.* FROM Invoices";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type'   => 353,
+                        'column' => 'Invoices',
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'id'     => 11,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectInt(): void
     {
         $source   = "SELECT inv_id FROM Invoices";
         $expected = [
@@ -88,7 +151,7 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql2(): void
+    public function testMvcModelQueryPhqlSelectIntString(): void
     {
         $source   = "SELECT inv_id, inv_title FROM Invoices";
         $expected = [
@@ -129,7 +192,7 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql3(): void
+    public function testMvcModelQueryPhqlSelectIdStringFloat(): void
     {
         $source   = "SELECT inv_id, inv_title, inv_total FROM Invoices";
         $expected = [
@@ -177,43 +240,7 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql4(): void
-    {
-        $source   = "SELECT i.inv_id FROM Invoices AS i";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type'   => 354,
-                        'column' => [
-                            'type'   => 355,
-                            'domain' => 'i',
-                            'name'   => 'inv_id',
-                        ],
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                    'alias'         => 'i',
-                ],
-            ],
-            'id'     => 7,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql5(): void
+    public function testMvcModelQueryPhqlSelectIntAliased(): void
     {
         $source   = "SELECT i.inv_id FROM Invoices i";
         $expected = [
@@ -249,16 +276,20 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql6(): void
+    public function testMvcModelQueryPhqlSelectIntAliasedAs(): void
     {
-        $source   = "SELECT i.* FROM Invoices i";
+        $source   = "SELECT i.inv_id FROM Invoices AS i";
         $expected = [
             'type'   => 309,
             'select' => [
                 'columns' => [
                     0 => [
-                        'type'   => 353,
-                        'column' => 'i',
+                        'type'   => 354,
+                        'column' => [
+                            'type'   => 355,
+                            'domain' => 'i',
+                            'name'   => 'inv_id',
+                        ],
                     ],
                 ],
                 'tables'  => [
@@ -269,7 +300,7 @@ final class BasicTest extends AbstractUnitTestCase
                     'alias'         => 'i',
                 ],
             ],
-            'id'     => 9,
+            'id'     => 7,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);
@@ -281,7 +312,7 @@ final class BasicTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql7(): void
+    public function testMvcModelQueryPhqlSelectIntAliasedTable(): void
     {
         $source   = "SELECT Invoices.inv_id FROM Invoices";
         $expected = [
@@ -305,37 +336,6 @@ final class BasicTest extends AbstractUnitTestCase
                 ],
             ],
             'id'     => 10,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql8(): void
-    {
-        $source   = "SELECT Invoices.* FROM Invoices";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type'   => 353,
-                        'column' => 'Invoices',
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'id'     => 11,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);

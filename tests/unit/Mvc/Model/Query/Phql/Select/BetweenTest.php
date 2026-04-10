@@ -24,9 +24,11 @@ final class BetweenTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql34(): void
+    public function testMvcModelQueryPhqlSelectBetweenFloat(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_total BETWEEN 10.00 AND 500.00";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_total BETWEEN 10.00 AND 500.00";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -72,57 +74,11 @@ final class BetweenTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql35(): void
+    public function testMvcModelQueryPhqlSelectBetweenInt(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_total NOT BETWEEN 10.00 AND 500.00";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 332,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_total',
-                ],
-                'right' => [
-                    'type'  => 266,
-                    'left'  => [
-                        'type'  => 259,
-                        'value' => '10.00',
-                    ],
-                    'right' => [
-                        'type'  => 259,
-                        'value' => '500.00',
-                    ],
-                ],
-            ],
-            'id'     => 38,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql36(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_id BETWEEN 1 AND 100";
+        $source   = "SELECT * "
+                    . "FROM Invoices "
+                    . "WHERE inv_id BETWEEN 1 AND 100";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -168,9 +124,61 @@ final class BetweenTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql37(): void
+    public function testMvcModelQueryPhqlSelectNotBetweenFloat(): void
     {
-        $source   = "SELECT * FROM Invoices WHERE inv_id NOT BETWEEN 1 AND 100";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_total NOT BETWEEN 10.00 AND 500.00";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 332,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_total',
+                ],
+                'right' => [
+                    'type'  => 266,
+                    'left'  => [
+                        'type'  => 259,
+                        'value' => '10.00',
+                    ],
+                    'right' => [
+                        'type'  => 259,
+                        'value' => '500.00',
+                    ],
+                ],
+            ],
+            'id'     => 38,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectNotBetweenInt(): void
+    {
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_id NOT BETWEEN 1 AND 100";
         $expected = [
             'type'   => 309,
             'select' => [
