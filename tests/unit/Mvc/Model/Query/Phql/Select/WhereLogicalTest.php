@@ -24,7 +24,7 @@ final class WhereLogicalTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql23(): void
+    public function testMvcModelQueryPhqlSelectWhereAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_status_flag = 1 AND inv_total > 0";
         $expected = [
@@ -79,7 +79,7 @@ final class WhereLogicalTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql24(): void
+    public function testMvcModelQueryPhqlSelectWhereOr(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_status_flag = 0 OR inv_status_flag = 1";
         $expected = [
@@ -134,7 +134,7 @@ final class WhereLogicalTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql25(): void
+    public function testMvcModelQueryPhqlSelectWhereAndAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_cst_id = 1 AND inv_status_flag = 1 AND inv_total > 0";
         $expected = [
@@ -203,7 +203,7 @@ final class WhereLogicalTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql26(): void
+    public function testMvcModelQueryPhqlSelectWhereNot(): void
     {
         $source   = "SELECT * FROM Invoices WHERE NOT inv_status_flag = 0";
         $expected = [
@@ -247,7 +247,7 @@ final class WhereLogicalTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql27(): void
+    public function testMvcModelQueryPhqlSelectWhereParenthesesOrAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE (inv_status_flag = 1 OR inv_status_flag = 2) AND inv_total > 0";
         $expected = [

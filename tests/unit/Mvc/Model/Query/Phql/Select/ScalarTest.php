@@ -24,7 +24,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql84(): void
+    public function testMvcModelQueryPhqlSelectUpper(): void
     {
         $source   = "SELECT UPPER(inv_title) FROM Invoices";
         $expected = [
@@ -64,7 +64,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql85(): void
+    public function testMvcModelQueryPhqlSelectLower(): void
     {
         $source   = "SELECT LOWER(inv_title) FROM Invoices";
         $expected = [
@@ -104,7 +104,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql86(): void
+    public function testMvcModelQueryPhqlSelectTrim(): void
     {
         $source   = "SELECT TRIM(inv_title) FROM Invoices";
         $expected = [
@@ -144,7 +144,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql87(): void
+    public function testMvcModelQueryPhqlSelectLength(): void
     {
         $source   = "SELECT LENGTH(inv_title) FROM Invoices";
         $expected = [
@@ -184,7 +184,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql88(): void
+    public function testMvcModelQueryPhqlSelectConcat(): void
     {
         $source   = "SELECT CONCAT(inv_title, ' - paid') FROM Invoices";
         $expected = [
@@ -228,7 +228,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql89(): void
+    public function testMvcModelQueryPhqlSelectAbs(): void
     {
         $source   = "SELECT ABS(inv_total) FROM Invoices";
         $expected = [
@@ -268,7 +268,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql90(): void
+    public function testMvcModelQueryPhqlSelectRound(): void
     {
         $source   = "SELECT ROUND(inv_total, 2) FROM Invoices";
         $expected = [
@@ -312,7 +312,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql91(): void
+    public function testMvcModelQueryPhqlSelectYear(): void
     {
         $source   = "SELECT YEAR(inv_created_at) FROM Invoices";
         $expected = [
@@ -352,7 +352,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql92(): void
+    public function testMvcModelQueryPhqlSelectMonthCount(): void
     {
         $source   = "SELECT MONTH(inv_created_at), COUNT(*) FROM Invoices GROUP BY MONTH(inv_created_at)";
         $expected = [
@@ -414,7 +414,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql93(): void
+    public function testMvcModelQueryPhqlSelectCoalesce(): void
     {
         $source   = "SELECT COALESCE(inv_title, 'N/A') FROM Invoices";
         $expected = [
@@ -458,7 +458,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql94(): void
+    public function testMvcModelQueryPhqlSelectIfnull(): void
     {
         $source   = "SELECT IFNULL(inv_title, 'N/A') FROM Invoices";
         $expected = [
@@ -502,7 +502,7 @@ final class ScalarTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql95(): void
+    public function testMvcModelQueryPhqlSelectNow(): void
     {
         $source   = "SELECT NOW() FROM Invoices";
         $expected = [

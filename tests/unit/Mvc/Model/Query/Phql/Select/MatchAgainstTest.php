@@ -24,7 +24,48 @@ final class MatchAgainstTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql132(): void
+    public function testMvcModelQueryPhqlSelectAgainst(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE inv_title AGAINST 'invoice'";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 276,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_title',
+                ],
+                'right' => [
+                    'type'  => 260,
+                    'value' => 'invoice',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectMatchAgainst(): void
     {
         $source   = "SELECT * FROM Invoices WHERE MATCH(inv_title) AGAINST ('invoice')";
         $expected = [
@@ -60,47 +101,6 @@ final class MatchAgainstTest extends AbstractUnitTestCase
                         'type'  => 260,
                         'value' => 'invoice',
                     ],
-                ],
-            ],
-        ];
-        $actual   = Lang::parsePhql($source);
-        unset($actual['id']);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql133(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_title AGAINST 'invoice'";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 276,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_title',
-                ],
-                'right' => [
-                    'type'  => 260,
-                    'value' => 'invoice',
                 ],
             ],
         ];

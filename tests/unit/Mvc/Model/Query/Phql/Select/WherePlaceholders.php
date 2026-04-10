@@ -24,7 +24,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql40(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderNum(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id = ?0";
         $expected = [
@@ -65,7 +65,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql41(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderNumAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id = ?1 AND inv_status_flag = ?2";
         $expected = [
@@ -120,7 +120,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql42(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderString(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title = :title:";
         $expected = [
@@ -161,7 +161,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql43(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderStringAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_cst_id = :custId: AND inv_status_flag = :status:";
         $expected = [
@@ -216,7 +216,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql44(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderBrackets(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id = {id}";
         $expected = [
@@ -257,7 +257,7 @@ final class WherePlaceholders extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql45(): void
+    public function testMvcModelQueryPhqlSelectWherePlaceholderBracketsAnd(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_cst_id = {custId} AND inv_total > {minTotal}";
         $expected = [

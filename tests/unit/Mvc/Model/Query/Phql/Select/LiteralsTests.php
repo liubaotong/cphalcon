@@ -24,47 +24,7 @@ final class LiteralsTests extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql99(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_status_flag = TRUE";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_status_flag',
-                ],
-                'right' => [
-                    'type' => 334,
-                ],
-            ],
-        ];
-        $actual   = Lang::parsePhql($source);
-        unset($actual['id']);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql100(): void
+    public function testMvcModelQueryPhqlSelectLiteralsFalse(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_status_flag = FALSE";
         $expected = [
@@ -104,48 +64,7 @@ final class LiteralsTests extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql101(): void
-    {
-        $source   = "SELECT * FROM Invoices WHERE inv_id = 0xFF";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'Invoices',
-                    ],
-                ],
-            ],
-            'where'  => [
-                'type'  => 61,
-                'left'  => [
-                    'type' => 355,
-                    'name' => 'inv_id',
-                ],
-                'right' => [
-                    'type'  => 414,
-                    'value' => '0xFF',
-                ],
-            ],
-        ];
-        $actual   = Lang::parsePhql($source);
-        unset($actual['id']);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql102(): void
+    public function testMvcModelQueryPhqlSelectLiteralsFloat(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total = 100.5";
         $expected = [
@@ -186,7 +105,7 @@ final class LiteralsTests extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql103(): void
+    public function testMvcModelQueryPhqlSelectLiteralsFloatNoLeft(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total = .5";
         $expected = [
@@ -227,7 +146,7 @@ final class LiteralsTests extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql104(): void
+    public function testMvcModelQueryPhqlSelectLiteralsFloatNoRight(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total = 100.";
         $expected = [
@@ -268,7 +187,7 @@ final class LiteralsTests extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql105(): void
+    public function testMvcModelQueryPhqlSelectLiteralsNull(): void
     {
         $source   = "SELECT NULL FROM Invoices";
         $expected = [
@@ -287,6 +206,87 @@ final class LiteralsTests extends AbstractUnitTestCase
                         'type' => 355,
                         'name' => 'Invoices',
                     ],
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectLiteralsTrue(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE inv_status_flag = TRUE";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_status_flag',
+                ],
+                'right' => [
+                    'type' => 334,
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectLiteralsWhereHex(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE inv_id = 0xFF";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type' => 355,
+                    'name' => 'inv_id',
+                ],
+                'right' => [
+                    'type'  => 414,
+                    'value' => '0xFF',
                 ],
             ],
         ];

@@ -16,7 +16,7 @@ namespace Phalcon\Tests\Unit\Mvc\Model\Query\Phql\Select;
 use Phalcon\Mvc\Model\Query\Lang;
 use Phalcon\Tests\AbstractUnitTestCase;
 
-final class PlaceholdersTest extends AbstractUnitTestCase
+final class OperatorsTest extends AbstractUnitTestCase
 {
     /**
      * @return void
@@ -24,7 +24,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql46(): void
+    public function testMvcModelQueryPhqlSelectAddition(): void
     {
         $source   = "SELECT inv_total + 10 FROM Invoices";
         $expected = [
@@ -65,7 +65,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql47(): void
+    public function testMvcModelQueryPhqlSelectSubtraction(): void
     {
         $source   = "SELECT inv_total - 5 FROM Invoices";
         $expected = [
@@ -106,7 +106,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql48(): void
+    public function testMvcModelQueryPhqlSelectMultiplication(): void
     {
         $source   = "SELECT inv_total * 1.1 FROM Invoices";
         $expected = [
@@ -147,7 +147,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql49(): void
+    public function testMvcModelQueryPhqlSelectDivision(): void
     {
         $source   = "SELECT inv_total / 2 FROM Invoices";
         $expected = [
@@ -188,7 +188,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql50(): void
+    public function testMvcModelQueryPhqlSelectModulo(): void
     {
         $source   = "SELECT inv_total % 3 FROM Invoices";
         $expected = [
@@ -229,7 +229,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql51(): void
+    public function testMvcModelQueryPhqlSelectMultiplicationAliasAs(): void
     {
         $source   = "SELECT inv_id, inv_total * 1.1 AS total_with_tax FROM Invoices";
         $expected = [
@@ -278,7 +278,7 @@ final class PlaceholdersTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql52(): void
+    public function testMvcModelQueryPhqlSelectSelectAdditionMultiplicationAliasAs(): void
     {
         $source   = "SELECT inv_id, (inv_total + 5) * 2 AS adjusted FROM Invoices";
         $expected = [

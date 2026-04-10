@@ -24,7 +24,7 @@ final class WithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql125(): void
+    public function testMvcModelQueryPhqlSelectWithCache(): void
     {
         $source   = "SELECT * FROM Invoices AS i WITH cache";
         $expected = [
@@ -59,7 +59,7 @@ final class WithTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql126(): void
+    public function testMvcModelQueryPhqlSelectWithCacheShared(): void
     {
         $source   = "SELECT * FROM Invoices AS i WITH (cache, shared)";
         $expected = [

@@ -24,10 +24,12 @@ final class SubqueriesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql106(): void
+    public function testMvcModelQueryPhqlSelectWhereInSubquery(): void
     {
-        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_cst_id IN " .
-                    "(SELECT id FROM Customers WHERE status = 1)";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_cst_id IN "
+            . "(SELECT id FROM Customers WHERE status = 1)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -93,10 +95,12 @@ final class SubqueriesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql107(): void
+    public function testMvcModelQueryPhqlSelectWhereNotInSubquery(): void
     {
-        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_cst_id NOT IN " .
-                    "(SELECT id FROM Customers WHERE status = 0)";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_cst_id NOT IN "
+            . "(SELECT id FROM Customers WHERE status = 0)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -162,10 +166,12 @@ final class SubqueriesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql108(): void
+    public function testMvcModelQueryPhqlSelectWhereExistsSubquery(): void
     {
-        $source   = "SELECT * " . "FROM Invoices " . "WHERE EXISTS " .
-                    "(SELECT id FROM Customers WHERE id = Invoices.inv_cst_id)";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE EXISTS "
+            . "(SELECT id FROM Customers WHERE id = Invoices.inv_cst_id)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -228,9 +234,11 @@ final class SubqueriesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql109(): void
+    public function testMvcModelQueryPhqlSelectWhereEqualsSubquery(): void
     {
-        $source   = "SELECT * " . "FROM Invoices " . "WHERE inv_total = (SELECT MAX(inv_total) FROM Invoices)";
+        $source   = "SELECT * "
+            . "FROM Invoices "
+            . "WHERE inv_total = (SELECT MAX(inv_total) FROM Invoices)";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -294,10 +302,13 @@ final class SubqueriesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql110(): void
+    public function testMvcModelQueryPhqlSelectFieldSubquery(): void
     {
-        $source   = "SELECT i.inv_id, " . "(SELECT COUNT(*) " . "FROM Invoices " .
-                    "WHERE inv_cst_id = i.inv_cst_id) AS cst_count " . "FROM Invoices i";
+        $source   = "SELECT i.inv_id, "
+            . "(SELECT COUNT(*) "
+            . "FROM Invoices "
+            . "WHERE inv_cst_id = i.inv_cst_id) AS cst_count "
+            . "FROM Invoices i";
         $expected = [
             'type'   => 309,
             'select' => [

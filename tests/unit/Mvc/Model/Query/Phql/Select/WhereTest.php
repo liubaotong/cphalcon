@@ -24,7 +24,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql15(): void
+    public function testMvcModelQueryPhqlSelectWhereEqInt(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id = 1";
         $expected = [
@@ -65,7 +65,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql16(): void
+    public function testMvcModelQueryPhqlSelectWhereNeqInt(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id != 1";
         $expected = [
@@ -106,7 +106,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql17(): void
+    public function testMvcModelQueryPhqlSelectWhereNotInt(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_id <> 1";
         $expected = [
@@ -147,7 +147,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql18(): void
+    public function testMvcModelQueryPhqlSelectWhereLtFloat(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total < 100.00";
         $expected = [
@@ -188,7 +188,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql19(): void
+    public function testMvcModelQueryPhqlSelectWhereGtFloat(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total > 100.00";
         $expected = [
@@ -229,7 +229,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql20(): void
+    public function testMvcModelQueryPhqlSelectWhereLteFloat(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total <= 100.00";
         $expected = [
@@ -270,7 +270,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql21(): void
+    public function testMvcModelQueryPhqlSelectWhereGteFloat(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total >= 100.00";
         $expected = [
@@ -311,7 +311,7 @@ final class WhereTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql22(): void
+    public function testMvcModelQueryPhqlSelectWhereEqString(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title = 'test invoice'";
         $expected = [

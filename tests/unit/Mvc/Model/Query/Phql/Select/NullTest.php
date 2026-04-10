@@ -24,7 +24,7 @@ final class NullTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql32(): void
+    public function testMvcModelQueryPhqlSelectWhereIsNull(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title IS NULL";
         $expected = [
@@ -61,7 +61,7 @@ final class NullTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql33(): void
+    public function testMvcModelQueryPhqlSelectWhereIsNotNull(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_title IS NOT NULL";
         $expected = [

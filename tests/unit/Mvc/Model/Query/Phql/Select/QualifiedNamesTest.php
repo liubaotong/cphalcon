@@ -24,7 +24,7 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql122(): void
+    public function testMvcModelQueryPhqlSelectModelNamespace(): void
     {
         $source   = "SELECT * FROM App\Models\Invoices";
         $expected = [
@@ -54,7 +54,7 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql123(): void
+    public function testMvcModelQueryPhqlSelectModelNamespaceAliasAs(): void
     {
         $source   = "SELECT i.inv_id FROM App\Models\Invoices AS i";
         $expected = [
@@ -90,7 +90,7 @@ final class QualifiedNamesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql124(): void
+    public function testMvcModelQueryPhqlSelectModelNamespaceWhereInt(): void
     {
         $source   = "SELECT * FROM App\Models\Invoices WHERE inv_id = 1";
         $expected = [

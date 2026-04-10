@@ -24,7 +24,7 @@ final class WhereIn extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql38(): void
+    public function testMvcModelQueryPhqlSelectWhereIn(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_status_flag IN (0, 1, 2)";
         $expected = [
@@ -75,7 +75,7 @@ final class WhereIn extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql39(): void
+    public function testMvcModelQueryPhqlSelectWhereNotIn(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_status_flag NOT IN (0, 1)";
         $expected = [

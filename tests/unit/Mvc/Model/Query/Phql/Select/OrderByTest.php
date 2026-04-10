@@ -24,7 +24,7 @@ final class OrderByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql55(): void
+    public function testMvcModelQueryPhqlSelectOrderByInt(): void
     {
         $source   = "SELECT * FROM Invoices ORDER BY inv_id";
         $expected = [
@@ -60,7 +60,7 @@ final class OrderByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql56(): void
+    public function testMvcModelQueryPhqlSelectOrderByIntAsc(): void
     {
         $source   = "SELECT * FROM Invoices ORDER BY inv_id ASC";
         $expected = [
@@ -97,7 +97,7 @@ final class OrderByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql57(): void
+    public function testMvcModelQueryPhqlSelectOrderByIntDesc(): void
     {
         $source   = "SELECT * FROM Invoices ORDER BY inv_id DESC";
         $expected = [
@@ -134,7 +134,7 @@ final class OrderByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql58(): void
+    public function testMvcModelQueryPhqlSelectOrderByDateDescIntAsc(): void
     {
         $source   = "SELECT * FROM Invoices ORDER BY inv_created_at DESC, inv_id ASC";
         $expected = [
@@ -180,9 +180,10 @@ final class OrderByTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql59(): void
+    public function testMvcModelQueryPhqlSelectOrderByFloatDescStringAscIntAsc(): void
     {
-        $source   = "SELECT * FROM Invoices ORDER BY inv_total DESC, inv_title ASC, inv_id ASC";
+        $source   = "SELECT * FROM Invoices "
+            . "ORDER BY inv_total DESC, inv_title ASC, inv_id ASC";
         $expected = [
             'type'    => 309,
             'select'  => [

@@ -24,7 +24,7 @@ final class UnaryMinusTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql53(): void
+    public function testMvcModelQueryPhqlSelectUnaryMinusField(): void
     {
         $source   = "SELECT -inv_total FROM Invoices";
         $expected = [
@@ -61,7 +61,7 @@ final class UnaryMinusTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql54(): void
+    public function testMvcModelQueryPhqlSelectUnaryMinusWhere(): void
     {
         $source   = "SELECT * FROM Invoices WHERE inv_total > -1";
         $expected = [
