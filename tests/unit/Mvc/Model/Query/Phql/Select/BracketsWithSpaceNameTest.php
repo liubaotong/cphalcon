@@ -24,7 +24,7 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql136(): void
+    public function testMvcModelQueryPhqlSelectBracketsFieldSpaces(): void
     {
         $source   = "SELECT [First Name], [Last Name] FROM Contacts";
         $expected = [
@@ -65,39 +65,10 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql137(): void
+    public function testMvcModelQueryPhqlSelectBracketsFieldSpacesAlias(): void
     {
-        $source   = "SELECT * FROM [My Table]";
-        $expected = [
-            'type'   => 309,
-            'select' => [
-                'columns' => [
-                    0 => [
-                        'type' => 352,
-                    ],
-                ],
-                'tables'  => [
-                    'qualifiedName' => [
-                        'type' => 355,
-                        'name' => 'My Table',
-                    ],
-                ],
-            ],
-            'id'     => 140,
-        ];
-        $actual   = Lang::parsePhql($source);
-        $this->assertSame($expected, $actual);
-    }
-
-    /**
-     * @return void
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2026-04-09
-     */
-    public function testMvcModelQueryPhql138(): void
-    {
-        $source   = "SELECT c.[First Name], c.[Last Name] FROM Contacts AS c";
+        $source   = "SELECT c.[First Name], c.[Last Name] "
+                    . "FROM Contacts AS c";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -139,9 +110,11 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql139(): void
+    public function testMvcModelQueryPhqlSelectBracketsFieldSpacesAliasWhereString(): void
     {
-        $source   = "SELECT c.[First Name] FROM Contacts AS c WHERE c.[Last Name] = 'Smith'";
+        $source   = "SELECT c.[First Name] "
+                    . "FROM Contacts AS c "
+                    . "WHERE c.[Last Name] = 'Smith'";
         $expected = [
             'type'   => 309,
             'select' => [
@@ -187,9 +160,11 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql140(): void
+    public function testMvcModelQueryPhqlSelectBracketsFieldSpacesOrderBy(): void
     {
-        $source   = "SELECT [First Name] AS firstName, [Last Name] AS lastName FROM Contacts ORDER BY [Last Name] ASC";
+        $source   = "SELECT [First Name] AS firstName, [Last Name] AS lastName "
+                    . "FROM Contacts "
+                    . "ORDER BY [Last Name] ASC";
         $expected = [
             'type'    => 309,
             'select'  => [
@@ -226,6 +201,36 @@ final class BracketsWithSpaceNameTest extends AbstractUnitTestCase
                 'sort'   => 327,
             ],
             'id'      => 143,
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-09
+     */
+    public function testMvcModelQueryPhqlSelectBracketsTableSpaces(): void
+    {
+        $source   = "SELECT * FROM [My Table]";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'My Table',
+                    ],
+                ],
+            ],
+            'id'     => 140,
         ];
         $actual   = Lang::parsePhql($source);
         $this->assertSame($expected, $actual);

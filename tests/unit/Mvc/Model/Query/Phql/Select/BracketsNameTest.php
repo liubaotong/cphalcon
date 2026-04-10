@@ -24,7 +24,7 @@ final class BracketsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql134(): void
+    public function testMvcModelQueryPhqlSelectBrackets(): void
     {
         $source   = "SELECT [inv_id], [inv_title] FROM [Invoices]";
         $expected = [
@@ -65,7 +65,7 @@ final class BracketsNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql135(): void
+    public function testMvcModelQueryPhqlSelectBracketsWhereNum(): void
     {
         $source   = "SELECT [inv_id] FROM Invoices WHERE [inv_status_flag] = 1";
         $expected = [

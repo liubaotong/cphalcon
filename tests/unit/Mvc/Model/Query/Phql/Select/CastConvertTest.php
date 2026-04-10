@@ -24,7 +24,7 @@ final class CastConvertTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql96(): void
+    public function testMvcModelQueryPhqlSelectCastInt(): void
     {
         $source   = "SELECT CAST(inv_total AS INTEGER) FROM Invoices";
         $expected = [
@@ -65,7 +65,7 @@ final class CastConvertTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql97(): void
+    public function testMvcModelQueryPhqlSelectCastVarchar(): void
     {
         $source   = "SELECT CAST(inv_id AS VARCHAR) FROM Invoices";
         $expected = [
@@ -106,7 +106,7 @@ final class CastConvertTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql98(): void
+    public function testMvcModelQueryPhqlSelectConvertUtf8(): void
     {
         $source   = "SELECT CONVERT(inv_title USING utf8) FROM Invoices";
         $expected = [

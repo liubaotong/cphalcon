@@ -24,7 +24,7 @@ final class BracketsWithEscapedNameTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql159(): void
+    public function testMvcModelQueryPhqlSelectBracketsEscapedNames(): void
     {
         $source   = "SELECT [col\[0\]], [col\[1\]] FROM Items";
         $expected = [

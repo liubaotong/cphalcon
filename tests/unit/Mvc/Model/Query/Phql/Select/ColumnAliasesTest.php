@@ -24,7 +24,7 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql12(): void
+    public function testMvcModelQueryPhqlSelectAliasInt(): void
     {
         $source   = "SELECT inv_id AS id FROM Invoices";
         $expected = [
@@ -59,7 +59,7 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql13(): void
+    public function testMvcModelQueryPhqlSelectAliasStringFloat(): void
     {
         $source   = "SELECT inv_title AS title, inv_total AS total FROM Invoices";
         $expected = [
@@ -102,7 +102,7 @@ final class ColumnAliasesTest extends AbstractUnitTestCase
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
-    public function testMvcModelQueryPhql14(): void
+    public function testMvcModelQueryPhqlSelectAliasTableAlias(): void
     {
         $source   = "SELECT i.inv_id AS id, i.inv_title title FROM Invoices AS i";
         $expected = [
