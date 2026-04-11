@@ -22,6 +22,80 @@ final class Combination extends AbstractUnitTestCase
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlUpdateWhereMultipleAndConditions(): void
+    {
+        $source   = "UPDATE Invoices SET inv_status_flag = 1 "
+            . "WHERE inv_cst_id = 1 AND inv_total > 100 AND inv_status_flag = 0";
+        $expected = [
+            'type'   => 300,
+            'update' => [
+                'tables' => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+                'values' => [
+                    'column' => [
+                        'type' => 355,
+                        'name' => 'inv_status_flag',
+                    ],
+                    'expr'   => [
+                        'type'  => 258,
+                        'value' => '1',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type'  => 62,
+                    'left'  => [
+                        'type'  => 61,
+                        'left'  => [
+                            'type' => 355,
+                            'name' => 'inv_cst_id',
+                        ],
+                        'right' => [
+                            'type'  => 266,
+                            'left'  => [
+                                'type'  => 258,
+                                'value' => '1',
+                            ],
+                            'right' => [
+                                'type' => 355,
+                                'name' => 'inv_total',
+                            ],
+                        ],
+                    ],
+                    'right' => [
+                        'type'  => 266,
+                        'left'  => [
+                            'type'  => 258,
+                            'value' => '100',
+                        ],
+                        'right' => [
+                            'type' => 355,
+                            'name' => 'inv_status_flag',
+                        ],
+                    ],
+                ],
+                'right' => [
+                    'type'  => 258,
+                    'value' => '0',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
     public function testMvcModelQueryPhqlUpdate(): void

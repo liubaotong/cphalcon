@@ -382,6 +382,92 @@ final class Combination extends AbstractUnitTestCase
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlInsertArithmeticInValues(): void
+    {
+        $source   = "INSERT INTO Invoices (inv_total) VALUES (100 + 50)";
+        $expected = [
+            'type'          => 306,
+            'qualifiedName' => [
+                'type' => 355,
+                'name' => 'Invoices',
+            ],
+            'fields'        => [
+                0 => [
+                    'type' => 355,
+                    'name' => 'inv_total',
+                ],
+            ],
+            'values'        => [
+                0 => [
+                    'type'  => 43,
+                    'left'  => [
+                        'type'  => 258,
+                        'value' => '100',
+                    ],
+                    'right' => [
+                        'type'  => 258,
+                        'value' => '50',
+                    ],
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlInsertFuncInValues(): void
+    {
+        $source   = "INSERT INTO Invoices (inv_title, inv_total) "
+            . "VALUES (UPPER('test invoice'), 100.00)";
+        $expected = [
+            'type'          => 306,
+            'qualifiedName' => [
+                'type' => 355,
+                'name' => 'Invoices',
+            ],
+            'fields'        => [
+                0 => [
+                    'type' => 355,
+                    'name' => 'inv_title',
+                ],
+                1 => [
+                    'type' => 355,
+                    'name' => 'inv_total',
+                ],
+            ],
+            'values'        => [
+                0 => [
+                    'type'      => 350,
+                    'name'      => 'UPPER',
+                    'arguments' => [
+                        0 => [
+                            'type'  => 260,
+                            'value' => 'test invoice',
+                        ],
+                    ],
+                ],
+                1 => [
+                    'type'  => 259,
+                    'value' => '100.00',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
     public function testMvcModelQueryPhqlInsertFieldsTrue(): void

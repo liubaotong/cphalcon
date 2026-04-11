@@ -22,6 +22,96 @@ final class FromTest extends AbstractUnitTestCase
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlSelectFromMultipleTables(): void
+    {
+        $source   = "SELECT * FROM Invoices, Customers";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    0 => [
+                        'qualifiedName' => [
+                            'type' => 355,
+                            'name' => 'Invoices',
+                        ],
+                    ],
+                    1 => [
+                        'qualifiedName' => [
+                            'type' => 355,
+                            'name' => 'Customers',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlSelectFromMultipleTablesWhere(): void
+    {
+        $source   = "SELECT * FROM Invoices, Customers "
+            . "WHERE Invoices.inv_cst_id = Customers.id";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    0 => [
+                        'qualifiedName' => [
+                            'type' => 355,
+                            'name' => 'Invoices',
+                        ],
+                    ],
+                    1 => [
+                        'qualifiedName' => [
+                            'type' => 355,
+                            'name' => 'Customers',
+                        ],
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type'   => 355,
+                    'domain' => 'Invoices',
+                    'name'   => 'inv_cst_id',
+                ],
+                'right' => [
+                    'type'   => 355,
+                    'domain' => 'Customers',
+                    'name'   => 'id',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
     public function testMvcModelQueryPhqlSelectFromAliases(): void

@@ -22,6 +22,69 @@ final class OrderByTest extends AbstractUnitTestCase
      * @return void
      *
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlSelectOrderByAggregate(): void
+    {
+        $source   = "SELECT inv_cst_id, COUNT(*) FROM Invoices "
+            . "GROUP BY inv_cst_id ORDER BY COUNT(*) DESC";
+        $expected = [
+            'type'    => 309,
+            'select'  => [
+                'columns' => [
+                    0 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type' => 355,
+                            'name' => 'inv_cst_id',
+                        ],
+                    ],
+                    1 => [
+                        'type'   => 354,
+                        'column' => [
+                            'type'      => 350,
+                            'name'      => 'COUNT',
+                            'arguments' => [
+                                0 => [
+                                    'type' => 352,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'orderBy' => [
+                'column' => [
+                    'type'      => 350,
+                    'name'      => 'COUNT',
+                    'arguments' => [
+                        0 => [
+                            'type' => 352,
+                        ],
+                    ],
+                ],
+                'sort'   => 328,
+            ],
+            'groupBy' => [
+                'type' => 355,
+                'name' => 'inv_cst_id',
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
     public function testMvcModelQueryPhqlSelectOrderByInt(): void
