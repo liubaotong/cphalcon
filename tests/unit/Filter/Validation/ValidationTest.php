@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Filter\Validation;
 
+use Phalcon\Di\Di;
 use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\AbstractCombinedFieldsValidator;
+use Phalcon\Filter\Validation\Exception as ValidationException;
 use Phalcon\Filter\Validation\Validator\Alpha;
 use Phalcon\Filter\Validation\Validator\Email;
 use Phalcon\Filter\Validation\Validator\PresenceOf;
@@ -24,6 +27,9 @@ use Phalcon\Messages\Message;
 use Phalcon\Messages\Messages;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
+use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeCombinedValidator;
+use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeEntityWithSetter;
+use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeEntityWithWriteAttribute;
 use Phalcon\Tests\Unit\Filter\Validation\Fake\FakeUserEntity;
 
 final class ValidationTest extends AbstractUnitTestCase
@@ -49,44 +55,104 @@ final class ValidationTest extends AbstractUnitTestCase
         $this->validation->setFilters('name', 'trim');
     }
 
-    /**
-     * Tests validate method with entity and filters
-     *
-     * @author Wojciech Ślawski <jurigag@gmail.com>
-     * @since  2016-09-26
-     */
-    public function testWithEntityAndFilter(): void
+    public function tearDown(): void
     {
-        $users = new FakeUserEntity(
+        Di::reset();
+    }
+
+    /**
+     * Tests that empty values behavior.
+     *
+     * @author Gorka Guridi <gorka.guridi@gmail.com>
+     * @since  2016-12-30
+     */
+    public function testEmptyValues(): void
+    {
+        $validation = new Validation();
+
+        $validation->setDI(
+            $this->container
+        );
+
+        $validation
+            ->add(
+                'name',
+                new Alpha(
+                    [
+                        'message' => 'The name is not valid',
+                    ]
+                )
+            )
+            ->add(
+                'name',
+                new PresenceOf(
+                    [
+                        'message' => 'The name is required',
+                    ]
+                )
+            )
+            ->add(
+                'url',
+                new Url(
+                    [
+                        'message'    => 'The url is not valid.',
+                        'allowEmpty' => true,
+                    ]
+                )
+            )
+            ->add(
+                'email',
+                new Email(
+                    [
+                        'message'    => 'The email is not valid.',
+                        'allowEmpty' => [null, false],
+                    ]
+                )
+            )
+        ;
+
+        $messages = $validation->validate(
             [
-                'name' => ' ',
+                'name'  => '',
+                'url'   => null,
+                'email' => '',
             ]
         );
 
-        $messages = $this->validation->validate(null, $users);
+        $this->assertCount(2, $messages);
 
-        $this->assertEquals(
-            1,
-            $messages->count()
-        );
 
-        $this->assertEquals(
-            'Name cant be empty.',
-            $messages->offsetGet(0)->getMessage()
-        );
-
-        $expectedMessages = new Messages(
+        $messages = $validation->validate(
             [
-                new Message(
-                    'Name cant be empty.',
-                    'name',
-                    PresenceOf::class,
-                    0
-                ),
+                'name'  => 'MyName',
+                'url'   => '',
+                'email' => '',
             ]
         );
 
-        $this->assertEquals($messages, $expectedMessages);
+        $this->assertCount(1, $messages);
+
+
+        $messages = $validation->validate(
+            [
+                'name'  => 'MyName',
+                'url'   => false,
+                'email' => null,
+            ]
+        );
+
+        $this->assertCount(0, $messages);
+
+
+        $messages = $validation->validate(
+            [
+                'name'  => 'MyName',
+                'url'   => 0,
+                'email' => 0,
+            ]
+        );
+
+        $this->assertCount(1, $messages);
     }
 
     /**
@@ -111,6 +177,238 @@ final class ValidationTest extends AbstractUnitTestCase
             'SomeName',
             $users->name
         );
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: add() - AbstractCombinedFieldsValidator with array field
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationAddCombinedValidator(): void
+    {
+        $validator  = new FakeCombinedValidator();
+        $validation = new Validation();
+        $validation->add(['field1', 'field2'], $validator);
+
+        // combinedFieldsValidators should contain the validator
+        $validators = $validation->getValidators();
+        $this->assertEmpty($validators, 'No regular validators added');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: bind() - entity with setter method
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationBindEntityWithSetter(): void
+    {
+        $entity = new FakeEntityWithSetter();
+        $data   = ['name' => 'Leonidas'];
+
+        $validation = new Validation();
+        $validation->bind($entity, $data);
+
+        $this->assertSame('Leonidas', $entity->getName(), 'Setter should have been called');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: bind() - entity with writeAttribute method
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationBindEntityWithWriteAttribute(): void
+    {
+        $entity = new FakeEntityWithWriteAttribute();
+        $data   = ['name' => 'Leonidas', 'city' => 'Sparta'];
+
+        $validation = new Validation();
+        $validation->bind($entity, $data);
+
+        $this->assertSame(
+            'Leonidas',
+            $entity->readAttribute('name'),
+            'writeAttribute should have been called'
+        );
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: __construct() - initialize() is called
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationConstructCallsInitialize(): void
+    {
+        $validation = new class extends Validation {
+            public bool $initialized = false;
+
+            public function initialize(): void
+            {
+                $this->initialized = true;
+            }
+        };
+
+        $this->assertTrue($validation->initialized, 'initialize() should be called during __construct');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - afterValidation is called
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateAfterValidationCalled(): void
+    {
+        $validation = new class extends Validation {
+            public bool $afterCalled = false;
+
+            public function afterValidation(mixed $data, mixed $entity): void
+            {
+                $this->afterCalled = true;
+            }
+        };
+
+        $validation->add('name', new PresenceOf());
+        $validation->validate(['name' => 'Leonidas']);
+
+        $this->assertTrue($validation->afterCalled, 'afterValidation should be called after validate()');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - beforeValidation returns false
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateBeforeValidationReturnsFalse(): void
+    {
+        $validation = new class extends Validation {
+            public function beforeValidation(mixed $data, mixed $entity): bool
+            {
+                return false;
+            }
+        };
+
+        $validation->add('name', new PresenceOf());
+        $result = $validation->validate(['name' => '']);
+
+        $this->assertFalse($result, 'beforeValidation returning false causes validate() to return false');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - combined validator with allowEmpty skips via continue
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateCombinedAllowEmptySkips(): void
+    {
+        $validator  = new FakeCombinedValidator(['allowEmpty' => true]);
+        $validation = new Validation();
+        $validation->add(['field1', 'field2'], $validator);
+
+        $messages = $validation->validate(['field1' => '', 'field2' => '']);
+        $this->assertCount(0, $messages, 'allowEmpty=true with empty fields skips combined validator');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - combined validator cancelOnFail breaks loop
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateCombinedCancelOnFailBreaks(): void
+    {
+        $validator = new class extends AbstractCombinedFieldsValidator {
+            public function validate(Validation $validation, $field): bool
+            {
+                return false;
+            }
+        };
+        $validator->setOption('cancelOnFail', true);
+
+        $validation = new Validation();
+        $validation->add(['field1', 'field2'], $validator);
+
+        $messages = $validation->validate(['field1' => 'val', 'field2' => 'val']);
+        $this->assertCount(0, $messages, 'cancelOnFail breaks loop; combined validator adds no messages');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators loop
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateCombinedFieldsValidators(): void
+    {
+        $validator  = new FakeCombinedValidator();
+        $validation = new Validation();
+        $validation->add(['field1', 'field2'], $validator);
+
+        $messages = $validation->validate(['field1' => 'value1', 'field2' => 'value2']);
+        $this->assertCount(0, $messages, 'Combined validator returns true → no messages');
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators scope not array
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateCombinedScopeNotArrayThrows(): void
+    {
+        $validation = new class extends Validation {
+            public function setInvalidCombinedScope(): void
+            {
+                $this->combinedFieldsValidators = ['not-an-array'];
+            }
+        };
+        $validation->setInvalidCombinedScope();
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The validator scope is not valid');
+        $validation->validate([]);
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators non-object validator
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateCombinedValidatorNotObjectThrows(): void
+    {
+        $validation = new class extends Validation {
+            public function setNonObjectCombinedValidator(): void
+            {
+                $this->combinedFieldsValidators = [['field', 'not-an-object']];
+            }
+        };
+        $validation->setNonObjectCombinedValidator();
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('One of the validators is not valid');
+        $validation->validate([]);
+    }
+
+    /**
+     * Tests Phalcon\Filter\Validation :: validate() - non-object validator throws exception
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-01-01
+     */
+    public function testFilterValidationValidateNonObjectValidatorThrows(): void
+    {
+        $validation = new Validation();
+        $validation->setValidators(['name' => ['not-a-validator-object']]);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('One of the validators is not valid');
+        $validation->validate(['name' => 'value']);
     }
 
     public function testValidationFiltering(): void
@@ -254,97 +552,42 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests that empty values behavior.
+     * Tests validate method with entity and filters
      *
-     * @author Gorka Guridi <gorka.guridi@gmail.com>
-     * @since  2016-12-30
+     * @author Wojciech Ślawski <jurigag@gmail.com>
+     * @since  2016-09-26
      */
-    public function testEmptyValues(): void
+    public function testWithEntityAndFilter(): void
     {
-        $validation = new Validation();
-
-        $validation->setDI(
-            $this->container
-        );
-
-        $validation
-            ->add(
-                'name',
-                new Alpha(
-                    [
-                        'message' => 'The name is not valid',
-                    ]
-                )
-            )
-            ->add(
-                'name',
-                new PresenceOf(
-                    [
-                        'message' => 'The name is required',
-                    ]
-                )
-            )
-            ->add(
-                'url',
-                new Url(
-                    [
-                        'message'    => 'The url is not valid.',
-                        'allowEmpty' => true,
-                    ]
-                )
-            )
-            ->add(
-                'email',
-                new Email(
-                    [
-                        'message'    => 'The email is not valid.',
-                        'allowEmpty' => [null, false],
-                    ]
-                )
-            )
-        ;
-
-        $messages = $validation->validate(
+        $users = new FakeUserEntity(
             [
-                'name'  => '',
-                'url'   => null,
-                'email' => '',
+                'name' => ' ',
             ]
         );
 
-        $this->assertCount(2, $messages);
+        $messages = $this->validation->validate(null, $users);
 
+        $this->assertEquals(
+            1,
+            $messages->count()
+        );
 
-        $messages = $validation->validate(
+        $this->assertEquals(
+            'Name cant be empty.',
+            $messages->offsetGet(0)->getMessage()
+        );
+
+        $expectedMessages = new Messages(
             [
-                'name'  => 'MyName',
-                'url'   => '',
-                'email' => '',
+                new Message(
+                    'Name cant be empty.',
+                    'name',
+                    PresenceOf::class,
+                    0
+                ),
             ]
         );
 
-        $this->assertCount(1, $messages);
-
-
-        $messages = $validation->validate(
-            [
-                'name'  => 'MyName',
-                'url'   => false,
-                'email' => null,
-            ]
-        );
-
-        $this->assertCount(0, $messages);
-
-
-        $messages = $validation->validate(
-            [
-                'name'  => 'MyName',
-                'url'   => 0,
-                'email' => 0,
-            ]
-        );
-
-        $this->assertCount(1, $messages);
+        $this->assertEquals($messages, $expectedMessages);
     }
 }
