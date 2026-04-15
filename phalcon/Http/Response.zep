@@ -713,7 +713,7 @@ class Response implements ResponseInterface, InjectionAwareInterface, EventsAwar
         }
 
         // if an empty message is given we try and grab the default for this
-        // status code. If a default doesn't exist, stop here.
+        // status code. If a default does not exist, stop here.
         if message === null {
             // See: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
             let statusCodes = [
