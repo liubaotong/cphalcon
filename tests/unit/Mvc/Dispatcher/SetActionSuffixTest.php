@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class SetActionSuffixTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: setActionSuffix()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

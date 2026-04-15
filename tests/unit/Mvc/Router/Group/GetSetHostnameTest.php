@@ -68,8 +68,6 @@ final class GetSetHostnameTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Router\Group :: getHostname()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
@@ -90,6 +88,7 @@ final class GetSetHostnameTest extends AbstractUnitTestCase
 
     /**
      * @dataProvider getHostnameRoutesRegex
+     *
      */
     public function testMvcRouterGroupGetHostnameRegexRouteGroup(
         ?string $actualHost,
@@ -139,6 +138,7 @@ final class GetSetHostnameTest extends AbstractUnitTestCase
 
     /**
      * @dataProvider getHostnameRoutes
+     *
      */
     public function testMvcRouterGroupGetHostnameRouteGroup(
         ?string $actualHost,

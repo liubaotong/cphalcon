@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 final class WasMatchedTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Router :: wasMatched()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

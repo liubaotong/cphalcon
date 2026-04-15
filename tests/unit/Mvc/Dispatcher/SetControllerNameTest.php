@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class SetControllerNameTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: setControllerName()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

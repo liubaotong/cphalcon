@@ -175,7 +175,7 @@ abstract class AbstractValidator implements ValidatorInterface
 
         return new Message(
             strtr(this->getTemplate(singleField), replacements),
-            field,
+            singleField,
             get_class(this),
             this->prepareCode(singleField)
         );

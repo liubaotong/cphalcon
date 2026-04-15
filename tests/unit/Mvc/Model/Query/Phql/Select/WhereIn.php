@@ -19,8 +19,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 final class WhereIn extends AbstractUnitTestCase
 {
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -70,8 +68,6 @@ final class WhereIn extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */

@@ -23,9 +23,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 final class RegisterModulesTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Cli\Console :: registerModules() - bad path throws
-     * exception
-     *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-15
      */
@@ -46,7 +43,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
         $this->expectExceptionMessage(
             "Module definition path '"
             . supportDir('not-a-real-file.php')
-            . "' doesn't exist"
+            . "' does not exist"
         );
 
         $console->handle(
@@ -58,12 +55,9 @@ final class RegisterModulesTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Cli\Console :: registerModules()
-     *
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     *
      * @author Nathan Edwards <https://github.com/npfedwards>
+     * @since  2018-11-13
      * @since  2018-26-12
      */
     public function testCliConsoleRegisterModules(): void

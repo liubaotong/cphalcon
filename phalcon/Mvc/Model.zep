@@ -174,7 +174,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
         <ManagerInterface> modelsManager = null
     ) {
         /**
-         * We use a default DI if the user doesn't define one
+         * We use a default DI if the user does not define one
          */
         if container === null {
             let container = Di::getDefault();
@@ -227,7 +227,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
      * Handles method calls when a method is not implemented
      *
      * @return mixed
-     * @throws \Phalcon\Mvc\Model\Exception If the method doesn't exist
+     * @throws \Phalcon\Mvc\Model\Exception If the method does not exist
      */
     public function __call(string method, array arguments)
     {
@@ -261,10 +261,10 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
         }
 
         /**
-         * The method doesn't exist throw an exception
+         * The method does not exist throw an exception
          */
         throw new Exception(
-            "The method '" . method . "' doesn't exist on model '" . modelName . "'"
+            "The method '" . method . "' does not exist on model '" . modelName . "'"
         );
     }
 
@@ -272,7 +272,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
      * Handles method calls when a static method is not implemented
      *
      * @return mixed
-     * @throws \Phalcon\Mvc\Model\Exception If the method doesn't exist
+     * @throws \Phalcon\Mvc\Model\Exception If the method does not exist
      */
     public static function __callStatic(string method, array arguments)
     {
@@ -287,10 +287,10 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
         let modelName = get_called_class();
 
         /**
-         * The method doesn't exist throw an exception
+         * The method does not exist throw an exception
          */
         throw new Exception(
-            "The method '" . method . "' doesn't exist on model '" . modelName . "'"
+            "The method '" . method . "' does not exist on model '" . modelName . "'"
         );
     }
 
@@ -780,7 +780,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 if !fetch attributeField, columnMap[attribute] {
                     if unlikely !Settings::get("orm.ignore_unknown_columns") {
                         throw new Exception(
-                            "Column '" . attribute. "' doesn't make part of the column map in '" . get_class(this) . "'"
+                            "Column '" . attribute. "' does not make part of the column map in '" . get_class(this) . "'"
                         );
                     }
 
@@ -969,7 +969,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                     if !fetch attribute, reverseMap[key] {
                         if unlikely !Settings::get("orm.ignore_unknown_columns") {
                             throw new Exception(
-                                "Column '" . key . "' doesn't make part of the column map in '" . get_class(base) . "'"
+                                "Column '" . key . "' does not make part of the column map in '" . get_class(base) . "'"
                             );
                         }
 
@@ -978,7 +978,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 } else {
                     if unlikely !Settings::get("orm.ignore_unknown_columns") {
                         throw new Exception(
-                            "Column '" . key . "' doesn't make part of the column map in '" . get_class(base) . "'"
+                            "Column '" . key . "' does not make part of the column map in '" . get_class(base) . "'"
                         );
                     }
 
@@ -1108,7 +1108,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                          * @todo unless we pass the model name in the funciton we cannot tell what model has this problem
                          */
                         throw new Exception(
-                            "Column '" . key . "' doesn't make part of the column map"
+                            "Column '" . key . "' does not make part of the column map"
                         );
                     }
 
@@ -2983,7 +2983,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 if !fetch attribute, columnMap[key] {
                     if unlikely !Settings::get("orm.ignore_unknown_columns") {
                         throw new Exception(
-                            "Column '" . key . "' doesn't make part of the column map in '" . get_class(this) . "'"
+                            "Column '" . key . "' does not make part of the column map in '" . get_class(this) . "'"
                         );
                     }
 
@@ -2994,7 +2994,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                     if !fetch attribute, attribute[0] {
                         if unlikely !Settings::get("orm.ignore_unknown_columns") {
                             throw new Exception(
-                                "Column '" . key . "' doesn't make part of the column map in '" . get_class(this) . "'"
+                                "Column '" . key . "' does not make part of the column map in '" . get_class(this) . "'"
                             );
                         }
 
@@ -3048,7 +3048,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 if !fetch attribute, columnMap[key] {
                     if unlikely !Settings::get("orm.ignore_unknown_columns") {
                         throw new Exception(
-                            "Column '" . key . "' doesn't make part of the column map in '" . get_class(this) . "'"
+                            "Column '" . key . "' does not make part of the column map in '" . get_class(this) . "'"
                         );
                     }
 
@@ -3059,7 +3059,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                     if !fetch attribute, attribute[0] {
                         if unlikely !Settings::get("orm.ignore_unknown_columns") {
                             throw new Exception(
-                                "Column '" . key . "' doesn't make part of the column map in '" . get_class(this) . "'"
+                                "Column '" . key . "' does not make part of the column map in '" . get_class(this) . "'"
                             );
                         }
 
@@ -3323,7 +3323,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 if !fetch attributeField, columnMap[attribute] {
                     if unlikely !Settings::get("orm.ignore_unknown_columns") {
                         throw new Exception(
-                            "Column '" . attribute . "' doesn't make part of the column map in '" . get_class(this) . "'"
+                            "Column '" . attribute . "' does not make part of the column map in '" . get_class(this) . "'"
                         );
                     }
 
@@ -3360,7 +3360,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
     }
 
     /**
-     * Updates a model instance. If the instance doesn't exist in the
+     * Updates a model instance. If the instance does not exist in the
      * persistence it will throw an exception. Returning `true` on success or
      * `false` otherwise.
      *

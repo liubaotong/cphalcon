@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class GetPreviousNamespaceNameTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: getPreviousNamespaceName()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

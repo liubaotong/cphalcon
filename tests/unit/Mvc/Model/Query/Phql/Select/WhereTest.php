@@ -19,8 +19,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 final class WhereTest extends AbstractUnitTestCase
 {
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -60,8 +58,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -101,8 +97,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -142,8 +136,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -183,8 +175,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -224,8 +214,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -265,8 +253,6 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */
@@ -306,8 +292,96 @@ final class WhereTest extends AbstractUnitTestCase
     }
 
     /**
-     * @return void
-     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlSelectWhereFuncLeft(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE UPPER(inv_title) = 'TEST INVOICE'";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type'      => 350,
+                    'name'      => 'UPPER',
+                    'arguments' => [
+                        0 => [
+                            'type' => 355,
+                            'name' => 'inv_title',
+                        ],
+                    ],
+                ],
+                'right' => [
+                    'type'  => 260,
+                    'value' => 'TEST INVOICE',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-10
+     */
+    public function testMvcModelQueryPhqlSelectWhereFuncLeftPlaceholder(): void
+    {
+        $source   = "SELECT * FROM Invoices WHERE UPPER(inv_title) = :title:";
+        $expected = [
+            'type'   => 309,
+            'select' => [
+                'columns' => [
+                    0 => [
+                        'type' => 352,
+                    ],
+                ],
+                'tables'  => [
+                    'qualifiedName' => [
+                        'type' => 355,
+                        'name' => 'Invoices',
+                    ],
+                ],
+            ],
+            'where'  => [
+                'type'  => 61,
+                'left'  => [
+                    'type'      => 350,
+                    'name'      => 'UPPER',
+                    'arguments' => [
+                        0 => [
+                            'type' => 355,
+                            'name' => 'inv_title',
+                        ],
+                    ],
+                ],
+                'right' => [
+                    'type'  => 274,
+                    'value' => 'title',
+                ],
+            ],
+        ];
+        $actual   = Lang::parsePhql($source);
+        unset($actual['id']);
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-09
      */

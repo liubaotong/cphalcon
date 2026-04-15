@@ -26,8 +26,6 @@ use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\DispatcherTestDefaultTwoController;
 class DispatcherTest extends BaseDispatcher
 {
     /**
-     * Tests the forwarding inside a controller's action.
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -137,8 +135,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests the forwarding inside a controller's action.
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -246,8 +242,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests the int return value from a dispatcher
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -301,8 +295,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests the string return value from a dispatcher
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -356,8 +348,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests cyclical routing
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -387,9 +377,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests the default order of dispatch events for basic execution with no
-     * custom method handlers
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -452,8 +439,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests throwing a new exception inside before exception.
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -554,8 +539,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests invalid handler specified
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -585,9 +568,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests the last handler when an exception occurs and is forwarded
-     * elsewhere
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -672,9 +652,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests dispatching from a controller without namespace to one with
-     * namespace namespaces
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -772,8 +749,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests dispatching without namespaces
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -840,8 +815,6 @@ class DispatcherTest extends BaseDispatcher
     }
 
     /**
-     * Tests parameter passing and return value from the dispatcher
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */

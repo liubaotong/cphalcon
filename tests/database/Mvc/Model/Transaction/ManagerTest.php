@@ -21,6 +21,10 @@ use Phalcon\Tests\Support\Models\Personas;
 use Phalcon\Tests\Support\Models\Select;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class ManagerTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -41,8 +45,6 @@ final class ManagerTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Transaction\Manager :: commit with new inserts
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-08-07
      *
@@ -87,8 +89,6 @@ final class ManagerTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Transaction\Manager :: transaction removed on commit
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-08-07
      *
@@ -137,8 +137,6 @@ final class ManagerTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Transaction\Manager :: transaction removed on rollback
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2012-08-07
      *

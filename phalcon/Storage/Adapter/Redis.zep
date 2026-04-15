@@ -67,6 +67,8 @@ class Redis extends AbstractAdapter
             options["ssl"]            = this->getArrVal(options, "ssl", []);
 
         parent::__construct(factory, options);
+
+        this->initSerializer();
     }
 
     /**

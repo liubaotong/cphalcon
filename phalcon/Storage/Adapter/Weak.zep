@@ -49,8 +49,9 @@ class Weak extends AbstractAdapter
     public function __construct(<SerializerFactory> factory, array! options = [])
     {
         let this->defaultSerializer = "none",
-            this->prefix                 = "",
-            this->options                = options;
+            this->lifetime           = this->getArrVal(options, "lifetime", 3600),
+            this->prefix             = "",
+            this->options            = options;
     }
 
      /**

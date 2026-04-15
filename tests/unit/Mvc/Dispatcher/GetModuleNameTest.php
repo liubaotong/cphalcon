@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class GetModuleNameTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: getModuleName()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

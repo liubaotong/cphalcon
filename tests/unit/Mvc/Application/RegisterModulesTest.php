@@ -154,8 +154,6 @@ final class RegisterModulesTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Application :: registerModules() - bad path throws exception
-     *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-15
      */
@@ -200,7 +198,7 @@ final class RegisterModulesTest extends AbstractUnitTestCase
         $this->expectExceptionMessage(
             "Module definition path '"
             . supportDir('not-a-real-file.php')
-            . "' doesn't exist"
+            . "' does not exist"
         );
 
         $application->handle('/index');

@@ -1935,7 +1935,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
     }
 
     /**
-     * Loads a model throwing an exception if it doesn't exist
+     * Loads a model throwing an exception if it does not exist
      *
      * @param string $modelName
      *
@@ -1946,7 +1946,7 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
         var model;
 
         /**
-         * The model doesn't exist throw an exception
+         * The model does not exist throw an exception
          */
         if unlikely !class_exists(modelName) {
             throw new Exception(
