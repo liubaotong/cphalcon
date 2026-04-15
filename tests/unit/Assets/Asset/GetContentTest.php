@@ -54,6 +54,27 @@ final class GetContentTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Assets\Asset :: getContent() - with sourcePath set
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testAssetsAssetGetContentWithSourcePath(): void
+    {
+        $path   = 'assets/assets/jquery.js';
+        $source = 'assets/assets/1198.css';
+        $asset  = new Asset('js', $path);
+        $asset->setSourcePath($source);
+
+        $expected = file_get_contents(supportDir($source));
+        $expected = str_replace("\r\n", PHP_EOL, $expected);
+        $actual   = $asset->getContent(supportDir());
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
      * Tests Phalcon\Assets\Asset :: getContent() - exception 404
      *
      * @return void

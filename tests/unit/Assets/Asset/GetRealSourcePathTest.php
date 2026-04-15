@@ -77,6 +77,24 @@ final class GetRealSourcePathTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests Phalcon\Assets\Asset :: getRealSourcePath() - with sourcePath set
+     *
+     * @return void
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
+     */
+    public function testAssetsAssetGetRealSourcePathWithSourcePath(): void
+    {
+        $asset = new Asset('css', 'css/docs.css');
+        $asset->setSourcePath('assets/assets/1198.css');
+
+        $actual = $asset->getRealSourcePath(supportDir());
+        $this->assertNotEmpty($actual);
+        $this->assertStringContainsString('1198.css', $actual);
+    }
+
+    /**
      * Tests Phalcon\Assets\Asset :: getRealSourcePath() - css/js remote
      *
      * @return void
