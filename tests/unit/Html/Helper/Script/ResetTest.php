@@ -15,20 +15,25 @@ use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Script;
 use Phalcon\Tests\AbstractUnitTestCase;
 
-final class ToStringTest extends AbstractUnitTestCase
+use const PHP_EOL;
+
+final class ResetTest extends AbstractUnitTestCase
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2024-01-01
      */
-    public function testHtmlHelperScriptToStringEmpty(): void
+    public function testHtmlHelperAbstractSeriesReset(): void
     {
         $escaper = new Escaper();
         $helper  = new Script($escaper);
 
-        $result = $helper();
+        $result = $helper('    ', PHP_EOL);
+        $result->add('/js/custom.js');
 
-        $actual = (string)$result;
-        $this->assertEmpty($actual);
+        $actual = $result->reset();
+        $this->assertInstanceOf(Script::class, $actual);
+
+        $this->assertSame('', (string)$result);
     }
 }
