@@ -66,14 +66,19 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "MyNamespace\\Controllers\\": "tests/support/Controllers/",
       "Zephir\\Optimizers\\FunctionCall\\": "optimizers/",
       "Phalcon\\Tests\\": "tests/",
       "Phalcon\\Tests\\Support\\": "tests/support/",
       "Phalcon\\Tests\\Unit\\": "tests/unit/",
       "Phalcon\\Tests\\Database\\": "tests/database/"
     },
+    "files": [
+      "tests/support/assets/Dispatcher/DispatcherTestDefaultNoNamespaceController.php"
+    ],
     "exclude-from-classmap": [
-      "tests/support/assets/"
+      "tests/support/assets/",
+      "tests/testbed/"
     ]
   },
   "support": {
