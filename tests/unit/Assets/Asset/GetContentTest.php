@@ -19,7 +19,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileExists;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileGetContents;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 use function file_get_contents;
 use function supportDir;
@@ -31,16 +30,11 @@ final class GetContentTest extends AbstractUnitTestCase
     use AssetsTrait;
 
     /**
-     * Tests Phalcon\Assets\Asset :: getContent()
-     *
-     * @return void
-     *
      * @dataProvider providerAssets
      *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    #[DataProvider('providerAssets')]
     public function testAssetsAssetGetContent(
         string $type,
         string $path
@@ -54,10 +48,6 @@ final class GetContentTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getContent() - with sourcePath set
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -75,10 +65,6 @@ final class GetContentTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getContent() - exception 404
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -95,10 +81,6 @@ final class GetContentTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getContent() - exception cannot read file
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */

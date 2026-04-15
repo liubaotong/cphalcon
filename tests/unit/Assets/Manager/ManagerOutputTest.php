@@ -39,11 +39,6 @@ use const PHP_EOL;
 final class ManagerOutputTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Assets\Manager :: calculatePrefixedPath() - autoVersion
-     * Covers L828-829: collection->isAutoVersion() && collection->isLocal()
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -71,11 +66,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: calculatePrefixedPath() - version set
-     * Covers L833: if ($version) { $prefixedPath .= '?ver=' . $version; }
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -97,11 +87,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: doCallback() - non-empty attributes
-     * Also covers processParameters() - 'local' key in array (L1088-1089+1091)
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -124,11 +109,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: getJoin() - completeTargetPath is directory
-     * Covers L929-931: exception when join=false and target is a directory
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -150,11 +130,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: getJoin() - empty completeTargetPath
-     * Covers L923-925: exception when join=false and target path is empty
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -176,11 +151,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - collection sourcePath is set
-     * Covers L419: $completeSourcePath .= $collectionSourcePath
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -212,11 +182,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - implicit echo when not joining
-     * Covers L591: echo $html when implicitOutput=true and join=false
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -252,11 +217,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: getOutput() - implicit echo when joining
-     * Covers L972: echo $html in getOutput() when implicitOutput=true
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -290,11 +250,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: getSourcePath() - empty source path exception
-     * Covers L995-999: throw when getRealSourcePath returns empty string
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -316,11 +271,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - empty target path exception
-     * Covers L469-471: throw when getRealTargetPath returns empty string
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -348,11 +298,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: outputInlineCss() - with named collection
-     * Covers L718: $collection = $this->get($name)
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -370,11 +315,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: outputInline() - filter is applied
-     * Covers L669: $content = $filter->filter($content)
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -395,11 +335,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: outputInline() - invalid filter exception
-     * Covers L661-662: throw when filter is not an object
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -419,11 +354,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: outputInlineJs() - with named collection
-     * Covers L736: $collection = $this->get($name)
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -441,11 +371,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: outputInline() - join=false path
-     * Covers L675-680: each inline code gets its own element tag
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -467,11 +392,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - invalid filter exception
-     * Covers L527: throw when filter is not an object (in output())
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -497,11 +417,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - no asset filter with join=true
-     * Covers L551-552: $filteredJoinedContent .= $content when mustFilter=false
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -532,12 +447,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: output() - no asset filter with join=false
-     * Covers L554: $filteredContent = $content when mustFilter=false and join=false
-     * Covers L563: file_put_contents when not joining
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -570,11 +479,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: isFilterNeeded() - same source and target paths
-     * Covers L1024-1026: throw when targetPath === sourcePath
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -602,11 +506,6 @@ final class ManagerOutputTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Manager :: isFilterNeeded() - target exists with different mtime
-     * Covers L1030-1031: filterNeeded=true when target file exists and filemtime differs
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */

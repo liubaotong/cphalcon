@@ -17,7 +17,6 @@ use Phalcon\Assets\Asset;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Unit\Assets\Fake\AssetsTrait;
 use Phalcon\Tests\Unit\Assets\Fake\FakeAssetFileExistsPositive;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 use function supportDir;
 
@@ -26,16 +25,11 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
     use AssetsTrait;
 
     /**
-     * Tests Phalcon\Assets\Asset :: getRealTargetPath() - css local
-     *
      * @dataProvider providerCssJsLocal
      *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
-    #[DataProvider('providerCssJsLocal')]
     public function testAssetsAssetGetRealTargetPath(
         string $type,
         string $path,
@@ -49,10 +43,6 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getRealTargetPath() - with targetPath set
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -68,11 +58,6 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getRealTargetPath() - realpath returns false (non-existent file)
-     * Covers branch where phpFileExists() returns true but realpath() returns false
-     *
-     * @return void
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-09-09
      */
@@ -86,12 +71,8 @@ final class GetRealTargetPathTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Assets\Asset :: getRealTargetPath() - css local 404
-     *
-     * @return void
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2020-09-09
      */
     public function testAssetsAssetGetRealTargetPath404(): void
     {
