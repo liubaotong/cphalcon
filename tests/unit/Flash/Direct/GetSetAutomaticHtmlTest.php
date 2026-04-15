@@ -16,23 +16,23 @@ namespace Phalcon\Tests\Unit\Flash\Direct;
 use Phalcon\Flash\Direct;
 use Phalcon\Tests\AbstractUnitTestCase;
 
-final class GetSetAutoescapeTest extends AbstractUnitTestCase
+final class GetSetAutomaticHtmlTest extends AbstractUnitTestCase
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2024-01-01
      */
-    public function testFlashDirectGetSetAutoescape(): void
+    public function testFlashDirectGetSetAutomaticHtml(): void
     {
         $flash = new Direct();
 
-        $actual = $flash->getAutoescape();
+        $actual = $flash->getAutomaticHtml();
         $this->assertTrue($actual);
 
-        $actual = $flash->setAutoescape(false);
+        $actual = $flash->setAutomaticHtml(false);
         $this->assertInstanceOf(Direct::class, $actual);
 
-        $actual = $flash->getAutoescape();
+        $actual = $flash->getAutomaticHtml();
         $this->assertFalse($actual);
     }
 }

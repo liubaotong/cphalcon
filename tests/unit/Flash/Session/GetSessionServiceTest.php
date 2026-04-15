@@ -13,25 +13,41 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Flash\Session;
 
+use Phalcon\Flash\Exception;
 use Phalcon\Flash\Session;
 use Phalcon\Tests\AbstractUnitTestCase;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
-final class GetSetCustomTemplateTest extends AbstractUnitTestCase
+final class GetSessionServiceTest extends AbstractUnitTestCase
 {
     use DiTrait;
 
     public function setUp(): void
     {
-        $this->setNewFactoryDefault();
+        $this->newDi();
         $this->setDiService('sessionStream');
     }
 
     /**
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2024-01-01
      */
-    public function testFlashSessionGetSetCustomTemplate(): void
+    public function testFlashSessionGetSessionServiceNoContainerThrows(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            "A dependency injection container is required to access the 'session' service"
+        );
+
+        $flash = new Session();
+        $flash->getSessionService();
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2024-01-01
+     */
+    public function testFlashSessionGetSessionServiceReturnsService(): void
     {
         $session = $this->container->getShared('session');
         $session->start();
@@ -39,15 +55,8 @@ final class GetSetCustomTemplateTest extends AbstractUnitTestCase
         $flash = new Session();
         $flash->setDI($this->container);
 
-        $actual = $flash->getCustomTemplate();
-        $this->assertEmpty($actual);
-
-        $template = '<span class="{cssClasses}">{message}</span>';
-        $actual   = $flash->setCustomTemplate($template);
-        $this->assertInstanceOf(Session::class, $actual);
-
-        $actual = $flash->getCustomTemplate();
-        $this->assertSame($template, $actual);
+        $actual = $flash->getSessionService();
+        $this->assertSame($session, $actual);
 
         $session->destroy();
     }
