@@ -820,7 +820,7 @@ class Response implements ResponseInterface, InjectionAwareInterface, EventsAwar
 
             if unlikely !isset statusCodes[code] {
                 throw new Exception(
-                    "Non-standard statuscode given without a message"
+                    "Non-standard status-code given without a message"
                 );
             }
 
