@@ -33,6 +33,10 @@ use Phalcon\Tests\Support\Traits\DiTrait;
 
 use function uniqid;
 
+/**
+ *
+ * @group phql
+ */
 final class SaveTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -52,14 +56,12 @@ final class SaveTest extends AbstractDatabaseTestCase
 
 
     /**
-     * Tests Phalcon\Mvc\Model\ :: save() Infinite Loop
-     *
+     * @issue  https://github.com/phalcon/cphalcon/issues/16395
      * @author Phalcon Team <team@phalcon.io>
      * @since  2023-08-09
-     * @issue  https://github.com/phalcon/cphalcon/issues/16395
      *
-     * @group  mysql
-     * @group  sqlite
+     * @group mysql
+     * @group sqlite
      */
     public function infiniteSaveLoop(): void
     {
@@ -80,14 +82,12 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save()
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
-     * @since  2019-04-30
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-04-30
      * @since  2019-05-10
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSave(): void
     {
@@ -153,14 +153,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() after fetching related records
-     *
-     * @see    https://github.com/phalcon/cphalcon/issues/13964
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveAfterFetchingRelated(): void
     {
@@ -199,14 +195,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() after setting empty array
-     *
-     * @see    https://github.com/phalcon/cphalcon/issues/1482214270
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-10-09
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveAfterSettingEmptyRelated(): void
     {
@@ -235,14 +227,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() after using related records getters
-     *
-     * @see    https://github.com/phalcon/cphalcon/issues/13964
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveAfterUsingRelatedGetters(): void
     {
@@ -281,14 +269,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() when default values are not set
-     *
-     * @see    https://github.com/phalcon/cphalcon/issues/13781
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-17
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveAfterWithoutDefaultValues(): void
     {
@@ -328,11 +312,9 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() with circular unsaved relations
-     *
      * @since  2019-04-28
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveCircularRelation(): void
     {
@@ -371,14 +353,12 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\ :: save() with property source
-     *
+     * @issue  #11922
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-11-16
-     * @issue  #11922
      *
-     * @group  mysql
-     * @group  sqlite
+     * @group mysql
+     * @group sqlite
      */
     public function testMvcModelSaveWithPropertySource(): void
     {
@@ -427,14 +407,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() with related records property (relation many - belongs)
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2020-11-04
      *
-     * @see    https://github.com/phalcon/cphalcon/issues/15148
-     *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveWithRelatedManyAndBelongsRecordsProperty(): void
     {
@@ -478,12 +454,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() with related records
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-30
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveWithRelatedRecords(): void
     {
@@ -522,14 +496,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() with related records property
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2020-10-31
      *
-     * @see    https://github.com/phalcon/cphalcon/issues/15148
-     *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveWithRelatedRecordsProperty(): void
     {
@@ -573,12 +543,10 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\ :: save() with schema
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-11-16
      *
-     * @group  mysql
+     * @group mysql
      */
     public function testMvcModelSaveWithSchema(): void
     {
@@ -607,15 +575,12 @@ final class SaveTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: save() with a tinyint(1)
-     *
-     * @see          https://github.com/phalcon/cphalcon/issues/14355
+     * @dataProvider tinyintProvider
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-08-02
-     * @dataProvider tinyintProvider
      *
-     * @group        mysql
+     * @group mysql
      */
     public function testMvcModelSaveWithTinyInt(string $value): void
     {

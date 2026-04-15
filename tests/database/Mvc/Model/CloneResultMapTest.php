@@ -60,8 +60,6 @@ final class CloneResultMapTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: cloneResultMap()
-     *
      * @dataProvider modelDataProvider
      *
      * @author       Phalcon Team <team@phalcon.io>
@@ -116,8 +114,6 @@ final class CloneResultMapTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: cloneResultMap() with casting
-     *
      * @dataProvider modelDataProvider
      *
      * @author       Phalcon Team <team@phalcon.io>

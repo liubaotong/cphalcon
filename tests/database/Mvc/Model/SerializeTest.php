@@ -39,8 +39,6 @@ final class SerializeTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: serialize()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-01
      *
@@ -75,8 +73,6 @@ final class SerializeTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: serialize() - with dirtyState
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2021-11-09
      *
