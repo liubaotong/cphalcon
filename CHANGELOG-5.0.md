@@ -3,12 +3,8 @@
 
 ### Changed
 
-- Changed `Phalcon\Assets\Manager` filter type check from `is_object()` to `typeof` and updated the error message to `"The filter is not valid"` [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Changed `Phalcon\Cache\AbstractCache::doDeleteMultiple()` to delegate to the storage adapter's `deleteMultiple()` instead of looping over individual `delete()` calls [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Changed calls to `globals_get` and `globals_set` in the code with `Phalcon\Support\Settings::get()/set()` [#16884](https://github.com/phalcon/cphalcon/issues/16884)
-- Changed `Phalcon\Di\Exception` message for missing services from `"was not found in the dependency injection container"` to `"is not registered in the container"` [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Changed `Phalcon\Di\Service\Builder` error messages for service parameters to use double quotes instead of single quotes [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Changed exception messages across multiple components to use `"does not"` instead of `"doesn't"` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 
 ### Added
 
@@ -16,15 +12,6 @@
 - Added key validation per entry in `Phalcon\Cache\AbstractCache::doDeleteMultiple()` throwing `InvalidArgumentException` for keys containing invalid characters [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 
 ### Fixed
-
-- Fixed `Phalcon\Filter\Validation\AbstractValidator::messageFactory()` to pass the joined field string to `Phalcon\Messages\Message` instead of the raw array when multiple fields are provided [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Filter\Validation::bind()` to skip the dependency injection container lookup when `data` is empty, preventing unnecessary `Di\Exception` errors [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Html\Escaper::css()` and `Phalcon\Html\Escaper::js()` to return an empty string instead of `false` when the input is empty or contains only a null codepoint [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Http\Response::setStatusCode()` exception message from `"Non-standard statuscode given without a message"` to `"Non-standard status-code given without a message"` [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Image\Adapter\Imagick::processPixelate()` to explicitly cast division result to `int` to prevent implicit float-to-int deprecation [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Support\Helper\Json\Encode` to prefix the `InvalidArgumentException` message with `"json_encode error: "` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Storage\Adapter\Libmemcached`, `Phalcon\Storage\Adapter\Redis` and `Phalcon\Storage\Adapter\Weak` to call `initSerializer()` during construction [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Storage\Adapter\Redis` to initialize `lifetime` from options during construction
 
 ### Removed
 
