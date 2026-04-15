@@ -61,8 +61,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests that empty values behavior.
-     *
      * @author Gorka Guridi <gorka.guridi@gmail.com>
      * @since  2016-12-30
      */
@@ -156,8 +154,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests that filters in validation will correctly filter entity values
-     *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2016-09-26
      */
@@ -180,8 +176,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: add() - AbstractCombinedFieldsValidator with array field
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -197,8 +191,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: bind() - entity with setter method
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -214,8 +206,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: bind() - entity with writeAttribute method
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -235,8 +225,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: __construct() - initialize() is called
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -255,8 +243,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - afterValidation is called
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -278,8 +264,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - beforeValidation returns false
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -299,8 +283,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - combined validator with allowEmpty skips via continue
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -315,8 +297,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - combined validator cancelOnFail breaks loop
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -338,8 +318,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators loop
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -354,8 +332,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators scope not array
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -375,8 +351,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - combinedFieldsValidators non-object validator
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -396,8 +370,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Filter\Validation :: validate() - non-object validator throws exception
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-01-01
      */
@@ -552,8 +524,6 @@ final class ValidationTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests validate method with entity and filters
-     *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2016-09-26
      */
