@@ -24,8 +24,6 @@ use function is_array;
 class GetActiveHandlerTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Micro :: getActiveHandler()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
@@ -35,8 +33,6 @@ class GetActiveHandlerTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Micro :: getActiveHandler() with lazy loader
-     *
      * @author Jurigag <https://github.com/Jurigag>
      * @since  2020-01-21
      */

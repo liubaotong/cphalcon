@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class SetDefaultControllerTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: setDefaultController()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

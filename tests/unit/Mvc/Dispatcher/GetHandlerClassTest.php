@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class GetHandlerClassTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: getHandlerClass()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class GetHandlerTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Micro\LazyLoader :: getHandler()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-03-19
      */

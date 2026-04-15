@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 class SetNamespaceNameTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: setNamespaceName()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */

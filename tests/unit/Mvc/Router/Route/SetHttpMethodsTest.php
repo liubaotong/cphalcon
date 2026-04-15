@@ -18,8 +18,6 @@ use Phalcon\Tests\AbstractUnitTestCase;
 final class SetHttpMethodsTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\Router\Route :: setHttpMethods()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
