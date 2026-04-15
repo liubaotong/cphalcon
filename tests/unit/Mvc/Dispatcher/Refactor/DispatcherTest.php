@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher\Refactor;
 
-use MyNamespace\Controllers\DispatcherTestDefaultNoNamespaceController;
+use DispatcherTestDefaultNoNamespaceController;
 use Phalcon\Mvc\Dispatcher\Exception;
 use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\DispatcherTestDefaultController;
