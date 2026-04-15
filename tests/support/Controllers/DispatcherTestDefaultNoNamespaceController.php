@@ -1,10 +1,11 @@
-<?php // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+<?php
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 use Phalcon\Mvc\Controller;
 
 /**
- * @author        Andres Gutierrez <andres@phalcon.io>
- * @author        Nikolaos Dimopoulos <nikos@phalcon.io>
+ * @author Andres Gutierrez <andres@phalcon.io>
+ * @author Nikolaos Dimopoulos <nikos@phalcon.io>
  */
 class DispatcherTestDefaultNoNamespaceController extends Controller
 {
@@ -41,7 +42,7 @@ class DispatcherTestDefaultNoNamespaceController extends Controller
                 'namespace'  => 'Phalcon\Tests\Unit\Mvc\Dispatcher\Helper',
                 'controller' => 'dispatcher-test-default',
                 'action'     => 'index',
-            ]
+            ],
         );
     }
 
@@ -56,7 +57,7 @@ class DispatcherTestDefaultNoNamespaceController extends Controller
         $dispatcher->forward(
             [
                 'action' => 'index2',
-            ]
+            ],
         );
     }
 
