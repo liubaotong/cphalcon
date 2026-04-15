@@ -60,7 +60,7 @@ final class RenderHtmlTest extends AbstractUnitTestCase
 <div align='center'>
     <div class='error-main'>
         <h1>Phalcon\Support\Exception: exception message</h1>
-        <span class='error-file'>" . __FILE__ . " (35)</span>
+        <span class='error-file'>" . __FILE__ . " (31)</span>
     </div>
     <script type='application/javascript'
             src='https://assets.phalcon.io/debug/5.0.x/assets/jquery/dist/jquery.min.js'></script>
