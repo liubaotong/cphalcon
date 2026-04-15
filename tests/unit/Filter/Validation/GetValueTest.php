@@ -170,7 +170,7 @@ final class GetValueTest extends AbstractUnitTestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            "Service 'filter' was not found in the dependency injection container"
+            "Service 'filter' is not registered in the container"
         );
         $validation = new Validation();
         $validation->setDI($container);
