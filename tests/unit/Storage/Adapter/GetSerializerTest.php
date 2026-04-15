@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Storage\Adapter;
 
-use Memcached as NativeMemcached;
 use Phalcon\Storage\Adapter\Apcu;
 use Phalcon\Storage\Adapter\Libmemcached;
 use Phalcon\Storage\Adapter\Memory;
@@ -21,17 +20,16 @@ use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\RedisCluster;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\Adapter\Weak;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Redis as NativeRedis;
-use RedisCluster as NativeRedisCluster;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function getOptionsRedisCluster;
 use function outputDir;
 
-final class GetAdapterTest extends AbstractUnitTestCase
+final class GetSerializerTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]
@@ -42,31 +40,26 @@ final class GetAdapterTest extends AbstractUnitTestCase
             [
                 Apcu::class,
                 [],
-                null,
                 'apcu',
             ],
             [
                 Libmemcached::class,
                 getOptionsLibmemcached(),
-                NativeMemcached::class,
                 'memcached',
             ],
             [
                 Memory::class,
                 [],
-                null,
                 '',
             ],
             [
                 Redis::class,
                 getOptionsRedis(),
-                NativeRedis::class,
                 'redis',
             ],
             [
                 RedisCluster::class,
                 getOptionsRedisCluster(),
-                NativeRedisCluster::class,
                 'redis',
             ],
             [
@@ -74,13 +67,6 @@ final class GetAdapterTest extends AbstractUnitTestCase
                 [
                     'storageDir' => outputDir(),
                 ],
-                null,
-                '',
-            ],
-            [
-                Weak::class,
-                [],
-                null,
                 '',
             ],
         ];
@@ -90,13 +76,12 @@ final class GetAdapterTest extends AbstractUnitTestCase
      * @dataProvider getExamples
      *
      * @author       Phalcon Team <team@phalcon.io>
-     * @since        2020-09-09
+     * @since        2026-04-14
      */
-    public function testStorageAdapterGetAdapter(
+    public function testStorageAdapterGetSerializer(
         string $class,
         array $options,
-        ?string $expected,
-        string $extension,
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -105,12 +90,18 @@ final class GetAdapterTest extends AbstractUnitTestCase
         $serializer = new SerializerFactory();
         $adapter    = new $class($serializer, $options);
 
-        $actual = $adapter->getAdapter();
+        $this->assertInstanceOf(SerializerInterface::class, $adapter->getSerializer());
+    }
 
-        if (null === $expected) {
-            $this->assertNull($actual);
-        } else {
-            $this->assertInstanceOf($expected, $actual);
-        }
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-14
+     */
+    public function testStorageAdapterWeakGetSerializerReturnsNull(): void
+    {
+        $serializer = new SerializerFactory();
+        $adapter    = new Weak($serializer);
+
+        $this->assertNull($adapter->getSerializer());
     }
 }
