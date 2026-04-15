@@ -16,16 +16,28 @@ namespace Phalcon\Tests\Unit\Support\Debug;
 use Phalcon\Support\Debug;
 use Phalcon\Tests\AbstractUnitTestCase;
 
-final class ListenLowSeverityTest extends AbstractUnitTestCase
+final class ListenTest extends AbstractUnitTestCase
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2026-04-11
      */
-    public function testSupportDebugListenLowSeverity(): void
+    public function testSupportDebugListenExceptionsOnly(): void
     {
         $debug  = new Debug();
-        $result = $debug->listenLowSeverity();
+        $result = $debug->listen();
+
+        $this->assertInstanceOf(Debug::class, $result);
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-11
+     */
+    public function testSupportDebugListenLowSeverityBranch(): void
+    {
+        $debug  = new Debug();
+        $result = $debug->listen(false, true);
 
         $this->assertInstanceOf(Debug::class, $result);
     }
