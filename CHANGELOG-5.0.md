@@ -24,7 +24,7 @@
 - Fixed `Phalcon\Image\Adapter\Imagick::processPixelate()` to explicitly cast division result to `int` to prevent implicit float-to-int deprecation [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Fixed `Phalcon\Support\Helper\Json\Encode` to prefix the `InvalidArgumentException` message with `"json_encode error: "` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Fixed `Phalcon\Storage\Adapter\Libmemcached`, `Phalcon\Storage\Adapter\Redis` and `Phalcon\Storage\Adapter\Weak` to call `initSerializer()` during construction [#16889](https://github.com/phalcon/cphalcon/issues/16889)
-- Fixed `Phalcon\Storage\Adapter\Redis` to initialize `lifetime` from options during construction [#16889](https://github.com/phalcon/cphalcon/issues/16889)
+- Fixed `Phalcon\Storage\Adapter\Redis` to initialize `lifetime` from options during construction
 
 ### Removed
 
