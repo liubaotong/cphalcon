@@ -20,21 +20,16 @@ use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Adapter\RedisCluster;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Cache\Adapter\Weak;
-use Phalcon\Cache\Exception\Exception as StorageException;
 use Phalcon\Storage\SerializerFactory;
-use Phalcon\Support\Exception as HelperException;
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeStreamFileGetContents;
-use Phalcon\Tests\Unit\Cache\Fake\Adapter\FakeStreamFopen;
-use stdClass;
 
+use function array_merge;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function getOptionsRedisCluster;
 use function outputDir;
-use function uniqid;
 
-final class HasTest extends AbstractUnitTestCase
+final class GetLifetimeTest extends AbstractUnitTestCase
 {
     /**
      * @return array[]
@@ -74,6 +69,11 @@ final class HasTest extends AbstractUnitTestCase
                 ],
                 '',
             ],
+            [
+                Weak::class,
+                [],
+                '',
+            ],
         ];
     }
 
@@ -81,12 +81,12 @@ final class HasTest extends AbstractUnitTestCase
      * @dataProvider getExamples
      *
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2026-04-14
      */
-    public function testCacheAdapterHas(
+    public function testCacheAdapterGetLifetime(
         string $class,
         array $options,
-        ?string $extension
+        string $extension
     ): void {
         if (!empty($extension)) {
             $this->checkExtensionIsLoaded($extension);
@@ -95,78 +95,34 @@ final class HasTest extends AbstractUnitTestCase
         $serializer = new SerializerFactory();
         $adapter    = new $class($serializer, $options);
 
-        $key = uniqid();
-
-        $actual = $adapter->has($key);
-        $this->assertFalse($actual);
-
-        $adapter->set($key, 'test');
-        $actual = $adapter->has($key);
-        $this->assertTrue($actual);
+        $expected = 3600;
+        $actual   = $adapter->getLifetime();
+        $this->assertSame($expected, $actual);
     }
 
     /**
+     * @dataProvider getExamples
+     *
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
+     * @since  2026-04-14
      */
-    public function testCacheAdapterStreamHasCannotOpenFile(): void
-    {
+    public function testCacheAdapterGetLifetimeCustom(
+        string $class,
+        array $options,
+        string $extension
+    ): void {
+        if (!empty($extension)) {
+            $this->checkExtensionIsLoaded($extension);
+        }
+
         $serializer = new SerializerFactory();
-        $adapter    = new FakeStreamFopen(
+        $adapter    = new $class(
             $serializer,
-            [
-                'storageDir' => outputDir(),
-            ],
+            array_merge($options, ['lifetime' => 7200])
         );
 
-        $key    = uniqid();
-        $actual = $adapter->set($key, 'test');
-        $this->assertTrue($actual);
-
-        $actual = $adapter->has($key);
-        $this->assertFalse($actual);
-    }
-
-    /**
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-09-09
-     */
-    public function testCacheAdapterStreamHasEmptyPayload(): void
-    {
-        $serializer = new SerializerFactory();
-        $adapter    = new FakeStreamFileGetContents(
-            $serializer,
-            [
-                'storageDir' => outputDir(),
-            ],
-        );
-
-        $key    = uniqid();
-        $actual = $adapter->set($key, 'test');
-        $this->assertTrue($actual);
-
-        $actual = $adapter->has($key);
-        $this->assertFalse($actual);
-    }
-
-    /**
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2023-07-17
-     */
-    public function testCacheAdapterWeakHas(): void
-    {
-        $serializer = new SerializerFactory();
-        $adapter    = new Weak($serializer);
-
-        $obj1 = new stdClass();
-
-        $key1   = uniqid();
-        $actual = $adapter->has($key1);
-        $this->assertFalse($actual);
-
-        $adapter->set($key1, $obj1);
-
-        $actual = $adapter->has($key1);
-        $this->assertTrue($actual);
+        $expected = 7200;
+        $actual   = $adapter->getLifetime();
+        $this->assertSame($expected, $actual);
     }
 }
