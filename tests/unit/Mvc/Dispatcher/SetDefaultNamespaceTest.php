@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class SetDefaultNamespaceTest extends AbstractUnitTestCase
+class SetDefaultNamespaceTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -23,6 +23,8 @@ class SetDefaultNamespaceTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherSetDefaultNamespace(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setDefaultNamespace('MyApp\Controllers');
+        $this->assertSame('MyApp\Controllers', $dispatcher->getDefaultNamespace());
     }
 }

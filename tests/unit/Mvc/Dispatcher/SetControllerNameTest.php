@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class SetControllerNameTest extends AbstractUnitTestCase
+class SetControllerNameTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -23,6 +23,8 @@ class SetControllerNameTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherSetControllerName(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setControllerName('my-controller');
+        $this->assertSame('my-controller', $dispatcher->getControllerName());
     }
 }

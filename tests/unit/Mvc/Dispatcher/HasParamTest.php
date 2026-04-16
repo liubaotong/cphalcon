@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class HasParamTest extends AbstractUnitTestCase
+class HasParamTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -23,6 +23,9 @@ class HasParamTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherHasParam(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setParam('key', 'value');
+        $this->assertTrue($dispatcher->hasParam('key'));
+        $this->assertFalse($dispatcher->hasParam('nonexistent'));
     }
 }

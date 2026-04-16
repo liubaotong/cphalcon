@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Router\Route;
 
+use Phalcon\Mvc\Router\Route;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class GetIdTest extends AbstractUnitTestCase
@@ -23,6 +24,8 @@ final class GetIdTest extends AbstractUnitTestCase
      */
     public function testMvcRouterRouteGetId(): void
     {
-        $this->markTestSkipped('Need implementation');
+        Route::reset();
+        $route = new Route('/test');
+        $this->assertSame('0', $route->getRouteId());
     }
 }

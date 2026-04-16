@@ -9,6 +9,7 @@
 - Changed `Phalcon\Di\Exception` message for missing services from `"was not found in the dependency injection container"` to `"is not registered in the container"` [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Changed `Phalcon\Di\Service\Builder` error messages for service parameters to use double quotes instead of single quotes [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Changed exception messages across multiple components to use `"does not"` instead of `"doesn't"` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
+- Changed `Phalcon\Mvc\Controller` and `Phalcon\Mvc\View\Engine\AbstractEngine` to be events aware [#16890](https://github.com/phalcon/cphalcon/pull/16890)
 
 ### Added
 

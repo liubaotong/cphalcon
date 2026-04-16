@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class SetDefaultActionTest extends AbstractUnitTestCase
+class SetDefaultActionTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -23,6 +23,10 @@ class SetDefaultActionTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherSetDefaultAction(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setDefaultAction('index2');
+        $dispatcher->setActionName('');
+        $dispatcher->dispatch();
+        $this->assertSame('index2', $dispatcher->getActionName());
     }
 }

@@ -54,6 +54,8 @@ class AfterBindingTest extends AbstractUnitTestCase
     }
 
     /**
+     * Tests after binding middleware
+     *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2016-11-19
      */

@@ -13,16 +13,25 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\DispatcherTestDefaultController;
 
-class GetActiveControllerTest extends AbstractUnitTestCase
+class GetActiveControllerTest extends BaseDispatcher
 {
     /**
+     * Tests Phalcon\Mvc\Dispatcher :: getActiveController()
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function testMvcDispatcherGetActiveController(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $this->assertNull($dispatcher->getActiveController());
+        $dispatcher->dispatch();
+        $this->assertInstanceOf(
+            DispatcherTestDefaultController::class,
+            $dispatcher->getActiveController()
+        );
     }
 }

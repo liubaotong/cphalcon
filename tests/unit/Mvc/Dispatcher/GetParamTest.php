@@ -16,9 +16,9 @@ namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 use Phalcon\Cli\Dispatcher as CliDispatcher;
 use Phalcon\Cli\Dispatcher\Exception as CliDispatcherException;
 use Phalcon\Dispatcher\Exception as DispatcherException;
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class GetParamTest extends AbstractUnitTestCase
+class GetParamTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -26,7 +26,10 @@ class GetParamTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherGetParam(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setParams(['id' => 42]);
+        $this->assertSame(42, $dispatcher->getParam('id'));
+        $this->assertNull($dispatcher->getParam('nonexistent'));
     }
 
     /**
