@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class SetActionSuffixTest extends AbstractUnitTestCase
+class SetActionSuffixTest extends BaseDispatcher
 {
     /**
      * @author Phalcon Team <team@phalcon.io>
@@ -23,6 +23,8 @@ class SetActionSuffixTest extends AbstractUnitTestCase
      */
     public function testMvcDispatcherSetActionSuffix(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setActionSuffix('Task');
+        $this->assertSame('Task', $dispatcher->getActionSuffix());
     }
 }

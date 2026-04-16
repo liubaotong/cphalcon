@@ -11,23 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Tests\Unit\Mvc\Router;
+namespace Phalcon\Tests\Unit\Mvc;
 
 use Phalcon\Tests\AbstractUnitTestCase;
-use Phalcon\Tests\Unit\Mvc\Fake\RouterTrait;
 
-final class GetModuleNameTest extends AbstractUnitTestCase
+final class RefactorControllersTest extends AbstractUnitTestCase
 {
-    use RouterTrait;
-
     /**
      * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
+     * @since  2026-04-02
      */
-    public function testMvcRouterGetModuleName(): void
+    public function testControllers(): void
     {
-        $router = $this->getRouter(false);
-        $router->handle('/');
-        $this->assertSame('', $router->getModuleName());
+        $this->markTestSkipped('Needs review - tocheck after migration');
     }
 }

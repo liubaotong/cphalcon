@@ -13,16 +13,19 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class GetModelBinderTest extends AbstractUnitTestCase
+class GetModelBinderTest extends BaseDispatcher
 {
     /**
+     * Tests Phalcon\Mvc\Dispatcher :: getModelBinder()
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function testMvcDispatcherGetModelBinder(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $this->assertNull($dispatcher->getModelBinder());
     }
 }

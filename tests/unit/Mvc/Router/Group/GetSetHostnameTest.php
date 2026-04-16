@@ -88,7 +88,6 @@ final class GetSetHostnameTest extends AbstractUnitTestCase
 
     /**
      * @dataProvider getHostnameRoutesRegex
-     *
      */
     public function testMvcRouterGroupGetHostnameRegexRouteGroup(
         ?string $actualHost,
@@ -138,7 +137,6 @@ final class GetSetHostnameTest extends AbstractUnitTestCase
 
     /**
      * @dataProvider getHostnameRoutes
-     *
      */
     public function testMvcRouterGroupGetHostnameRouteGroup(
         ?string $actualHost,

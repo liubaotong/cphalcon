@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Router\Route;
 
+use Phalcon\Mvc\Router\Route;
+use Phalcon\Mvc\Router\RouteInterface;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class SetHttpMethodsTest extends AbstractUnitTestCase
@@ -23,6 +25,9 @@ final class SetHttpMethodsTest extends AbstractUnitTestCase
      */
     public function testMvcRouterRouteSetHttpMethods(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $route  = new Route('/test');
+        $result = $route->setHttpMethods(['GET', 'POST']);
+        $this->assertInstanceOf(RouteInterface::class, $result);
+        $this->assertSame(['GET', 'POST'], $route->getHttpMethods());
     }
 }

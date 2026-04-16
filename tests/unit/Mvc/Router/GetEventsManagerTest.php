@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Router;
 
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Mvc\Router;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class GetEventsManagerTest extends AbstractUnitTestCase
@@ -23,6 +25,9 @@ final class GetEventsManagerTest extends AbstractUnitTestCase
      */
     public function testMvcRouterGetEventsManager(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $router  = new Router();
+        $manager = new EventsManager();
+        $router->setEventsManager($manager);
+        $this->assertInstanceOf(EventsManager::class, $router->getEventsManager());
     }
 }

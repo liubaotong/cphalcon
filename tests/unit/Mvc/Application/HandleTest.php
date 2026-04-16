@@ -62,7 +62,7 @@ final class HandleTest extends AbstractUnitTestCase
             true
         );
 
-        $eventsManager = $this->container->getEventsManager();
+        $eventsManager = $this->container->getShared('eventsManager');
 
         $this->container->set(
             'dispatcher',

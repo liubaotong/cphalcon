@@ -13,16 +13,19 @@ declare(strict_types=1);
 
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
-use Phalcon\Tests\AbstractUnitTestCase;
+use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 
-class GetBoundModelsTest extends AbstractUnitTestCase
+class GetBoundModelsTest extends BaseDispatcher
 {
     /**
+     * Tests Phalcon\Mvc\Dispatcher :: getBoundModels()
+     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function testMvcDispatcherGetBoundModels(): void
     {
-        $this->markTestSkipped('Need implementation');
+        $dispatcher = $this->getDispatcher();
+        $this->assertSame([], $dispatcher->getBoundModels());
     }
 }
