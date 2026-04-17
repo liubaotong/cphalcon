@@ -11,12 +11,15 @@
 - Changed exception messages across multiple components to use `"does not"` instead of `"doesn't"` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Changed `Phalcon\Mvc\Controller` and `Phalcon\Mvc\View\Engine\AbstractEngine` to be events aware [#16890](https://github.com/phalcon/cphalcon/pull/16890)
 - Changed `Phalcon\Mvc\View\Engine\Volt\Compiler::setOptions` to return `$this` now [#16891](https://github.com/phalcon/cphalcon/pull/16891)
+- Changed `Phalcon\Html\TagFactory` to accept an optional `ResponseInterface` in the constructor (useful for `preload`) [#16892](https://github.com/phalcon/cphalcon/issues/16892)
 
 ### Added
 
 - Added `deleteMultiple()` to `Phalcon\Storage\Adapter\*` to delete multiple keys in a single operation using native batch capabilities per adapter [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Added key validation per entry in `Phalcon\Cache\AbstractCache::doDeleteMultiple()` throwing `InvalidArgumentException` for keys containing invalid characters [#16859](https://github.com/phalcon/cphalcon/issues/16859)
-
+- Added `Phalcon\Html\Helper\FriendlyTitle` - available via `TagFactory` as `friendlyTitle` [#16892(https://github.com/phalcon/cphalcon/issues/16892)
+- Added `Phalcon\Html\Helper\Preload` - available via `TagFactory` as `preload`; `TagFactory` now accepts an optional `ResponseInterface` as its third constructor parameter [#16892(https://github.com/phalcon/cphalcon/issues/16892)
+  
 ### Fixed
 
 - Fixed `Phalcon\Filter\Validation\AbstractValidator::messageFactory()` to pass the joined field string to `Phalcon\Messages\Message` instead of the raw array when multiple fields are provided [#16889](https://github.com/phalcon/cphalcon/issues/16889)
