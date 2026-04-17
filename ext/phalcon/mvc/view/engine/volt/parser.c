@@ -3299,12 +3299,12 @@ int phvolt_parse_view(zval *result, zval *view_code, zval *template_path)
 	ZVAL_NULL(error_msg);
 
 	if (Z_TYPE_P(view_code) != IS_STRING) {
-		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_exception_ce, "View code must be a string");
+		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_engine_volt_exception_ce, "View code must be a string");
 		return FAILURE;
 	}
 
 	if (phvolt_internal_parse_view(&result, view_code, template_path, &error_msg) == FAILURE) {
-		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_exception_ce, Z_STRVAL_P(error_msg));
+		ZEPHIR_THROW_EXCEPTION_STRW(phalcon_mvc_view_engine_volt_exception_ce, Z_STRVAL_P(error_msg));
 		zval_dtor(error_msg);
 		return FAILURE;
 	}
