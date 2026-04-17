@@ -3,6 +3,8 @@
 
 ### Changed
 
+- Changed `Phalcon\Forms\Element\Select::render()` to use `TagFactory`-based `Html\Helper\Input\Select` instead of the deprecated `Phalcon\Tag\Select` [#16892](https://github.com/phalcon/cphalcon/issues/16892)
+- Changed `Phalcon\Forms\Element\AbstractElement::getLocalTagFactory()` to throw `Phalcon\Forms\Exception` instead of silently creating a new `TagFactory` when neither `setTagFactory()` nor a parent `Form` provides one [#16892](https://github.com/phalcon/cphalcon/issues/16892)
 - Changed `Phalcon\Assets\Manager` filter type check from `is_object()` to `typeof` and updated the error message to `"The filter is not valid"` [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Changed `Phalcon\Cache\AbstractCache::doDeleteMultiple()` to delegate to the storage adapter's `deleteMultiple()` instead of looping over individual `delete()` calls [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Changed calls to `globals_get` and `globals_set` in the code with `Phalcon\Support\Settings::get()/set()` [#16884](https://github.com/phalcon/cphalcon/issues/16884)
@@ -15,6 +17,9 @@
 
 ### Added
 
+- Added `Phalcon\Html\Helper\Input\Select\SelectDataInterface`, `Phalcon\Html\Helper\Input\Select\ArrayData`, and `Phalcon\Html\Helper\Input\Select\ResultsetData` as data providers for the `Select` helper [#16892](https://github.com/phalcon/cphalcon/issues/16892)
+- Added `Phalcon\Html\Helper\Input\Select::fromData()` to populate select options from a `SelectDataInterface` provider, with optgroup support [#16892](https://github.com/phalcon/cphalcon/issues/16892)
+- Added named static factory methods `Phalcon\Forms\Exception::tagFactoryNotFound()` and `Phalcon\Forms\Exception::usingParameterRequired()` [#16892](https://github.com/phalcon/cphalcon/issues/16892)
 - Added `deleteMultiple()` to `Phalcon\Storage\Adapter\*` to delete multiple keys in a single operation using native batch capabilities per adapter [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Added key validation per entry in `Phalcon\Cache\AbstractCache::doDeleteMultiple()` throwing `InvalidArgumentException` for keys containing invalid characters [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Added `Phalcon\Html\Helper\FriendlyTitle` - available via `TagFactory` as `friendlyTitle` [#16892(https://github.com/phalcon/cphalcon/issues/16892)
