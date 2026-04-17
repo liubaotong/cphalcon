@@ -2228,9 +2228,11 @@ class Compiler implements InjectionAwareInterface
     /**
      * Sets the compiler options
      */
-    public function setOptions(array! options)
+    public function setOptions(array! options) -> <Compiler>
     {
         let this->options = options;
+
+        return this;
     }
 
     /**
