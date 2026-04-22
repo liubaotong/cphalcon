@@ -36,6 +36,8 @@
 - Fixed `Phalcon\Support\Helper\Json\Encode` to prefix the `InvalidArgumentException` message with `"json_encode error: "` for consistency [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Fixed `Phalcon\Storage\Adapter\Libmemcached`, `Phalcon\Storage\Adapter\Redis` and `Phalcon\Storage\Adapter\Weak` to call `initSerializer()` during construction [#16889](https://github.com/phalcon/cphalcon/issues/16889)
 - Fixed `Phalcon\Storage\Adapter\Redis` to initialize `lifetime` from options during construction [#16889](https://github.com/phalcon/cphalcon/issues/16889)
+- Fixed `Phalcon\Mvc\Model\Transaction\Manager::commit()` to remove each transaction from the pool after committing so that subsequent `get()` calls return a fresh transaction [#16522](https://github.com/phalcon/cphalcon/issues/16522)
+- Fixed `Phalcon\Mvc\Model\Transaction\Manager::collectTransaction()` to keep the correct transactions when rebuilding the list after removal [#16522](https://github.com/phalcon/cphalcon/issues/16522)
 
 ### Removed
 
