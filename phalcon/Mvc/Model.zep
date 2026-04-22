@@ -327,11 +327,16 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             }
 
             /**
-             * Return already-loaded related records to avoid overwriting
-             * any modifications made to the object between accesses
+             * Return an already-loaded single model for non-reusable relations to
+             * avoid overwriting modifications made to the object between accesses.
+             * Resultsets (hasMany) are never returned from this cache because they
+             * can go stale after external deletes; reusable relations delegate
+             * caching to the models manager.
              */
-            if isset this->related[lowerProperty] {
-                return this->related[lowerProperty];
+            if isset this->related[lowerProperty] && !relation->isReusable() {
+                if typeof this->related[lowerProperty] === "object" && (this->related[lowerProperty] instanceof ModelInterface) {
+                    return this->related[lowerProperty];
+                }
             }
 
             /**

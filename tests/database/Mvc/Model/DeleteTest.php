@@ -157,9 +157,6 @@ final class DeleteTest extends AbstractDatabaseTestCase
         $customersMigration = new CustomersMigration($connection);
         $customersMigration->insert($custId, 0, $firstName, $lastName);
 
-        $paidInvoiceId   = 40;
-        $unpaidInvoiceId = 50;
-
         $title = uniqid('inv-');
 
         /**
