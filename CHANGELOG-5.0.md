@@ -40,6 +40,8 @@
 - Fixed `Phalcon\Mvc\Model\Transaction\Manager::collectTransaction()` to keep the correct transactions when rebuilding the list after removal [#16522](https://github.com/phalcon/cphalcon/issues/16522)
 - Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` to use the `columns` option as the `COUNT(DISTINCT ...)` argument when a `GROUP BY` is present, allowing NULL-safe expressions to be supplied [#15266](https://github.com/phalcon/cphalcon/issues/15266)
 - Fixed `Phalcon\Mvc\Model::__get()` to return the already-loaded related record instead of re-fetching from the database, preventing modifications to relation properties from being discarded [#15554](https://github.com/phalcon/cphalcon/issues/15554)
+- Fixed `Phalcon\Filter\Validation\AbstractValidator::allowEmpty()` to support a value-list array (e.g. `[null, '']`) in addition to the per-field map syntax, using strict `===` comparison so that `'0'` is never silently treated as empty [#15491](https://github.com/phalcon/cphalcon/issues/15491)
+- Fixed `Phalcon\Filter\Validation\Validator\Alpha::validate()` to return `false` when `allowEmpty` is explicitly set to `false` and the submitted value is `null` or an empty string [#16200](https://github.com/phalcon/cphalcon/issues/16200)
 
 ### Removed
 
