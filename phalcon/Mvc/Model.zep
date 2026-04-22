@@ -327,6 +327,14 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             }
 
             /**
+             * Return already-loaded related records to avoid overwriting
+             * any modifications made to the object between accesses
+             */
+            if isset this->related[lowerProperty] {
+                return this->related[lowerProperty];
+            }
+
+            /**
              * Get the related records
              */
             return this->getRelated(lowerProperty);
