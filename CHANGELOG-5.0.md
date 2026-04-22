@@ -40,6 +40,8 @@
 - Fixed `Phalcon\Mvc\Model\Transaction\Manager::collectTransaction()` to keep the correct transactions when rebuilding the list after removal [#16522](https://github.com/phalcon/cphalcon/issues/16522)
 - Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` to use the `columns` option as the `COUNT(DISTINCT ...)` argument when a `GROUP BY` is present, allowing NULL-safe expressions to be supplied [#15266](https://github.com/phalcon/cphalcon/issues/15266)
 - Fixed `Phalcon\Mvc\Model::__get()` to return the already-loaded related record instead of re-fetching from the database, preventing modifications to relation properties from being discarded [#15554](https://github.com/phalcon/cphalcon/issues/15554)
+- Fixed `Phalcon\Mvc\Model::toArray()` to catch `Error` thrown by a getter that accesses an uninitialized typed PHP property (can occur when `cloneResultMap()` skips a null value for a `NOT NULL` column, e.g. via a `LEFT JOIN`), returning `null` instead of propagating the error [#15711](https://github.com/phalcon/cphalcon/issues/15711)
+- Fixed `Phalcon\Mvc\Model::unserialize()` to catch `TypeError` when assigning a serialised `null` back to a typed non-nullable PHP property, preventing a crash on the second request when the model is loaded from a cache like APCu [#15711](https://github.com/phalcon/cphalcon/issues/15711)
 
 ### Removed
 
