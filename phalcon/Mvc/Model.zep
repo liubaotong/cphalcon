@@ -2936,10 +2936,18 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
              */
             if fetch properties, attributes["attributes"] {
                 /**
-                 * Update the objects properties
+                 * Update the objects properties. A TypeError can be thrown
+                 * when assigning null to a typed non-nullable PHP property
+                 * (e.g. int $id) because the serialised value was null due
+                 * to the property being uninitialized at serialize() time.
+                 * Skip such assignments gracefully.
                  */
                 for key, value in properties {
-                    let this->{key} = value;
+                    try {
+                        let this->{key} = value;
+                    } catch \TypeError {
+                        // Incompatible value for typed property – leave as-is
+                    }
                 }
             } else {
                 let properties = [];
@@ -3403,7 +3411,17 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
              * Do not use the getter if the field name is `source` (getSource)
              */
             if true === useGetter && "getSource" !== method && method_exists(this, method) {
-                let data[attributeField] = this->{method}();
+                /**
+                 * A getter may access a typed property that was never
+                 * initialized (e.g. because cloneResultMap() skipped a null
+                 * value for a NOT NULL column). Catch the resulting Error and
+                 * return null rather than letting it propagate.
+                 */
+                try {
+                    let data[attributeField] = this->{method}();
+                } catch \Error {
+                    let data[attributeField] = null;
+                }
             } elseif isset(this->{attributeField}) {
                 let data[attributeField] = this->{attributeField};
             } else {
