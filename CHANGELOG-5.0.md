@@ -46,6 +46,7 @@
 - Fixed `Phalcon\Filter\Validation\AbstractValidator::allowEmpty()` to support a value-list array (e.g. `[null, '']`) in addition to the per-field map syntax, using strict `===` comparison so that `'0'` is never silently treated as empty [#15491](https://github.com/phalcon/cphalcon/issues/15491)
 - Fixed `Phalcon\Filter\Validation\Validator\Alpha::validate()` to return `false` when `allowEmpty` is explicitly set to `false` and the submitted value is `null` or an empty string [#16200](https://github.com/phalcon/cphalcon/issues/16200)
 - Fixed `Phalcon\Mvc\Model\Query\Builder::getPhql()` to use a named bind parameter (`:APK0:`) instead of embedding the raw primary-key value in the PHQL string when `findFirst()` is called with a numeric or numeric-string argument; this prevents unbounded growth of the internal PHQL AST cache (`Query::$internalPhqlCache`) in long-running CLI processes [#14656](https://github.com/phalcon/cphalcon/issues/14656)
+- Fixed `Phalcon\Mvc\Model\Query::executeSelect()` to embed `Phalcon\Db\RawValue` bind parameters directly in the SQL string instead of passing them to PDO [#16350](https://github.com/phalcon/cphalcon/issues/16350)
 
 ### Removed
 
