@@ -938,7 +938,9 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
      */
     public static function cloneResultMap(var base, array! data, var columnMap, int dirtyState = 0, bool keepSnapshots = null) -> <ModelInterface>
     {
-        var instance, attribute, key, value, castValue, attributeName, metaData, reverseMap, notNullAttributes;
+        var instance, attribute, key, value, castValue, attributeName, metaData, reverseMap, notNullAttributes,
+            disableSetters, setter;
+        array localMethods;
 
         let instance = clone base;
         if instance instanceof Model {
@@ -951,6 +953,21 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
 
         // Change the dirty state to persistent
         instance->setDirtyState(dirtyState);
+
+        let disableSetters = (bool) Settings::get("orm.disable_assign_setters");
+
+        let localMethods = [
+            "setConnectionService"      : 1,
+            "setDirtyState"             : 1,
+            "setEventsManager"          : 1,
+            "setReadConnectionService"  : 1,
+            "setOldSnapshotData"        : 1,
+            "setSchema"                 : 1,
+            "setSnapshotData"           : 1,
+            "setSource"                 : 1,
+            "setTransaction"            : 1,
+            "setWriteConnectionService" : 1
+        ];
 
         /**
          * Assign the data in the model
@@ -966,6 +983,14 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             }
 
             if typeof columnMap !== "array" {
+                if !disableSetters {
+                    let setter = "set" . camelize(key);
+                    if method_exists(instance, setter) && !isset localMethods[setter] {
+                        instance->{setter}(value);
+                        continue;
+                    }
+                }
+
                 let instance->{key} = value;
 
                 continue;
@@ -1000,6 +1025,14 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             }
 
             if typeof attribute !== "array" {
+                if !disableSetters {
+                    let setter = "set" . camelize(attribute);
+                    if method_exists(instance, setter) && !isset localMethods[setter] {
+                        instance->{setter}(value);
+                        continue;
+                    }
+                }
+
                 let instance->{attribute} = value;
 
                 continue;
@@ -1049,8 +1082,17 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             }
 
             let attributeName = attribute[0],
-                instance->{attributeName} = castValue,
                 data[key] = castValue;
+
+            if !disableSetters {
+                let setter = "set" . camelize(attributeName);
+                if method_exists(instance, setter) && !isset localMethods[setter] {
+                    instance->{setter}(castValue);
+                    continue;
+                }
+            }
+
+            let instance->{attributeName} = castValue;
         }
 
         /**
