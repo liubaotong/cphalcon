@@ -17,6 +17,7 @@
 
 ### Added
 
+- Added `Phalcon\Mvc\Model\Resultset::refresh()` to re-execute the underlying query and update the resultset with fresh data from the database [#16409](https://github.com/phalcon/cphalcon/issues/16409)
 - Added `deleteMultiple()` to `Phalcon\Storage\Adapter\*` to delete multiple keys in a single operation using native batch capabilities per adapter [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Added key validation per entry in `Phalcon\Cache\AbstractCache::doDeleteMultiple()` throwing `InvalidArgumentException` for keys containing invalid characters [#16859](https://github.com/phalcon/cphalcon/issues/16859)
 - Added named static factory methods `Phalcon\Forms\Exception::tagFactoryNotFound()` and `Phalcon\Forms\Exception::usingParameterRequired()` [#16894](https://github.com/phalcon/cphalcon/issues/16894)
@@ -27,6 +28,8 @@
   
 ### Fixed
 
+- Fixed `Phalcon\Mvc\Model::getRelated()` to return already-fetched relations from the internal cache (`dirtyRelated` first, then `related`) instead of always querying the database; cache is cleared after `save()` and `delete()` to prevent stale results [#16409](https://github.com/phalcon/cphalcon/issues/16409)
+- Fixed `Phalcon\Db\Result\PdoResult::$rowCount` to use `null` as the uninitialised sentinel instead of `false`, preventing a count of `0` rows being confused with "not yet counted" [#16409](https://github.com/phalcon/cphalcon/issues/16409)
 - Fixed `Phalcon\Html\Helper\AbstractHelper::renderAttributes()` to emit boolean HTML5 attributes (e.g. `async`, `defer`) as standalone attribute names instead of `async="1"` when the attribute value is `true` [#16304](https://github.com/phalcon/cphalcon/issues/16304)
 - Fixed `Phalcon\Mvc\Model::__unserialize()` and `Phalcon\Mvc\Model::unserialize()` to call `onConstruct()` after deserialization, so typed properties initialized in `onConstruct` are correctly set when a model is restored from cache [#15906](https://github.com/phalcon/cphalcon/issues/15906)
 - Fixed `Phalcon\Mvc\Model::__unserialize()` and `Phalcon\Mvc\Model::unserialize()` to restore snapshot as the current attributes (instead of null) when a model is deserialized with no pending changes, preventing `getChangedFields()` from throwing after cache retrieval [#15837](https://github.com/phalcon/cphalcon/issues/15837)
