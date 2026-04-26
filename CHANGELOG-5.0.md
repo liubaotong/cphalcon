@@ -62,7 +62,7 @@
 - Fixed the CI run to correctly use updated changes, and reuse artifacts [#16920](https://github.com/phalcon/cphalcon/pull/16920)
 - Fixed the CI run to now run Postgresql tests [#16920](https://github.com/phalcon/cphalcon/pull/16920)
 - Fixed the CI run to now run Sqlite tests [#16920](https://github.com/phalcon/cphalcon/pull/16920)
-- Fixed `Phalcon\Mvc\Model` to handle the `lastInsertId correctly under Postgres [#16920](https://github.com/phalcon/cphalcon/pull/16920)
+- Fixed `Phalcon\Mvc\Model` to handle the `lastInsertId correctly under Postgres [#16920](https://github.com/phalcon/cphalcon/pull/16920) [#16436](https://github.com/phalcon/cphalcon/pull/16436)
 
 ### Removed
 
