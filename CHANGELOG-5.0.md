@@ -28,6 +28,7 @@
   
 ### Fixed
 
+- Fixed `Phalcon\Image\Adapter\Gd::processResize()` to preserve PNG alpha channel transparency by replacing `imagescale()` with `imagecreatetruecolor()` + `imagealphablending(false)` + `imagesavealpha(true)` + `imagecopyresampled()` [#16316](https://github.com/phalcon/cphalcon/issues/16316)
 - Fixed `Phalcon\Mvc\Model::collectRelatedToSave()` to skip unmodified `hasOne`/`hasMany` related records that have snapshot data, preventing spurious `INSERT`/`UPDATE` statements when a relation is read but not changed [#16000](https://github.com/phalcon/cphalcon/issues/16000)
 - Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` to correctly count groups when `groupBy()` receives a multi-column array, using a `SELECT DISTINCT` subquery instead of the PostgreSQL-incompatible `COUNT(DISTINCT col1, col2)` form [#15912](https://github.com/phalcon/cphalcon/issues/15912)
 - Fixed `Phalcon\Mvc\Model::getRelated()` to return already-fetched relations from the internal cache (`dirtyRelated` first, then `related`) instead of always querying the database; cache is cleared after `save()` and `delete()` to prevent stale results [#16409](https://github.com/phalcon/cphalcon/issues/16409)
