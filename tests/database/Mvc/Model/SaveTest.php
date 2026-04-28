@@ -25,10 +25,12 @@ use Phalcon\Tests\Support\Models\Customers;
 use Phalcon\Tests\Support\Models\CustomersDefaults;
 use Phalcon\Tests\Support\Models\CustomersKeepSnapshots;
 use Phalcon\Tests\Support\Models\Invoices;
+use Phalcon\Tests\Support\Models\InvoicesHasOneKeepSnapshots;
 use Phalcon\Tests\Support\Models\InvoicesHasOneNotReusable;
 use Phalcon\Tests\Support\Models\InvoicesKeepSnapshots;
 use Phalcon\Tests\Support\Models\InvoicesSchema;
 use Phalcon\Tests\Support\Models\InvoicesValidationFails;
+use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Tests\Support\Models\Sources;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
@@ -397,6 +399,47 @@ final class SaveTest extends AbstractDatabaseTestCase
 
         $this->assertSame('newFirstName', $customer->cst_name_first);
         $this->assertSame(0, (int) $customer->cst_status_flag);
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-28
+     *
+     * @issue  16000
+     * @group mysql
+     * @group pgsql
+     * @group sqlite
+     */
+    public function testMvcModelSaveDoesNotSaveUnmodifiedHasOneRelation(): void
+    {
+        /** @var PDO $connection */
+        $connection = self::getConnection();
+
+        $customersMigration = new CustomersMigration($connection);
+        $customersMigration->insert(1, 1, 'firstName', 'lastName');
+
+        $invoicesMigration = new InvoicesMigration($connection);
+        $invoicesMigration->insert(77, 1, 0, uniqid('inv-', true));
+
+        $invoice  = InvoicesHasOneKeepSnapshots::findFirst(77);
+        $customer = $invoice->getRelated('customer');
+
+        $this->assertNotFalse($customer);
+
+        $eventsManager  = new EventsManager();
+        $customerSaved  = false;
+        $eventsManager->attach(
+            'model:beforeSave',
+            function () use (&$customerSaved): void {
+                $customerSaved = true;
+            }
+        );
+        $customer->setEventsManager($eventsManager);
+
+        $invoice->inv_title = uniqid('inv-updated-', true);
+
+        $this->assertTrue($invoice->save());
+        $this->assertFalse($customerSaved, 'Unmodified hasOne related record must not be saved');
     }
 
     /**
