@@ -28,6 +28,7 @@
   
 ### Fixed
 
+- Fixed `Phalcon\Mvc\Router\Annotations::handle()` to strip the `controllerSuffix` from the class name when a fully-qualified class name already includes it (e.g. `App\Controllers\InvoicesController`), preventing the doubled suffix `InvoicesControllerController` [#16238](https://github.com/phalcon/cphalcon/issues/16238)
 - Fixed `Phalcon\Db\Dialect\Postgresql::modifyColumn()` to generate correct SQL when changing a boolean column's default value: replaced `empty` check with `hasDefault()` to avoid treating `false` as "no default", removed the boolean-only branch that omitted the `ALTER TABLE` prefix, and fixed `castDefault()` to return PostgreSQL literals `true`/`false` instead of raw PHP booleans [#15829](https://github.com/phalcon/cphalcon/issues/15829)
 - Fixed `Phalcon\Image\Adapter\AbstractAdapter::crop()` to correctly handle `offsetX = 0` and `offsetY = 0` by changing the parameter types from `int` to `var`; the previous `int` typing caused Zephir to compile the `null` check as `0 == offset` in C, making explicit zero offsets indistinguishable from omitted (center) offsets [#16156](https://github.com/phalcon/cphalcon/issues/16156)
 - Fixed `Phalcon\Image\Adapter\Gd::processResize()` to preserve PNG alpha channel transparency by replacing `imagescale()` with `imagecreatetruecolor()` + `imagealphablending(false)` + `imagesavealpha(true)` + `imagecopyresampled()` [#16316](https://github.com/phalcon/cphalcon/issues/16316)
