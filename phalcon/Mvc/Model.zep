@@ -1256,6 +1256,10 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 continue;
             }
 
+            if record->hasSnapshotData() && !record->hasChanged() {
+                continue;
+            }
+
             record->setDirtyState(self::DIRTY_STATE_TRANSIENT);
             let dirtyRelated[name] = record;
         }
