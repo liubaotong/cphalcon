@@ -28,6 +28,7 @@
   
 ### Fixed
 
+- Fixed `Phalcon\Image\Adapter\AbstractAdapter::crop()` to correctly handle `offsetX = 0` and `offsetY = 0` by changing the parameter types from `int` to `var`; the previous `int` typing caused Zephir to compile the `null` check as `0 == offset` in C, making explicit zero offsets indistinguishable from omitted (center) offsets [#16156](https://github.com/phalcon/cphalcon/issues/16156)
 - Fixed `Phalcon\Image\Adapter\Gd::processResize()` to preserve PNG alpha channel transparency by replacing `imagescale()` with `imagecreatetruecolor()` + `imagealphablending(false)` + `imagesavealpha(true)` + `imagecopyresampled()` [#16316](https://github.com/phalcon/cphalcon/issues/16316)
 - Fixed `Phalcon\Mvc\Model::collectRelatedToSave()` to skip unmodified `hasOne`/`hasMany` related records that have snapshot data, preventing spurious `INSERT`/`UPDATE` statements when a relation is read but not changed [#16000](https://github.com/phalcon/cphalcon/issues/16000)
 - Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` to correctly count groups when `groupBy()` receives a multi-column array, using a `SELECT DISTINCT` subquery instead of the PostgreSQL-incompatible `COUNT(DISTINCT col1, col2)` form [#15912](https://github.com/phalcon/cphalcon/issues/15912)
