@@ -29,6 +29,7 @@
 ### Fixed
 
 - Fixed `Phalcon\Mvc\Model::collectRelatedToSave()` to skip unmodified `hasOne`/`hasMany` related records that have snapshot data, preventing spurious `INSERT`/`UPDATE` statements when a relation is read but not changed [#16000](https://github.com/phalcon/cphalcon/issues/16000)
+- Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` to correctly count groups when `groupBy()` receives a multi-column array, using a `SELECT DISTINCT` subquery instead of the PostgreSQL-incompatible `COUNT(DISTINCT col1, col2)` form [#15912](https://github.com/phalcon/cphalcon/issues/15912)
 - Fixed `Phalcon\Mvc\Model::getRelated()` to return already-fetched relations from the internal cache (`dirtyRelated` first, then `related`) instead of always querying the database; cache is cleared after `save()` and `delete()` to prevent stale results [#16409](https://github.com/phalcon/cphalcon/issues/16409)
 - Fixed `Phalcon\Db\Result\PdoResult::$rowCount` to use `null` as the uninitialised sentinel instead of `false`, preventing a count of `0` rows being confused with "not yet counted" [#16409](https://github.com/phalcon/cphalcon/issues/16409)
 - Fixed `Phalcon\Html\Helper\AbstractHelper::renderAttributes()` to emit boolean HTML5 attributes (e.g. `async`, `defer`) as standalone attribute names instead of `async="1"` when the attribute value is `true` [#16304](https://github.com/phalcon/cphalcon/issues/16304)

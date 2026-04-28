@@ -232,6 +232,59 @@ final class PaginateTest extends AbstractDatabaseTestCase
     }
 
     /**
+     * Tests Phalcon\Paginator\Adapter\QueryBuilder :: paginate() - groupBy with
+     * multiple columns (array) generates valid SQL for all databases
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-28
+     *
+     * @issue  15912
+     * @group mysql
+     * @group pgsql
+     * @group sqlite
+     */
+    public function testPaginatorAdapterQuerybuilderPaginateGroupByMultipleColumns(): void
+    {
+        /** @var PDO $connection */
+        $connection = self::getConnection();
+        $migration  = new InvoicesMigration($connection);
+        $invId      = ('sqlite' === self::getDriver()) ? 'null' : 'default';
+
+        // 3 distinct (inv_cst_id, inv_status_flag) groups: (1,0), (1,1), (2,0)
+        $migration->insert($invId, 1, 0, 'inv-a1');
+        $migration->insert($invId, 1, 0, 'inv-a2');
+        $migration->insert($invId, 1, 0, 'inv-a3');
+        $migration->insert($invId, 1, 1, 'inv-b1');
+        $migration->insert($invId, 1, 1, 'inv-b2');
+        $migration->insert($invId, 2, 0, 'inv-c1');
+        $migration->insert($invId, 2, 0, 'inv-c2');
+        $migration->insert($invId, 2, 0, 'inv-c3');
+        $migration->insert($invId, 2, 0, 'inv-c4');
+
+        $manager = $this->getService('modelsManager');
+        $builder = $manager
+            ->createBuilder()
+            ->columns(['inv_cst_id', 'inv_status_flag'])
+            ->from(Invoices::class)
+            ->groupBy(['inv_cst_id', 'inv_status_flag'])
+        ;
+
+        $paginator = new QueryBuilder(
+            [
+                'builder' => $builder,
+                'limit'   => 5,
+                'page'    => 1,
+            ]
+        );
+
+        $page = $paginator->paginate();
+
+        $this->assertInstanceOf(Repository::class, $page);
+        $this->assertSame(3, $page->getTotalItems());
+        $this->assertSame(1, $page->getLast());
+    }
+
+    /**
      * Tests Phalcon\Paginator\Adapter\QueryBuilder :: paginate()
      *
      * @issue  14639
