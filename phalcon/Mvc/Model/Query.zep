@@ -2129,7 +2129,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                 case PHQL_T_BETWEEN_NOT:
                     let exprReturn = [
                         "type": "binary-op",
-                        "op":   "BETWEEN NOT",
+                        "op":   "NOT BETWEEN",
                         "left": left,
                         "right": right
                     ];
