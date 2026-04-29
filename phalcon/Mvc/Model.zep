@@ -4205,7 +4205,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
      protected function doLowUpdate(<MetaDataInterface> metaData, <AdapterInterface> connection, var table) -> bool
      {
         var automaticAttributes, attributeField, bindSkip, bindDataTypes,
-            bindType, bindTypes, columnMap, dataType, dataTypes, field, fields,
+            bindType, bindTypes, columnMap, dataType, dataTypes, defaultValues, field, fields,
             manager, nonPrimary, newSnapshot, rawValue, rawValues, success, primaryKeys, snapshot,
             snapshotValue, uniqueKey, uniqueParams, value, values,
             updateValue;
@@ -4227,6 +4227,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
 
         let dataTypes           = metaData->getDataTypes(this),
             bindDataTypes       = metaData->getBindTypes(this),
+            defaultValues       = metaData->getDefaultValues(this),
             nonPrimary          = metaData->getNonPrimaryKeyAttributes(this),
             automaticAttributes = metaData->getAutomaticUpdateAttributes(this);
 
@@ -4400,6 +4401,18 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                             bindTypes[]                 = bindType,
                             newSnapshot[attributeField] = rawValue;
                     } elseif fetch value, this->{attributeField} {
+                        /**
+                         * Skip columns whose value is still the function-call
+                         * default from the DB (e.g. "gen_random_uuid()"). Passing
+                         * such a string as a bound parameter would fail type
+                         * validation on the DB side.
+                         */
+                        if typeof value == "string" && isset defaultValues[field] && value === defaultValues[field] && memstr(value, "(") {
+                            let newSnapshot[attributeField] = value;
+
+                            continue;
+                        }
+
                         let fields[]                    = field,
                             values[]                    = value,
                             bindTypes[]                 = bindType,
