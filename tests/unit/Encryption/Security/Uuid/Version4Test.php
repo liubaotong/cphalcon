@@ -24,12 +24,11 @@ final class Version4Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion4Format(): void
     {
-        $version = new Version4();
-        $uuid    = $version();
+        $uuid = new Version4();
 
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid
+            (string) $uuid
         );
     }
 
@@ -39,8 +38,54 @@ final class Version4Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion4Unique(): void
     {
-        $version = new Version4();
+        $uuid1 = new Version4();
+        $uuid2 = new Version4();
 
-        $this->assertNotSame($version(), $version());
+        $this->assertNotSame((string) $uuid1, (string) $uuid2);
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-29
+     */
+    public function testEncryptionSecurityUuidVersion4ToString(): void
+    {
+        $uuid = new Version4();
+
+        $this->assertIsString((string) $uuid);
+        $this->assertSame((string) $uuid, $uuid->__toString());
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-29
+     */
+    public function testEncryptionSecurityUuidVersion4JsonSerialize(): void
+    {
+        $uuid = new Version4();
+
+        $this->assertSame((string) $uuid, $uuid->jsonSerialize());
+    }
+
+    /**
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-29
+     */
+    public function testEncryptionSecurityUuidAbstractUuidConstants(): void
+    {
+        $this->assertSame(
+            '00000000-0000-0000-0000-000000000000',
+            Version4::NIL
+        );
+
+        $this->assertSame(
+            'ffffffff-ffff-ffff-ffff-ffffffffffff',
+            Version4::MAX
+        );
+
+        $this->assertSame(
+            0x01B21DD213814000,
+            Version4::TIME_OFFSET_INT
+        );
     }
 }

@@ -25,12 +25,11 @@ final class Version5Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion5Format(): void
     {
-        $version = new Version5();
-        $uuid    = $version(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
+        $uuid = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
 
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-5[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid
+            (string) $uuid
         );
     }
 
@@ -40,11 +39,10 @@ final class Version5Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion5Deterministic(): void
     {
-        $version = new Version5();
-        $uuid1   = $version(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
-        $uuid2   = $version(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
+        $uuid1 = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
+        $uuid2 = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
 
-        $this->assertSame($uuid1, $uuid2);
+        $this->assertSame((string) $uuid1, (string) $uuid2);
     }
 
     /**
@@ -53,12 +51,10 @@ final class Version5Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion5DifferentNames(): void
     {
-        $version = new Version5();
+        $uuid1 = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
+        $uuid2 = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.org');
 
-        $this->assertNotSame(
-            $version(UuidInterface::NAMESPACE_DNS, 'phalcon.io'),
-            $version(UuidInterface::NAMESPACE_DNS, 'phalcon.org')
-        );
+        $this->assertNotSame((string) $uuid1, (string) $uuid2);
     }
 
     /**
@@ -67,11 +63,9 @@ final class Version5Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion5DifferentNamespaces(): void
     {
-        $version = new Version5();
+        $uuid1 = new Version5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
+        $uuid2 = new Version5(UuidInterface::NAMESPACE_URL, 'phalcon.io');
 
-        $this->assertNotSame(
-            $version(UuidInterface::NAMESPACE_DNS, 'phalcon.io'),
-            $version(UuidInterface::NAMESPACE_URL, 'phalcon.io')
-        );
+        $this->assertNotSame((string) $uuid1, (string) $uuid2);
     }
 }
