@@ -160,6 +160,11 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
     protected oldSnapshot = [];
 
     /**
+     * @var array
+     */
+    protected rawValues = [];
+
+    /**
      * @var bool
      */
     protected skipped = false;
@@ -783,8 +788,11 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
     public function assign(array! data, var whiteList = null, var dataColumnMap = null) -> <ModelInterface>
     {
         var key, keyMapped, value, attribute, attributeField, metaData,
-            columnMap, disableAssignSetters;
+            columnMap, disableAssignSetters, rawValues;
         array dataMapped;
+
+        let rawValues       = [],
+            this->rawValues = rawValues;
 
         let disableAssignSetters = Settings::get("orm.disable_assign_setters");
 
@@ -848,11 +856,15 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 }
 
                 // Try to find a possible getter
-                if disableAssignSetters || !this->possibleSetter(attributeField, value) {
+                if typeof value == "object" && value instanceof RawValue {
+                    let rawValues[attributeField] = value;
+                } elseif disableAssignSetters || !this->possibleSetter(attributeField, value) {
                     let this->{attributeField} = value;
                 }
             }
         }
+
+        let this->rawValues = rawValues;
 
         return this;
     }
@@ -3926,7 +3938,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
     {
         var attributeField, attributes, automaticAttributes, bindDataTypes,
             bindSkip, bindType, bindTypes, columnMap, defaultValue, defaultValues,
-            field, fields, lastInsertedId, manager, sequenceName, schema,
+            field, fields, lastInsertedId, manager, rawValue, rawValues, sequenceName, schema,
             snapshot, source, success, unsetDefaultValues, value, values;
         bool useExplicitIdentity;
 
@@ -3937,6 +3949,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             snapshot            = [],
             bindTypes           = [],
             unsetDefaultValues  = [],
+            rawValues           = this->rawValues,
             attributes          = metaData->getAttributes(this),
             bindDataTypes       = metaData->getBindTypes(this),
             automaticAttributes = metaData->getAutomaticCreateAttributes(this),
@@ -3974,7 +3987,18 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                      * This isset checks that the property be defined in the
                      * model
                      */
-                    if fetch value, this->{attributeField} {
+                    if fetch rawValue, rawValues[attributeField] {
+                        if unlikely !fetch bindType, bindDataTypes[field] {
+                            throw new Exception(
+                                "Column '" . field . "' in '" . get_class(this) . "' have not defined a bind data type"
+                            );
+                        }
+
+                        let fields[]                 = field,
+                            values[]                 = rawValue,
+                            bindTypes[]              = bindType,
+                            snapshot[attributeField] = rawValue;
+                    } elseif fetch value, this->{attributeField} {
                         if value === null && isset defaultValues[field] {
                             let snapshot[attributeField]           = defaultValues[field],
                                 unsetDefaultValues[attributeField] = defaultValues[field];
@@ -4182,7 +4206,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
      {
         var automaticAttributes, attributeField, bindSkip, bindDataTypes,
             bindType, bindTypes, columnMap, dataType, dataTypes, field, fields,
-            manager, nonPrimary, newSnapshot, success, primaryKeys, snapshot,
+            manager, nonPrimary, newSnapshot, rawValue, rawValues, success, primaryKeys, snapshot,
             snapshotValue, uniqueKey, uniqueParams, value, values,
             updateValue;
         bool changed, useDynamicUpdate;
@@ -4192,6 +4216,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
             values      = [],
             bindTypes   = [],
             newSnapshot = [],
+            rawValues   = this->rawValues,
             manager     = <ManagerInterface> this->modelsManager;
 
         /**
@@ -4238,7 +4263,12 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                      * Get the field's value
                      * If a field isn't set there was no change
                      */
-                    if fetch value, this->{attributeField} {
+                    if fetch rawValue, rawValues[attributeField] {
+                        let fields[]                    = field,
+                            values[]                    = rawValue,
+                            bindTypes[]                 = bindType,
+                            newSnapshot[attributeField] = rawValue;
+                    } elseif fetch value, this->{attributeField} {
                         /**
                         * If the field is not part of the snapshot we add them as changed
                         */
@@ -4364,19 +4394,21 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                      * Get the field's value
                      * If a field isn't set we pass a null value
                      */
-                    if fetch value, this->{attributeField} {
-                        /**
-                         * When dynamic update is not used we pass every field to the update
-                         */
-                        let fields[] = field,
-                            values[] = value;
-                        let bindTypes[] = bindType;
-                        let newSnapshot[attributeField] = value;
+                    if fetch rawValue, rawValues[attributeField] {
+                        let fields[]                    = field,
+                            values[]                    = rawValue,
+                            bindTypes[]                 = bindType,
+                            newSnapshot[attributeField] = rawValue;
+                    } elseif fetch value, this->{attributeField} {
+                        let fields[]                    = field,
+                            values[]                    = value,
+                            bindTypes[]                 = bindType,
+                            newSnapshot[attributeField] = value;
                     } else {
-                        let newSnapshot[attributeField] = null;
-                        let fields[]    = field,
-                            values[]    = null,
-                            bindTypes[] = bindSkip;
+                        let newSnapshot[attributeField] = null,
+                            fields[]                    = field,
+                            values[]                    = null,
+                            bindTypes[]                 = bindSkip;
                     }
                 }
             }
