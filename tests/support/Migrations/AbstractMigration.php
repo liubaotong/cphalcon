@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Support\Migrations;
 
 use PDO;
-use Phalcon\DataMapper\Pdo\Connection;
 use PHPUnit\Framework\Assert;
 
 /**
@@ -33,10 +32,10 @@ abstract class AbstractMigration
     /**
      * Migration constructor.
      *
-     * @param PDO|Connection|null $connection
+     * @param PDO|null $connection
      */
     final public function __construct(
-        protected PDO|Connection|null $connection = null,
+        protected PDO|null $connection = null,
         bool $withClear = true
     ) {
         $withClear && $this->clear();
@@ -197,13 +196,9 @@ abstract class AbstractMigration
 
     protected function execute(string $sql, array $params = []): int
     {
-        if ($this->connection instanceof Connection) {
-            $result = $this->connection->executeStatement($sql, $params);
-        } else {
-            $stmt   = $this->connection->prepare($sql);
-            $stmt->execute($params);
-            $result = $stmt->rowCount();
-        }
+        $stmt   = $this->connection->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->rowCount();
 
         if (! $result) {
             $table  = $this->getTable();
