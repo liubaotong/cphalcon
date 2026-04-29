@@ -78,9 +78,21 @@ use Phalcon\Support\Settings;
  */
 class Query implements QueryInterface, InjectionAwareInterface
 {
+    /**
+     * @var int
+     */
     const TYPE_DELETE = 303;
+    /**
+     * @var int
+     */
     const TYPE_INSERT = 306;
+    /**
+     * @var int
+     */
     const TYPE_SELECT = 309;
+    /**
+     * @var int
+     */
     const TYPE_UPDATE = 300;
 
     /**
@@ -1026,12 +1038,21 @@ class Query implements QueryInterface, InjectionAwareInterface
                     this->modelsInstances[modelName] = model;
             }
 
-            let connection = this->getReadConnection(
-                model,
-                intermediate,
-                bindParams,
-                bindTypes
-            );
+            if isset intermediate["forUpdate"] && intermediate["forUpdate"] {
+                let connection = this->getWriteConnection(
+                    model,
+                    intermediate,
+                    bindParams,
+                    bindTypes
+                );
+            } else {
+                let connection = this->getReadConnection(
+                    model,
+                    intermediate,
+                    bindParams,
+                    bindTypes
+                );
+            }
 
             if typeof connection == "object" {
                 // More than one type of connection is not allowed
@@ -1156,7 +1177,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                 }
             } else {
                 /**
-                 * Create an alias if the column doesn't have one
+                 * Create an alias if the column does not have one
                  */
                 if typeof aliasCopy == "int" {
                     let columnAlias = [sqlColumn, null];
@@ -1226,6 +1247,23 @@ class Query implements QueryInterface, InjectionAwareInterface
 
         if this->sharedLock {
             let sqlSelect = dialect->sharedLock(sqlSelect);
+        }
+
+        /**
+         * Embed RawValue bind params directly in the SQL instead of passing
+         * them to PDO, which would quote them as strings.
+         */
+        for wildcard, value in processed {
+            if typeof value == "object" && value instanceof RawValue {
+                if substr(wildcard, 0, 1) === ":" {
+                    let sqlSelect = str_replace(wildcard, (string) value, sqlSelect);
+                } else {
+                    let sqlSelect = str_replace(":" . wildcard, (string) value, sqlSelect);
+                }
+
+                unset processed[wildcard];
+                unset processedTypes[wildcard];
+            }
         }
 
         /**
@@ -2091,7 +2129,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                 case PHQL_T_BETWEEN_NOT:
                     let exprReturn = [
                         "type": "binary-op",
-                        "op":   "BETWEEN NOT",
+                        "op":   "NOT BETWEEN",
                         "left": left,
                         "right": right
                     ];
@@ -2177,7 +2215,7 @@ class Query implements QueryInterface, InjectionAwareInterface
         }
 
         /**
-         * If the expression doesn't have a type it's a list of nodes
+         * If the expression does not have a type it's a list of nodes
          */
         if isset expr[0] {
             let listItems = [];
@@ -3015,7 +3053,7 @@ class Query implements QueryInterface, InjectionAwareInterface
             if typeof columnMap == "array" {
                 if unlikely !fetch realColumnName, columnMap[columnName] {
                     throw new Exception(
-                        "Column '" . columnName . "' doesn't belong to the model or alias '" . columnDomain . "', when executing: ". this->phql
+                        "Column '" . columnName . "' does not belong to the model or alias '" . columnDomain . "', when executing: ". this->phql
                     );
                 }
             } else {
@@ -3023,7 +3061,7 @@ class Query implements QueryInterface, InjectionAwareInterface
             }
         } else {
             /**
-             * If the column IR doesn't have a domain, we must check for
+             * If the column IR does not have a domain, we must check for
              * ambiguities
              */
             let number = 0,
@@ -3052,7 +3090,7 @@ class Query implements QueryInterface, InjectionAwareInterface
              */
             if unlikely hasModel === false {
                 throw new Exception(
-                    "Column '" . columnName . "' doesn't belong to any of the selected models (1), when preparing: " . this->phql
+                    "Column '" . columnName . "' does not belong to any of the selected models (1), when preparing: " . this->phql
                 );
             }
 
@@ -3093,7 +3131,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                  */
                 if unlikely !fetch realColumnName, columnMap[columnName] {
                     throw new Exception(
-                        "Column '" . columnName . "' doesn't belong to any of the selected models (3), when preparing: " . this->phql
+                        "Column '" . columnName . "' does not belong to any of the selected models (3), when preparing: " . this->phql
                     );
                 }
             } else {
@@ -3229,7 +3267,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                     "type"  : "object",
                     "model" : modelName,
                     "column": source,
-                    "balias": lcfirst(modelName)
+                    "balias": (strpos(modelName, "\\") !== false) ? modelName : lcfirst(modelName)
                 ];
 
                 if eager !== null {
@@ -3278,13 +3316,8 @@ class Query implements QueryInterface, InjectionAwareInterface
                 modelName = sqlAliasesModels[columnDomain];
 
             if typeof preparedAlias != "string" {
-
-                /**
-                 * If the best alias is the model name, we lowercase the first
-                 * letter
-                 */
                 if columnDomain == modelName {
-                    let preparedAlias = lcfirst(modelName);
+                    let preparedAlias = (strpos(modelName, "\\") !== false) ? modelName : lcfirst(modelName);
                 } else {
                     let preparedAlias = columnDomain;
                 }
@@ -3663,7 +3696,7 @@ class Query implements QueryInterface, InjectionAwareInterface
                 // Check that inserted fields are part of the model
                 if unlikely !metaData->hasAttribute(model, name) {
                     throw new Exception(
-                        "The model '" . modelName . "' doesn't have the attribute '" . name . "', when preparing: " . this->phql
+                        "The model '" . modelName . "' does not have the attribute '" . name . "', when preparing: " . this->phql
                     );
                 }
 

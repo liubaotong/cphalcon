@@ -25,12 +25,15 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
     /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-01-25
+     *
+     * @group mysql
+     * @group sqlite
      */
     public function testDMPdoConnectionCommitInTransaction(): void
     {
         /** @var Connection $connection */
         $connection = self::getDataMapperConnection();
-        (new InvoicesMigration($connection));
+        (new InvoicesMigration(self::getConnection()));
         $connection->beginTransaction();
 
         $this->assertTrue($connection->inTransaction());
@@ -43,7 +46,7 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
             . "{$invId}, 1, 1, \"{$title}\", 102, \"{$date}\")";
 
         $result = $connection->exec($sql);
-        $this->assertEquals(1, $result);
+        $this->assertSame(1, $result);
 
         $connection->commit();
 
@@ -56,21 +59,25 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
                 [
                     0 => $invId,
                 ]
-            );
+            )
+        ;
 
         $this->assertIsArray($all);
-        $this->assertEquals($invId, $all['inv_id']);
+        $this->assertSame($invId, $all['inv_id']);
     }
 
     /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-01-25
+     *
+     * @group mysql
+     * @group sqlite
      */
     public function testDMPdoConnectionRollBack(): void
     {
         /** @var Connection $connection */
         $connection = self::getDataMapperConnection();
-        (new InvoicesMigration($connection));
+        (new InvoicesMigration(self::getConnection()));
         $connection->beginTransaction();
 
         $this->assertTrue($connection->inTransaction());
@@ -83,7 +90,7 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
             . "{$invId}, 1, 1, \"{$title}\", 102, \"{$date}\")";
 
         $result = $connection->exec($sql);
-        $this->assertEquals(1, $result);
+        $this->assertSame(1, $result);
 
         /**
          * Committed record
@@ -94,7 +101,8 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
                 [
                     0 => $invId,
                 ]
-            );
+            )
+        ;
 
         $connection->rollBack();
 
@@ -104,7 +112,8 @@ final class CommitInTransactionRollBackTest extends AbstractDatabaseTestCase
                 [
                     0 => $invId,
                 ]
-            );
+            )
+        ;
 
         $this->assertIsArray($all);
         $this->assertEmpty($all);

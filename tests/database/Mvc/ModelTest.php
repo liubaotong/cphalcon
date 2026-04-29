@@ -36,10 +36,6 @@ final class ModelTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model - modelsCacheSnapshot
-     *
-     * Saving snapshot using simple resultset while using modelsCache.
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-02
      */
@@ -68,12 +64,12 @@ final class ModelTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model - executeCamelCaseRelation
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testExecuteCamelCaseRelation(): void
     {
@@ -581,7 +577,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //    public function testBehaviorsTimestampable()
 //    {
 //        $this->specify(
-//            "Timestampable model behavior doesn't work",
+//            "Timestampable model behavior does not work",
 //            function () {
 //                $subscriber = new Subscribers();
 //
@@ -597,7 +593,7 @@ final class ModelTest extends AbstractDatabaseTestCase
 //    public function testBehaviorsSoftDelete()
 //    {
 //        $this->specify(
-//            "Soft Delete model behavior doesn't work",
+//            "Soft Delete model behavior does not work",
 //            function () {
 //                $number = Subscribers::count();
 //

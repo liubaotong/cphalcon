@@ -22,6 +22,10 @@ use Phalcon\Tests\AbstractDatabaseTestCase;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class ExecuteQueryTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -41,13 +45,13 @@ final class ExecuteQueryTest extends AbstractDatabaseTestCase
         $this->setDatabase();
     }
     /**
-     * Tests Phalcon\Mvc\Model\Manager :: executeQuery() - Issue 15024
-     *
+     * @issue  15024
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-05-06
-     * @issue  15024
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      * @group pgsql
      */
     public function testMvcModelManagerExecuteQuery(): void

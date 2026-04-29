@@ -47,7 +47,7 @@ class QueryBuilder extends AbstractAdapter
     protected builder;
 
     /**
-     * Columns for count query if builder has having
+     * Columns for count query if builder has having or group by
      *
      * @var array|string
      */
@@ -113,7 +113,7 @@ class QueryBuilder extends AbstractAdapter
             number, query, previous, items, totalQuery, result, row, rowcount,
             next, sql, columns, db, model, modelClass, dbService, groups,
             groupColumn;
-        bool hasHaving, hasGroup;
+        bool hasHaving, hasGroup, hasMultipleGroups;
         int numberPage;
 
         let originalBuilder = this->builder;
@@ -188,16 +188,36 @@ class QueryBuilder extends AbstractAdapter
         if hasGroup {
             if typeof groups == "array" {
                 let groupColumn = implode(", ", groups);
+                let hasMultipleGroups = count(groups) > 1;
             } else {
                 let groupColumn = groups;
+                let hasMultipleGroups = false;
             }
 
             if !hasHaving {
-                totalBuilder->groupBy(null)->columns(
-                    [
-                        "COUNT(DISTINCT " . groupColumn . ") AS [rowcount]"
-                    ]
-                );
+                if !empty columns {
+                    let groupColumn = columns;
+                    let hasMultipleGroups = false;
+                }
+
+                if hasMultipleGroups {
+                    /**
+                     * Multiple GROUP BY columns: COUNT(DISTINCT col1, col2) is
+                     * invalid in PostgreSQL. Use DISTINCT columns and wrap in a
+                     * subquery (same strategy as hasHaving) to count groups.
+                     */
+                    totalBuilder->groupBy(null)->columns(
+                        [
+                            "DISTINCT " . groupColumn
+                        ]
+                    );
+                } else {
+                    totalBuilder->groupBy(null)->columns(
+                        [
+                            "COUNT(DISTINCT " . groupColumn . ") AS [rowcount]"
+                        ]
+                    );
+                }
             } else {
                 totalBuilder->columns(
                     [
@@ -221,7 +241,7 @@ class QueryBuilder extends AbstractAdapter
          * Obtain the result of the total query
          * If we have having perform native count on temp table
          */
-        if hasHaving {
+        if hasHaving || hasMultipleGroups {
             let sql = totalQuery->getSql(),
                 modelClass = builder->getModels();
 

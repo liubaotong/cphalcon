@@ -37,12 +37,12 @@ final class JoinTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Criteria :: join()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-02-01
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelCriteriaJoin(): void
     {
@@ -66,14 +66,13 @@ final class JoinTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Criteria :: join() and use ManyToMany with
-     * Multiple schemas
-     *
      * @issue  14716
      * @author Jeremy PASTOURET <https://github.com/jenovateurs>
      * @since  2020-02-06
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      * @group pgsql
      */
     public function testMvcModelCriteriaJoinManyToManyMultipleSchema(): void

@@ -19,6 +19,10 @@ use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class UnderscoreSetTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -35,12 +39,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set()
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSet(): void
     {
@@ -85,12 +89,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() whether it is using setters correctly
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetIsUsingSetters(): void
     {
@@ -135,15 +139,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() undefined property with associative
-     * array
-     *
-     * @see    https://github.com/phalcon/cphalcon/issues/14021
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetUndefinedPropertyWithAssociativeArray(): void
     {
@@ -167,13 +168,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with an array as properties of a
-     * belongs-to related record
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithArrayOfBelongsToRelatedRecord(): void
     {
@@ -207,13 +207,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with an array as properties of a
-     * has-one related record
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithArrayOfHasOneRelatedRecord(): void
     {
@@ -247,12 +246,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with belongs-to related record
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithBelongsToRelatedRecord(): void
     {
@@ -273,12 +272,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with has-many related records
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasManyRelatedRecords(): void
     {
@@ -380,12 +379,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with has-many-to-many related records
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasManyToManyRelatedRecords(): void
     {
@@ -423,12 +422,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with has-one related record
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-05-02
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasOneRelatedRecord(): void
     {
@@ -449,12 +448,12 @@ final class UnderscoreSetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __set() with has-one-through related record
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-11-03
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreSetWithHasOneThroughRelatedRecord(): void
     {

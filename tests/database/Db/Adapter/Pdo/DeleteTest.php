@@ -18,6 +18,9 @@ use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ * @group phql
+ */
 final class DeleteTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -35,6 +38,8 @@ final class DeleteTest extends AbstractDatabaseTestCase
      * @since  2021-05-10
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testDbAdapterPdoQuery(): void
     {

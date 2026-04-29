@@ -17,6 +17,10 @@ use Phalcon\Tests\Support\Migrations\CustomersMigration;
 use Phalcon\Tests\Support\Models;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class UnderscoreIssetTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -33,12 +37,12 @@ final class UnderscoreIssetTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: __isset()
-     *
      * @author Sid Roberts <https://github.com/SidRoberts>
      * @since  2019-05-22
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelUnderscoreIsset(): void
     {

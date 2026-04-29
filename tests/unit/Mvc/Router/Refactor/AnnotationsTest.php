@@ -34,8 +34,6 @@ final class AnnotationsTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Router\Annotations :: addResource() - full resources 1
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
@@ -68,8 +66,6 @@ final class AnnotationsTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Router\Annotations :: addResource() - namespaced
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
@@ -104,8 +100,35 @@ final class AnnotationsTest extends AbstractUnitTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Router\Annotations :: addResource() - full resources 2
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-28
      *
+     * @issue  16238
+     */
+    public function testMvcRouterAnnotationsAddResourceWithFullyQualifiedClassNameIncludingSuffix(): void
+    {
+        $container = $this->getDi();
+
+        $router = new Annotations(false);
+        $router->setDI($container);
+
+        $router->addResource(
+            'Phalcon\Tests\Support\Controllers\RobotsController',
+            '/'
+        );
+
+        $router->handle('/robots');
+
+        $routes = $router->getRoutes();
+        $this->assertNotEmpty($routes, 'Routes must be registered when FQCN includes the Controller suffix');
+
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $router->handle('/robots');
+
+        $this->assertSame('robots', $router->getControllerName());
+    }
+
+    /**
      * @dataProvider getRoutesProvider
      *
      * @author Phalcon Team <team@phalcon.io>

@@ -30,7 +30,7 @@ final class UnderscoreCallTest extends AbstractDatabaseTestCase
         $connection = self::getDataMapperConnection();
         $factory    = new QueryFactory();
         $select     = $factory->newSelect($connection);
-        (new InvoicesMigration($connection));
+        (new InvoicesMigration(self::getConnection()));
 
         $select->from('co_invoices');
         $expected = [];

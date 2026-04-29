@@ -24,6 +24,10 @@ use Phalcon\Tests\Support\Models\AlbumORama\Artists;
 use Phalcon\Tests\Support\Models\AlbumORama\Songs;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -56,12 +60,12 @@ final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: isRelationshipLoaded() - when using __get()
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelIsRelationshipLoadedViaUnderscoreGet(): void
     {
@@ -92,12 +96,12 @@ final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: isRelationshipLoaded() - when using __set()
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelIsRelationshipLoadedViaUnderscoreSet(): void
     {
@@ -129,12 +133,12 @@ final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: isRelationshipLoaded() - when using __call() getters
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelIsRelationshipLoadedViaCallGetters(): void
     {
@@ -165,12 +169,12 @@ final class IsRelationshipLoadedTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: isRelationshipLoaded() - when using getRelated()
-     *
      * @author Balázs Németh <https://github.com/zsilbi>
      * @since  2019-04-26
      *
      * @group mysql
+     * @group pgsql
+     * @group sqlite
      */
     public function testMvcModelIsRelationshipLoadedViaGetRelated(): void
     {

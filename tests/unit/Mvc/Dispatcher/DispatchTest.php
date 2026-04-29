@@ -14,15 +14,13 @@ declare(strict_types=1);
 namespace Phalcon\Tests\Unit\Mvc\Dispatcher;
 
 use Phalcon\Dispatcher\Exception;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\BaseDispatcher;
 use Phalcon\Tests\Unit\Mvc\Dispatcher\Helper\DispatcherTestDefaultController;
 
 class DispatchTest extends BaseDispatcher
 {
     /**
-     * Tests Phalcon\Mvc\Dispatcher :: dispatch()
-     * Tests the default order of dispatch events for basic execution
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -82,8 +80,6 @@ class DispatchTest extends BaseDispatcher
     }
 
     /**
-     * Tests invalid handler action specified
-     *
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */
@@ -104,8 +100,45 @@ class DispatchTest extends BaseDispatcher
     }
 
     /**
-     * Tests handler not found
+     * Tests that events fired after initialize() are received when the
+     * controller attaches an events manager to the dispatcher inside
+     * initialize() and no events manager was set before dispatch started.
      *
+     * @see https://github.com/phalcon/cphalcon/issues/16440
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2026-04-29
+     */
+    public function testDispatchEventsAttachedInsideInitialize(): void
+    {
+        $di = $this->getDI();
+
+        $dispatcher = new Dispatcher();
+        $dispatcher->setDI($di);
+        $dispatcher->setNamespaceName('Phalcon\Tests\Unit\Mvc\Dispatcher\Helper');
+        $dispatcher->setControllerName('dispatcher-test-initialize-set-events-manager');
+        $dispatcher->setActionName('index');
+
+        $di->setShared('dispatcher', $dispatcher);
+
+        $dispatcher->dispatch();
+
+        $expected = [
+            'initialize-method',
+            'afterInitialize',
+            'indexAction',
+            'afterExecuteRoute',
+            'afterDispatch',
+            'afterDispatchLoop',
+        ];
+
+        $this->assertEquals(
+            $expected,
+            $this->getDispatcherListener()->getTrace()
+        );
+    }
+
+    /**
      * @author Mark Johnson <https://github.com/virgofx>
      * @since  2017-10-07
      */

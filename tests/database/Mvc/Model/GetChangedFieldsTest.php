@@ -18,6 +18,10 @@ use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class GetChangedFieldsTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -37,14 +41,13 @@ final class GetChangedFieldsTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: getChangedFields() returns empty on new model
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      *
      * @group mysql
      * @group pgsql
      * @group sqlite
+     * @group pgsql
      */
     public function testMvcModelGetChangedFieldsNewModel(): void
     {
@@ -62,14 +65,13 @@ final class GetChangedFieldsTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model :: getChangedFields() with keepSnapshots enabled
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      *
      * @group mysql
      * @group pgsql
      * @group sqlite
+     * @group pgsql
      */
     public function testMvcModelGetChangedFieldsWithSnapshot(): void
     {

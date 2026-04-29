@@ -63,17 +63,23 @@ final class UnderscoreInvokeTest extends AbstractUnitTestCase
                 . "--<script type=\"application/javascript\" "
                 . "src=\"/js/print.js\" ie=\"active\"></script>+",
             ],
+            [
+                '',
+                PHP_EOL,
+                [
+                    [
+                        "/js/sdk.js",
+                        ['async' => true, 'defer' => true, 'nonce' => '12345'],
+                    ],
+                ],
+                "<script type=\"application/javascript\" src=\"/js/sdk.js\""
+                . " async defer nonce=\"12345\"></script>" . PHP_EOL,
+            ],
         ];
     }
 
     /**
-     * Tests Phalcon\Html\Helper\Script :: __invoke()
-     *
      * @dataProvider getExamples
-     *
-     * @return void
-     *
-     * @throws Exception
      *
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2020-09-09

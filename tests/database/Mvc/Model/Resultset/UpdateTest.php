@@ -18,6 +18,10 @@ use Phalcon\Tests\Support\Migrations\InvoicesMigration;
 use Phalcon\Tests\Support\Models\Invoices;
 use Phalcon\Tests\Support\Traits\DiTrait;
 
+/**
+ *
+ * @group phql
+ */
 final class UpdateTest extends AbstractDatabaseTestCase
 {
     use DiTrait;
@@ -39,14 +43,13 @@ final class UpdateTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Resultset :: update()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      *
      * @group mysql
      * @group pgsql
      * @group sqlite
+     * @group pgsql
      */
     public function testMvcModelResultsetUpdate(): void
     {
@@ -62,14 +65,11 @@ final class UpdateTest extends AbstractDatabaseTestCase
     }
 
     /**
-     * Tests Phalcon\Mvc\Model\Resultset :: update() throws on invalid data
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2026-04-02
      *
      * @group mysql
      * @group pgsql
-     * @group sqlite
      */
     public function testMvcModelResultsetUpdateThrowsOnInvalidData(): void
     {

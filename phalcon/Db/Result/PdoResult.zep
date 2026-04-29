@@ -71,9 +71,9 @@ class PdoResult implements ResultInterface
     protected result;
 
     /**
-     * @var bool
+     * @var int|null
      */
-    protected rowCount = false;
+    protected rowCount = null;
 
     /**
      * @var string|null
@@ -128,7 +128,7 @@ class PdoResult implements ResultInterface
             bindParams = this->bindParams;
 
         /**
-         * PDO doesn't support scrollable cursors, so we need to re-execute the
+         * PDO does not support scrollable cursors, so we need to re-execute the
          * statement
          */
         if typeof bindParams === "array" {
@@ -164,6 +164,7 @@ class PdoResult implements ResultInterface
      */
     public function execute() -> bool
     {
+        let this->rowCount = null;
         return this->pdoStatement->execute();
     }
 
@@ -281,7 +282,7 @@ class PdoResult implements ResultInterface
 
         let rowCount = this->rowCount;
 
-        if rowCount === false {
+        if rowCount === null {
             let connection = this->connection,
                 type = connection->getType();
 
@@ -296,7 +297,7 @@ class PdoResult implements ResultInterface
             /**
              * We should get the count using a new statement :(
              */
-            if rowCount === false {
+            if rowCount === null {
                 /**
                  * SQLite/SQLServer returns resultsets that to the client eyes
                  * (PDO) has an arbitrary number of rows, so we need to perform

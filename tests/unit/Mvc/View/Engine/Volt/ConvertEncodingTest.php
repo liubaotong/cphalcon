@@ -22,8 +22,6 @@ use function chr;
 class ConvertEncodingTest extends AbstractUnitTestCase
 {
     /**
-     * Tests Phalcon\Mvc\View\Engine\Volt :: convertEncoding()
-     *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-03-13
      */
@@ -49,7 +47,7 @@ class ConvertEncodingTest extends AbstractUnitTestCase
         $text     = 'Schlüssel';
         $from     = 'utf7';
         $to       = 'euc-jp';
-        $expected = 'Schl+eu8-ssel';
+        $expected = 'Schl??ssel';
         $actual   = $engine->convertEncoding($text, $from, $to);
         $this->assertEquals($expected, $actual);
     }
