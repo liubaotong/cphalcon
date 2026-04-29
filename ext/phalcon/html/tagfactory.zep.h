@@ -16,6 +16,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_html_tagfactory___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, escaper, Phalcon\\Html\\Escaper\\EscaperInterface, 0)
 ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, services, IS_ARRAY, 0, "[]")
 	ZEND_ARG_OBJ_INFO(0, response, Phalcon\\Http\\ResponseInterface, 1)
+	ZEND_ARG_OBJ_INFO(0, url, Phalcon\\Mvc\\Url\\UrlInterface, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_html_tagfactory___call, 0, 0, 2)
