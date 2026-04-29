@@ -13,9 +13,6 @@
 
 namespace Phalcon\Encryption\Security\Uuid;
 
-use DateTimeImmutable;
-use DateTimeInterface;
-
 /**
  * Generates a version 1 (time-based) UUID.
  *
@@ -28,15 +25,16 @@ use DateTimeInterface;
  */
 class Version1 extends AbstractUuid implements TimeBasedUuidInterface
 {
-    public function __construct(<DateTimeInterface> dateTime = null, var node = null)
+    public function __construct(<\DateTimeInterface> dateTime = null, var node = null)
     {
-        var nowSec, nowUsec, dateUsec, timeLow, timeMid, timeHi, clockSeqBytes, clockSeqHiRes, clockSeqLow, nodeStr;
+        var nowSec, nowUsec, dateTimestamp, dateUsec, timeLow, timeMid, timeHi, clockSeqBytes, clockSeqHiRes, clockSeqLow, nodeStr;
         int sec, usec, timestamp;
 
         if dateTime !== null {
-            let sec      = dateTime->getTimestamp();
-            let dateUsec = intval(dateTime->format("u")) * 10;
-            let usec     = dateUsec;
+            let dateTimestamp = dateTime->getTimestamp();
+            let sec           = dateTimestamp;
+            let dateUsec      = intval(dateTime->format("u")) * 10;
+            let usec          = dateUsec;
         } else {
             let nowSec  = time();
             let sec     = nowSec;
@@ -74,17 +72,19 @@ class Version1 extends AbstractUuid implements TimeBasedUuidInterface
     /**
      * Returns a DateTimeImmutable built from the UUID's embedded timestamp.
      */
-    public function getDateTime() -> <DateTimeImmutable>
+    public function getDateTime() -> <\DateTimeImmutable>
     {
-        var parts;
+        var parts, hexTimeLow, hexTimeMid, hexTimeHi;
         int timeLow, timeMid, timeHi, timestamp;
 
-        let parts   = explode("-", this->uid);
-        let timeLow = hexdec(parts[0]);
-        let timeMid = hexdec(parts[1]);
-        let timeHi  = hexdec(parts[2]) & 0x0fff;
-
-        let timestamp = (timeHi << 48) | (timeMid << 32) | timeLow;
+        let parts      = explode("-", this->uid);
+        let hexTimeLow = hexdec(parts[0]);
+        let hexTimeMid = hexdec(parts[1]);
+        let hexTimeHi  = hexdec(parts[2]) & 0x0fff;
+        let timeLow    = hexTimeLow;
+        let timeMid    = hexTimeMid;
+        let timeHi     = hexTimeHi;
+        let timestamp  = (timeHi << 48) | (timeMid << 32) | timeLow;
 
         return this->uuidTimestampToDateTime(timestamp);
     }
