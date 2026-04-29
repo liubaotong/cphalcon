@@ -15,6 +15,12 @@ namespace Phalcon\Tests\Unit\Encryption\Security\Uuid;
 
 use Phalcon\Encryption\Security\Uuid;
 use Phalcon\Encryption\Security\Uuid\UuidInterface;
+use Phalcon\Encryption\Security\Uuid\Version1;
+use Phalcon\Encryption\Security\Uuid\Version3;
+use Phalcon\Encryption\Security\Uuid\Version4;
+use Phalcon\Encryption\Security\Uuid\Version5;
+use Phalcon\Encryption\Security\Uuid\Version6;
+use Phalcon\Encryption\Security\Uuid\Version7;
 use Phalcon\Tests\AbstractUnitTestCase;
 
 final class UuidFactoryTest extends AbstractUnitTestCase
@@ -25,11 +31,13 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV1(): void
     {
-        $uuid = new Uuid();
+        $uuid   = new Uuid();
+        $result = $uuid->v1();
 
+        $this->assertInstanceOf(Version1::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-1[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid->v1()
+            (string) $result
         );
     }
 
@@ -39,18 +47,18 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV3(): void
     {
-        $uuid = new Uuid();
-
+        $uuid   = new Uuid();
         $result = $uuid->v3(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
 
+        $this->assertInstanceOf(Version3::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-3[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $result
+            (string) $result
         );
 
         $this->assertSame(
-            $result,
-            $uuid->v3(UuidInterface::NAMESPACE_DNS, 'phalcon.io')
+            (string) $result,
+            (string) $uuid->v3(UuidInterface::NAMESPACE_DNS, 'phalcon.io')
         );
     }
 
@@ -60,11 +68,13 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV4(): void
     {
-        $uuid = new Uuid();
+        $uuid   = new Uuid();
+        $result = $uuid->v4();
 
+        $this->assertInstanceOf(Version4::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid->v4()
+            (string) $result
         );
     }
 
@@ -74,18 +84,18 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV5(): void
     {
-        $uuid = new Uuid();
-
+        $uuid   = new Uuid();
         $result = $uuid->v5(UuidInterface::NAMESPACE_DNS, 'phalcon.io');
 
+        $this->assertInstanceOf(Version5::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-5[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $result
+            (string) $result
         );
 
         $this->assertSame(
-            $result,
-            $uuid->v5(UuidInterface::NAMESPACE_DNS, 'phalcon.io')
+            (string) $result,
+            (string) $uuid->v5(UuidInterface::NAMESPACE_DNS, 'phalcon.io')
         );
     }
 
@@ -95,11 +105,13 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV6(): void
     {
-        $uuid = new Uuid();
+        $uuid   = new Uuid();
+        $result = $uuid->v6();
 
+        $this->assertInstanceOf(Version6::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-6[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid->v6()
+            (string) $result
         );
     }
 
@@ -109,11 +121,13 @@ final class UuidFactoryTest extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidFactoryV7(): void
     {
-        $uuid = new Uuid();
+        $uuid   = new Uuid();
+        $result = $uuid->v7();
 
+        $this->assertInstanceOf(Version7::class, $result);
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid->v7()
+            (string) $result
         );
     }
 

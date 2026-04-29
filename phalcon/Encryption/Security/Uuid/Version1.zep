@@ -6,6 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by sinbadxiii/cphalcon-uuid
+ * @link    https://github.com/sinbadxiii/cphalcon-uuid
  */
 
 namespace Phalcon\Encryption\Security\Uuid;
@@ -14,29 +17,30 @@ namespace Phalcon\Encryption\Security\Uuid;
  * Generates a version 1 (time-based) UUID.
  *
  * The timestamp is the number of 100-nanosecond intervals since
- * October 15, 1582 00:00:00.00 UTC (the UUID epoch). The node is a
- * random 48-bit value with the multicast bit set, as permitted by
- * RFC 4122 section 4.5 when a MAC address is not available.
+ * October 15, 1582 00:00:00.00 UTC (the UUID epoch). The node is resolved
+ * via SysNodeProvider (hardware MAC, APCu-cached) with RandomNodeProvider
+ * as fallback.
  *
  * @link https://www.ietf.org/rfc/rfc4122.txt
  */
-class Version1 extends AbstractUuid
+class Version1 extends AbstractUuid implements TimeBasedUuidInterface
 {
-    public function __invoke() -> string
+    public function __construct(<\DateTimeInterface> dateTime = null, var node = null)
     {
-        // nowSec/nowUsec receive PHP return values (must be var).
-        // sec/usec/timestamp are typed int (C long, 64-bit) for precise arithmetic.
-        var nowSec, nowUsec, timeLow, timeMid, timeHi, clockSeqBytes, clockSeqHiRes, clockSeqLow, nodeBytes;
+        var nowSec, nowUsec, dateTimestamp, dateUsec, timeLow, timeMid, timeHi, clockSeqBytes, clockSeqHiRes, clockSeqLow, nodeStr;
         int sec, usec, timestamp;
 
-        // time() returns current Unix seconds as a PHP int (64-bit safe).
-        // Subtract sec from microtime(true) to isolate the sub-second fraction
-        // (small float, no precision loss) and convert to 100-ns units.
-        // 12219292800 = seconds between UUID epoch (Oct 15, 1582) and Unix epoch.
-        let nowSec  = time();
-        let sec     = nowSec;
-        let nowUsec = intval(round((microtime(true) - doubleval(nowSec)) * 10000000.0));
-        let usec    = nowUsec;
+        if dateTime !== null {
+            let dateTimestamp = dateTime->getTimestamp();
+            let sec           = dateTimestamp;
+            let dateUsec      = intval(dateTime->format("u")) * 10;
+            let usec          = dateUsec;
+        } else {
+            let nowSec  = time();
+            let sec     = nowSec;
+            let nowUsec = intval(round((microtime(true) - doubleval(nowSec)) * 10000000.0));
+            let usec    = nowUsec;
+        }
 
         let timestamp = (sec + 12219292800) * 10000000 + usec;
 
@@ -48,18 +52,48 @@ class Version1 extends AbstractUuid
         let clockSeqHiRes = (ord(substr(clockSeqBytes, 0, 1)) & 0x3f) | 0x80;
         let clockSeqLow   = ord(substr(clockSeqBytes, 1, 1));
 
-        // Random node with multicast bit set (RFC 4122 §4.5)
-        let nodeBytes = random_bytes(6);
-        let nodeBytes = chr(ord(substr(nodeBytes, 0, 1)) | 0x01) . substr(nodeBytes, 1);
+        if node !== null {
+            let nodeStr = node;
+        } else {
+            let nodeStr = this->getNodeProvider()->getNode();
+        }
 
-        return sprintf(
+        let this->uid = sprintf(
             "%08x-%04x-%04x-%02x%02x-%s",
             timeLow,
             timeMid,
             timeHi,
             clockSeqHiRes,
             clockSeqLow,
-            bin2hex(nodeBytes)
+            nodeStr
         );
+    }
+
+    /**
+     * Returns a DateTimeImmutable built from the UUID's embedded timestamp.
+     */
+    public function getDateTime() -> <\DateTimeImmutable>
+    {
+        var parts, hexTimeLow, hexTimeMid, hexTimeHi;
+        int timeLow, timeMid, timeHi, timestamp;
+
+        let parts      = explode("-", this->uid);
+        let hexTimeLow = hexdec(parts[0]);
+        let hexTimeMid = hexdec(parts[1]);
+        let hexTimeHi  = hexdec(parts[2]) & 0x0fff;
+        let timeLow    = hexTimeLow;
+        let timeMid    = hexTimeMid;
+        let timeHi     = hexTimeHi;
+        let timestamp  = (timeHi << 48) | (timeMid << 32) | timeLow;
+
+        return this->uuidTimestampToDateTime(timestamp);
+    }
+
+    /**
+     * Returns the 12-character hex node embedded in the UUID.
+     */
+    public function getNode() -> string
+    {
+        return substr(this->uid, 24);
     }
 }

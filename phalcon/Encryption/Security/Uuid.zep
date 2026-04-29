@@ -6,6 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by sinbadxiii/cphalcon-uuid
+ * @link    https://github.com/sinbadxiii/cphalcon-uuid
  */
 
 namespace Phalcon\Encryption\Security;
@@ -20,116 +23,64 @@ use Phalcon\Encryption\Security\Uuid\Version7;
 /**
  * Factory that generates UUIDs of versions 1 through 7.
  *
- * Each version adapter is instantiated once and cached for reuse.
+ * Each call creates a new immutable version object. Cast to string for the
+ * UUID value; use the returned object for additional methods such as
+ * getDateTime() or getNode().
  *
- * @method string v1()
- * @method string v3(string $namespaceName, string $name)
- * @method string v4()
- * @method string v5(string $namespaceName, string $name)
- * @method string v6()
- * @method string v7()
+ * @method Version1 v1()
+ * @method Version3 v3(string $namespaceName, string $name)
+ * @method Version4 v4()
+ * @method Version5 v5(string $namespaceName, string $name)
+ * @method Version6 v6()
+ * @method Version7 v7()
  */
 class Uuid
 {
     /**
-     * @var Version1|null
-     */
-    private version1 = null;
-
-    /**
-     * @var Version3|null
-     */
-    private version3 = null;
-
-    /**
-     * @var Version4|null
-     */
-    private version4 = null;
-
-    /**
-     * @var Version5|null
-     */
-    private version5 = null;
-
-    /**
-     * @var Version6|null
-     */
-    private version6 = null;
-
-    /**
-     * @var Version7|null
-     */
-    private version7 = null;
-
-    /**
      * Generates a version 1 (time-based) UUID.
      */
-    public function v1() -> string
+    public function v1() -> <Version1>
     {
-        if this->version1 === null {
-            let this->version1 = new Version1();
-        }
-
-        return this->version1->__invoke();
+        return new Version1();
     }
 
     /**
      * Generates a version 3 (name-based MD5) UUID.
      */
-    public function v3(string! namespaceName, string! name) -> string
+    public function v3(string! namespaceName, string! name) -> <Version3>
     {
-        if this->version3 === null {
-            let this->version3 = new Version3();
-        }
-
-        return this->version3->__invoke(namespaceName, name);
+        return new Version3(namespaceName, name);
     }
 
     /**
      * Generates a version 4 (random) UUID.
      */
-    public function v4() -> string
+    public function v4() -> <Version4>
     {
-        if this->version4 === null {
-            let this->version4 = new Version4();
-        }
-
-        return this->version4->__invoke();
+        return new Version4();
     }
 
     /**
      * Generates a version 5 (name-based SHA-1) UUID.
      */
-    public function v5(string! namespaceName, string! name) -> string
+    public function v5(string! namespaceName, string! name) -> <Version5>
     {
-        if this->version5 === null {
-            let this->version5 = new Version5();
-        }
-
-        return this->version5->__invoke(namespaceName, name);
+        return new Version5(namespaceName, name);
     }
 
     /**
      * Generates a version 6 (reordered time-based) UUID.
      */
-    public function v6() -> string
+    public function v6() -> <Version6>
     {
-        if this->version6 === null {
-            let this->version6 = new Version6();
-        }
-
-        return this->version6->__invoke();
+        return new Version6();
     }
 
     /**
      * Generates a version 7 (Unix timestamp) UUID.
      */
-    public function v7() -> string
+    public function v7() -> <Version7>
     {
-        if this->version7 === null {
-            let this->version7 = new Version7();
-        }
-
-        return this->version7->__invoke();
+        return new Version7();
     }
 }

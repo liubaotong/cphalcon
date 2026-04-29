@@ -6,6 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by sinbadxiii/cphalcon-uuid
+ * @link    https://github.com/sinbadxiii/cphalcon-uuid
  */
 
 namespace Phalcon\Encryption\Security\Uuid;
@@ -20,24 +23,23 @@ namespace Phalcon\Encryption\Security\Uuid;
  */
 class Version7 extends AbstractUuid
 {
-    public function __invoke() -> string
+    public function __construct()
     {
         var ms, timeHigh32, timeLow16, verRandA, varRandB, randBytes;
+        int msInt;
 
-        let ms = (int) (microtime(true) * 1000);
+        let ms    = intval(microtime(true) * 1000);
+        let msInt = ms;
 
-        let timeHigh32 = (ms >> 16) & 0xffffffff,
-            timeLow16  = ms & 0xffff;
+        let timeHigh32 = (msInt >> 16) & 0xffffffff;
+        let timeLow16  = msInt & 0xffff;
 
         let randBytes = random_bytes(10);
 
-        // 4-bit version (7) + 12-bit rand_a
         let verRandA = 0x7000 | (hexdec(bin2hex(substr(randBytes, 0, 2))) & 0x0fff);
-
-        // 2-bit variant (10) + 14-bit rand_b_hi, then 48-bit rand_b_lo
         let varRandB = 0x8000 | (hexdec(bin2hex(substr(randBytes, 2, 2))) & 0x3fff);
 
-        return sprintf(
+        let this->uid = sprintf(
             "%08x-%04x-%04x-%04x-%s",
             timeHigh32,
             timeLow16,

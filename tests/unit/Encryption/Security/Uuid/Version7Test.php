@@ -24,12 +24,11 @@ final class Version7Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion7Format(): void
     {
-        $version = new Version7();
-        $uuid    = $version();
+        $uuid = new Version7();
 
         $this->assertMatchesRegularExpression(
             '/^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/',
-            $uuid
+            (string) $uuid
         );
     }
 
@@ -39,9 +38,10 @@ final class Version7Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion7Unique(): void
     {
-        $version = new Version7();
+        $uuid1 = new Version7();
+        $uuid2 = new Version7();
 
-        $this->assertNotSame($version(), $version());
+        $this->assertNotSame((string) $uuid1, (string) $uuid2);
     }
 
     /**
@@ -50,12 +50,10 @@ final class Version7Test extends AbstractUnitTestCase
      */
     public function testEncryptionSecurityUuidVersion7Sortable(): void
     {
-        $version = new Version7();
-
-        $uuid1 = $version();
+        $uuid1 = new Version7();
         usleep(1000);
-        $uuid2 = $version();
+        $uuid2 = new Version7();
 
-        $this->assertLessThan($uuid2, $uuid1);
+        $this->assertLessThan((string) $uuid2, (string) $uuid1);
     }
 }
