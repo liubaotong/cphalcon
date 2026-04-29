@@ -316,7 +316,7 @@ PHP_METHOD(Phalcon_Forms_Element_Select, render)
 	if (Z_TYPE_P(&options) == IS_ARRAY) {
 		ZEPHIR_INIT_VAR(&_9$$17);
 		object_init_ex(&_9$$17, phalcon_html_helper_input_select_arraydata_ce);
-		ZEPHIR_CALL_METHOD(NULL, &_9$$17, "__construct", NULL, 317, &options);
+		ZEPHIR_CALL_METHOD(NULL, &_9$$17, "__construct", NULL, 339, &options);
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, &select, "fromdata", NULL, 0, &_9$$17);
 		zephir_check_call_status();
@@ -334,7 +334,7 @@ PHP_METHOD(Phalcon_Forms_Element_Select, render)
 		}
 		ZEPHIR_INIT_VAR(&_12$$18);
 		object_init_ex(&_12$$18, phalcon_html_helper_input_select_resultsetdata_ce);
-		ZEPHIR_CALL_METHOD(NULL, &_12$$18, "__construct", NULL, 318, &options, &using);
+		ZEPHIR_CALL_METHOD(NULL, &_12$$18, "__construct", NULL, 340, &options, &using);
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(NULL, &select, "fromdata", NULL, 0, &_12$$18);
 		zephir_check_call_status();

@@ -156,7 +156,7 @@ PHP_METHOD(Phalcon_Html_Helper_FriendlyTitle, __invoke)
 			object_init_ex(&_3$$4, phalcon_html_exception_ce);
 			ZEPHIR_CALL_METHOD(&_4$$4, &ex, "getmessage", NULL, 0);
 			zephir_check_call_status();
-			ZEPHIR_CALL_METHOD(NULL, &_3$$4, "__construct", NULL, 32, &_4$$4);
+			ZEPHIR_CALL_METHOD(NULL, &_3$$4, "__construct", NULL, 35, &_4$$4);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(&_3$$4, "phalcon/Html/Helper/FriendlyTitle.zep", 57);
 			ZEPHIR_MM_RESTORE();

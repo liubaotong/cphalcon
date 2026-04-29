@@ -9,11 +9,13 @@ PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, add);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, clear);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, clearAttributes);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, getAttributes);
+PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, getPrefix);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, getSeparator);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, getTemplate);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, remove);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, render);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, setAttributes);
+PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, setPrefix);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, setSeparator);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, setTemplate);
 PHP_METHOD(Phalcon_Html_Helper_Breadcrumbs, toArray);
@@ -23,6 +25,7 @@ zend_object *zephir_init_properties_Phalcon_Html_Helper_Breadcrumbs(zend_class_e
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, escaper, Phalcon\\Html\\Escaper\\EscaperInterface, 0)
+	ZEND_ARG_OBJ_INFO(0, url, Phalcon\\Mvc\\Url\\UrlInterface, 1)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs___invoke, 0, 0, Phalcon\\Html\\Helper\\Breadcrumbs, 0)
@@ -46,6 +49,9 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_getattributes, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_getprefix, 0, 0, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_getseparator, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
@@ -62,6 +68,10 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_setattributes, 0, 1, Phalcon\\Html\\Helper\\Breadcrumbs, 0)
 	ZEND_ARG_ARRAY_INFO(0, attributes, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_setprefix, 0, 1, Phalcon\\Html\\Helper\\Breadcrumbs, 0)
+	ZEND_ARG_TYPE_INFO(0, prefix, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_phalcon_html_helper_breadcrumbs_setseparator, 0, 1, Phalcon\\Html\\Helper\\Breadcrumbs, 0)
@@ -96,11 +106,13 @@ ZEPHIR_INIT_FUNCS(phalcon_html_helper_breadcrumbs_method_entry) {
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, clear, arginfo_phalcon_html_helper_breadcrumbs_clear, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, clearAttributes, arginfo_phalcon_html_helper_breadcrumbs_clearattributes, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, getAttributes, arginfo_phalcon_html_helper_breadcrumbs_getattributes, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, getPrefix, arginfo_phalcon_html_helper_breadcrumbs_getprefix, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, getSeparator, arginfo_phalcon_html_helper_breadcrumbs_getseparator, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, getTemplate, arginfo_phalcon_html_helper_breadcrumbs_gettemplate, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, remove, arginfo_phalcon_html_helper_breadcrumbs_remove, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, render, arginfo_phalcon_html_helper_breadcrumbs_render, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, setAttributes, arginfo_phalcon_html_helper_breadcrumbs_setattributes, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, setPrefix, arginfo_phalcon_html_helper_breadcrumbs_setprefix, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, setSeparator, arginfo_phalcon_html_helper_breadcrumbs_setseparator, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, setTemplate, arginfo_phalcon_html_helper_breadcrumbs_settemplate, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalcon_Html_Helper_Breadcrumbs, toArray, arginfo_phalcon_html_helper_breadcrumbs_toarray, ZEND_ACC_PUBLIC)
