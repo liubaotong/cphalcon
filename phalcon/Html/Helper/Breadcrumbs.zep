@@ -10,8 +10,9 @@
 
 namespace Phalcon\Html\Helper;
 
-use Phalcon\Support\Helper\Str\Interpolate;
 use Phalcon\Html\Escaper\EscaperInterface;
+use Phalcon\Mvc\Url\UrlInterface;
+use Phalcon\Support\Helper\Str\Interpolate;
 
 /**
  * This component offers an easy way to create breadcrumbs for your application.
@@ -36,6 +37,20 @@ class Breadcrumbs extends AbstractHelper
      * @var array<string, string>
      */
     private attributes = [];
+    /**
+     * Link prefix prepended to every non-empty link during rendering.
+     * Auto-populated from the Url service when one is injected.
+     *
+     * @var string
+     */
+    private prefix = "";
+    /**
+     * Optional Url service used to resolve links via get().
+     * When set, takes priority over the string prefix.
+     *
+     * @var UrlInterface|null
+     */
+    private url = null;
     /**
      * Keeps all the breadcrumbs.
      *
@@ -75,13 +90,14 @@ class Breadcrumbs extends AbstractHelper
      * AbstractHelper constructor.
      *
      * @param EscaperInterface $escaper
-     * @param string $indent = ""
-     * @param string|null $delimiter = null
+     * @param UrlInterface|null $url
      */
-    public function __construct(<EscaperInterface> escaper) {
+    public function __construct(<EscaperInterface> escaper, <UrlInterface> url = null)
+    {
         parent::__construct(escaper);
 
-        let this->interpolator  = new Interpolate();
+        let this->interpolator = new Interpolate(),
+            this->url          = url;
     }
 
     /**
@@ -160,6 +176,14 @@ class Breadcrumbs extends AbstractHelper
     public function getAttributes() -> array
     {
         return this->attributes;
+    }
+
+    /**
+     * Returns the link prefix.
+     */
+    public function getPrefix() -> string
+    {
+        return this->prefix;
     }
 
     /**
@@ -255,6 +279,18 @@ class Breadcrumbs extends AbstractHelper
     }
 
     /**
+     * Set the link prefix prepended to every non-empty link during rendering.
+     * When a Url service was injected, calling this method replaces it.
+     */
+    public function setPrefix(string prefix) -> <Breadcrumbs>
+    {
+        let this->prefix = prefix,
+            this->url    = null;
+
+        return this;
+    }
+
+    /**
      * Set the separator.
      */
     public function setSeparator(string separator) -> <Breadcrumbs>
@@ -298,6 +334,16 @@ class Breadcrumbs extends AbstractHelper
         string template,
         array element
     ) -> string {
+        var link;
+
+        if !empty element["link"] && this->url !== null {
+            let link = this->url->get(element["link"]);
+        } elseif !empty element["link"] && !empty this->prefix {
+            let link = this->prefix . element["link"];
+        } else {
+            let link = element["link"];
+        }
+
         return this->indent
             .this->interpolator->__invoke(
                 template,
@@ -305,7 +351,7 @@ class Breadcrumbs extends AbstractHelper
                     "attributes" : this->processAttributes(element["attributes"]),
                     "icon"       : element["icon"],
                     "text"       : this->escaper->html(element["text"]),
-                    "link"       : element["link"]
+                    "link"       : link
                 ]
             )
             .this->delimiter;
