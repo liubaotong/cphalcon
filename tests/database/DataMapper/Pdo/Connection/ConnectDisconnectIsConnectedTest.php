@@ -21,6 +21,9 @@ final class ConnectDisconnectIsConnectedTest extends AbstractDatabaseTestCase
     /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-01-25
+     *
+     * @group mysql
+     * @group sqlite
      */
     public function testDMPdoConnectionConnectDisconnectIsConnected(): void
     {
@@ -37,6 +40,8 @@ final class ConnectDisconnectIsConnectedTest extends AbstractDatabaseTestCase
     /**
      * @author Phalcon Team <team@phalcon.io>
      * @since  2020-01-25
+     *
+     * @group mysql
      */
     public function testDMPdoConnectionConnectQueries(): void
     {
@@ -63,7 +68,7 @@ final class ConnectDisconnectIsConnectedTest extends AbstractDatabaseTestCase
                 'Value'         => 'big5',
             ];
 
-            $this->assertEquals($expected, $result);
+            $this->assertSame($expected, $result);
         }
     }
 }
