@@ -17,6 +17,7 @@
 
 ### Added
 
+- Added `Phalcon\Encryption\Security\Uuid` factory and versioned adapters (`Version1`–`Version7`) with a `UuidInterface` carrying standard RFC 4122 namespace constants; each version is a singleton cached by the factory, invoked via `v1()`–`v7()` [#16326](https://github.com/phalcon/cphalcon/issues/16326)
 - Added `Phalcon\Html\Helper\FriendlyTitle` - available via `TagFactory` as `friendlyTitle` [#16892(https://github.com/phalcon/cphalcon/issues/16892)
 - Added `Phalcon\Html\Helper\Input\Select::fromData()` to populate select options from a `SelectDataInterface` provider, with optgroup support [#16894](https://github.com/phalcon/cphalcon/issues/16894)
 - Added `Phalcon\Html\Helper\Input\Select\SelectDataInterface`, `Phalcon\Html\Helper\Input\Select\ArrayData`, and `Phalcon\Html\Helper\Input\Select\ResultsetData` as data providers for the `Select` helper [#16894](https://github.com/phalcon/cphalcon/issues/16894)
