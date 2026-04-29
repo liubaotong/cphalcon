@@ -46,6 +46,7 @@ use Phalcon\Html\Helper\Title;
 use Phalcon\Html\Helper\Ul;
 use Phalcon\Html\Link\Link;
 use Phalcon\Http\ResponseInterface;
+use Phalcon\Mvc\Url\UrlInterface;
 
 /**
  * ServiceLocator implementation for Tag helpers.
@@ -117,6 +118,11 @@ class TagFactory extends AbstractFactory
     private response = null;
 
     /**
+     * @var UrlInterface|null
+     */
+    private url = null;
+
+    /**
      * @var array
      */
     protected services = [];
@@ -127,14 +133,17 @@ class TagFactory extends AbstractFactory
      * @param EscaperInterface       $escaper
      * @param array                  $services
      * @param ResponseInterface|null $response
+     * @param UrlInterface|null      $url
      */
     public function __construct(
         <EscaperInterface> escaper,
         array! services = [],
-        <ResponseInterface> response = null
+        <ResponseInterface> response = null,
+        <UrlInterface> url = null
     ) {
         let this->escaper  = escaper,
-            this->response = response;
+            this->response = response,
+            this->url      = url;
 
         this->init(services);
     }
@@ -189,6 +198,14 @@ class TagFactory extends AbstractFactory
                             doctype
                         ]
                     );
+            } elseif name === "breadcrumbs" {
+                let this->services[name] = create_instance_params(
+                    definition,
+                    [
+                        this->escaper,
+                        this->url
+                    ]
+                );
             } elseif name === "preload" {
                 let this->services[name] = create_instance_params(
                     definition,
