@@ -13,8 +13,6 @@
 
 namespace Phalcon\Encryption\Security\Uuid;
 
-use DateTimeImmutable;
-
 /**
  * Shared base for all UUID version objects.
  */
@@ -85,15 +83,14 @@ abstract class AbstractUuid implements UuidInterface
      * Converts a 60-bit UUID timestamp (100-ns intervals since UUID epoch) to
      * a DateTimeImmutable. Used by Version1 and Version6.
      */
-    protected function uuidTimestampToDateTime(int timestamp) -> <DateTimeImmutable>
+    protected function uuidTimestampToDateTime(var timestamp) -> <\DateTimeImmutable>
     {
-        int adjusted, sec, usec;
+        var sec, usec;
 
-        let adjusted = timestamp - self::TIME_OFFSET_INT;
-        let sec      = adjusted / 10000000;
-        let usec     = (adjusted % 10000000) / 10;
+        let sec  = intdiv(timestamp, 10000000) - 12219292800;
+        let usec = intdiv(timestamp % 10000000, 10);
 
-        return DateTimeImmutable::createFromFormat(
+        return \DateTimeImmutable::createFromFormat(
             "U u",
             sec . " " . str_pad(usec, 6, "0", STR_PAD_LEFT)
         );

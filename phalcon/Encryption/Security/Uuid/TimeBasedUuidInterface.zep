@@ -15,6 +15,6 @@ namespace Phalcon\Encryption\Security\Uuid;
 
 interface TimeBasedUuidInterface
 {
-    public function getDateTime() -> <DateTimeImmutable>;
+    public function getDateTime() -> <\DateTimeImmutable>;
     public function getNode() -> string;
 }
