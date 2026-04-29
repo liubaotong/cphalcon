@@ -516,6 +516,15 @@ abstract class AbstractDispatcher extends AbstractInjectionAware implements Disp
                 let this->isControllerInitialize = false;
 
                 /**
+                 * Refresh in case initialize() attached an events manager to
+                 * the dispatcher when none existed at dispatch() entry.
+                 */
+                if !hasEventsManager && this->eventsManager !== null && this->eventsManager instanceof ManagerInterface {
+                    let eventsManager    = <ManagerInterface> this->eventsManager;
+                    let hasEventsManager = true;
+                }
+
+                /**
                  * Calling "dispatch:afterInitialize" event
                  */
                 if eventsManager {
