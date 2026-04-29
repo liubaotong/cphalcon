@@ -6,6 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by sinbadxiii/cphalcon-uuid
+ * @link    https://github.com/sinbadxiii/cphalcon-uuid
  */
 
 namespace Phalcon\Encryption\Security\Uuid;
@@ -20,7 +23,7 @@ namespace Phalcon\Encryption\Security\Uuid;
  */
 class Version4 extends AbstractUuid
 {
-    public function __invoke() -> string
+    public function __construct()
     {
         var ary;
 
@@ -33,6 +36,6 @@ class Version4 extends AbstractUuid
 
         array_unshift(ary, "%08x-%04x-%04x-%04x-%04x%08x");
 
-        return call_user_func_array("sprintf", ary);
+        let this->uid = call_user_func_array("sprintf", ary);
     }
 }

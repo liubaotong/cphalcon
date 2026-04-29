@@ -6,6 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by sinbadxiii/cphalcon-uuid
+ * @link    https://github.com/sinbadxiii/cphalcon-uuid
  */
 
 namespace Phalcon\Encryption\Security\Uuid;
@@ -20,7 +23,7 @@ namespace Phalcon\Encryption\Security\Uuid;
  */
 class Version3 extends AbstractUuid
 {
-    public function __invoke(string! namespaceName, string! name) -> string
+    public function __construct(string! namespaceName, string! name)
     {
         var hash;
 
@@ -28,6 +31,6 @@ class Version3 extends AbstractUuid
         let hash = substr_replace(hash, chr((ord(substr(hash, 6, 1)) & 0x0f) | 0x30), 6, 1);
         let hash = substr_replace(hash, chr((ord(substr(hash, 8, 1)) & 0x3f) | 0x80), 8, 1);
 
-        return this->format(bin2hex(hash));
+        let this->uid = this->format(bin2hex(hash));
     }
 }
