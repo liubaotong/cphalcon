@@ -230,7 +230,7 @@ class Request extends AbstractInjectionAware implements RequestInterface, Reques
      * @return string|false
      * @throws \Exception
      */
-    public function getClientAddress(bool trustForwardedHeader = false) -> string | false
+    public function getClientAddress(bool trustForwardedHeader = false) -> string | bool
     {
         var server, address, trustedProxyHeaderIp,
             forwarded, forwardedIps, reverseForwardedIps, forwardedIp,
@@ -1884,7 +1884,7 @@ class Request extends AbstractInjectionAware implements RequestInterface, Reques
      * @return string|false
      * @throws \Phalcon\Filter\Exception
      */
-    private function isValidPublicIp(string forwardedIp) -> string | false
+    private function isValidPublicIp(string forwardedIp) -> string | bool
     {
         var filterService, filtered;
 
