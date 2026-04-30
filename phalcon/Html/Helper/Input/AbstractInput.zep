@@ -94,7 +94,7 @@ abstract class AbstractInput extends AbstractHelper
      */
     public function setValue(string value = null) -> <AbstractInput>
     {
-        if is_numeric(value) || !empty(value)  {
+        if value !== null {
             let this->attributes["value"] = value;
         }
 

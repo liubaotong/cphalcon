@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Html\Helper\Input\AbstractInput::setValue()` ignoring empty string `""` as a valid value, causing `Checkbox` and `Radio` inputs with `value=""` to never render `checked="checked"` even when the `checked` attribute matched [#16648](https://github.com/phalcon/cphalcon/issues/16648)
 - Fixed `Phalcon\Http\Response\Cookies::get()` throwing an opaque fatal error when no DI container has been set; it now throws `Phalcon\Http\Cookie\Exception` with a descriptive message before accessing the container [#16650](https://github.com/phalcon/cphalcon/issues/16650)
 - Fixed `Phalcon\Mvc\Model\MetaData::writeMetaDataIndex()` prematurely initializing a child model's metadata with the parent's source table when `skipAttributes()` (or `skipAttributesOnCreate()`/`skipAttributesOnUpdate()`) is called inside a parent model's `initialize()` and the child calls `parent::initialize()` before setting its own source, corrupting the child's attribute list and breaking relationship resolution [#16544](https://github.com/phalcon/cphalcon/issues/16544)
 - Fixed `Phalcon\Storage\Serializer\Json::serialize()` rejecting plain objects (e.g. `stdClass`) that do not implement `JsonSerializable`; `json_encode()` handles such objects natively and the guard was unnecessary [#16630](https://github.com/phalcon/cphalcon/issues/16630)
