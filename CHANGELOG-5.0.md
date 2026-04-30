@@ -9,6 +9,8 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Mvc\Model\MetaDataInterface::readMetaDataIndex()` and `Phalcon\Mvc\Model\MetaData::readMetaDataIndex()` declaring return type as `array|null` when the method can also return a `string` (e.g. for `MODELS_IDENTITY_COLUMN`), causing a PHP fatal error on PHP 8+ [#16613](https://github.com/phalcon/cphalcon/issues/16613)
+- Fixed `Phalcon\Mvc\View\Engine\Volt\Compiler::statementList()` returning `null` instead of `string` when processing templates that consist entirely of block-mode statements, causing a PHP fatal error on PHP 8+ [#16613](https://github.com/phalcon/cphalcon/issues/16613)
 - Fixed `Phalcon\Forms\Element\Select::render()` multiselect regression introduced in v5.12.0 (#16894) by reverting to `Phalcon\Tag\Select::selectField()`; the new `Html\Helper\Input\Select` only supports a single selected value and does not handle array values required for multiselect [#16946](https://github.com/phalcon/cphalcon/issues/16946)
 - Fixed `Phalcon\Html\Helper\Input\AbstractInput::setValue()` ignoring empty string `""` as a valid value, causing `Checkbox` and `Radio` inputs with `value=""` to never render `checked="checked"` even when the `checked` attribute matched [#16648](https://github.com/phalcon/cphalcon/issues/16648)
 - Fixed `Phalcon\Http\Response\Cookies::get()` throwing an opaque fatal error when no DI container has been set; it now throws `Phalcon\Http\Cookie\Exception` with a descriptive message before accessing the container [#16650](https://github.com/phalcon/cphalcon/issues/16650)
