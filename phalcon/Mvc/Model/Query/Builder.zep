@@ -416,7 +416,7 @@ class Builder implements BuilderInterface, InjectionAwareInterface
      */
     final public function autoescape(string identifier) -> string
     {
-        if memstr(identifier, "[") || memstr(identifier, ".") || is_numeric(identifier) {
+        if memstr(identifier, "[") || memstr(identifier, ".") || memstr(identifier, "(") || is_numeric(identifier) {
             return identifier;
         }
 
