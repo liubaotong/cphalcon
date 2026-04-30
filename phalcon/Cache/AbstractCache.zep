@@ -12,6 +12,7 @@ namespace Phalcon\Cache;
 
 use DateInterval;
 use Phalcon\Cache\Adapter\AdapterInterface;
+use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Events\EventsAwareInterface;
 use Phalcon\Events\ManagerInterface;
@@ -209,7 +210,8 @@ abstract class AbstractCache implements CacheInterface, EventsAwareInterface
         this->fire("cache:beforeGetMultiple", keys);
 
         let results = [];
-        if (adapterClass === "Phalcon\Cache\Adapter\Redis") {
+        let adapterClass = get_class(this->adapter);
+        if (adapterClass instanceof Redis) {
              let results    = this->adapter->getAdapter()->mget(keys);
              let serializer = this->adapter->getSerializer();
              let results    = array_map(
