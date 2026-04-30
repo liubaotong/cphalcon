@@ -2137,12 +2137,12 @@ PHP_METHOD(Phalcon_Assets_Manager, jsLink)
  */
 PHP_METHOD(Phalcon_Assets_Manager, processParameters)
 {
-	zval _13;
+	zval _22;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_string *helperClass = NULL, *type = NULL, *name = NULL;
-	zend_bool local;
-	zval *parameters, parameters_sub, *local_param = NULL, helperClass_zv, type_zv, name_zv, helper, output, params, tag, _4, _11, _12, _0$$3, _1$$3, _2$$4, _3$$6, _5$$8, _6$$9, _7$$10, _8$$11, _9$$11, _10$$11;
+	zend_bool local, _9$$11;
+	zval *parameters, parameters_sub, *local_param = NULL, helperClass_zv, type_zv, name_zv, helper, output, params, tag, _4, _20, _21, _0$$3, _1$$3, _2$$4, _3$$6, _5$$8, _6$$9, _7$$10, _8$$11, _10$$11, _11$$11, _12$$11, _13$$12, _14$$12, _15$$12, _16$$12, _17$$13, _18$$13, _19$$13;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&parameters_sub);
@@ -2154,8 +2154,8 @@ PHP_METHOD(Phalcon_Assets_Manager, processParameters)
 	ZVAL_UNDEF(&params);
 	ZVAL_UNDEF(&tag);
 	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&_11);
-	ZVAL_UNDEF(&_12);
+	ZVAL_UNDEF(&_20);
+	ZVAL_UNDEF(&_21);
 	ZVAL_UNDEF(&_0$$3);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$4);
@@ -2164,9 +2164,17 @@ PHP_METHOD(Phalcon_Assets_Manager, processParameters)
 	ZVAL_UNDEF(&_6$$9);
 	ZVAL_UNDEF(&_7$$10);
 	ZVAL_UNDEF(&_8$$11);
-	ZVAL_UNDEF(&_9$$11);
 	ZVAL_UNDEF(&_10$$11);
-	ZVAL_UNDEF(&_13);
+	ZVAL_UNDEF(&_11$$11);
+	ZVAL_UNDEF(&_12$$11);
+	ZVAL_UNDEF(&_13$$12);
+	ZVAL_UNDEF(&_14$$12);
+	ZVAL_UNDEF(&_15$$12);
+	ZVAL_UNDEF(&_16$$12);
+	ZVAL_UNDEF(&_17$$13);
+	ZVAL_UNDEF(&_18$$13);
+	ZVAL_UNDEF(&_19$$13);
+	ZVAL_UNDEF(&_22);
 	ZEND_PARSE_PARAMETERS_START(5, 5)
 		Z_PARAM_ZVAL(parameters)
 		Z_PARAM_BOOL(local)
@@ -2228,25 +2236,46 @@ PHP_METHOD(Phalcon_Assets_Manager, processParameters)
 	zephir_array_fetch(&tag, &params, &name_zv, PH_NOISY, "phalcon/Assets/Manager.zep", 1049);
 	zephir_array_unset(&params, &name_zv, PH_SEPARATE);
 	if (local) {
-		ZEPHIR_INIT_VAR(&_8$$11);
-		ZEPHIR_INIT_VAR(&_9$$11);
-		ZVAL_STRING(&_9$$11, "/");
-		zephir_fast_trim(&_8$$11, &tag, &_9$$11, ZEPHIR_TRIM_LEFT);
-		ZEPHIR_INIT_VAR(&_10$$11);
-		ZEPHIR_CONCAT_SV(&_10$$11, "/", &_8$$11);
-		ZEPHIR_CPY_WRT(&tag, &_10$$11);
+		zephir_read_property(&_8$$11, this_ptr, ZEND_STRL("container"), PH_NOISY_CC | PH_READONLY);
+		_9$$11 = Z_TYPE_P(&_8$$11) != IS_NULL;
+		if (_9$$11) {
+			zephir_read_property(&_10$$11, this_ptr, ZEND_STRL("container"), PH_NOISY_CC | PH_READONLY);
+			ZEPHIR_INIT_VAR(&_12$$11);
+			ZVAL_STRING(&_12$$11, "url");
+			ZEPHIR_CALL_METHOD(&_11$$11, &_10$$11, "has", NULL, 0, &_12$$11);
+			zephir_check_call_status();
+			_9$$11 = zephir_is_true(&_11$$11);
+		}
+		if (_9$$11) {
+			zephir_read_property(&_13$$12, this_ptr, ZEND_STRL("container"), PH_NOISY_CC | PH_READONLY);
+			ZEPHIR_INIT_VAR(&_15$$12);
+			ZVAL_STRING(&_15$$12, "url");
+			ZEPHIR_CALL_METHOD(&_14$$12, &_13$$12, "get", NULL, 0, &_15$$12);
+			zephir_check_call_status();
+			ZEPHIR_CALL_METHOD(&_16$$12, &_14$$12, "getstatic", NULL, 0, &tag);
+			zephir_check_call_status();
+			ZEPHIR_CPY_WRT(&tag, &_16$$12);
+		} else {
+			ZEPHIR_INIT_VAR(&_17$$13);
+			ZEPHIR_INIT_VAR(&_18$$13);
+			ZVAL_STRING(&_18$$13, "/");
+			zephir_fast_trim(&_17$$13, &tag, &_18$$13, ZEPHIR_TRIM_LEFT);
+			ZEPHIR_INIT_VAR(&_19$$13);
+			ZEPHIR_CONCAT_SV(&_19$$13, "/", &_17$$13);
+			ZEPHIR_CPY_WRT(&tag, &_19$$13);
+		}
 	}
-	zephir_read_property(&_11, this_ptr, ZEND_STRL("tagFactory"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&helper, &_11, "newinstance", NULL, 0, &helperClass_zv);
+	zephir_read_property(&_20, this_ptr, ZEND_STRL("tagFactory"), PH_NOISY_CC | PH_READONLY);
+	ZEPHIR_CALL_METHOD(&helper, &_20, "newinstance", NULL, 0, &helperClass_zv);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(&_12);
-	ZVAL_STRING(&_12, "");
-	ZEPHIR_CALL_METHOD(NULL, &helper, "__invoke", NULL, 0, &_12);
+	ZEPHIR_INIT_VAR(&_21);
+	ZVAL_STRING(&_21, "");
+	ZEPHIR_CALL_METHOD(NULL, &helper, "__invoke", NULL, 0, &_21);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, &helper, "add", NULL, 0, &tag, &params);
 	zephir_check_call_status();
-	zephir_cast_to_string(&_13, &helper);
-	ZEPHIR_CPY_WRT(&output, &_13);
+	zephir_cast_to_string(&_22, &helper);
+	ZEPHIR_CPY_WRT(&output, &_22);
 	ZEPHIR_CALL_METHOD(NULL, &helper, "reset", NULL, 0);
 	zephir_check_call_status();
 	RETURN_CCTOR(&output);
