@@ -5,6 +5,7 @@
 ### Added
 
 - Added `Phalcon\Db\Column::TYPE_UUID` constant (value `29`) and added support for PostgreSQL native `uuid` column type in `Phalcon\Db\Adapter\Pdo\Postgresql` and `Phalcon\Db\Dialect\Postgresql` [#16840](https://github.com/phalcon/cphalcon/issues/16840)
+- Added support for `Phalcon\Mvc\Url` static base URI in `Phalcon\Assets\Manager`; when a DI container is set and a `url` service is available, local asset paths are now resolved via `getStatic()` instead of a bare `/` prefix [#16570](https://github.com/phalcon/cphalcon/issues/16570)
 
 ### Fixed
 
