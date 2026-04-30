@@ -1,4 +1,11 @@
 # Changelog
+
+## [5.12.1](https://github.com/phalcon/cphalcon/releases/tag/v5.12.1) (xxxx-xx-xx)
+
+### Fixed
+
+- Fixed `Phalcon\Mvc\Model` - saving a model with multiple fields relations threw `"Not implemented"` [#16029](https://github.com/phalcon/cphalcon/issues/16029)
+
 ## 5.12.0 (2026-04-29)
 
 ### Changed

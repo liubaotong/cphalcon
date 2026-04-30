@@ -22,18 +22,20 @@ class OrdersMigration extends AbstractMigration
 
     public function insert(
         ?int $id,
-        ?string $name = null
+        ?string $name = null,
+        int $statusFlag = 0
     ): int {
         $sql    = <<<SQL
 insert into co_orders (
-    ord_id, ord_name
+    ord_id, ord_name, ord_status_flag
 ) values (
-    :id, :name
+    :id, :name, :statusFlag
 )
 SQL;
         $params = [
-            ':id'   => $id,
-            ':name' => $name ?: uniqid(),
+            ':id'         => $id,
+            ':name'       => $name ?: uniqid(),
+            ':statusFlag' => $statusFlag,
         ];
 
         $result = $this->execute($sql, $params);
@@ -55,6 +57,7 @@ drop table if exists `co_orders`;
 CREATE TABLE `co_orders` (
     `ord_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `ord_name` VARCHAR(70) NULL,
+    `ord_status_flag` tinyint(1) NULL,
     PRIMARY KEY (`ord_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             "
@@ -63,7 +66,14 @@ CREATE TABLE `co_orders` (
 
     protected function getSqlSqlite(): array
     {
-        return [];
+        return [
+"drop table if exists `co_orders`;",
+"create table `co_orders` (
+    `ord_id` integer constraint ord_id_pk primary key autoincrement,
+    `ord_name` text NULL,
+    `ord_status_flag` integer NULL
+);"
+        ];
     }
 
     protected function getSqlPgsql(): array
@@ -75,10 +85,9 @@ drop table if exists co_orders;
             "
 create table co_orders
 (
-    ord_id serial not null
-    constraint ord_pk
-      primary key,
-      ord_name varchar(70)
+    ord_id serial not null constraint ord_pk primary key,
+    ord_name varchar(70),
+    ord_status_flag integer
 );
             "
         ];
