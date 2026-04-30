@@ -1851,6 +1851,13 @@ class Manager implements ManagerInterface, InjectionAwareInterface, EventsAwareI
             eventsManager->fire("modelsManager:afterInitialize", this, model);
         }
 
+        /**
+         * Release the reference so the model instance is not permanently
+         * retained in memory (prevents a reference cycle in long-running
+         * processes). The event above already received the model directly.
+         */
+        let this->lastInitialized = null;
+
         return true;
     }
 

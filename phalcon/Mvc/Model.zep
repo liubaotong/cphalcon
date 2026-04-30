@@ -2924,6 +2924,7 @@ abstract class Model extends AbstractInjectionAware implements EntityInterface, 
                 let this->dirtyRelated = [];
             }
             let this->related = [];
+            (<ManagerInterface> this->modelsManager)->clearReusableObjects();
             this->fireEvent("afterSave");
         }
 
