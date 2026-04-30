@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Http\Response\Cookies::get()` throwing an opaque fatal error when no DI container has been set; it now throws `Phalcon\Http\Cookie\Exception` with a descriptive message before accessing the container [#16650](https://github.com/phalcon/cphalcon/issues/16650)
 - Fixed `Phalcon\Mvc\Model\MetaData::writeMetaDataIndex()` prematurely initializing a child model's metadata with the parent's source table when `skipAttributes()` (or `skipAttributesOnCreate()`/`skipAttributesOnUpdate()`) is called inside a parent model's `initialize()` and the child calls `parent::initialize()` before setting its own source, corrupting the child's attribute list and breaking relationship resolution [#16544](https://github.com/phalcon/cphalcon/issues/16544)
 - Fixed `Phalcon\Storage\Serializer\Json::serialize()` rejecting plain objects (e.g. `stdClass`) that do not implement `JsonSerializable`; `json_encode()` handles such objects natively and the guard was unnecessary [#16630](https://github.com/phalcon/cphalcon/issues/16630)
 - Fixed `Phalcon\Mvc\Model\Manager` retaining a model instance in `lastInitialized` after initialization and `Phalcon\Mvc\Model` not clearing the reusable-records cache after `save()`, causing memory to grow unboundedly in long-running processes [#16566](https://github.com/phalcon/cphalcon/issues/16566)
