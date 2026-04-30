@@ -274,6 +274,13 @@ class Column implements ColumnInterface
     const TYPE_TINYTEXT = 25;
 
     /**
+     * UUID abstract data type
+     *
+     * @var int
+     */
+    const TYPE_UUID = 29;
+
+    /**
      * Varbinary abstract data type
      *
      * @var int

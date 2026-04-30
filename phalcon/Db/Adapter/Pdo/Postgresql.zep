@@ -452,8 +452,7 @@ class Postgresql extends PdoAdapter
                  * UUID
                  */
                 case memstr(columnType, "uuid"):
-                    let definition["type"] = Column::TYPE_CHAR,
-                        definition["size"] = 36;
+                    let definition["type"] = Column::TYPE_UUID;
 
                     break;
 

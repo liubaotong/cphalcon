@@ -126,6 +126,16 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
     protected metaData = [];
 
     /**
+     * Holds metadata index writes that arrived before the model's metadata was
+     * properly initialized (e.g. skipAttributes() called in a parent model's
+     * initialize() while the child's source had not yet been set).  Applied
+     * inside initializeMetaData() after the real schema is loaded.
+     *
+     * @var array
+     */
+    protected pendingMetaDataWrites = [];
+
+    /**
      * @var StrategyInterface|null
      */
     protected strategy = null;
@@ -645,7 +655,7 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
      * );
      *```
      */
-    final public function readMetaDataIndex(<ModelInterface> model, int index) -> array | null
+    final public function readMetaDataIndex(<ModelInterface> model, int index) -> array | string | null
     {
         var key;
         let key = this->getMetaDataUniqueKey(model);
@@ -664,8 +674,9 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
      */
     public function reset() -> void
     {
-        let this->metaData = [],
-            this->columnMap = [];
+        let this->metaData             = [],
+            this->columnMap            = [],
+            this->pendingMetaDataWrites = [];
     }
 
     /**
@@ -783,10 +794,16 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
      */
     final public function writeMetaDataIndex(<ModelInterface> model, int index, var data) -> void
     {
-        var key;
-        let key = this->getMetaDataUniqueKey(model);
-        if likely key !== null {
+        string key;
+        let key = get_class_lower(model);
+
+        if isset(this->metaData[key]) {
             let this->metaData[key][index] = data;
+        } else {
+            if !isset(this->pendingMetaDataWrites[key]) {
+                let this->pendingMetaDataWrites[key] = [];
+            }
+            let this->pendingMetaDataWrites[key][index] = data;
         }
     }
 
@@ -854,6 +871,20 @@ abstract class MetaData implements InjectionAwareInterface, MetaDataInterface
                      * Store the meta-data in the adapter
                      */
                     this->{"write"}(prefixKey, modelMetadata);
+                }
+
+                /**
+                 * Apply any metadata index writes that were buffered before
+                 * this model's metadata was properly initialized (e.g. from
+                 * skipAttributes() called during a parent model's initialize()
+                 * while the child's source had not yet been set).
+                 */
+                if isset(this->pendingMetaDataWrites[key]) {
+                    var pendingIndex, pendingData;
+                    for pendingIndex, pendingData in this->pendingMetaDataWrites[key] {
+                        let this->metaData[key][pendingIndex] = pendingData;
+                    }
+                    unset(this->pendingMetaDataWrites[key]);
                 }
             }
             return true;

@@ -21,11 +21,17 @@ use Phalcon\Mvc\Model;
  * @property int    $oxp_ord_id;
  * @property string $oxp_prd_id;
  * @property string $oxp_quantity;
+ * @property int    $oxp_ord_status_flag;
+ * @property int    $oxp_prd_status_flag;
  */
 class OrdersProducts extends Model
 {
     public $oxp_ord_id;
     public $oxp_prd_id;
+    public $oxp_quantity;
+    public $oxp_ord_status_flag;
+    public $oxp_prd_status_flag;
+
 
     public function initialize()
     {

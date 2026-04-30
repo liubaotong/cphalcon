@@ -2887,7 +2887,7 @@ class Compiler implements InjectionAwareInterface
 
         let this->level--;
 
-        return compilation;
+        return (string) compilation;
     }
 
     /**

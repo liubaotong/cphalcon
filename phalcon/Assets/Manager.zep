@@ -1050,10 +1050,17 @@ class Manager extends AbstractInjectionAware
         unset(params[name]);
 
         /**
-         * URLs are generated through the "url" service
+         * URLs are generated through the "url" service when available
          */
         if local {
-            let tag = "/" . ltrim(tag, "/");
+            if (
+                this->container !== null &&
+                this->container->has("url")
+            ) {
+                let tag = this->container->get("url")->getStatic(tag);
+            } else {
+                let tag = "/" . ltrim(tag, "/");
+            }
         }
 
         let helper = this->tagFactory->newInstance(helperClass);

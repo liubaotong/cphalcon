@@ -17,7 +17,7 @@ on:
 
 env:
   # All versions should be declared here
-  PHALCON_VERSION: 5.12.0
+  PHALCON_VERSION: 5.12.1
   ZEPHIR_PARSER_VERSION: 1.8.0
   # For tests
   LANG: en_US.UTF-8
@@ -959,7 +959,7 @@ jobs:
         with:
           token: ${{ secrets.STUBS_REPO_TOKEN }}
           owner: phalcon
-          repo: phalcon-ide-stubs
+          repo: ide-stubs
           tag: v${{ env.PHALCON_VERSION }}
           name: v${{ env.PHALCON_VERSION }} Stubs
           body: "v${{ env.PHALCON_VERSION }} Stubs"

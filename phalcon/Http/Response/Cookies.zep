@@ -140,24 +140,22 @@ class Cookies extends AbstractInjectionAware implements CookiesInterface
          * It's value come from $_COOKIE with request, so it shouldn't be saved
          * to _cookies property, otherwise it will always be resent after get.
          */
-        let cookie = <CookieInterface> this->container->get("Phalcon\\Http\\Cookie", [name]),
-            container = this->container;
+        let container = this->checkContainer();
+        let cookie    = <CookieInterface> container->get("Phalcon\\Http\\Cookie", [name]);
 
-        if typeof container == "object" {
-            /**
-             * Pass the DI to created cookies
-             */
-            cookie->setDi(container);
+        /**
+         * Pass the DI to created cookies
+         */
+        cookie->setDi(container);
 
-            let encryption = this->useEncryption;
+        let encryption = this->useEncryption;
 
-            /**
-             * Enable encryption in the cookie
-             */
-            if encryption {
-                cookie->useEncryption(encryption);
-                cookie->setSignKey(this->signKey);
-            }
+        /**
+         * Enable encryption in the cookie
+         */
+        if encryption {
+            cookie->useEncryption(encryption);
+            cookie->setSignKey(this->signKey);
         }
 
         return cookie;
@@ -303,15 +301,8 @@ class Cookies extends AbstractInjectionAware implements CookiesInterface
          * Register the cookies bag in the response
          */
         if this->registered === false {
-            let container = this->container;
-
-            if container === null {
-                throw new Exception(
-                    "A dependency injection container is required to access the 'response' service"
-                );
-            }
-
-            let response = container->getShared("response");
+            let container = this->checkContainer();
+            let response  = container->getShared("response");
 
             /**
              * Pass the cookies bag to the response so it can send the headers
@@ -350,5 +341,20 @@ class Cookies extends AbstractInjectionAware implements CookiesInterface
         let this->useEncryption = useEncryption;
 
         return this;
+    }
+
+    private function checkContainer() -> <DiInterface>
+    {
+        var container;
+
+        let container = this->container;
+
+        if container === null {
+            throw new Exception(
+                "A dependency injection container is required to access the 'response' service"
+            );
+        }
+
+        return container;
     }
 }

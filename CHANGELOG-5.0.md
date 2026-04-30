@@ -1,5 +1,27 @@
 # Changelog
-## 5.12.0 (2026-04-29)
+
+## [5.12.1](https://github.com/phalcon/cphalcon/releases/tag/v5.12.1) (xxxx-xx-xx)
+
+### Added
+
+- Added `Phalcon\Db\Column::TYPE_UUID` constant (value `29`) and added support for PostgreSQL native `uuid` column type in `Phalcon\Db\Adapter\Pdo\Postgresql` and `Phalcon\Db\Dialect\Postgresql` [#16840](https://github.com/phalcon/cphalcon/issues/16840)
+- Added support for `Phalcon\Mvc\Url` static base URI in `Phalcon\Assets\Manager`; when a DI container is set and a `url` service is available, local asset paths are now resolved via `getStatic()` instead of a bare `/` prefix [#16570](https://github.com/phalcon/cphalcon/issues/16570)
+
+### Fixed
+
+- Fixed `Phalcon\Mvc\Model\MetaDataInterface::readMetaDataIndex()` and `Phalcon\Mvc\Model\MetaData::readMetaDataIndex()` declaring return type as `array|null` when the method can also return a `string` (e.g. for `MODELS_IDENTITY_COLUMN`), causing a PHP fatal error on PHP 8+ [#16613](https://github.com/phalcon/cphalcon/issues/16613)
+- Fixed `Phalcon\Mvc\View\Engine\Volt\Compiler::statementList()` returning `null` instead of `string` when processing templates that consist entirely of block-mode statements, causing a PHP fatal error on PHP 8+ [#16613](https://github.com/phalcon/cphalcon/issues/16613)
+- Fixed `Phalcon\Forms\Element\Select::render()` multiselect regression introduced in v5.12.0 (#16894) by reverting to `Phalcon\Tag\Select::selectField()`; the new `Html\Helper\Input\Select` only supports a single selected value and does not handle array values required for multiselect [#16946](https://github.com/phalcon/cphalcon/issues/16946)
+- Fixed `Phalcon\Html\Helper\Input\AbstractInput::setValue()` ignoring empty string `""` as a valid value, causing `Checkbox` and `Radio` inputs with `value=""` to never render `checked="checked"` even when the `checked` attribute matched [#16648](https://github.com/phalcon/cphalcon/issues/16648)
+- Fixed `Phalcon\Http\Response\Cookies::get()` throwing an opaque fatal error when no DI container has been set; it now throws `Phalcon\Http\Cookie\Exception` with a descriptive message before accessing the container [#16650](https://github.com/phalcon/cphalcon/issues/16650)
+- Fixed `Phalcon\Mvc\Model\MetaData::writeMetaDataIndex()` prematurely initializing a child model's metadata with the parent's source table when `skipAttributes()` (or `skipAttributesOnCreate()`/`skipAttributesOnUpdate()`) is called inside a parent model's `initialize()` and the child calls `parent::initialize()` before setting its own source, corrupting the child's attribute list and breaking relationship resolution [#16544](https://github.com/phalcon/cphalcon/issues/16544)
+- Fixed `Phalcon\Storage\Serializer\Json::serialize()` rejecting plain objects (e.g. `stdClass`) that do not implement `JsonSerializable`; `json_encode()` handles such objects natively and the guard was unnecessary [#16630](https://github.com/phalcon/cphalcon/issues/16630)
+- Fixed `Phalcon\Mvc\Model\Manager` retaining a model instance in `lastInitialized` after initialization and `Phalcon\Mvc\Model` not clearing the reusable-records cache after `save()`, causing memory to grow unboundedly in long-running processes [#16566](https://github.com/phalcon/cphalcon/issues/16566)
+- Fixed `Phalcon\Paginator\Adapter\QueryBuilder::paginate()` returning wrong total item count when the query uses `DISTINCT` columns; the count now uses `COUNT(DISTINCT ...)` for a single column and a subquery for multiple columns [#16581](https://github.com/phalcon/cphalcon/issues/16581)
+- Fixed `Phalcon\Mvc\Model\Query\Builder::autoescape()` incorrectly wrapping function expressions (e.g. `DATE_PART(...)`) in brackets when used in `groupBy()`, causing a `"Column does not belong to any of the selected models"` exception [#16599](https://github.com/phalcon/cphalcon/issues/16599)
+- Fixed `Phalcon\Mvc\Model` - saving a model with multiple fields relations threw `"Not implemented"` [#16029](https://github.com/phalcon/cphalcon/issues/16029)
+
+## [5.12.0](https://github.com/phalcon/cphalcon/releases/tag/v5.12.0) (2026-04-29)
 
 ### Changed
 
@@ -78,7 +100,7 @@
 ### Removed
 
 # Changelog
-## 5.11.1 (2026-04-04)
+## [5.11.1](https://github.com/phalcon/cphalcon/releases/tag/v5.11.1) (2026-04-04)
 
 ### Changed
 
@@ -94,7 +116,7 @@
 
 ### Removed
 
-## 5.11.0 (2026-04-03)
+## [5.11.0](https://github.com/phalcon/cphalcon/releases/tag/v5.11.0) (2026-04-03)
 
 ### Changed
 
@@ -125,7 +147,7 @@
 ### Removed
 
 # Changelog
-## 5.10.0 (2025-12-25)
+## [5.10.0](https://github.com/phalcon/cphalcon/releases/tag/v5.10.0) (2025-12-25)
 
 ### Changed
 

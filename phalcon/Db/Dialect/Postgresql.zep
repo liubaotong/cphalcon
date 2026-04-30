@@ -495,6 +495,13 @@ class Postgresql extends Dialect
 
                 break;
 
+            case Column::TYPE_UUID:
+                if empty columnSql {
+                    let columnSql .= "UUID";
+                }
+
+                break;
+
             case Column::TYPE_VARCHAR:
                 if empty columnSql {
                     let columnSql .= "CHARACTER VARYING";

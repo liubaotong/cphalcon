@@ -112,8 +112,8 @@ class QueryBuilder extends AbstractAdapter
         var originalBuilder, builder, totalBuilder, totalPages, limit,
             number, query, previous, items, totalQuery, result, row, rowcount,
             next, sql, columns, db, model, modelClass, dbService, groups,
-            groupColumn;
-        bool hasHaving, hasGroup, hasMultipleGroups;
+            groupColumn, builderColumns, distinctColumn;
+        bool hasHaving, hasGroup, hasMultipleGroups, hasDistinct;
         int numberPage;
 
         let originalBuilder = this->builder;
@@ -179,7 +179,26 @@ class QueryBuilder extends AbstractAdapter
 
             totalBuilder->columns(columns);
         } else {
-            totalBuilder->columns("COUNT(*) [rowcount]");
+            let hasDistinct    = false,
+                builderColumns = builder->getColumns();
+
+            if typeof builderColumns == "string" && stripos(trim(builderColumns), "DISTINCT ") === 0 {
+                let distinctColumn = trim(substr(trim(builderColumns), 9));
+                let hasDistinct = true;
+
+                if strpos(distinctColumn, ",") !== false {
+                    totalBuilder->columns(["DISTINCT " . distinctColumn]);
+                    let hasMultipleGroups = true;
+                } else {
+                    totalBuilder->columns(
+                        ["COUNT(DISTINCT " . distinctColumn . ") AS [rowcount]"]
+                    );
+                }
+            }
+
+            if !hasDistinct {
+                totalBuilder->columns("COUNT(*) [rowcount]");
+            }
         }
 
         /**
