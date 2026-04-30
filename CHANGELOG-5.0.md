@@ -2,6 +2,10 @@
 
 ## [5.12.1](https://github.com/phalcon/cphalcon/releases/tag/v5.12.1) (xxxx-xx-xx)
 
+### Added
+
+- Added `Phalcon\Db\Column::TYPE_UUID` constant (value `29`) and added support for PostgreSQL native `uuid` column type in `Phalcon\Db\Adapter\Pdo\Postgresql` and `Phalcon\Db\Dialect\Postgresql` [#16840](https://github.com/phalcon/cphalcon/issues/16840)
+
 ### Fixed
 
 - Fixed `Phalcon\Mvc\Model\Query\Builder::autoescape()` incorrectly wrapping function expressions (e.g. `DATE_PART(...)`) in brackets when used in `groupBy()`, causing a `"Column does not belong to any of the selected models"` exception [#16599](https://github.com/phalcon/cphalcon/issues/16599)
