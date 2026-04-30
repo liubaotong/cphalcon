@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Fixed `Phalcon\Forms\Element\Select::render()` multiselect regression introduced in v5.12.0 (#16894) by reverting to `Phalcon\Tag\Select::selectField()`; the new `Html\Helper\Input\Select` only supports a single selected value and does not handle array values required for multiselect [#16946](https://github.com/phalcon/cphalcon/issues/16946)
 - Fixed `Phalcon\Html\Helper\Input\AbstractInput::setValue()` ignoring empty string `""` as a valid value, causing `Checkbox` and `Radio` inputs with `value=""` to never render `checked="checked"` even when the `checked` attribute matched [#16648](https://github.com/phalcon/cphalcon/issues/16648)
 - Fixed `Phalcon\Http\Response\Cookies::get()` throwing an opaque fatal error when no DI container has been set; it now throws `Phalcon\Http\Cookie\Exception` with a descriptive message before accessing the container [#16650](https://github.com/phalcon/cphalcon/issues/16650)
 - Fixed `Phalcon\Mvc\Model\MetaData::writeMetaDataIndex()` prematurely initializing a child model's metadata with the parent's source table when `skipAttributes()` (or `skipAttributesOnCreate()`/`skipAttributesOnUpdate()`) is called inside a parent model's `initialize()` and the child calls `parent::initialize()` before setting its own source, corrupting the child's attribute list and breaking relationship resolution [#16544](https://github.com/phalcon/cphalcon/issues/16544)
