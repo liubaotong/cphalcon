@@ -27,24 +27,32 @@ class OrdersProductsFieldsOneMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        int $oxp_id,
-        int $oxp_ord_id,
-        int $oxp_prd_id,
-        int $oxp_quantity
+        ?int $oxpId,
+        int $oxpOrdId,
+        int $oxpPrdId,
+        ?int $oxpQuantity = null
     ): int {
-        $oxp_id   = $oxp_id ?: 'null';
-        $oxp_ord_id   = $oxp_ord_id ?: 'null';
-        $oxp_prd_id   = $oxp_prd_id ?: 'null';
-        $oxp_quantity = $oxp_quantity ?: 'null';
-        $sql    = <<<SQL
+        $sql = <<<SQL
 insert into co_orders_x_products_one (
     oxp_id, oxp_ord_id, oxp_prd_id, oxp_quantity
 ) values (
-    {$oxp_id}, {$oxp_ord_id}, {$oxp_prd_id}, {$oxp_quantity}
+    :oxpId, :oxpOrdId, :oxpPrdId, :oxpQuantity
 )
 SQL;
+        $params = [
+            ':oxpId'       => $oxpId,
+            ':oxpOrdId'    => $oxpOrdId,
+            ':oxpPrdId'    => $oxpPrdId,
+            ':oxpQuantity' => $oxpQuantity,
+        ];
 
-        return $this->connection->exec($sql);
+        $result = $this->execute($sql, $params);
+
+        if ($oxpId !== null) {
+            $this->advanceSequence('oxp_id', $oxpId);
+        }
+
+        return $result;
     }
 
     protected function getSqlMysql(): array

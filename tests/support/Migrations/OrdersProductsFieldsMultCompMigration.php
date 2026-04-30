@@ -27,26 +27,28 @@ class OrdersProductsFieldsMultCompMigration extends AbstractMigration
      * @return int
      */
     public function insert(
-        int $oxp_ord_id,
-        int $oxp_prd_id,
-        int $oxp_quantity,
-        int $oxp_ord_status_flag = 0,
-        int $oxp_prd_status_flag = 0
+        int $oxpOrdId,
+        int $oxpPrdId,
+        ?int $oxpQuantity = null,
+        int $oxpOrdStatusFlag = 0,
+        int $oxpPrdStatusFlag = 0
     ): int {
-        $oxp_ord_id   = $oxp_ord_id ?: 'null';
-        $oxp_prd_id   = $oxp_prd_id ?: 'null';
-        $oxp_quantity = $oxp_quantity ?: 'null';
-        $oxp_ord_status_flag = $oxp_ord_status_flag ?: 0;
-        $oxp_prd_status_flag = $oxp_prd_status_flag ?: 0;
-        $sql    = <<<SQL
+        $sql = <<<SQL
 insert into co_orders_x_products_mult_comp (
     oxp_ord_id, oxp_prd_id, oxp_quantity, oxp_ord_status_flag, oxp_prd_status_flag
 ) values (
-    {$oxp_ord_id}, {$oxp_prd_id}, {$oxp_quantity}, {$oxp_ord_status_flag}, {$oxp_prd_status_flag}
+    :oxpOrdId, :oxpPrdId, :oxpQuantity, :oxpOrdStatusFlag, :oxpPrdStatusFlag
 )
 SQL;
+        $params = [
+            ':oxpOrdId'         => $oxpOrdId,
+            ':oxpPrdId'         => $oxpPrdId,
+            ':oxpQuantity'      => $oxpQuantity,
+            ':oxpOrdStatusFlag' => $oxpOrdStatusFlag,
+            ':oxpPrdStatusFlag' => $oxpPrdStatusFlag,
+        ];
 
-        return $this->connection->exec($sql);
+        return $this->execute($sql, $params);
     }
 
     protected function getSqlMysql(): array
