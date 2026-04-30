@@ -21,7 +21,7 @@
 - Fixed `Phalcon\Mvc\Model\Query\Builder::autoescape()` incorrectly wrapping function expressions (e.g. `DATE_PART(...)`) in brackets when used in `groupBy()`, causing a `"Column does not belong to any of the selected models"` exception [#16599](https://github.com/phalcon/cphalcon/issues/16599)
 - Fixed `Phalcon\Mvc\Model` - saving a model with multiple fields relations threw `"Not implemented"` [#16029](https://github.com/phalcon/cphalcon/issues/16029)
 
-## 5.12.0 (2026-04-29)
+## [5.12.0](https://github.com/phalcon/cphalcon/releases/tag/v5.12.0) (2026-04-29)
 
 ### Changed
 
@@ -100,7 +100,7 @@
 ### Removed
 
 # Changelog
-## 5.11.1 (2026-04-04)
+## [5.11.1](https://github.com/phalcon/cphalcon/releases/tag/v5.11.1) (2026-04-04)
 
 ### Changed
 
@@ -116,7 +116,7 @@
 
 ### Removed
 
-## 5.11.0 (2026-04-03)
+## [5.11.0](https://github.com/phalcon/cphalcon/releases/tag/v5.11.0) (2026-04-03)
 
 ### Changed
 
@@ -147,7 +147,7 @@
 ### Removed
 
 # Changelog
-## 5.10.0 (2025-12-25)
+## [5.10.0](https://github.com/phalcon/cphalcon/releases/tag/v5.10.0) (2025-12-25)
 
 ### Changed
 
